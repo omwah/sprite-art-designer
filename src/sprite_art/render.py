@@ -87,29 +87,52 @@ def _repeat_counts(
     return repeats
 
 
-def _compose_horizontal(tier: Tier, rng: random.Random, target: int) -> list[str]:
+def _compose_horizontal(
+    tier: Tier,
+    rng: random.Random,
+    target: int,
+    highlight_variant: Variant | None = None,
+) -> tuple[list[str], list[str]]:
     chosen = [_choose_variant(section, rng) for section in tier.sections]
     repeats = _repeat_counts(tier.sections, chosen, target, horizontal=True)
     height = chosen[0].height
-    return [
+    rows = [
         "".join(
             variant.cells[row] * repeat
             for variant, repeat in zip(chosen, repeats)
         )
         for row in range(height)
     ]
+    mask = [
+        "".join(
+            ("1" if highlight_variant in section.variants else "0")
+            * variant.width
+            * repeat
+            for section, variant, repeat in zip(tier.sections, chosen, repeats)
+        )
+        for _ in range(height)
+    ]
+    return rows, mask
 
 
-def _compose_vertical(tier: Tier, rng: random.Random, target: int) -> list[str]:
+def _compose_vertical(
+    tier: Tier,
+    rng: random.Random,
+    target: int,
+    highlight_variant: Variant | None = None,
+) -> tuple[list[str], list[str]]:
     chosen = [_choose_variant(section, rng) for section in tier.sections]
     repeats = _repeat_counts(tier.sections, chosen, target, horizontal=False)
     rows: list[str] = []
+    mask: list[str] = []
     # Sections remain authored tail -> nose. Nose-up art is displayed top-down,
     # so the semantic section order is reversed without changing each part.
-    for variant, repeat in reversed(list(zip(chosen, repeats))):
+    for section, variant, repeat in reversed(list(zip(tier.sections, chosen, repeats))):
         for _ in range(repeat):
             rows.extend(variant.cells)
-    return rows
+            marker = "1" if highlight_variant in section.variants else "0"
+            mask.extend([marker * variant.width for _ in range(variant.height)])
+    return rows, mask
 
 
 def compose_grid(
@@ -123,9 +146,9 @@ def compose_grid(
     view = sprite.views[view_id]
     tier = _select_tier(view, width, height)
     if view.axis == "horizontal":
-        rows = _compose_horizontal(tier, rng, width)
+        rows, _mask = _compose_horizontal(tier, rng, width)
     elif view.axis == "vertical":
-        rows = _compose_vertical(tier, rng, height)
+        rows, _mask = _compose_vertical(tier, rng, height)
     else:
         rows = list(_choose_variant(tier.sections[0], rng).cells)
     requested_facing = facing or view.canonical_facing
@@ -135,6 +158,37 @@ def compose_grid(
         elif view.axis == "vertical":
             rows = flip_rows_vertical(rows)
     return rows
+
+
+def _compose_grid_with_highlight(
+    sprite: Sprite,
+    rng: random.Random,
+    width: int,
+    height: int,
+    view_id: str,
+    highlight_variant: Variant | None,
+    facing: str | None = None,
+) -> tuple[list[str], list[str]]:
+    view = sprite.views[view_id]
+    tier = _select_tier(view, width, height)
+    if view.axis == "horizontal":
+        rows, mask = _compose_horizontal(tier, rng, width, highlight_variant)
+    elif view.axis == "vertical":
+        rows, mask = _compose_vertical(tier, rng, height, highlight_variant)
+    else:
+        variant = _choose_variant(tier.sections[0], rng)
+        rows = list(variant.cells)
+        marker = "1" if highlight_variant in tier.sections[0].variants else "0"
+        mask = [marker * variant.width for _ in range(variant.height)]
+    requested_facing = facing or view.canonical_facing
+    if view.mirror_facing is not None and requested_facing == view.mirror_facing:
+        if view.axis == "horizontal":
+            rows = flip_rows_horizontal(rows)
+            mask = flip_rows_horizontal(mask)
+        elif view.axis == "vertical":
+            rows = flip_rows_vertical(rows)
+            mask = flip_rows_vertical(mask)
+    return rows, mask
 
 
 def _fit_grid(
@@ -183,27 +237,53 @@ def _paint_grid(
     width: int,
     height: int,
     reverse_vertical_bias: bool = False,
+    highlight_mask: list[str] | None = None,
 ) -> Text:
     output = Text()
-    for y, line in enumerate(
+    fitted_rows = _fit_grid(
+        rows, width, height, reverse_vertical_bias=reverse_vertical_bias
+    )
+    fitted_mask = (
         _fit_grid(
-            rows,
-            width,
-            height,
-            reverse_vertical_bias=reverse_vertical_bias,
+            highlight_mask, width, height, reverse_vertical_bias=reverse_vertical_bias
         )
-    ):
-        for glyph in line:
+        if highlight_mask is not None
+        else ["0" * width for _ in range(height)]
+    )
+    for y, line in enumerate(fitted_rows):
+        for x, glyph in enumerate(line):
+            highlighted = fitted_mask[y][x] == "1"
+            background = "#4c1d95" if highlighted else VOID_BG
             if glyph == " ":
-                output.append(" ")
+                output.append(" ", style=f"on {background}" if highlighted else "")
             elif glyph == "R":
-                output.append("▀", style=beacon_color)
+                output.append(
+                    "▀",
+                    style=f"{beacon_color} on {background}"
+                    if highlighted
+                    else beacon_color,
+                )
             elif glyph == "r":
-                output.append("▄", style=beacon_color)
+                output.append(
+                    "▄",
+                    style=f"{beacon_color} on {background}"
+                    if highlighted
+                    else beacon_color,
+                )
             elif glyph == "Y":
-                output.append("▄", style=engine_color)
+                output.append(
+                    "▄",
+                    style=f"{engine_color} on {background}"
+                    if highlighted
+                    else engine_color,
+                )
             elif glyph == "y":
-                output.append("▀", style=engine_color)
+                output.append(
+                    "▀",
+                    style=f"{engine_color} on {background}"
+                    if highlighted
+                    else engine_color,
+                )
             elif glyph in HULL_CHARS:
                 if glyph in BRIGHT_CHARS and rng.random() < WINDOW_PROBABILITY:
                     color = rng.choice(palette.window)
@@ -213,11 +293,11 @@ def _paint_grid(
                     color = palette.bright
                 else:
                     color = palette.mid
-                output.append(glyph, style=f"{color} on {VOID_BG}")
+                output.append(glyph, style=f"{color} on {background}")
             else:
                 output.append(
                     glyph,
-                    style=f"{palette.facet} on {palette.bright}",
+                    style=f"{palette.facet} on {background if highlighted else palette.bright}",
                 )
         if y < height - 1:
             output.append("\n")
@@ -234,6 +314,7 @@ def render_sprite(
     archetype_id: str = "humanoid_diplomat",
     view_id: str = "horizontal",
     facing: str | None = None,
+    highlight_variant: Variant | None = None,
 ) -> Text:
     """Render one exact-sized, deterministic Rich sprite.
 
@@ -256,7 +337,15 @@ def render_sprite(
     palette = palettes.resolve(archetype_id)
     beacon_color = rng.choice(palette.beacon)
     engine_color = rng.choice(palette.engine)
-    rows = compose_grid(sprite, rng, width, height, view_id, facing)
+    rows, highlight_mask = _compose_grid_with_highlight(
+        sprite,
+        rng,
+        width,
+        height,
+        view_id,
+        highlight_variant,
+        facing,
+    )
     view = sprite.views[view_id]
     requested_facing = facing or view.canonical_facing
     reverse_vertical_bias = (
@@ -273,4 +362,5 @@ def render_sprite(
         width,
         height,
         reverse_vertical_bias,
+        highlight_mask=highlight_mask if highlight_variant is not None else None,
     )

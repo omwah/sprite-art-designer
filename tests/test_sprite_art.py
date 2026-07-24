@@ -112,6 +112,32 @@ def test_generation_is_deterministic_and_exact(role: str, palettes: PaletteCatal
             assert all(len(line) == width for line in lines)
 
 
+def test_highlighted_variant_preserves_text_and_marks_its_section(
+    palettes: PaletteCatalog,
+) -> None:
+    sprite = load_sprite(ASSETS / "sprites" / "ships" / "fighter.yaml")
+    variant = sprite.views["horizontal"].tiers[0].sections[0].variants[0]
+    normal = render_sprite(
+        sprite,
+        palettes,
+        width=56,
+        height=12,
+        seed=13,
+        view_id="horizontal",
+    )
+    highlighted = render_sprite(
+        sprite,
+        palettes,
+        width=56,
+        height=12,
+        seed=13,
+        view_id="horizontal",
+        highlight_variant=variant,
+    )
+    assert highlighted.plain == normal.plain
+    assert highlighted.spans != normal.spans
+
+
 def test_horizontal_facing_is_exact_glyph_reflection(palettes: PaletteCatalog) -> None:
     sprite = load_sprite(ASSETS / "sprites" / "ships" / "fighter.yaml")
     right = render_sprite(

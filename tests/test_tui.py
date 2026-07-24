@@ -5,8 +5,8 @@ from shutil import copytree
 
 import pytest
 
-from sprite_art_designer.app import EdgeArtDesigner, _new_sprite
-from sprite_art_designer.widgets import ArtCanvas
+from sprite_art_designer.app import EdgeArtDesigner, HelpScreen, _new_sprite
+from sprite_art_designer.widgets import ArtCanvas, PreviewMatrix
 
 ROOT = Path(__file__).parents[1]
 
@@ -22,6 +22,20 @@ async def test_app_mounts_wide_and_populates_editor() -> None:
         assert app.query_one("#tools-pane").display
         assert app.query_one("#preview-pane").display
         assert app.query_one("#preview-matrix").render() is not None
+        tree = app.query_one("#structure-tree")
+        assert tree.cursor_node is not None
+        assert tree.cursor_node.data.item is app.selection.item
+        preview = app.query_one("#preview-pane")
+        canvas = app.query_one("#canvas-pane")
+        structure = app.query_one("#nav-pane")
+        assert preview.region.x < canvas.region.x
+        assert preview.region.y == canvas.region.y
+        assert preview.region.y > structure.region.y
+        art_canvas = app.query_one("#art-canvas")
+        previous = app.query_one("#previous-structure")
+        assert previous.region.y * 2 + previous.region.height == (
+            art_canvas.region.y * 2 + art_canvas.region.height
+        )
 
 
 @pytest.mark.asyncio
@@ -36,6 +50,73 @@ async def test_narrow_layout_uses_switchable_panels() -> None:
         await pilot.pause()
         assert app.query_one("#preview-pane").display
         assert not app.query_one("#workspace").display
+
+
+@pytest.mark.asyncio
+async def test_preview_size_select_supports_custom_size() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        size_select = app.query_one("#preview-size")
+        size_select.value = "custom"
+        await pilot.pause()
+        custom_size = app.query_one("#preview-custom-size")
+        assert custom_size.display
+        custom_size.value = "24x6"
+        app._apply_preview_configuration()
+        assert app.preview_size == (24, 6)
+        assert app.query_one("#preview-matrix", PreviewMatrix).preview_size == (24, 6)
+
+
+@pytest.mark.asyncio
+async def test_question_mark_opens_help_modal() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.press("question_mark")
+        assert isinstance(app.screen, HelpScreen)
+        await pilot.press("escape")
+        assert not isinstance(app.screen, HelpScreen)
+
+
+@pytest.mark.asyncio
+async def test_h_shortcut_toggles_preview_highlight() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.press("h")
+        assert app.highlight_preview
+        await pilot.press("h")
+        assert not app.highlight_preview
+
+
+@pytest.mark.asyncio
+async def test_preview_navigation_buttons_and_shortcuts_select_variants() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        first = app.selection.item
+        await pilot.click("#next-structure")
+        assert app.selection is not None
+        assert app.selection.kind == "variant"
+        assert app.selection.item is not first
+        await pilot.press("comma")
+        assert app.selection.item is first
+        await pilot.press("full_stop")
+        assert app.selection.item is not first
+
+
+@pytest.mark.asyncio
+async def test_structure_selection_switches_preview_to_its_view() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        tree = app.query_one("#structure-tree")
+        vertical_view = next(
+            node for node in tree.root.children if node.data.item.id == "vertical"
+        )
+        tree.select_node(vertical_view.children[0].children[0].children[0])
+        await pilot.pause()
+        assert app.current_view_id == "vertical"
+        assert app.query_one("#preview-view").value == "vertical"
 
 
 def test_new_generic_sprite_uses_fixed_canvas_model() -> None:

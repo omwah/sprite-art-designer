@@ -12,13 +12,7 @@ from typing import Any, Literal
 from rich.color import Color
 from textual import events
 from textual.app import App, ComposeResult
-from textual.containers import (
-    Container,
-    Grid,
-    Horizontal,
-    Vertical,
-    VerticalScroll,
-)
+from textual.containers import Container, Horizontal, Vertical, VerticalScroll
 from textual.screen import ModalScreen
 from textual.timer import Timer
 from textual.widgets import (
@@ -28,14 +22,13 @@ from textual.widgets import (
     Input,
     Label,
     Select,
-    TabbedContent,
-    TabPane,
+    Static,
+    Switch,
     Tree,
 )
 from textual.widgets.tree import TreeNode
 
 from sprite_art import (
-    ARCHETYPE_IDS,
     PROPERTY_IDS,
     Palette,
     Section,
@@ -48,7 +41,17 @@ from sprite_art import (
 from sprite_art.model import SCHEMA_VERSION
 
 from .state import EditorState
-from .widgets import ArtCanvas, GlyphPalette, PreviewMatrix
+from .widgets import (
+    ArtCanvas,
+    CanvasPane,
+    DocumentBar,
+    GlyphPalette,
+    NarrowTabs,
+    NavPane,
+    PreviewMatrix,
+    PreviewPane,
+    ToolsPane,
+)
 
 SelectionKind = Literal["sprite", "view", "tier", "section", "variant"]
 
@@ -74,6 +77,51 @@ class ConfirmScreen(ModalScreen[bool]):
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         self.dismiss(event.button.id == "confirm")
+
+
+class HelpScreen(ModalScreen[None]):
+    """Scroll-friendly editor help, adapted from Edge's contextual help screen."""
+
+    BINDINGS = [
+        ("escape", "close", "Close"),
+        ("question_mark", "close", "Close"),
+    ]
+
+    CSS = """
+    HelpScreen { align: center middle; background: #0009; }
+    HelpScreen #help-box {
+        width: 72; max-width: 100%; max-height: 90%; height: auto;
+        padding: 1 2; border: round #38bdf8; background: #10212c;
+    }
+    HelpScreen #help-title { text-style: bold; color: #7dd3fc; margin-bottom: 1; }
+    HelpScreen .help-section { text-style: bold; color: #7dd3fc; margin-top: 1; }
+    HelpScreen #help-footer { color: #78909c; margin-top: 1; }
+    """
+
+    def compose(self) -> ComposeResult:
+        with VerticalScroll(id="help-box"):
+            yield Static("Help — Edge Art Designer", id="help-title")
+            yield Static("Canvas", classes="help-section")
+            yield Static(
+                "Left-drag paints · right-drag erases · arrows move · Space paints\n"
+                "Enter also paints · Delete or Backspace erases"
+            )
+            yield Static("Shortcuts", classes="help-section")
+            yield Static(
+                "  Ctrl+S  Save current sprite\n"
+                "  Ctrl+Shift+S  Save all modified assets\n"
+                "  Ctrl+N  Create a sprite\n"
+                "  Ctrl+R  Restore recovery snapshot\n"
+                "  Ctrl+G  Generate vertical view\n"
+                "  Ctrl+D  Duplicate selection\n"
+                "  Delete  Delete selection\n"
+                "  , / .  Previous / next structure\n"
+                "  ?  Open or close this help"
+            )
+            yield Static("[dim]Esc or ? to close[/]", id="help-footer")
+
+    def action_close(self) -> None:
+        self.dismiss(None)
 
 
 class NewSpriteScreen(ModalScreen[tuple[str, str, str] | None]):
@@ -214,6 +262,10 @@ class EdgeArtDesigner(App[None]):
         ("ctrl+g", "rotate_vertical", "Generate vertical"),
         ("ctrl+d", "duplicate_item", "Duplicate"),
         ("delete", "delete_item", "Delete"),
+        ("h", "toggle_highlight", "Toggle highlight"),
+        ("comma", "previous_structure", "Previous structure"),
+        ("full_stop", "next_structure", "Next structure"),
+        ("question_mark", "help", "Help"),
     ]
 
     def __init__(self, asset_root: Path) -> None:
@@ -221,12 +273,8 @@ class EdgeArtDesigner(App[None]):
         self.editor = EditorState.load(asset_root)
         self.selection: Selection | None = None
         self.selected_glyph = "█"
-        self.preview_sizes: list[tuple[int, int]] = [
-            (18, 3),
-            (30, 5),
-            (40, 7),
-            (56, 12),
-        ]
+        self.preview_size = (56, 12)
+        self.highlight_preview = False
         self.preview_seed = 7
         self.current_archetype = "humanoid_diplomat"
         self.current_view_id = "horizontal"
@@ -251,123 +299,28 @@ class EdgeArtDesigner(App[None]):
                 (initial_view.mirror_facing.title(), initial_view.mirror_facing)
             )
         yield Header(show_clock=True)
-        with Horizontal(id="document-bar"):
-            yield Label("Sprite")
-            yield Select(
-                self._sprite_options(),
-                value=self.editor.current_sprite_id,
-                allow_blank=False,
-                id="sprite-select",
-            )
-            yield Button("New", id="new-sprite")
-            yield Button("Save", id="save", variant="success")
-            yield Button("Save all", id="save-all")
-            yield Button("Generate vertical", id="rotate-vertical")
-            yield Label("", id="dirty-indicator")
+        yield DocumentBar(self._sprite_options(), self.editor.current_sprite_id)
+        yield NarrowTabs()
 
-        with Horizontal(id="narrow-tabs"):
-            yield Button("Navigate", id="panel-nav")
-            yield Button("Canvas", id="panel-canvas", variant="primary")
-            yield Button("Tools", id="panel-tools")
-            yield Button("Preview", id="panel-preview")
-
-        with Vertical(id="body"):
-            with Horizontal(id="workspace"):
-                with Vertical(id="nav-pane", classes="pane"):
-                    yield Label("Structure", classes="pane-title")
-                    yield Tree("Sprite", id="structure-tree")
-                    with Grid(id="structure-actions"):
-                        yield Button("+", id="add-item", tooltip="Add child")
-                        yield Button("⧉", id="duplicate-item", tooltip="Duplicate")
-                        yield Button("−", id="delete-item", tooltip="Delete")
-                        yield Button("↑", id="move-up", tooltip="Move up")
-                        yield Button("↓", id="move-down", tooltip="Move down")
-
-                with Vertical(id="canvas-pane", classes="pane"):
-                    yield Label("Select a variant", id="canvas-title", classes="pane-title")
-                    with VerticalScroll(id="canvas-scroll"):
-                        yield ArtCanvas(id="art-canvas")
-                    yield Label(
-                        "Left-drag paints · right-drag erases · arrows move · Space paints",
-                        id="canvas-help",
-                    )
-
-                with Vertical(id="tools-pane", classes="pane"):
-                    with TabbedContent(id="tool-tabs"):
-                        with TabPane("Glyphs", id="glyph-tab"):
-                            yield GlyphPalette(id="glyph-palette")
-                            yield Label("Selected: █", id="selected-glyph")
-                        with TabPane("Properties", id="properties-tab"):
-                            with VerticalScroll():
-                                yield Label("Selection", id="selection-title", classes="section-title")
-                                yield Label("ID")
-                                yield Input(id="item-id")
-                                yield Label("Name")
-                                yield Input(id="item-name")
-                                with Vertical(id="section-fields"):
-                                    yield Label("Primary property")
-                                    yield Select(
-                                        [(value.replace("_", " ").title(), value) for value in PROPERTY_IDS],
-                                        value="utility",
-                                        allow_blank=False,
-                                        id="primary-property",
-                                    )
-                                    yield Label("Secondary properties (comma-separated)")
-                                    yield Input(id="secondary-properties")
-                                    yield Label("Repeat min / max")
-                                    with Horizontal():
-                                        yield Input(value="1", type="integer", id="repeat-min")
-                                        yield Input(value="1", type="integer", id="repeat-max")
-                                with Vertical(id="variant-fields"):
-                                    yield Label("Selection weight")
-                                    yield Input(value="1", type="integer", id="variant-weight")
-                                    yield Label("Canvas width / height")
-                                    with Horizontal():
-                                        yield Input(value="1", type="integer", id="variant-width")
-                                        yield Input(value="1", type="integer", id="variant-height")
-                                yield Button("Apply properties", id="apply-properties", variant="primary")
-                        with TabPane("Palette", id="palette-tab"):
-                            with VerticalScroll():
-                                yield Label("Controlled archetype")
-                                yield Select(
-                                    [(value.replace("_", " ").title(), value) for value in ARCHETYPE_IDS],
-                                    value=self.current_archetype,
-                                    allow_blank=False,
-                                    id="palette-archetype",
-                                )
-                                for field_name in ("bright", "mid", "dark", "beacon", "engine", "window", "facet"):
-                                    yield Label(field_name.replace("_", " ").title())
-                                    yield Input(id=f"palette-{field_name}")
-                                yield Button("Apply palette", id="apply-palette", variant="primary")
-
-            with Vertical(id="preview-pane", classes="pane"):
-                with Horizontal(id="preview-controls"):
-                    yield Label("Preview")
-                    yield Select(
+        with Container(id="body"):
+            with Vertical(id="workspace"):
+                with Horizontal(id="structure-tools"):
+                    yield NavPane()
+                    yield ToolsPane(
+                        self.current_archetype,
                         [
                             (view.name, view_id)
                             for view_id, view in initial_sprite.views.items()
                         ],
-                        value=initial_view_id,
-                        allow_blank=False,
-                        id="preview-view",
-                    )
-                    yield Select(
+                        initial_view_id,
                         initial_facings,
-                        value=initial_view.canonical_facing,
-                        allow_blank=False,
-                        id="preview-facing",
+                        self.preview_seed,
+                        self.preview_size,
+                        self.highlight_preview,
                     )
-                    yield Label("Seed")
-                    yield Input(value=str(self.preview_seed), type="integer", id="preview-seed")
-                    yield Label("Sizes")
-                    yield Input(
-                        value="18x3, 30x5, 40x7, 56x12",
-                        id="preview-sizes",
-                    )
-                    yield Button("Apply", id="apply-preview")
-                with VerticalScroll(id="preview-scroll"):
-                    yield PreviewMatrix(id="preview-matrix")
+                with Horizontal(id="preview-canvas"):
+                    yield PreviewPane()
+                    yield CanvasPane()
         yield Footer()
 
     def _sprite_options(self) -> list[tuple[str, str]]:
@@ -378,6 +331,7 @@ class EdgeArtDesigner(App[None]):
 
     def on_mount(self) -> None:
         self._rebuild_tree()
+        self.call_after_refresh(self._sync_tree_cursor_to_selection)
         self._refresh_palette_fields()
         self._refresh_preview_controls()
         self._refresh_preview()
@@ -388,6 +342,26 @@ class EdgeArtDesigner(App[None]):
                 severity="warning",
                 timeout=8,
             )
+
+    def _sync_tree_cursor_to_selection(self) -> None:
+        if self.selection is None:
+            return
+        selected_item = self.selection.item
+        tree = self.query_one("#structure-tree", Tree)
+
+        def find(node: TreeNode[Any]) -> TreeNode[Any] | None:
+            if isinstance(node.data, Selection) and node.data.item is selected_item:
+                return node
+            for child in node.children:
+                result = find(child)
+                if result is not None:
+                    return result
+            return None
+
+        tree.move_cursor(find(tree.root))
+
+    def action_help(self) -> None:
+        self.push_screen(HelpScreen())
 
     def on_resize(self, event: events.Resize) -> None:
         narrow = event.size.width < 100
@@ -402,10 +376,17 @@ class EdgeArtDesigner(App[None]):
         workspace = self.query_one("#workspace")
         if not self._narrow:
             workspace.display = True
+            self.query_one("#structure-tools").display = True
+            self.query_one("#preview-canvas").display = True
             for panel_id in panel_ids:
                 self.query_one(f"#{panel_id}-pane").display = True
             return
         workspace.display = self._narrow_panel != "preview"
+        self.query_one("#structure-tools").display = self._narrow_panel in {
+            "nav",
+            "tools",
+        }
+        self.query_one("#preview-canvas").display = self._narrow_panel == "canvas"
         for panel_id in ("nav", "canvas", "tools"):
             self.query_one(f"#{panel_id}-pane").display = panel_id == self._narrow_panel
         self.query_one("#preview-pane").display = self._narrow_panel == "preview"
@@ -468,6 +449,10 @@ class EdgeArtDesigner(App[None]):
         if not isinstance(selection, Selection):
             return
         self.selection = selection
+        selected_view = self._view_for_structure(selection.item)
+        if selected_view is not None and self.current_view_id != selected_view.id:
+            self.current_view_id = selected_view.id
+            self._refresh_preview_controls()
         self._populate_inspector()
         canvas = self.query_one("#art-canvas", ArtCanvas)
         if selection.kind == "variant":
@@ -475,10 +460,31 @@ class EdgeArtDesigner(App[None]):
             assert isinstance(variant, Variant)
             canvas.set_variant(variant)
             self.query_one("#canvas-title", Label).update(
-                f"{self.editor.current_sprite.name} / {variant.id}"
+                f"{variant.id}"
             )
         else:
             canvas.set_variant(None)
+        self._refresh_preview()
+
+    def _view_for_structure(
+        self,
+        item: Sprite | View | Tier | Section | Variant,
+    ) -> View | None:
+        if isinstance(item, View):
+            return item
+        for view in self.editor.current_sprite.views.values():
+            if any(tier is item for tier in view.tiers):
+                return view
+            for tier in view.tiers:
+                if any(section is item for section in tier.sections):
+                    return view
+                if any(
+                    variant is item
+                    for section in tier.sections
+                    for variant in section.variants
+                ):
+                    return view
+        return None
 
     def _populate_inspector(self) -> None:
         if self.selection is None:
@@ -554,6 +560,46 @@ class EdgeArtDesigner(App[None]):
         shown = "space" if event.glyph == " " else event.glyph
         self.query_one("#selected-glyph", Label).update(f"Selected: {shown}")
 
+    def on_switch_changed(self, event: Switch.Changed) -> None:
+        if event.switch.id == "preview-highlight":
+            self.highlight_preview = event.value
+            self._refresh_preview()
+
+    def action_toggle_highlight(self) -> None:
+        self.highlight_preview = not self.highlight_preview
+        self.query_one("#preview-highlight", Switch).value = self.highlight_preview
+        self._refresh_preview()
+
+    def action_previous_structure(self) -> None:
+        self._select_adjacent_structure(-1)
+
+    def action_next_structure(self) -> None:
+        self._select_adjacent_structure(1)
+
+    def _select_adjacent_structure(self, delta: int) -> None:
+        tree = self.query_one("#structure-tree", Tree)
+        variants: list[TreeNode[Any]] = []
+
+        def collect(node: TreeNode[Any]) -> None:
+            if isinstance(node.data, Selection) and node.data.kind == "variant":
+                variants.append(node)
+            for child in node.children:
+                collect(child)
+
+        collect(tree.root)
+        if not variants:
+            return
+        current_item = self.selection.item if self.selection is not None else None
+        current_index = next(
+            (
+                index
+                for index, node in enumerate(variants)
+                if isinstance(node.data, Selection) and node.data.item is current_item
+            ),
+            0,
+        )
+        tree.select_node(variants[(current_index + delta) % len(variants)])
+
     def on_select_changed(self, event: Select.Changed) -> None:
         select_id = event.select.id
         if event.value is Select.BLANK:
@@ -585,6 +631,12 @@ class EdgeArtDesigner(App[None]):
         elif select_id == "preview-facing":
             self.current_facing = value
             self._refresh_preview()
+        elif select_id == "preview-size":
+            custom_size = self.query_one("#preview-custom-size", Input)
+            custom_size.display = value == "custom"
+            if value != "custom":
+                self.preview_size = self._parse_preview_size(value)
+                self._refresh_preview()
 
     def _refresh_preview_controls(self) -> None:
         view_select = self.query_one("#preview-view", Select)
@@ -617,8 +669,14 @@ class EdgeArtDesigner(App[None]):
             view_id=self.current_view_id,
             facing=self.current_facing,
             seed=self.preview_seed,
-            sizes=self.preview_sizes,
+            size=self.preview_size,
+            highlight_variant=self._selected_preview_variant(),
         )
+
+    def _selected_preview_variant(self) -> Variant | None:
+        if not self.highlight_preview or self.selection is None:
+            return None
+        return self.selection.item if isinstance(self.selection.item, Variant) else None
 
     def _refresh_palette_fields(self) -> None:
         palette = self.editor.palettes.archetypes[self.current_archetype]
@@ -652,6 +710,10 @@ class EdgeArtDesigner(App[None]):
             self._apply_palette()
         elif button_id == "apply-preview":
             self._apply_preview_configuration()
+        elif button_id == "previous-structure":
+            self.action_previous_structure()
+        elif button_id == "next-structure":
+            self.action_next_structure()
         elif button_id == "add-item":
             self.action_add_item()
         elif button_id == "duplicate-item":
@@ -776,21 +838,24 @@ class EdgeArtDesigner(App[None]):
     def _apply_preview_configuration(self) -> None:
         try:
             seed = int(self.query_one("#preview-seed", Input).value)
-            sizes: list[tuple[int, int]] = []
-            for value in self.query_one("#preview-sizes", Input).value.split(","):
-                width_text, height_text = value.strip().lower().split("x", 1)
-                width, height = int(width_text), int(height_text)
-                if width < 1 or height < 1:
-                    raise ValueError
-                sizes.append((width, height))
-            if not sizes:
-                raise ValueError
+            size_value = str(self.query_one("#preview-size", Select).value)
+            if size_value == "custom":
+                size_value = self.query_one("#preview-custom-size", Input).value
+            size = self._parse_preview_size(size_value)
         except ValueError:
-            self.notify("Use sizes such as 18x3, 30x5, 40x7", severity="error")
+            self.notify("Use a size such as 18x3 or 56x12", severity="error")
             return
         self.preview_seed = seed
-        self.preview_sizes = sizes
+        self.preview_size = size
         self._refresh_preview()
+
+    @staticmethod
+    def _parse_preview_size(value: str) -> tuple[int, int]:
+        width_text, height_text = value.strip().lower().split("x", 1)
+        width, height = int(width_text), int(height_text)
+        if width < 1 or height < 1:
+            raise ValueError
+        return width, height
 
     def action_save(self) -> None:
         try:

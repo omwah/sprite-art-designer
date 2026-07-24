@@ -7,14 +7,22 @@ from rich.panel import Panel
 from rich.text import Text
 from textual import events
 from textual.app import ComposeResult
-from textual.containers import Grid
+from textual.containers import Grid, Horizontal, ItemGrid, Vertical, VerticalScroll
 from textual.geometry import Size
 from textual.message import Message
 from textual.widget import Widget
-from textual.widgets import Button, Static
+from textual.widgets import Button, Input, Label, Select, Static, Switch, TabbedContent, TabPane, Tree
 
 from sprite_art import PaletteCatalog, Sprite, Variant, render_sprite
 from sprite_art.glyphs import AUTHORING_GLYPHS
+
+PREVIEW_SIZE_OPTIONS = [
+    ("18 × 3", "18x3"),
+    ("30 × 5", "30x5"),
+    ("40 × 7", "40x7"),
+    ("56 × 12", "56x12"),
+    ("Custom…", "custom"),
+]
 
 
 class ArtCanvas(Widget, can_focus=True):
@@ -128,11 +136,29 @@ class ArtCanvas(Widget, can_focus=True):
         event.stop()
 
 
-class GlyphPalette(Grid):
+class GlyphPalette(ItemGrid):
     class Selected(Message):
         def __init__(self, glyph: str) -> None:
             self.glyph = glyph
             super().__init__()
+
+    def __init__(
+        self,
+        *children: Widget,
+        name: str | None = None,
+        id: str | None = None,
+        classes: str | None = None,
+        disabled: bool = False,
+    ) -> None:
+        super().__init__(
+            *children,
+            name=name,
+            id=id,
+            classes=classes,
+            disabled=disabled,
+            min_column_width=3,
+            stretch_height=False,
+        )
 
     def compose(self) -> ComposeResult:
         for index, (glyph, description) in enumerate(AUTHORING_GLYPHS):
@@ -151,6 +177,255 @@ class GlyphPalette(Grid):
         self.post_message(self.Selected(AUTHORING_GLYPHS[index][0]))
 
 
+class DocumentBar(Horizontal):
+    """The current-sprite picker and document-level actions."""
+
+    def __init__(self, sprite_options: list[tuple[str, str]], current_sprite_id: str) -> None:
+        super().__init__(id="document-bar")
+        self.sprite_options = sprite_options
+        self.current_sprite_id = current_sprite_id
+
+    def compose(self) -> ComposeResult:
+        yield Label("Sprite")
+        yield Select(
+            self.sprite_options,
+            value=self.current_sprite_id,
+            allow_blank=False,
+            id="sprite-select",
+        )
+        yield Button("New", id="new-sprite")
+        yield Button("Save", id="save", variant="success")
+        yield Button("Save all", id="save-all")
+        yield Button("Generate vertical", id="rotate-vertical")
+        yield Label("", id="dirty-indicator")
+
+
+class NarrowTabs(Horizontal):
+    """Panel switcher shown when the workspace is too narrow for all panes."""
+
+    def __init__(self) -> None:
+        super().__init__(id="narrow-tabs")
+
+    def compose(self) -> ComposeResult:
+        yield Button("Navigate", id="panel-nav")
+        yield Button("Canvas", id="panel-canvas", variant="primary")
+        yield Button("Tools", id="panel-tools")
+        yield Button("Preview", id="panel-preview")
+
+
+class NavPane(Vertical):
+    """Sprite composition navigator and structural editing controls."""
+
+    def __init__(self) -> None:
+        super().__init__(id="nav-pane", classes="pane")
+
+    def compose(self) -> ComposeResult:
+        yield Label("Structure", classes="pane-title")
+        yield Tree("Sprite", id="structure-tree")
+        with Grid(id="structure-actions"):
+            yield Button("+", id="add-item", tooltip="Add child")
+            yield Button("⧉", id="duplicate-item", tooltip="Duplicate")
+            yield Button("−", id="delete-item", tooltip="Delete")
+            yield Button("↑", id="move-up", tooltip="Move up")
+            yield Button("↓", id="move-down", tooltip="Move down")
+
+
+class CanvasPane(Vertical):
+    """Editable cell canvas."""
+
+    def __init__(self) -> None:
+        super().__init__(id="canvas-pane", classes="pane")
+
+    def compose(self) -> ComposeResult:
+        yield Label("Select a variant", id="canvas-title", classes="pane-title")
+        with VerticalScroll(id="canvas-scroll"):
+            with Horizontal(id="canvas-navigation"):
+                with Vertical(classes="canvas-navigation-button"):
+                    yield Button("‹", id="previous-structure", tooltip="Previous structure (,)")
+                with Vertical(classes="canvas-art-wrapper"):
+                    yield ArtCanvas(id="art-canvas")
+                with Vertical(classes="canvas-navigation-button"):
+                    yield Button("›", id="next-structure", tooltip="Next structure (.)")
+
+
+class GlyphToolsTab(TabPane):
+    """Glyph selection tab."""
+
+    def __init__(self) -> None:
+        super().__init__("Glyphs", id="glyph-tab")
+
+    def compose(self) -> ComposeResult:
+        with VerticalScroll():
+            yield GlyphPalette(id="glyph-palette")
+            yield Label("Selected: █", id="selected-glyph")
+
+
+class PropertiesToolsTab(TabPane):
+    """Structure selection metadata tab."""
+
+    def __init__(self) -> None:
+        super().__init__("Properties", id="properties-tab")
+
+    def compose(self) -> ComposeResult:
+        from sprite_art import PROPERTY_IDS
+
+        with VerticalScroll():
+            yield Label("Selection", id="selection-title", classes="section-title")
+            yield Label("ID")
+            yield Input(id="item-id")
+            yield Label("Name")
+            yield Input(id="item-name")
+            with Vertical(id="section-fields"):
+                yield Label("Primary property")
+                yield Select(
+                    [(value.replace("_", " ").title(), value) for value in PROPERTY_IDS],
+                    value="utility",
+                    allow_blank=False,
+                    id="primary-property",
+                )
+                yield Label("Secondary properties (comma-separated)")
+                yield Input(id="secondary-properties")
+                yield Label("Repeat min / max")
+                with Horizontal():
+                    yield Input(value="1", type="integer", id="repeat-min")
+                    yield Input(value="1", type="integer", id="repeat-max")
+            with Vertical(id="variant-fields"):
+                yield Label("Selection weight")
+                yield Input(value="1", type="integer", id="variant-weight")
+                yield Label("Canvas width / height")
+                with Horizontal(classes="canvas-dimensions"):
+                    yield Input(value="1", type="integer", id="variant-width")
+                    yield Input(value="1", type="integer", id="variant-height")
+            yield Button("Apply properties", id="apply-properties", variant="primary")
+
+
+class PaletteToolsTab(TabPane):
+    """Controlled archetype palette tab."""
+
+    def __init__(self, current_archetype: str) -> None:
+        super().__init__("Palette", id="palette-tab")
+        self.current_archetype = current_archetype
+
+    def compose(self) -> ComposeResult:
+        from sprite_art import ARCHETYPE_IDS
+
+        with VerticalScroll():
+            yield Label("Controlled archetype")
+            yield Select(
+                [(value.replace("_", " ").title(), value) for value in ARCHETYPE_IDS],
+                value=self.current_archetype,
+                allow_blank=False,
+                id="palette-archetype",
+            )
+            for field_name in (
+                "bright",
+                "mid",
+                "dark",
+                "beacon",
+                "engine",
+                "window",
+                "facet",
+            ):
+                yield Label(field_name.replace("_", " ").title())
+                yield Input(id=f"palette-{field_name}")
+            yield Button("Apply palette", id="apply-palette", variant="primary")
+
+
+class PreviewToolsTab(TabPane):
+    """Preview view, random seed, and size controls tab."""
+
+    def __init__(
+        self,
+        view_options: list[tuple[str, str]],
+        initial_view_id: str,
+        facing_options: list[tuple[str, str]],
+        seed: int,
+        size: tuple[int, int],
+        highlight_enabled: bool,
+    ) -> None:
+        super().__init__("Preview", id="preview-tab")
+        self.view_options = view_options
+        self.initial_view_id = initial_view_id
+        self.facing_options = facing_options
+        self.seed = seed
+        self.preview_size = size
+        self.highlight_enabled = highlight_enabled
+
+    def compose(self) -> ComposeResult:
+        with VerticalScroll(id="preview-controls"):
+            yield Label("View")
+            yield Select(self.view_options, value=self.initial_view_id, allow_blank=False, id="preview-view")
+            yield Label("Facing")
+            yield Select(
+                self.facing_options,
+                value=self.facing_options[0][1],
+                allow_blank=False,
+                id="preview-facing",
+            )
+            yield Label("Seed")
+            yield Input(value=str(self.seed), type="integer", id="preview-seed")
+            yield Label("Size")
+            with Horizontal(id="preview-size-controls"):
+                yield Select(
+                    PREVIEW_SIZE_OPTIONS,
+                    value=f"{self.preview_size[0]}x{self.preview_size[1]}",
+                    allow_blank=False,
+                    id="preview-size",
+                )
+                yield Input(placeholder="Custom: 56x12", id="preview-custom-size")
+            yield Label("Highlight edit")
+            yield Switch(value=self.highlight_enabled, id="preview-highlight")
+            yield Button("Apply", id="apply-preview", variant="primary")
+
+
+class ToolsPane(Vertical):
+    """Glyph, property, palette, and preview editing tabs."""
+
+    def __init__(
+        self,
+        current_archetype: str,
+        view_options: list[tuple[str, str]],
+        initial_view_id: str,
+        facing_options: list[tuple[str, str]],
+        seed: int,
+        size: tuple[int, int],
+        highlight_enabled: bool,
+    ) -> None:
+        super().__init__(id="tools-pane", classes="pane")
+        self.current_archetype = current_archetype
+        self.view_options = view_options
+        self.initial_view_id = initial_view_id
+        self.facing_options = facing_options
+        self.seed = seed
+        self.preview_size = size
+        self.highlight_enabled = highlight_enabled
+
+    def compose(self) -> ComposeResult:
+        with TabbedContent(id="tool-tabs"):
+            yield GlyphToolsTab()
+            yield PreviewToolsTab(
+                self.view_options,
+                self.initial_view_id,
+                self.facing_options,
+                self.seed,
+                self.preview_size,
+                self.highlight_enabled,
+            )
+            yield PropertiesToolsTab()
+            yield PaletteToolsTab(self.current_archetype)
+
+
+class PreviewPane(Vertical):
+    """Live rendered sprite preview."""
+
+    def __init__(self) -> None:
+        super().__init__(id="preview-pane", classes="pane")
+
+    def compose(self) -> ComposeResult:
+        with VerticalScroll(id="preview-scroll"):
+            yield PreviewMatrix(id="preview-matrix")
+
+
 class PreviewMatrix(Static):
     sprite: Sprite | None = None
     palettes: PaletteCatalog | None = None
@@ -158,7 +433,8 @@ class PreviewMatrix(Static):
     view_id = "horizontal"
     facing: str | None = None
     seed = 7
-    sizes: list[tuple[int, int]] = [(18, 3), (30, 5), (40, 7), (56, 12)]
+    preview_size: tuple[int, int] = (56, 12)
+    highlight_variant: Variant | None = None
 
     def configure(
         self,
@@ -169,7 +445,8 @@ class PreviewMatrix(Static):
         view_id: str,
         facing: str | None,
         seed: int,
-        sizes: list[tuple[int, int]],
+        size: tuple[int, int],
+        highlight_variant: Variant | None,
     ) -> None:
         self.sprite = sprite
         self.palettes = palettes
@@ -177,7 +454,8 @@ class PreviewMatrix(Static):
         self.view_id = view_id
         self.facing = facing
         self.seed = seed
-        self.sizes = sizes
+        self.preview_size = size
+        self.highlight_variant = highlight_variant
         self.refresh_previews()
 
     def refresh_previews(self) -> None:
@@ -185,29 +463,39 @@ class PreviewMatrix(Static):
             self.update("No preview")
             return
         view = self.sprite.views[self.view_id]
-        panels: list[Panel] = []
-        for configured_width, configured_height in self.sizes:
-            width, height = (
-                (configured_height, configured_width)
-                if view.axis == "vertical"
-                else (configured_width, configured_height)
+        configured_width, configured_height = self.preview_size
+        width, height = (
+            (configured_height, configured_width)
+            if view.axis == "vertical"
+            else (configured_width, configured_height)
+        )
+        art = render_sprite(
+            self.sprite,
+            self.palettes,
+            width=width,
+            height=height,
+            seed=self.seed,
+            archetype_id=self.archetype_id,
+            view_id=self.view_id,
+            facing=self.facing,
+            highlight_variant=self.highlight_variant,
+        )
+        # The panel has one border cell and the matrix has one padding cell on
+        # each side. Keeping the widget at this natural width lets its scroll
+        # parent center it instead of stretching it across the pane.
+        self.styles.width = width + 4
+        self.update(
+            Columns(
+                [
+                    Panel(
+                        art,
+                        title=f"{self.view_id} · {width}×{height}",
+                        border_style="grey35",
+                        padding=(0, 0),
+                    )
+                ],
+                equal=False,
+                expand=False,
+                padding=(0, 1),
             )
-            art = render_sprite(
-                self.sprite,
-                self.palettes,
-                width=width,
-                height=height,
-                seed=self.seed,
-                archetype_id=self.archetype_id,
-                view_id=self.view_id,
-                facing=self.facing,
-            )
-            panels.append(
-                Panel(
-                    art,
-                    title=f"{self.view_id} · {width}×{height}",
-                    border_style="grey35",
-                    padding=(0, 0),
-                )
-            )
-        self.update(Columns(panels, equal=False, expand=False, padding=(0, 1)))
+        )
