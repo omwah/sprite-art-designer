@@ -1,0 +1,45 @@
+# Edge Art Designer
+
+`edge-art-designer` is a resizable Textual application for authoring procedural
+Unicode sprite art. Ships are its first compositional asset type, while a simple
+fixed-canvas mode keeps the underlying `sprite_art` format and library useful for
+future art.
+
+The project follows the constraints in `SHIP_DESIGN_PRINCIPALS.md`:
+
+- hand-authored rectangular pieces assembled procedurally;
+- semantic detail tiers instead of blind scaling;
+- seeded, size-stable variant selection;
+- editable archetype palettes separated from geometry;
+- independently stored horizontal and vertical views;
+- glyph-aware reflection for four travel directions.
+
+## Run
+
+```bash
+pixi run app
+```
+
+The reusable package is `sprite_art`. The Textual application lives in
+`sprite_art_designer`; Edge of the Unknown can vendor only `sprite_art` and the
+YAML assets without taking an editor dependency.
+
+## Data
+
+```text
+assets/
+├── palettes.yaml
+└── sprites/
+    └── ships/
+        ├── fighter.yaml
+        ├── transport.yaml
+        └── ...
+```
+
+Each sprite and the palette catalog carries its own `schema_version`. Ship roles
+are file-backed sprite IDs. Geometry files reference no palette, so any controlled
+archetype palette can be applied at render time.
+
+See `docs/SPRITE_ART_FORMAT.md` and `docs/EDGE_INTEGRATION.md` for the format and
+the vendoring seam.
+

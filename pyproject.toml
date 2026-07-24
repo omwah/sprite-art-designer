@@ -1,0 +1,58 @@
+[project]
+name = "edge-art-designer"
+version = "0.1.0"
+description = "A Textual sprite-art editor for Edge of the Unknown"
+authors = [{ name = "James McDuffie", email = "mcduffie@pitfall.org" }]
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+edge-art-designer = "sprite_art_designer.app:main"
+
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sprite_art", "src/sprite_art_designer"]
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[tool.pixi.dependencies]
+python = "3.12.*"
+textual = ">=3"
+rich = "*"
+pyyaml = "*"
+pytest = "*"
+pytest-asyncio = "*"
+ruff = "*"
+mypy = "*"
+
+[tool.pixi.pypi-dependencies]
+edge-art-designer = { path = ".", editable = true }
+
+[tool.pixi.tasks]
+app = "edge-art-designer"
+test = "pytest"
+lint = "ruff check src tests tools"
+typecheck = "mypy src"
+check = { depends-on = ["lint", "typecheck", "test"] }
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["src"]
+
+[[tool.mypy.overrides]]
+module = "yaml"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"

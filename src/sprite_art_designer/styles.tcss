@@ -1,0 +1,288 @@
+Screen {
+    background: #071018;
+    color: #d9e3ea;
+}
+
+Header {
+    background: #102b3a;
+}
+
+#document-bar {
+    height: 3;
+    padding: 0 1;
+    align-vertical: middle;
+    background: #0b1d28;
+}
+
+#document-bar Label {
+    width: auto;
+    margin-right: 1;
+}
+
+#sprite-select {
+    width: 28;
+    margin-right: 1;
+}
+
+#document-bar Button {
+    min-width: 8;
+    margin-right: 1;
+}
+
+#dirty-indicator {
+    color: #ffc857;
+    margin-left: 1;
+}
+
+#narrow-tabs {
+    display: none;
+    height: 3;
+    background: #0b1d28;
+    padding: 0 1;
+}
+
+#narrow-tabs Button {
+    width: 1fr;
+}
+
+#body {
+    height: 1fr;
+}
+
+#workspace {
+    height: 1fr;
+}
+
+.pane {
+    border: round #315a74;
+    background: #091721;
+}
+
+.pane-title, .section-title {
+    height: 1;
+    color: #7dd3fc;
+    text-style: bold;
+}
+
+#nav-pane {
+    width: 25;
+    min-width: 18;
+}
+
+#structure-tree {
+    height: 1fr;
+}
+
+#structure-actions {
+    grid-size: 5 1;
+    grid-columns: 1fr 1fr 1fr 1fr 1fr;
+    height: 3;
+}
+
+#structure-actions Button {
+    min-width: 3;
+}
+
+#canvas-pane {
+    width: 1fr;
+    min-width: 20;
+}
+
+#canvas-scroll {
+    height: 1fr;
+    align: center middle;
+}
+
+#art-canvas {
+    width: auto;
+    height: auto;
+    min-width: 1;
+    min-height: 1;
+    border: tall #315a74;
+    padding: 1 2;
+}
+
+#art-canvas:focus {
+    border: tall #38bdf8;
+}
+
+#canvas-help {
+    height: 1;
+    color: #78909c;
+    text-align: center;
+}
+
+#tools-pane {
+    width: 32;
+    min-width: 27;
+}
+
+#tool-tabs {
+    height: 1fr;
+}
+
+#glyph-palette {
+    grid-size: 6;
+    grid-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-gutter: 0;
+    height: auto;
+    padding: 1;
+}
+
+.glyph-button {
+    min-width: 3;
+    height: 3;
+    padding: 0;
+}
+
+#selected-glyph {
+    height: 2;
+    padding: 0 1;
+    color: #7dd3fc;
+}
+
+#properties-tab VerticalScroll,
+#palette-tab VerticalScroll {
+    padding: 0 1 1 1;
+}
+
+#properties-tab Input,
+#properties-tab Select,
+#palette-tab Input,
+#palette-tab Select {
+    margin-bottom: 1;
+}
+
+#section-fields,
+#variant-fields {
+    height: auto;
+}
+
+#section-fields Horizontal,
+#variant-fields Horizontal {
+    height: 3;
+}
+
+#section-fields Horizontal Input,
+#variant-fields Horizontal Input {
+    width: 1fr;
+}
+
+#preview-pane {
+    height: 20;
+    min-height: 9;
+}
+
+#preview-controls {
+    height: 3;
+    padding: 0 1;
+    align-vertical: middle;
+}
+
+#preview-controls Label {
+    width: auto;
+    margin-right: 1;
+}
+
+#preview-view, #preview-facing {
+    width: 16;
+    margin-right: 1;
+}
+
+#preview-seed {
+    width: 8;
+    margin-right: 1;
+}
+
+#preview-sizes {
+    width: 31;
+    margin-right: 1;
+}
+
+#preview-scroll {
+    height: 1fr;
+}
+
+#preview-matrix {
+    width: auto;
+    height: auto;
+    padding: 0 1;
+}
+
+#dialog {
+    width: 62;
+    height: auto;
+    max-height: 28;
+    background: #10212c;
+    border: round #38bdf8;
+    padding: 1 2;
+    align: center middle;
+}
+
+#dialog-message {
+    width: 1fr;
+    height: auto;
+    margin-bottom: 1;
+}
+
+.dialog-title {
+    text-style: bold;
+    color: #7dd3fc;
+}
+
+.dialog-buttons {
+    height: 3;
+    align-horizontal: right;
+    margin-top: 1;
+}
+
+.dialog-buttons Button {
+    margin-left: 1;
+}
+
+ModalScreen {
+    align: center middle;
+    background: #0009;
+}
+
+.narrow #narrow-tabs {
+    display: block;
+}
+
+.narrow #document-bar {
+    height: 6;
+    layout: grid;
+    grid-size: 4 2;
+    grid-columns: 8 1fr 10 10;
+}
+
+.narrow #workspace {
+    height: 1fr;
+}
+
+.narrow #nav-pane,
+.narrow #canvas-pane,
+.narrow #tools-pane {
+    width: 1fr;
+    height: 1fr;
+}
+
+.narrow #preview-pane {
+    width: 1fr;
+    height: 1fr;
+}
+
+.narrow #preview-controls {
+    height: auto;
+    layout: grid;
+    grid-size: 2 4;
+    grid-columns: 9 1fr;
+}
+
+.narrow #preview-view,
+.narrow #preview-facing,
+.narrow #preview-seed,
+.narrow #preview-sizes {
+    width: 1fr;
+}
+

@@ -1,0 +1,388 @@
+schema_version: 1
+id: radiant_lance
+name: Radiant Lance
+kind: ship
+role: radiant_lance
+description: A glittering military spine with folding diamond radiators and petal habitats.
+views:
+  horizontal:
+    name: Horizontal
+    axis: horizontal
+    canonical_facing: right
+    mirror_facing: left
+    tiers:
+    - id: full
+      name: Full Detail
+      sections:
+      - id: fusion_bell
+        name: Fusion Bell
+        primary_property: thrusters
+        secondary_properties:
+        - reactor
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: focused
+          weight: 1
+          cells:
+          - ' Y▶═'
+          - '    '
+          - ' Y▓ '
+          - Y██▓
+          - ' Y▓ '
+          - '    '
+          - ' Y▶═'
+        - id: hot
+          weight: 1
+          cells:
+          - ' YY═'
+          - ' Y  '
+          - 'Y▟▓ '
+          - Y██▓
+          - 'Y▜▓ '
+          - ' Y  '
+          - ' YY═'
+      - id: engine_swell
+        name: Engine Swell
+        primary_property: spindrive
+        secondary_properties:
+        - reactor
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: swell
+          weight: 1
+          cells:
+          - ' ▴  '
+          - ◢██◣
+          - ▓██▓
+          - █▒▒█
+          - ▓██▓
+          - ◥██◤
+          - ' ▾  '
+        - id: veined
+          weight: 1
+          cells:
+          - ' R  '
+          - ◢█◇◣
+          - ▓██▓
+          - █▒▒█
+          - ▓██▓
+          - ◥█◇◤
+          - ' ▾  '
+      - id: diamond_radiators
+        name: Diamond Radiators
+        primary_property: radiator
+        secondary_properties:
+        - hull
+        repeat:
+          min: 1
+          max: 6
+        variants:
+        - id: open
+          weight: 1
+          cells:
+          - '◢█◣ '
+          - ' ╲  '
+          - ┌──┐
+          - │▒▒│
+          - └──┘
+          - ' ╱  '
+          - '◥█◤ '
+        - id: folded
+          weight: 1
+          cells:
+          - ' ▴  '
+          - ' │  '
+          - ┌──┐
+          - │◇▒│
+          - └──┘
+          - ' │  '
+          - ' ▾  '
+      - id: habitat_petals
+        name: Habitat Petals
+        primary_property: habitat
+        secondary_properties:
+        - bridge
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: spread
+          weight: 1
+          cells:
+          - ◢██◣
+          - ' ╲╱ '
+          - ████
+          - █☉██
+          - ████
+          - ' ╱╲ '
+          - ◥██◤
+        - id: folded
+          weight: 1
+          cells:
+          - '    '
+          - ◢██◣
+          - ████
+          - █◇██
+          - ████
+          - ◥██◤
+          - '    '
+      - id: lance
+        name: Lance
+        primary_property: main_gun
+        secondary_properties:
+        - weapons
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: needle
+          weight: 1
+          cells:
+          - '     '
+          - '     '
+          - '  ─▙ '
+          - ──█▓▶
+          - '  ─▛ '
+          - '     '
+          - '     '
+        - id: fork
+          weight: 1
+          cells:
+          - '     '
+          - '     '
+          - '─▓█▙ '
+          - ─██▓▶
+          - '─▓█▛ '
+          - '     '
+          - '     '
+    - id: compact
+      name: Compact
+      sections:
+      - id: drive
+        name: Drive
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: drive
+          weight: 1
+          cells:
+          - ' ▴'
+          - Y█
+          - ' ▾'
+      - id: body
+        name: Body
+        primary_property: hull
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 11
+        variants:
+        - id: fins
+          weight: 1
+          cells:
+          - ◢█
+          - ██
+          - ◥█
+        - id: petal
+          weight: 1
+          cells:
+          - ▀█
+          - █◇
+          - ▄█
+      - id: prow
+        name: Prow
+        primary_property: weapons
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: lance
+          weight: 1
+          cells:
+          - '   '
+          - ─█▶
+          - '   '
+  vertical:
+    name: Vertical
+    axis: vertical
+    canonical_facing: up
+    mirror_facing: down
+    tiers:
+    - id: full
+      name: Full Detail
+      sections:
+      - id: fusion_bell
+        name: Fusion Bell
+        primary_property: thrusters
+        secondary_properties:
+        - reactor
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: focused
+          weight: 1
+          cells:
+          - ║  ▓  ║
+          - ▴ ▓█▓ ▴
+          - Y Y█Y Y
+          - '   Y   '
+        - id: hot
+          weight: 1
+          cells:
+          - ║  ▓  ║
+          - Y ▓█▓ Y
+          - YY▜█▛YY
+          - '  YYY  '
+      - id: engine_swell
+        name: Engine Swell
+        primary_property: spindrive
+        secondary_properties:
+        - reactor
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: swell
+          weight: 1
+          cells:
+          - ' ◢▓█▓◣ '
+          - ' ██▒██ '
+          - ◀██▒██▶
+          - ' ◥▓█▓◤ '
+        - id: veined
+          weight: 1
+          cells:
+          - ' ◢▓█▓◣ '
+          - ' ◇█▒█◇ '
+          - R██▒██▶
+          - ' ◥▓█▓◤ '
+      - id: diamond_radiators
+        name: Diamond Radiators
+        primary_property: radiator
+        secondary_properties:
+        - hull
+        repeat:
+          min: 1
+          max: 6
+        variants:
+        - id: open
+          weight: 1
+          cells:
+          - '  ┌─┐  '
+          - ◢ │▒│ ◣
+          - █╱│▒│╲█
+          - ◥ └─┘ ◤
+        - id: folded
+          weight: 1
+          cells:
+          - '  ┌─┐  '
+          - '  │▒│  '
+          - ◀─│◇│─▶
+          - '  └─┘  '
+      - id: habitat_petals
+        name: Habitat Petals
+        primary_property: habitat
+        secondary_properties:
+        - bridge
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: spread
+          weight: 1
+          cells:
+          - ◢ ███ ◣
+          - █╲███╱█
+          - █╱█☉█╲█
+          - ◥ ███ ◤
+        - id: folded
+          weight: 1
+          cells:
+          - ' ◢███◣ '
+          - ' █████ '
+          - ' ██◇██ '
+          - ' ◥███◤ '
+      - id: lance
+        name: Lance
+        primary_property: main_gun
+        secondary_properties:
+        - weapons
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: needle
+          weight: 1
+          cells:
+          - '   ▴   '
+          - '  ▟▓▙  '
+          - '  │█│  '
+          - '   │   '
+          - '   │   '
+        - id: fork
+          weight: 1
+          cells:
+          - '   ▴   '
+          - '  ▟▓▙  '
+          - '  ███  '
+          - '  ▓█▓  '
+          - '  │││  '
+    - id: compact
+      name: Compact
+      sections:
+      - id: drive
+        name: Drive
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: drive
+          weight: 1
+          cells:
+          - ◀█▶
+          - ' Y '
+      - id: body
+        name: Body
+        primary_property: hull
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 11
+        variants:
+        - id: fins
+          weight: 1
+          cells:
+          - ███
+          - ◥█◤
+        - id: petal
+          weight: 1
+          cells:
+          - █◇█
+          - ▌█▐
+      - id: prow
+        name: Prow
+        primary_property: weapons
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: lance
+          weight: 1
+          cells:
+          - ' ▴ '
+          - ' █ '
+          - ' │ '

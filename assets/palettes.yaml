@@ -1,0 +1,200 @@
+schema_version: 1
+fallback_archetype: humanoid_diplomat
+archetypes:
+  humanoid_diplomat:
+    bright: grey85
+    mid: grey58
+    dark: grey35
+    beacon:
+    - red
+    - bright_red
+    engine:
+    - yellow
+    - bright_yellow
+    window:
+    - bright_cyan
+    - bright_yellow
+    - grey100
+    facet: grey15
+  canid_technologist:
+    bright: khaki1
+    mid: dark_khaki
+    dark: grey35
+    beacon:
+    - orange1
+    - gold1
+    engine:
+    - cyan
+    - bright_cyan
+    window:
+    - gold1
+    - bright_white
+    facet: dark_orange3
+  tentacled_envoy:
+    bright: pale_turquoise1
+    mid: cyan
+    dark: grey30
+    beacon:
+    - aquamarine1
+    - cyan
+    engine:
+    - turquoise2
+    - cyan
+    window:
+    - pale_turquoise1
+    - bright_white
+    facet: dark_cyan
+  brain_dome_automaton:
+    bright: grey93
+    mid: grey62
+    dark: grey30
+    beacon:
+    - bright_cyan
+    - cyan
+    engine:
+    - dodger_blue1
+    - bright_cyan
+    window:
+    - bright_cyan
+    - grey100
+    facet: deep_sky_blue4
+  ribbon_salvager:
+    bright: tan
+    mid: dark_orange3
+    dark: grey23
+    beacon:
+    - orange_red1
+    - red
+    engine:
+    - orange1
+    - dark_orange
+    window:
+    - orange1
+    - red
+    facet: grey15
+  temporal_broker:
+    bright: plum1
+    mid: medium_purple
+    dark: grey27
+    beacon:
+    - magenta
+    - violet
+    engine:
+    - blue_violet
+    - purple
+    window:
+    - plum1
+    - bright_white
+    facet: purple4
+  cosmic_arbiter:
+    bright: khaki1
+    mid: gold3
+    dark: grey42
+    beacon:
+    - gold1
+    - yellow
+    engine:
+    - bright_white
+    - gold1
+    window:
+    - gold1
+    - bright_white
+    facet: dark_goldenrod
+  telepath_aristocrat:
+    bright: orchid
+    mid: purple
+    dark: grey27
+    beacon:
+    - magenta
+    - bright_magenta
+    engine:
+    - violet
+    - magenta
+    window:
+    - orchid
+    - bright_white
+    facet: purple4
+  engineered_aesthete:
+    bright: pink1
+    mid: hot_pink3
+    dark: grey30
+    beacon:
+    - gold1
+    - yellow
+    engine:
+    - deep_pink2
+    - hot_pink
+    window:
+    - gold1
+    - pink1
+    facet: medium_violet_red
+  amorous_imp:
+    bright: light_pink1
+    mid: hot_pink
+    dark: grey30
+    beacon:
+    - hot_pink
+    - magenta
+    engine:
+    - bright_magenta
+    - hot_pink
+    window:
+    - light_pink1
+    - bright_white
+    facet: medium_violet_red
+  horned_grudgekeeper:
+    bright: grey66
+    mid: red3
+    dark: dark_red
+    beacon:
+    - red
+    - bright_red
+    engine:
+    - orange3
+    - red
+    window:
+    - red
+    - orange1
+    facet: grey15
+  psionic_overlord:
+    bright: slate_blue1
+    mid: purple4
+    dark: grey23
+    beacon:
+    - blue_violet
+    - purple
+    engine:
+    - dodger_blue1
+    - blue
+    window:
+    - slate_blue1
+    - bright_cyan
+    facet: grey15
+  colonial_broodmaster:
+    bright: green_yellow
+    mid: chartreuse4
+    dark: grey23
+    beacon:
+    - green_yellow
+    - chartreuse1
+    engine:
+    - yellow3
+    - chartreuse3
+    window:
+    - green_yellow
+    - bright_yellow
+    facet: green4
+  winged_schemer:
+    bright: grey62
+    mid: cadet_blue
+    dark: grey27
+    beacon:
+    - dark_cyan
+    - cyan
+    engine:
+    - steel_blue
+    - cyan
+    window:
+    - cyan
+    - grey100
+    facet: grey15

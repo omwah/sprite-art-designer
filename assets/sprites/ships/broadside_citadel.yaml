@@ -1,0 +1,406 @@
+schema_version: 1
+id: broadside_citadel
+name: Broadside Citadel
+kind: ship
+role: broadside_citadel
+description: A capital linebreaker built around layered lateral batteries and a fortress spine.
+views:
+  horizontal:
+    name: Horizontal
+    axis: horizontal
+    canonical_facing: right
+    mirror_facing: left
+    tiers:
+    - id: full
+      name: Full Detail
+      sections:
+      - id: capital_drive
+        name: Capital Drive
+        primary_property: thrusters
+        secondary_properties:
+        - reactor
+        - spindrive
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: seven_bell
+          weight: 1
+          cells:
+          - ' Y▶═ '
+          - '     '
+          - 'Y▟▓▓ '
+          - Y███▓
+          - Y███▓
+          - 'Y▜▓▓ '
+          - ' Y▶═ '
+        - id: armored
+          weight: 1
+          cells:
+          - ' YY═ '
+          - 'Y▶▓  '
+          - ' ▟██▓'
+          - Y████
+          - Y███▓
+          - ' ▜██▓'
+          - ' YY═ '
+      - id: drive_citadel
+        name: Drive Citadel
+        primary_property: armor
+        secondary_properties:
+        - spindrive
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: buttress
+          weight: 1
+          cells:
+          - ▓███═
+          - ' │   '
+          - ┌───┐
+          - │▒▒▒│
+          - │▒◇▒│
+          - └───┘
+          - ▓███═
+        - id: layered
+          weight: 1
+          cells:
+          - ◢███◣
+          - ▓███▓
+          - █████
+          - █▒▒▒█
+          - █████
+          - ▓███▓
+          - ◥███◤
+      - id: broadside_decks
+        name: Broadside Decks
+        primary_property: weapons
+        secondary_properties:
+        - hull
+        - armor
+        repeat:
+          min: 1
+          max: 10
+        variants:
+        - id: open_bays
+          weight: 1
+          cells:
+          - ' R    '
+          - ▓█▶▓█▶
+          - ┌────┐
+          - │▒◇▒▒│
+          - └────┘
+          - ▓█▶▓█▶
+          - ' ▾    '
+        - id: gunwalls
+          weight: 1
+          cells:
+          - '▓███═ '
+          - '─▓▙   '
+          - ██████
+          - █◇▒◇██
+          - ██████
+          - '─▓▛   '
+          - '▓███═ '
+      - id: command_keep
+        name: Command Keep
+        primary_property: bridge
+        secondary_properties:
+        - sensors
+        - screens
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: tower
+          weight: 1
+          cells:
+          - '  R  '
+          - ' ┌─┐ '
+          - ◢███◣
+          - █☉███
+          - █████
+          - ◥███◤
+          - '  ▾  '
+        - id: low_keep
+          weight: 1
+          cells:
+          - '     '
+          - ' ◢█◣ '
+          - ◢███◣
+          - █◇███
+          - █████
+          - ◥███◤
+          - '     '
+      - id: siege_prow
+        name: Siege Prow
+        primary_property: main_gun
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: triple
+          weight: 1
+          cells:
+          - '      '
+          - '      '
+          - '─███▙ '
+          - ─██▓▓▶
+          - '─███▛ '
+          - '      '
+          - '      '
+        - id: ram
+          weight: 1
+          cells:
+          - '      '
+          - '  ◢█◣ '
+          - ─████▙
+          - ─███▓▶
+          - ─████▛
+          - '  ◥█◤ '
+          - '      '
+    - id: compact
+      name: Compact
+      sections:
+      - id: drive
+        name: Drive
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: drive
+          weight: 1
+          cells:
+          - ██
+          - Y█
+          - ██
+      - id: body
+        name: Body
+        primary_property: hull
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 15
+        variants:
+        - id: gunwall
+          weight: 1
+          cells:
+          - █▶
+          - ██
+          - █▶
+        - id: armor
+          weight: 1
+          cells:
+          - ██
+          - █◇
+          - ██
+      - id: prow
+        name: Prow
+        primary_property: weapons
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: siege
+          weight: 1
+          cells:
+          - ' ██'
+          - ██▶
+          - ' ██'
+  vertical:
+    name: Vertical
+    axis: vertical
+    canonical_facing: up
+    mirror_facing: down
+    tiers:
+    - id: full
+      name: Full Detail
+      sections:
+      - id: capital_drive
+        name: Capital Drive
+        primary_property: thrusters
+        secondary_properties:
+        - reactor
+        - spindrive
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: seven_bell
+          weight: 1
+          cells:
+          - '   ▓▓  '
+          - ║ ▓██▓║
+          - ▴ ▓██▓▴
+          - Y ▜██▛Y
+          - '  YYYY '
+        - id: armored
+          weight: 1
+          cells:
+          - '  ▓█▓▓ '
+          - ║ ████║
+          - Y▓████Y
+          - Y▴▜██▛Y
+          - ' Y YY  '
+      - id: drive_citadel
+        name: Drive Citadel
+        primary_property: armor
+        secondary_properties:
+        - spindrive
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: buttress
+          weight: 1
+          cells:
+          - ║ ┌──┐║
+          - █ │▒▒│█
+          - █ │▒◇│█
+          - █─│▒▒│█
+          - ▓ └──┘▓
+        - id: layered
+          weight: 1
+          cells:
+          - ◢▓███▓◣
+          - ███▒███
+          - ███▒███
+          - ███▒███
+          - ◥▓███▓◤
+      - id: broadside_decks
+        name: Broadside Decks
+        primary_property: weapons
+        secondary_properties:
+        - hull
+        - armor
+        repeat:
+          min: 1
+          max: 10
+        variants:
+        - id: open_bays
+          weight: 1
+          cells:
+          - ' ▴┌─┐▴ '
+          - ' █│▒│█ '
+          - ' ▓│▒│▓ '
+          - ' ▴│◇│▴ '
+          - R█│▒│█▶
+          - ' ▓└─┘▓ '
+        - id: gunwalls
+          weight: 1
+          cells:
+          - '  ███  '
+          - ║ ███ ║
+          - █ █◇█ █
+          - █▟█▒█▙█
+          - █▓█◇█▓█
+          - ▓│███│▓
+      - id: command_keep
+        name: Command Keep
+        primary_property: bridge
+        secondary_properties:
+        - sensors
+        - screens
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: tower
+          weight: 1
+          cells:
+          - '  ◢██◣ '
+          - ' ┌████ '
+          - R│████▶
+          - ' └█☉██ '
+          - '  ◥██◤ '
+        - id: low_keep
+          weight: 1
+          cells:
+          - '  ◢██◣ '
+          - ' ◢████ '
+          - ' █████ '
+          - ' ◥█◇██ '
+          - '  ◥██◤ '
+      - id: siege_prow
+        name: Siege Prow
+        primary_property: main_gun
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: triple
+          weight: 1
+          cells:
+          - '   ▴   '
+          - '  ▟▓▙  '
+          - '  █▓█  '
+          - '  ███  '
+          - '  ███  '
+          - '  │││  '
+        - id: ram
+          weight: 1
+          cells:
+          - '  ▟▴▙  '
+          - ' ◢█▓█◣ '
+          - ' █████ '
+          - ' ◥███◤ '
+          - '  ███  '
+          - '  │││  '
+    - id: compact
+      name: Compact
+      sections:
+      - id: drive
+        name: Drive
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: drive
+          weight: 1
+          cells:
+          - ███
+          - █Y█
+      - id: body
+        name: Body
+        primary_property: hull
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 15
+        variants:
+        - id: gunwall
+          weight: 1
+          cells:
+          - ▴█▴
+          - ███
+        - id: armor
+          weight: 1
+          cells:
+          - █◇█
+          - ███
+      - id: prow
+        name: Prow
+        primary_property: weapons
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: siege
+          weight: 1
+          cells:
+          - █▴█
+          - ███
+          - ' █ '

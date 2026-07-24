@@ -1,0 +1,357 @@
+schema_version: 1
+id: fighter
+name: Fighter
+kind: ship
+role: fighter
+description: Translated from Edge of the Unknown's original ship grammar.
+views:
+  horizontal:
+    name: Horizontal
+    axis: horizontal
+    canonical_facing: right
+    mirror_facing: left
+    tiers:
+    - id: full
+      name: Full Detail
+      sections:
+      - id: thrusters
+        name: Thrusters
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: thrusters_1
+          weight: 1
+          cells:
+          - '     '
+          - '  Y▶▓'
+          - '  Y▶▓'
+          - '     '
+        - id: thrusters_2
+          weight: 1
+          cells:
+          - '     '
+          - ' YY▶▓'
+          - ' YY▶▓'
+          - '     '
+      - id: spindrive
+        name: Spindrive
+        primary_property: spindrive
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: spindrive_1
+          weight: 1
+          cells:
+          - ' Y▶══◥█'
+          - ▓██████
+          - ▓██████
+          - ' Y▶══◢█'
+        - id: spindrive_2
+          weight: 1
+          cells:
+          - '   ◥███'
+          - ▓██████
+          - ▓██████
+          - '   ◢███'
+      - id: hull
+        name: Hull
+        primary_property: hull
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 6
+        variants:
+        - id: hull_1
+          weight: 1
+          cells:
+          - '    '
+          - ████
+          - ████
+          - '    '
+        - id: hull_2
+          weight: 1
+          cells:
+          - '    '
+          - █▒▒█
+          - █▒▒█
+          - '    '
+      - id: screens
+        name: Screens
+        primary_property: screens
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: screens_1
+          weight: 1
+          cells:
+          - '     '
+          - ◇▓███
+          - █████
+          - '     '
+        - id: screens_2
+          weight: 1
+          cells:
+          - '     '
+          - ◇▓███
+          - █████
+          - '     '
+      - id: main_gun
+        name: Main Gun
+        primary_property: main_gun
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: main_gun_1
+          weight: 1
+          cells:
+          - '      '
+          - ─▓██▓▶
+          - ' ▜██▛ '
+          - '      '
+        - id: main_gun_2
+          weight: 1
+          cells:
+          - '      '
+          - ' ▟██▙ '
+          - ─▓██▓▶
+          - '      '
+    - id: compact
+      name: Compact
+      sections:
+      - id: thrusters
+        name: Thrusters
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: thrusters_1
+          weight: 1
+          cells:
+          - '  '
+          - Y█
+          - '  '
+      - id: hull
+        name: Hull
+        primary_property: hull
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 8
+        variants:
+        - id: hull_1
+          weight: 1
+          cells:
+          - '  '
+          - ██
+          - '  '
+        - id: hull_2
+          weight: 1
+          cells:
+          - ' ▴'
+          - ██
+          - '  '
+      - id: main_gun
+        name: Main Gun
+        primary_property: main_gun
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: main_gun_1
+          weight: 1
+          cells:
+          - '  '
+          - █▶
+          - '  '
+  vertical:
+    name: Vertical
+    axis: vertical
+    canonical_facing: up
+    mirror_facing: down
+    tiers:
+    - id: full
+      name: Full Detail
+      sections:
+      - id: thrusters
+        name: Thrusters
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: thrusters_1
+          weight: 1
+          cells:
+          - ' ▓▓ '
+          - ' ▴▴ '
+          - ' YY '
+          - '    '
+          - '    '
+        - id: thrusters_2
+          weight: 1
+          cells:
+          - ' ▓▓ '
+          - ' ▴▴ '
+          - ' YY '
+          - ' YY '
+          - '    '
+      - id: spindrive
+        name: Spindrive
+        primary_property: spindrive
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: spindrive_1
+          weight: 1
+          cells:
+          - ████
+          - ◤██◥
+          - ║██║
+          - ║██║
+          - ▴██▴
+          - Y██Y
+          - ' ▓▓ '
+        - id: spindrive_2
+          weight: 1
+          cells:
+          - ████
+          - ████
+          - ████
+          - ◤██◥
+          - ' ██ '
+          - ' ██ '
+          - ' ▓▓ '
+      - id: hull
+        name: Hull
+        primary_property: hull
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 6
+        variants:
+        - id: hull_1
+          weight: 1
+          cells:
+          - ' ██ '
+          - ' ██ '
+          - ' ██ '
+          - ' ██ '
+        - id: hull_2
+          weight: 1
+          cells:
+          - ' ██ '
+          - ' ▒▒ '
+          - ' ▒▒ '
+          - ' ██ '
+      - id: screens
+        name: Screens
+        primary_property: screens
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: screens_1
+          weight: 1
+          cells:
+          - ' ██ '
+          - ' ██ '
+          - ' ██ '
+          - ' ▓█ '
+          - ' ◇█ '
+        - id: screens_2
+          weight: 1
+          cells:
+          - ' ██ '
+          - ' ██ '
+          - ' ██ '
+          - ' ▓█ '
+          - ' ◇█ '
+      - id: main_gun
+        name: Main Gun
+        primary_property: main_gun
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: main_gun_1
+          weight: 1
+          cells:
+          - ' ▴  '
+          - ' ▓▙ '
+          - ' ██ '
+          - ' ██ '
+          - ' ▓▛ '
+          - ' │  '
+        - id: main_gun_2
+          weight: 1
+          cells:
+          - '  ▴ '
+          - ' ▟▓ '
+          - ' ██ '
+          - ' ██ '
+          - ' ▜▓ '
+          - '  │ '
+    - id: compact
+      name: Compact
+      sections:
+      - id: thrusters
+        name: Thrusters
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: thrusters_1
+          weight: 1
+          cells:
+          - ' █ '
+          - ' Y '
+      - id: hull
+        name: Hull
+        primary_property: hull
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 8
+        variants:
+        - id: hull_1
+          weight: 1
+          cells:
+          - ' █ '
+          - ' █ '
+        - id: hull_2
+          weight: 1
+          cells:
+          - '◀█ '
+          - ' █ '
+      - id: main_gun
+        name: Main Gun
+        primary_property: main_gun
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: main_gun_1
+          weight: 1
+          cells:
+          - ' ▴ '
+          - ' █ '

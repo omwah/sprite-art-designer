@@ -1,0 +1,396 @@
+schema_version: 1
+id: pearl_shell
+name: Pearl Shell
+kind: ship
+role: pearl_shell
+description: An alien troop shell with offset carapace plates and a ring of recessed weapon ports.
+views:
+  horizontal:
+    name: Horizontal
+    axis: horizontal
+    canonical_facing: right
+    mirror_facing: left
+    tiers:
+    - id: full
+      name: Full Detail
+      sections:
+      - id: ciliary_drive
+        name: Ciliary Drive
+        primary_property: thrusters
+        secondary_properties:
+        - spindrive
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: fan
+          weight: 1
+          cells:
+          - ' YY '
+          - 'Y◢▓ '
+          - Y██▓
+          - Y██▓
+          - 'Y◥▓ '
+          - '    '
+          - ' Y  '
+        - id: barbs
+          weight: 1
+          cells:
+          - ' Y▶ '
+          - 'Y▟▓ '
+          - Y██▓
+          - Y▒█▓
+          - 'Y▜▓ '
+          - '    '
+          - ' Y▶ '
+      - id: rear_carapace
+        name: Rear Carapace
+        primary_property: armor
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: pearl
+          weight: 1
+          cells:
+          - ' ◢██◣'
+          - ◢████
+          - █████
+          - █▒◇██
+          - █████
+          - ◥████
+          - ' ◥██◤'
+        - id: scarred
+          weight: 1
+          cells:
+          - '  ◢█◣'
+          - ◢██▒█
+          - ██◇██
+          - █▒▒██
+          - █████
+          - ◥██▒█
+          - '  ◥█◤'
+      - id: weapon_ring
+        name: Weapon Ring
+        primary_property: weapons
+        secondary_properties:
+        - hangar
+        - hull
+        repeat:
+          min: 1
+          max: 5
+        variants:
+        - id: ports
+          weight: 1
+          cells:
+          - ' R    '
+          - ◢████◣
+          - █◇█◇██
+          - ██☉███
+          - █◇██◇█
+          - ◥████◤
+          - '   ▾  '
+        - id: sealed
+          weight: 1
+          cells:
+          - '      '
+          - ' ◢██◣ '
+          - ◢████◣
+          - █▒◊▒██
+          - ◥████◤
+          - ' ◥██◤ '
+          - '      '
+      - id: troop_lobe
+        name: Troop Lobe
+        primary_property: hangar
+        secondary_properties:
+        - habitat
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: open
+          weight: 1
+          cells:
+          - ' ◢██◣'
+          - ◢█◇██
+          - █████
+          - ██☉██
+          - █████
+          - ◥██▒█
+          - '  ◥█◤'
+        - id: heavy
+          weight: 1
+          cells:
+          - '  ◢█◣'
+          - ◢████
+          - █▒▒██
+          - ██◇██
+          - █████
+          - ◥████
+          - ' ◥██◤'
+      - id: beak
+        name: Carapace Beak
+        primary_property: screens
+        secondary_properties:
+        - sensors
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: hook
+          weight: 1
+          cells:
+          - '     '
+          - ' ◢█◣ '
+          - ◢███▙
+          - ██◇▓▶
+          - ◥███▛
+          - '  ◥█ '
+          - '     '
+        - id: round
+          weight: 1
+          cells:
+          - '     '
+          - '  ◢█◣'
+          - ◢████
+          - ██☉▓▶
+          - ◥████
+          - '  ◥█◤'
+          - '     '
+    - id: compact
+      name: Compact
+      sections:
+      - id: drive
+        name: Drive
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: drive
+          weight: 1
+          cells:
+          - ' █'
+          - Y█
+          - ' ▾'
+      - id: body
+        name: Body
+        primary_property: hull
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 10
+        variants:
+        - id: shell
+          weight: 1
+          cells:
+          - ◢█
+          - █◇
+          - ◥█
+        - id: ports
+          weight: 1
+          cells:
+          - ▀█
+          - █☉
+          - ▄█
+      - id: prow
+        name: Prow
+        primary_property: weapons
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: beak
+          weight: 1
+          cells:
+          - ' ◢ '
+          - ██▶
+          - ' ◥ '
+  vertical:
+    name: Vertical
+    axis: vertical
+    canonical_facing: up
+    mirror_facing: down
+    tiers:
+    - id: full
+      name: Full Detail
+      sections:
+      - id: ciliary_drive
+        name: Ciliary Drive
+        primary_property: thrusters
+        secondary_properties:
+        - spindrive
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: fan
+          weight: 1
+          cells:
+          - '  ▓▓   '
+          - 'Y▓██▓  '
+          - Y◥██◤ Y
+          - ' YYYY  '
+        - id: barbs
+          weight: 1
+          cells:
+          - '  ▓▓   '
+          - ▴▓██▓ ▴
+          - Y▜█▒▛ Y
+          - ' YYYY  '
+      - id: rear_carapace
+        name: Rear Carapace
+        primary_property: armor
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: pearl
+          weight: 1
+          cells:
+          - ◢█████◣
+          - ███████
+          - ███◇███
+          - ◥██▒██◤
+          - ' ◥███◤ '
+        - id: scarred
+          weight: 1
+          cells:
+          - ◢█████◣
+          - █▒███▒█
+          - ◥█◇▒██◤
+          - ' ██▒██ '
+          - ' ◥███◤ '
+      - id: weapon_ring
+        name: Weapon Ring
+        primary_property: weapons
+        secondary_properties:
+        - hangar
+        - hull
+        repeat:
+          min: 1
+          max: 5
+        variants:
+        - id: ports
+          weight: 1
+          cells:
+          - ' ◢███◣ '
+          - ' ███◇█ '
+          - ' █◇███▶'
+          - ' ██☉██ '
+          - 'R█◇█◇█ '
+          - ' ◥███◤ '
+        - id: sealed
+          weight: 1
+          cells:
+          - '  ◢█◣  '
+          - ' ◢███◣ '
+          - ' ██▒██ '
+          - ' ██◊██ '
+          - ' ◥█▒█◤ '
+          - '  ◥█◤  '
+      - id: troop_lobe
+        name: Troop Lobe
+        primary_property: hangar
+        secondary_properties:
+        - habitat
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: open
+          weight: 1
+          cells:
+          - ◢█████◣
+          - █████▒█
+          - █◇█☉██◤
+          - '◥█████ '
+          - ' ◥███◤ '
+        - id: heavy
+          weight: 1
+          cells:
+          - ◢█████◣
+          - ███████
+          - ◥█▒◇███
+          - ' █▒███◤'
+          - ' ◥███◤ '
+      - id: beak
+        name: Carapace Beak
+        primary_property: screens
+        secondary_properties:
+        - sensors
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: hook
+          weight: 1
+          cells:
+          - '  ▟▴▙  '
+          - ' ◢█▓██ '
+          - ' ██◇█◤ '
+          - ' ◥███  '
+          - '  ◥█◤  '
+        - id: round
+          weight: 1
+          cells:
+          - ' ◢█▴█◣ '
+          - ' ██▓██ '
+          - ' ◥█☉█◤ '
+          - '  ███  '
+          - '  ◥█◤  '
+    - id: compact
+      name: Compact
+      sections:
+      - id: drive
+        name: Drive
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: drive
+          weight: 1
+          cells:
+          - ██▶
+          - ' Y '
+      - id: body
+        name: Body
+        primary_property: hull
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 10
+        variants:
+        - id: shell
+          weight: 1
+          cells:
+          - █◇█
+          - ◥█◤
+        - id: ports
+          weight: 1
+          cells:
+          - █☉█
+          - ▌█▐
+      - id: prow
+        name: Prow
+        primary_property: weapons
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: beak
+          weight: 1
+          cells:
+          - ' ▴ '
+          - ◥█◤
+          - ' █ '

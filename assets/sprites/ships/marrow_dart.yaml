@@ -1,0 +1,368 @@
+schema_version: 1
+id: marrow_dart
+name: Marrow Dart
+kind: ship
+role: marrow_dart
+description: A reckless organic assault craft grown as bound spars, muscle bands, and a hardened beak.
+views:
+  horizontal:
+    name: Horizontal
+    axis: horizontal
+    canonical_facing: right
+    mirror_facing: left
+    tiers:
+    - id: full
+      name: Full Detail
+      sections:
+      - id: sinew_drive
+        name: Sinew Drive
+        primary_property: thrusters
+        secondary_properties:
+        - reactor
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: tendons
+          weight: 1
+          cells:
+          - ' Y   '
+          - 'YY╲▓ '
+          - Y▒██▓
+          - 'YY╱▓ '
+          - '     '
+        - id: spasm
+          weight: 1
+          cells:
+          - ' YY  '
+          - 'Y╲▒▓ '
+          - Y███▓
+          - 'Y╱▒▓ '
+          - '  Y  '
+      - id: marrow_knot
+        name: Marrow Knot
+        primary_property: spindrive
+        secondary_properties:
+        - hull
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: joint
+          weight: 1
+          cells:
+          - ' ◢▒◣'
+          - ╱███
+          - █☉██
+          - ╲███
+          - ' ◥▒◤'
+        - id: scar
+          weight: 1
+          cells:
+          - '  ▴ '
+          - ◢█▒◣
+          - ██◊█
+          - ◥█▒◤
+          - '  ▾ '
+      - id: bound_spars
+        name: Bound Spars
+        primary_property: hull
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 8
+        variants:
+        - id: bones
+          weight: 1
+          cells:
+          - ╲  ╱
+          - ▓██▓
+          - █▒▒█
+          - ▓██▓
+          - ╱  ╲
+        - id: muscle
+          weight: 1
+          cells:
+          - ◢▒▒◣
+          - █▓▓█
+          - █◊▒█
+          - █▓▓█
+          - ◥▒▒◤
+      - id: nerve_cluster
+        name: Nerve Cluster
+        primary_property: sensors
+        secondary_properties:
+        - weapons
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: eye
+          weight: 1
+          cells:
+          - ' ◢█◣ '
+          - █☉███
+          - █████
+          - █◇▒██
+          - ' ◥█◤ '
+        - id: many_eyes
+          weight: 1
+          cells:
+          - ' R R '
+          - ◢◇█◇◣
+          - █████
+          - ◥█◇█◤
+          - '  ▾  '
+      - id: hardened_beak
+        name: Hardened Beak
+        primary_property: main_gun
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: fang
+          weight: 1
+          cells:
+          - '    '
+          - '◢▒▙ '
+          - ██▓▶
+          - '◥▒▛ '
+          - '    '
+        - id: barb
+          weight: 1
+          cells:
+          - '    '
+          - '╲█▙ '
+          - █▒▓▶
+          - '╱█▛ '
+          - '    '
+    - id: compact
+      name: Compact
+      sections:
+      - id: drive
+        name: Drive
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: drive
+          weight: 1
+          cells:
+          - ' ▴'
+          - Y▒
+          - ' ▾'
+      - id: body
+        name: Body
+        primary_property: hull
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 12
+        variants:
+        - id: bone
+          weight: 1
+          cells:
+          - ╲█
+          - █▒
+          - ╱█
+        - id: muscle
+          weight: 1
+          cells:
+          - ◢▒
+          - █◊
+          - ◥▒
+      - id: prow
+        name: Prow
+        primary_property: weapons
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: fang
+          weight: 1
+          cells:
+          - ' ◢ '
+          - █▓▶
+          - ' ◥ '
+  vertical:
+    name: Vertical
+    axis: vertical
+    canonical_facing: up
+    mirror_facing: down
+    tiers:
+    - id: full
+      name: Full Detail
+      sections:
+      - id: sinew_drive
+        name: Sinew Drive
+        primary_property: thrusters
+        secondary_properties:
+        - reactor
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: tendons
+          weight: 1
+          cells:
+          - '  ▓  '
+          - ' ▓█▓ '
+          - ' ╱█╲ '
+          - 'YY▒Y '
+          - ' YYY '
+        - id: spasm
+          weight: 1
+          cells:
+          - '  ▓  '
+          - ' ▓█▓ '
+          - Y▒█▒Y
+          - 'Y╱█╲ '
+          - ' YYY '
+      - id: marrow_knot
+        name: Marrow Knot
+        primary_property: spindrive
+        secondary_properties:
+        - hull
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: joint
+          weight: 1
+          cells:
+          - ◢███◣
+          - ▒███▒
+          - ◥█☉█◤
+          - ' ╲█╱ '
+        - id: scar
+          weight: 1
+          cells:
+          - ' ◢█◣ '
+          - ◀▒◊▒▶
+          - ' ███ '
+          - ' ◥█◤ '
+      - id: bound_spars
+        name: Bound Spars
+        primary_property: hull
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 8
+        variants:
+        - id: bones
+          weight: 1
+          cells:
+          - ╲▓█▓╱
+          - ' █▒█ '
+          - ' █▒█ '
+          - ╱▓█▓╲
+        - id: muscle
+          weight: 1
+          cells:
+          - ◢███◣
+          - ▒▓▒▓▒
+          - ▒▓◊▓▒
+          - ◥███◤
+      - id: nerve_cluster
+        name: Nerve Cluster
+        primary_property: sensors
+        secondary_properties:
+        - weapons
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: eye
+          weight: 1
+          cells:
+          - ' ███ '
+          - ◢███◣
+          - ███▒█
+          - ◥☉█◇◤
+          - ' ███ '
+        - id: many_eyes
+          weight: 1
+          cells:
+          - ' ◢█◣ '
+          - 'R◇██ '
+          - ' ██◇▶'
+          - 'R◇██ '
+          - ' ◥█◤ '
+      - id: hardened_beak
+        name: Hardened Beak
+        primary_property: main_gun
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: fang
+          weight: 1
+          cells:
+          - '  ▴  '
+          - ' ▟▓▙ '
+          - ' ▒█▒ '
+          - ' ◥█◤ '
+        - id: barb
+          weight: 1
+          cells:
+          - '  ▴  '
+          - ' ▟▓▙ '
+          - ' █▒█ '
+          - ' ╱█╲ '
+    - id: compact
+      name: Compact
+      sections:
+      - id: drive
+        name: Drive
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: drive
+          weight: 1
+          cells:
+          - ◀▒▶
+          - ' Y '
+      - id: body
+        name: Body
+        primary_property: hull
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 12
+        variants:
+        - id: bone
+          weight: 1
+          cells:
+          - █▒█
+          - ╱█╲
+        - id: muscle
+          weight: 1
+          cells:
+          - ▒◊▒
+          - ◥█◤
+      - id: prow
+        name: Prow
+        primary_property: weapons
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: fang
+          weight: 1
+          cells:
+          - ' ▴ '
+          - ◥▓◤
+          - ' █ '

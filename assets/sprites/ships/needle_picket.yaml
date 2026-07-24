@@ -1,0 +1,366 @@
+schema_version: 1
+id: needle_picket
+name: Needle Picket
+kind: ship
+role: needle_picket
+description: A lean independent patrol hull with exposed drive nodes and an oversized sensor prow.
+views:
+  horizontal:
+    name: Horizontal
+    axis: horizontal
+    canonical_facing: right
+    mirror_facing: left
+    tiers:
+    - id: full
+      name: Full Detail
+      sections:
+      - id: thrusters
+        name: Thruster Fork
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: fork
+          weight: 1
+          cells:
+          - '     '
+          - '  Y▓ '
+          - ' YY█▓'
+          - '  Y▓ '
+          - '     '
+        - id: split
+          weight: 1
+          cells:
+          - ' Y   '
+          - '  Y▓ '
+          - ' Y██▓'
+          - '  Y▓ '
+          - '     '
+      - id: drive_nodes
+        name: Drive Nodes
+        primary_property: spindrive
+        secondary_properties:
+        - radiator
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: open
+          weight: 1
+          cells:
+          - ' ▴  '
+          - ▓██═
+          - ████
+          - ▓██═
+          - '    '
+        - id: veiled
+          weight: 1
+          cells:
+          - ' R  '
+          - ◢██◣
+          - ████
+          - ◥██◤
+          - '    '
+      - id: patrol_spine
+        name: Patrol Spine
+        primary_property: hull
+        secondary_properties:
+        - sensors
+        repeat:
+          min: 1
+          max: 7
+        variants:
+        - id: sensor_rib
+          weight: 1
+          cells:
+          - ' R  '
+          - ┌──┐
+          - █▒▒█
+          - └──┘
+          - '    '
+        - id: plain_rib
+          weight: 1
+          cells:
+          - '    '
+          - ◢██◣
+          - █◇▒█
+          - ◥██◤
+          - '    '
+      - id: sensor_crown
+        name: Sensor Crown
+        primary_property: sensors
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: crown
+          weight: 1
+          cells:
+          - ' ◢█◣'
+          - ◇███
+          - ████
+          - ' ◥█◤'
+          - '    '
+        - id: dish
+          weight: 1
+          cells:
+          - '  R '
+          - ◢██◣
+          - █☉██
+          - ◥██◤
+          - '    '
+      - id: needle
+        name: Needle Prow
+        primary_property: main_gun
+        secondary_properties:
+        - sensors
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: long
+          weight: 1
+          cells:
+          - '     '
+          - '  ╾▙ '
+          - ──▓▓▶
+          - '  ╾▛ '
+          - '     '
+        - id: probe
+          weight: 1
+          cells:
+          - '     '
+          - '  ─▙ '
+          - ─██▓▶
+          - '  ─▛ '
+          - '     '
+    - id: compact
+      name: Compact
+      sections:
+      - id: drive
+        name: Drive
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: drive
+          weight: 1
+          cells:
+          - '  '
+          - Y█
+          - '  '
+      - id: body
+        name: Body
+        primary_property: hull
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 12
+        variants:
+        - id: spine
+          weight: 1
+          cells:
+          - ' ▴'
+          - ██
+          - '  '
+        - id: sensor
+          weight: 1
+          cells:
+          - ' R'
+          - █◇
+          - '  '
+      - id: prow
+        name: Prow
+        primary_property: weapons
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: needle
+          weight: 1
+          cells:
+          - '   '
+          - ─▓▶
+          - '   '
+  vertical:
+    name: Vertical
+    axis: vertical
+    canonical_facing: up
+    mirror_facing: down
+    tiers:
+    - id: full
+      name: Full Detail
+      sections:
+      - id: thrusters
+        name: Thruster Fork
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: fork
+          weight: 1
+          cells:
+          - '  ▓  '
+          - ' ▓█▓ '
+          - ' YYY '
+          - '  Y  '
+          - '     '
+        - id: split
+          weight: 1
+          cells:
+          - '  ▓  '
+          - ' ▓█▓ '
+          - ' Y█Y '
+          - 'Y Y  '
+          - '     '
+      - id: drive_nodes
+        name: Drive Nodes
+        primary_property: spindrive
+        secondary_properties:
+        - radiator
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: open
+          weight: 1
+          cells:
+          - ' ║█║ '
+          - ' ███ '
+          - '◀███ '
+          - ' ▓█▓ '
+        - id: veiled
+          weight: 1
+          cells:
+          - ' ◢█◣ '
+          - ' ███ '
+          - 'R███ '
+          - ' ◥█◤ '
+      - id: patrol_spine
+        name: Patrol Spine
+        primary_property: hull
+        secondary_properties:
+        - sensors
+        repeat:
+          min: 1
+          max: 7
+        variants:
+        - id: sensor_rib
+          weight: 1
+          cells:
+          - ' ┌█┐ '
+          - ' │▒│ '
+          - 'R│▒│ '
+          - ' └█┘ '
+        - id: plain_rib
+          weight: 1
+          cells:
+          - ' ◢█◣ '
+          - ' █▒█ '
+          - ' █◇█ '
+          - ' ◥█◤ '
+      - id: sensor_crown
+        name: Sensor Crown
+        primary_property: sensors
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: crown
+          weight: 1
+          cells:
+          - '◢██◣ '
+          - '████ '
+          - '◥██◤ '
+          - ' ◇█  '
+        - id: dish
+          weight: 1
+          cells:
+          - ' ◢█◣ '
+          - 'R███ '
+          - ' █☉█ '
+          - ' ◥█◤ '
+      - id: needle
+        name: Needle Prow
+        primary_property: main_gun
+        secondary_properties:
+        - sensors
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: long
+          weight: 1
+          cells:
+          - '  ▴  '
+          - ' ▟▓▙ '
+          - ' ╻▓╻ '
+          - '  │  '
+          - '  │  '
+        - id: probe
+          weight: 1
+          cells:
+          - '  ▴  '
+          - ' ▟▓▙ '
+          - ' │█│ '
+          - '  █  '
+          - '  │  '
+    - id: compact
+      name: Compact
+      sections:
+      - id: drive
+        name: Drive
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: drive
+          weight: 1
+          cells:
+          - ' █ '
+          - ' Y '
+      - id: body
+        name: Body
+        primary_property: hull
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 12
+        variants:
+        - id: spine
+          weight: 1
+          cells:
+          - '◀█ '
+          - ' █ '
+        - id: sensor
+          weight: 1
+          cells:
+          - 'R◇ '
+          - ' █ '
+      - id: prow
+        name: Prow
+        primary_property: weapons
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: needle
+          weight: 1
+          cells:
+          - ' ▴ '
+          - ' ▓ '
+          - ' │ '

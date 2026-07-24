@@ -1,0 +1,370 @@
+schema_version: 1
+id: falsehold_raider
+name: Falsehold Raider
+kind: ship
+role: falsehold_raider
+description: An armed merchant hull whose cargo seams conceal batteries and reinforced magazines.
+views:
+  horizontal:
+    name: Horizontal
+    axis: horizontal
+    canonical_facing: right
+    mirror_facing: left
+    tiers:
+    - id: full
+      name: Full Detail
+      sections:
+      - id: merchant_drive
+        name: Merchant Drive
+        primary_property: thrusters
+        secondary_properties:
+        - spindrive
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: triple
+          weight: 1
+          cells:
+          - ' Y▶ '
+          - '    '
+          - Y██▓
+          - '    '
+          - ' Y▶ '
+        - id: dirty
+          weight: 1
+          cells:
+          - ' YY '
+          - 'Y▶▓ '
+          - Y██▓
+          - '    '
+          - ' Y▶ '
+      - id: armored_buttress
+        name: Armored Buttress
+        primary_property: armor
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: ribbed
+          weight: 1
+          cells:
+          - ▓██═
+          - ┌──┐
+          - █▒▒█
+          - └──┘
+          - ▓██═
+        - id: sealed
+          weight: 1
+          cells:
+          - ◢██◣
+          - ████
+          - █░░█
+          - ████
+          - ◥██◤
+      - id: false_holds
+        name: False Cargo Holds
+        primary_property: cargo
+        secondary_properties:
+        - weapons
+        - hull
+        repeat:
+          min: 1
+          max: 8
+        variants:
+        - id: doors
+          weight: 1
+          cells:
+          - ' R    '
+          - ┌────┐
+          - │▒◇▒▒│
+          - └────┘
+          - ' ▾    '
+        - id: containers
+          weight: 1
+          cells:
+          - '      '
+          - ◢████◣
+          - █▒┤├▒█
+          - ◥████◤
+          - '      '
+      - id: masked_battery
+        name: Masked Battery
+        primary_property: weapons
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: closed
+          weight: 1
+          cells:
+          - '    '
+          - ◢██◣
+          - █≡██
+          - ◥██◤
+          - '    '
+        - id: open
+          weight: 1
+          cells:
+          - ' ▴  '
+          - '▓█▶ '
+          - ████
+          - '▓█▶ '
+          - ' ▾  '
+      - id: merchant_prow
+        name: Merchant Prow
+        primary_property: hull
+        secondary_properties:
+        - main_gun
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: blunt
+          weight: 1
+          cells:
+          - '    '
+          - '██▙ '
+          - ██▓▶
+          - '██▛ '
+          - '    '
+        - id: tapered
+          weight: 1
+          cells:
+          - '    '
+          - '▓█▙ '
+          - ███▶
+          - '▓█▛ '
+          - '    '
+    - id: compact
+      name: Compact
+      sections:
+      - id: drive
+        name: Drive
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: drive
+          weight: 1
+          cells:
+          - ' █'
+          - Y█
+          - ' █'
+      - id: body
+        name: Body
+        primary_property: hull
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 12
+        variants:
+        - id: hold
+          weight: 1
+          cells:
+          - ██
+          - █▒
+          - ██
+        - id: gun_hold
+          weight: 1
+          cells:
+          - ▀█
+          - █◇
+          - ▄█
+      - id: prow
+        name: Prow
+        primary_property: weapons
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: prow
+          weight: 1
+          cells:
+          - '   '
+          - ██▶
+          - '   '
+  vertical:
+    name: Vertical
+    axis: vertical
+    canonical_facing: up
+    mirror_facing: down
+    tiers:
+    - id: full
+      name: Full Detail
+      sections:
+      - id: merchant_drive
+        name: Merchant Drive
+        primary_property: thrusters
+        secondary_properties:
+        - spindrive
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: triple
+          weight: 1
+          cells:
+          - '  ▓  '
+          - ▴ █ ▴
+          - Y █ Y
+          - '  Y  '
+        - id: dirty
+          weight: 1
+          cells:
+          - '  ▓  '
+          - Y▓█ ▴
+          - Y▴█ Y
+          - ' YY  '
+      - id: armored_buttress
+        name: Armored Buttress
+        primary_property: armor
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: ribbed
+          weight: 1
+          cells:
+          - ║┌█┐║
+          - █│▒│█
+          - █│▒│█
+          - ▓└█┘▓
+        - id: sealed
+          weight: 1
+          cells:
+          - ◢███◣
+          - ██░██
+          - ██░██
+          - ◥███◤
+      - id: false_holds
+        name: False Cargo Holds
+        primary_property: cargo
+        secondary_properties:
+        - weapons
+        - hull
+        repeat:
+          min: 1
+          max: 8
+        variants:
+        - id: doors
+          weight: 1
+          cells:
+          - ' ┌─┐ '
+          - ' │▒│ '
+          - ' │▒│ '
+          - ' │◇│ '
+          - R│▒│▶
+          - ' └─┘ '
+        - id: containers
+          weight: 1
+          cells:
+          - ' ◢█◣ '
+          - ' █▒█ '
+          - ' █┴█ '
+          - ' █┬█ '
+          - ' █▒█ '
+          - ' ◥█◤ '
+      - id: masked_battery
+        name: Masked Battery
+        primary_property: weapons
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: closed
+          weight: 1
+          cells:
+          - ' ◢█◣ '
+          - ' ███ '
+          - ' █║█ '
+          - ' ◥█◤ '
+        - id: open
+          weight: 1
+          cells:
+          - '  █  '
+          - ' ▴█▴ '
+          - ◀███▶
+          - ' ▓█▓ '
+      - id: merchant_prow
+        name: Merchant Prow
+        primary_property: hull
+        secondary_properties:
+        - main_gun
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: blunt
+          weight: 1
+          cells:
+          - '  ▴  '
+          - ' ▟▓▙ '
+          - ' ███ '
+          - ' ███ '
+        - id: tapered
+          weight: 1
+          cells:
+          - '  ▴  '
+          - ' ▟█▙ '
+          - ' ███ '
+          - ' ▓█▓ '
+    - id: compact
+      name: Compact
+      sections:
+      - id: drive
+        name: Drive
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: drive
+          weight: 1
+          cells:
+          - ███
+          - ' Y '
+      - id: body
+        name: Body
+        primary_property: hull
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 12
+        variants:
+        - id: hold
+          weight: 1
+          cells:
+          - █▒█
+          - ███
+        - id: gun_hold
+          weight: 1
+          cells:
+          - █◇█
+          - ▌█▐
+      - id: prow
+        name: Prow
+        primary_property: weapons
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: prow
+          weight: 1
+          cells:
+          - ' ▴ '
+          - ' █ '
+          - ' █ '

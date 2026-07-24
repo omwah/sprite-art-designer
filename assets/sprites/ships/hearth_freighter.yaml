@@ -1,0 +1,386 @@
+schema_version: 1
+id: hearth_freighter
+name: Hearth Freighter
+kind: ship
+role: hearth_freighter
+description: A century-old modular transport made homelike through repairs, cargo, and a rotating drum.
+views:
+  horizontal:
+    name: Horizontal
+    axis: horizontal
+    canonical_facing: right
+    mirror_facing: left
+    tiers:
+    - id: full
+      name: Full Detail
+      sections:
+      - id: retrofitted_drive
+        name: Retrofitted Drive
+        primary_property: thrusters
+        secondary_properties:
+        - spindrive
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: fusion
+          weight: 1
+          cells:
+          - ' Y▶ '
+          - '    '
+          - 'Y▟▓ '
+          - Y██▓
+          - 'Y▜▓ '
+          - '    '
+        - id: patched
+          weight: 1
+          cells:
+          - ' YY '
+          - 'Y▶▓ '
+          - ' ▟▓ '
+          - Y██▓
+          - ' ▜▓ '
+          - '    '
+      - id: machine_shop
+        name: Machine Shop
+        primary_property: utility
+        secondary_properties:
+        - reactor
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: shop
+          weight: 1
+          cells:
+          - ' R  '
+          - ┌──┐
+          - │◇▒│
+          - │▒▒│
+          - └──┘
+          - ' ▾  '
+        - id: patched
+          weight: 1
+          cells:
+          - '    '
+          - ◢██◣
+          - █▒◇█
+          - █░▒█
+          - ◥██◤
+          - '    '
+      - id: cargo_modules
+        name: Cargo Modules
+        primary_property: cargo
+        secondary_properties:
+        - hull
+        repeat:
+          min: 1
+          max: 9
+        variants:
+        - id: stack
+          weight: 1
+          cells:
+          - '      '
+          - ┌────┐
+          - │▒▒▒▒│
+          - │▒◇▒▒│
+          - └────┘
+          - '      '
+        - id: pods
+          weight: 1
+          cells:
+          - ' ◢██◣ '
+          - ' ╲  ╱ '
+          - ██▒▒██
+          - ██◇▒██
+          - ' ╱  ╲ '
+          - ' ◥██◤ '
+      - id: hearth_drum
+        name: Hearth Drum
+        primary_property: habitat
+        secondary_properties:
+        - bridge
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: turning
+          weight: 1
+          cells:
+          - ' ◢██◣ '
+          - ╱    ╲
+          - █◇████
+          - █☉████
+          - ╲    ╱
+          - ' ◥██◤ '
+        - id: locked
+          weight: 1
+          cells:
+          - '      '
+          - ◢████◣
+          - █▒◇▒▒█
+          - █▒☉▒▒█
+          - ◥████◤
+          - '      '
+      - id: mining_prow
+        name: Mining Prow
+        primary_property: main_gun
+        secondary_properties:
+        - utility
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: laser
+          weight: 1
+          cells:
+          - '     '
+          - '  ▟  '
+          - ──█▓▶
+          - '  ▜  '
+          - '     '
+          - '     '
+        - id: tractor
+          weight: 1
+          cells:
+          - '     '
+          - ' ◢█◣ '
+          - ─█◇█▶
+          - ' ◥█◤ '
+          - '     '
+          - '     '
+    - id: compact
+      name: Compact
+      sections:
+      - id: drive
+        name: Drive
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: drive
+          weight: 1
+          cells:
+          - ' █'
+          - Y█
+          - '  '
+      - id: body
+        name: Body
+        primary_property: hull
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 14
+        variants:
+        - id: cargo
+          weight: 1
+          cells:
+          - ██
+          - █▒
+          - ██
+        - id: home
+          weight: 1
+          cells:
+          - ▀█
+          - █☉
+          - ▄█
+      - id: prow
+        name: Prow
+        primary_property: weapons
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: laser
+          weight: 1
+          cells:
+          - '   '
+          - ─█▶
+          - '   '
+  vertical:
+    name: Vertical
+    axis: vertical
+    canonical_facing: up
+    mirror_facing: down
+    tiers:
+    - id: full
+      name: Full Detail
+      sections:
+      - id: retrofitted_drive
+        name: Retrofitted Drive
+        primary_property: thrusters
+        secondary_properties:
+        - spindrive
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: fusion
+          weight: 1
+          cells:
+          - '   ▓  '
+          - '▴ ▓█▓ '
+          - 'Y ▜█▛ '
+          - '  YYY '
+        - id: patched
+          weight: 1
+          cells:
+          - '   ▓  '
+          - 'Y▓▓█▓ '
+          - 'Y▴▜█▛ '
+          - ' Y Y  '
+      - id: machine_shop
+        name: Machine Shop
+        primary_property: utility
+        secondary_properties:
+        - reactor
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: shop
+          weight: 1
+          cells:
+          - ' ┌──┐ '
+          - ' │▒▒│ '
+          - R│◇▒│▶
+          - ' └──┘ '
+        - id: patched
+          weight: 1
+          cells:
+          - ' ◢██◣ '
+          - ' █◇▒█ '
+          - ' █▒░█ '
+          - ' ◥██◤ '
+      - id: cargo_modules
+        name: Cargo Modules
+        primary_property: cargo
+        secondary_properties:
+        - hull
+        repeat:
+          min: 1
+          max: 9
+        variants:
+        - id: stack
+          weight: 1
+          cells:
+          - ' ┌──┐ '
+          - ' │▒▒│ '
+          - ' │▒▒│ '
+          - ' │▒◇│ '
+          - ' │▒▒│ '
+          - ' └──┘ '
+        - id: pods
+          weight: 1
+          cells:
+          - '  ██  '
+          - ◢╲██╱◣
+          - █ ▒▒ █
+          - █ ▒◇ █
+          - ◥╱██╲◤
+          - '  ██  '
+      - id: hearth_drum
+        name: Hearth Drum
+        primary_property: habitat
+        secondary_properties:
+        - bridge
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: turning
+          weight: 1
+          cells:
+          - ' ╱██╲ '
+          - ◢ ██ ◣
+          - █ ██ █
+          - █ ██ █
+          - ◥ ◇☉ ◤
+          - ' ╲██╱ '
+        - id: locked
+          weight: 1
+          cells:
+          - ' ◢██◣ '
+          - ' █▒▒█ '
+          - ' █▒▒█ '
+          - ' █◇☉█ '
+          - ' █▒▒█ '
+          - ' ◥██◤ '
+      - id: mining_prow
+        name: Mining Prow
+        primary_property: main_gun
+        secondary_properties:
+        - utility
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: laser
+          weight: 1
+          cells:
+          - '  ▴   '
+          - '  ▓   '
+          - ' ▜█▛  '
+          - '  │   '
+          - '  │   '
+        - id: tractor
+          weight: 1
+          cells:
+          - '  ▴   '
+          - ' ◢█◣  '
+          - ' █◇█  '
+          - ' ◥█◤  '
+          - '  │   '
+    - id: compact
+      name: Compact
+      sections:
+      - id: drive
+        name: Drive
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: drive
+          weight: 1
+          cells:
+          - '██ '
+          - ' Y '
+      - id: body
+        name: Body
+        primary_property: hull
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 14
+        variants:
+        - id: cargo
+          weight: 1
+          cells:
+          - █▒█
+          - ███
+        - id: home
+          weight: 1
+          cells:
+          - █☉█
+          - ▌█▐
+      - id: prow
+        name: Prow
+        primary_property: weapons
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: laser
+          weight: 1
+          cells:
+          - ' ▴ '
+          - ' █ '
+          - ' │ '

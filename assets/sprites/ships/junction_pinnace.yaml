@@ -1,0 +1,292 @@
+schema_version: 1
+id: junction_pinnace
+name: Junction Pinnace
+kind: ship
+role: junction_pinnace
+description: A tiny courier and landing craft wrapped around drive, compensator, and cabin.
+views:
+  horizontal:
+    name: Horizontal
+    axis: horizontal
+    canonical_facing: right
+    mirror_facing: left
+    tiers:
+    - id: full
+      name: Full Detail
+      sections:
+      - id: overdrive
+        name: Overdrive
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: single
+          weight: 1
+          cells:
+          - '    '
+          - ' YY▓'
+          - ' Y█▓'
+          - '    '
+        - id: fork
+          weight: 1
+          cells:
+          - ' Y  '
+          - ' Y▶▓'
+          - ' Y▶▓'
+          - '    '
+      - id: sail_nodes
+        name: Sail Nodes
+        primary_property: spindrive
+        secondary_properties:
+        - radiator
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: diamond
+          weight: 1
+          cells:
+          - ◢██◣
+          - ▓██▓
+          - ▓██▓
+          - ◥██◤
+        - id: open
+          weight: 1
+          cells:
+          - ' ▴  '
+          - ▓██▓
+          - ▓██▓
+          - ' ▾  '
+      - id: cabin
+        name: Cabin
+        primary_property: habitat
+        secondary_properties:
+        - sensors
+        repeat:
+          min: 1
+          max: 3
+        variants:
+        - id: window
+          weight: 1
+          cells:
+          - ' R  '
+          - ████
+          - █◇██
+          - '    '
+        - id: armored
+          weight: 1
+          cells:
+          - '    '
+          - ◢██◣
+          - █▒██
+          - ◥██◤
+      - id: landing_nose
+        name: Landing Nose
+        primary_property: utility
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: round
+          weight: 1
+          cells:
+          - '   '
+          - '▓▙ '
+          - ██▶
+          - '▓▛ '
+        - id: probe
+          weight: 1
+          cells:
+          - '   '
+          - '─▙ '
+          - █▓▶
+          - '─▛ '
+    - id: compact
+      name: Compact
+      sections:
+      - id: drive
+        name: Drive
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: drive
+          weight: 1
+          cells:
+          - '  '
+          - Y▓
+          - '  '
+      - id: body
+        name: Body
+        primary_property: hull
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 4
+        variants:
+        - id: cabin
+          weight: 1
+          cells:
+          - ' ▴'
+          - ██
+          - ' ▾'
+      - id: prow
+        name: Prow
+        primary_property: weapons
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: nose
+          weight: 1
+          cells:
+          - '  '
+          - █▶
+          - '  '
+  vertical:
+    name: Vertical
+    axis: vertical
+    canonical_facing: up
+    mirror_facing: down
+    tiers:
+    - id: full
+      name: Full Detail
+      sections:
+      - id: overdrive
+        name: Overdrive
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: single
+          weight: 1
+          cells:
+          - ' ▓▓ '
+          - ' Y█ '
+          - ' YY '
+          - '    '
+        - id: fork
+          weight: 1
+          cells:
+          - ' ▓▓ '
+          - ' ▴▴ '
+          - 'YYY '
+          - '    '
+      - id: sail_nodes
+        name: Sail Nodes
+        primary_property: spindrive
+        secondary_properties:
+        - radiator
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: diamond
+          weight: 1
+          cells:
+          - ◢▓▓◣
+          - ████
+          - ████
+          - ◥▓▓◤
+        - id: open
+          weight: 1
+          cells:
+          - ' ▓▓ '
+          - ' ██ '
+          - ◀██▶
+          - ' ▓▓ '
+      - id: cabin
+        name: Cabin
+        primary_property: habitat
+        secondary_properties:
+        - sensors
+        repeat:
+          min: 1
+          max: 3
+        variants:
+        - id: window
+          weight: 1
+          cells:
+          - ' ██ '
+          - ' ██ '
+          - 'R█◇ '
+          - ' ██ '
+        - id: armored
+          weight: 1
+          cells:
+          - ' ◢█◣'
+          - ' ███'
+          - ' █▒█'
+          - ' ◥█◤'
+      - id: landing_nose
+        name: Landing Nose
+        primary_property: utility
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: round
+          weight: 1
+          cells:
+          - '  ▴ '
+          - ' ▟█▙'
+          - ' ▓█▓'
+        - id: probe
+          weight: 1
+          cells:
+          - '  ▴ '
+          - ' ▟▓▙'
+          - ' │█│'
+    - id: compact
+      name: Compact
+      sections:
+      - id: drive
+        name: Drive
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: drive
+          weight: 1
+          cells:
+          - ' ▓ '
+          - ' Y '
+      - id: body
+        name: Body
+        primary_property: hull
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 4
+        variants:
+        - id: cabin
+          weight: 1
+          cells:
+          - ◀█▶
+          - ' █ '
+      - id: prow
+        name: Prow
+        primary_property: weapons
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: nose
+          weight: 1
+          cells:
+          - ' ▴ '
+          - ' █ '
