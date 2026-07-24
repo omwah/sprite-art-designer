@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any, Literal
 
 from rich.color import Color
+from rich.text import Text
 from textual import events
 from textual.app import App, ComposeResult
 from textual.containers import Container, Horizontal, Vertical, VerticalScroll
@@ -37,6 +38,7 @@ from sprite_art import (
     Variant,
     View,
     generate_rotated_view,
+    selected_variants,
 )
 from sprite_art.model import SCHEMA_VERSION
 
@@ -116,7 +118,10 @@ class HelpScreen(ModalScreen[None]):
                 "  Ctrl+G  Generate vertical view\n"
                 "  Ctrl+D  Duplicate selection\n"
                 "  Delete  Delete selection\n"
-                "  , / .  Previous / next structure\n"
+                "  H  Toggle selected-part preview highlight\n"
+                "  Click a Structure variant to select and keep it for its slot\n"
+                "  V  Select and keep the next variant in the selected slot\n"
+                "  , / .  Temporarily browse previous / next structure\n"
                 "  ?  Open or close this help"
             )
             yield Static("[dim]Esc or ? to close[/]", id="help-footer")
@@ -264,6 +269,7 @@ class EdgeArtDesigner(App[None]):
         ("ctrl+d", "duplicate_item", "Duplicate"),
         ("delete", "delete_item", "Delete"),
         ("h", "toggle_highlight", "Toggle highlight"),
+        ("v", "next_variant", "Next variant"),
         ("comma", "previous_structure", "Previous structure"),
         ("full_stop", "next_structure", "Next structure"),
         ("question_mark", "help", "Help"),
@@ -284,6 +290,9 @@ class EdgeArtDesigner(App[None]):
         self._narrow = False
         self._narrow_panel = "canvas"
         self._workspace_top_height: int | None = None
+        self._persistent_variant_overrides: dict[int, Variant] = {}
+        self._transient_variant_override: tuple[int, Variant] | None = None
+        self._tree_variant_selection_persists = False
 
     def compose(self) -> ComposeResult:
         initial_sprite = self.editor.current_sprite
@@ -468,25 +477,60 @@ class EdgeArtDesigner(App[None]):
                         selected_node = section_node
                     for variant in section.variants:
                         variant_node = section_node.add_leaf(
-                            f"{variant.id} · {variant.width}×{variant.height} · w{variant.weight}",
+                            self._variant_label(variant, id(section.variants)),
                             Selection("variant", variant, section.variants),
                         )
                         if select_item is variant:
                             selected_node = variant_node
         tree.root.expand_all()
         if selected_node is not None:
-            tree.select_node(selected_node)
+            self._select_tree_node(selected_node, persist_variant=False)
         elif tree.root.children:
             first_view = tree.root.children[0]
             if first_view.children and first_view.children[0].children:
                 first_section = first_view.children[0].children[0]
                 if first_section.children:
-                    tree.select_node(first_section.children[0])
+                    self._select_tree_node(first_section.children[0], persist_variant=False)
+
+    def _variant_label(self, variant: Variant, variants_key: int) -> Text:
+        label = f"{variant.id} · {variant.width}×{variant.height} · w{variant.weight}"
+        if self._preview_variants().get(variants_key) is variant:
+            return Text(label, style="#d9e3ea")
+        return Text(label, style="dim #718096")
+
+    def _preview_variants(self) -> dict[int, Variant]:
+        return selected_variants(
+            self.editor.current_sprite,
+            self.editor.palettes,
+            width=self.preview_size[0],
+            height=self.preview_size[1],
+            seed=self.preview_seed,
+            archetype_id=self.current_archetype,
+            view_id=self.current_view_id,
+            variant_overrides=self._preview_variant_overrides(),
+        )
+
+    def _refresh_variant_labels(self) -> None:
+        tree = self.query_one("#structure-tree", Tree)
+
+        def refresh(node: TreeNode[Any]) -> None:
+            if isinstance(node.data, Selection) and node.data.kind == "variant":
+                variant = node.data.item
+                assert isinstance(variant, Variant)
+                parent = node.data.parent
+                if isinstance(parent, list):
+                    node.set_label(self._variant_label(variant, id(parent)))
+            for child in node.children:
+                refresh(child)
+
+        refresh(tree.root)
 
     def on_tree_node_selected(self, event: Tree.NodeSelected[Selection]) -> None:
         selection = event.node.data
         if not isinstance(selection, Selection):
             return
+        persist_variant = self._tree_variant_selection_persists
+        self._tree_variant_selection_persists = True
         self.selection = selection
         selected_view = self._view_for_structure(selection.item)
         if selected_view is not None and self.current_view_id != selected_view.id:
@@ -497,11 +541,22 @@ class EdgeArtDesigner(App[None]):
         if selection.kind == "variant":
             variant = selection.item
             assert isinstance(variant, Variant)
+            if isinstance(selection.parent, list):
+                key = id(selection.parent)
+                if persist_variant:
+                    self._persistent_variant_overrides[key] = variant
+                    self._transient_variant_override = None
+                    self._refresh_variant_labels()
+                else:
+                    self._transient_variant_override = (key, variant)
+                self._refresh_variant_labels()
             canvas.set_variant(variant)
             self.query_one("#canvas-title", Label).update(
                 f"{variant.id}"
             )
         else:
+            self._transient_variant_override = None
+            self._refresh_variant_labels()
             canvas.set_variant(None)
         self._refresh_preview()
 
@@ -615,6 +670,52 @@ class EdgeArtDesigner(App[None]):
     def action_next_structure(self) -> None:
         self._select_adjacent_structure(1)
 
+    def action_next_variant(self) -> None:
+        if self.selection is None:
+            return
+        if isinstance(self.selection.item, Section):
+            variants = self.selection.item.variants
+            current_index = -1
+        elif isinstance(self.selection.item, Variant):
+            variants = [
+                variant
+                for variant in self.selection.parent or []
+                if isinstance(variant, Variant)
+            ]
+            current_index = variants.index(self.selection.item)
+        else:
+            return
+        if not variants:
+            return
+        self._select_tree_item(
+            variants[(current_index + 1) % len(variants)], persist_variant=True
+        )
+
+    def _select_tree_item(self, item: object, *, persist_variant: bool) -> None:
+        tree = self.query_one("#structure-tree", Tree)
+
+        def find(node: TreeNode[Any]) -> TreeNode[Any] | None:
+            if isinstance(node.data, Selection) and node.data.item is item:
+                return node
+            for child in node.children:
+                result = find(child)
+                if result is not None:
+                    return result
+            return None
+
+        node = find(tree.root)
+        if node is not None:
+            self._select_tree_node(node, persist_variant=persist_variant)
+
+    def _select_tree_node(
+        self,
+        node: TreeNode[Any],
+        *,
+        persist_variant: bool,
+    ) -> None:
+        self._tree_variant_selection_persists = persist_variant
+        self.query_one("#structure-tree", Tree).select_node(node)
+
     def _select_adjacent_structure(self, delta: int) -> None:
         tree = self.query_one("#structure-tree", Tree)
         variants: list[TreeNode[Any]] = []
@@ -637,7 +738,10 @@ class EdgeArtDesigner(App[None]):
             ),
             0,
         )
-        tree.select_node(variants[(current_index + delta) % len(variants)])
+        self._select_tree_node(
+            variants[(current_index + delta) % len(variants)],
+            persist_variant=False,
+        )
 
     def on_select_changed(self, event: Select.Changed) -> None:
         select_id = event.select.id
@@ -648,6 +752,8 @@ class EdgeArtDesigner(App[None]):
             if value == self.editor.current_sprite_id:
                 return
             self.editor.current_sprite_id = value
+            self._persistent_variant_overrides.clear()
+            self._transient_variant_override = None
             self.current_view_id = next(iter(self.editor.current_sprite.views))
             self._rebuild_tree()
             self._refresh_preview_controls()
@@ -661,11 +767,13 @@ class EdgeArtDesigner(App[None]):
         elif select_id == "palette-archetype":
             self.current_archetype = value
             self._refresh_palette_fields()
+            self._refresh_variant_labels()
             self._refresh_preview()
         elif select_id == "preview-view":
             if value in self.editor.current_sprite.views:
                 self.current_view_id = value
                 self._refresh_facing_options()
+                self._refresh_variant_labels()
                 self._refresh_preview()
         elif select_id == "preview-facing":
             self.current_facing = value
@@ -675,6 +783,7 @@ class EdgeArtDesigner(App[None]):
             custom_size.display = value == "custom"
             if value != "custom":
                 self.preview_size = self._parse_preview_size(value)
+                self._refresh_variant_labels()
                 self._refresh_preview()
 
     def _refresh_preview_controls(self) -> None:
@@ -710,12 +819,20 @@ class EdgeArtDesigner(App[None]):
             seed=self.preview_seed,
             size=self.preview_size,
             highlight_variant=self._selected_preview_variant(),
+            variant_overrides=self._preview_variant_overrides(),
         )
 
     def _selected_preview_variant(self) -> Variant | None:
         if not self.highlight_preview or self.selection is None:
             return None
         return self.selection.item if isinstance(self.selection.item, Variant) else None
+
+    def _preview_variant_overrides(self) -> dict[int, Variant] | None:
+        overrides = dict(self._persistent_variant_overrides)
+        if self._transient_variant_override is not None:
+            key, variant = self._transient_variant_override
+            overrides[key] = variant
+        return overrides or None
 
     def _refresh_palette_fields(self) -> None:
         palette = self.editor.palettes.archetypes[self.current_archetype]
@@ -749,6 +866,8 @@ class EdgeArtDesigner(App[None]):
             self._apply_palette()
         elif button_id == "apply-preview":
             self._apply_preview_configuration()
+        elif button_id == "reset-preview-seed":
+            self._reset_preview_seed()
         elif button_id == "previous-structure":
             self.action_previous_structure()
         elif button_id == "next-structure":
@@ -872,6 +991,7 @@ class EdgeArtDesigner(App[None]):
         self.editor.palettes.archetypes[self.current_archetype] = palette
         self.editor.mark_palettes_dirty()
         self._update_dirty_indicator()
+        self._refresh_variant_labels()
         self._refresh_preview()
 
     def _apply_preview_configuration(self) -> None:
@@ -886,6 +1006,13 @@ class EdgeArtDesigner(App[None]):
             return
         self.preview_seed = seed
         self.preview_size = size
+        self._refresh_variant_labels()
+        self._refresh_preview()
+
+    def _reset_preview_seed(self) -> None:
+        self.preview_seed = 7
+        self.query_one("#preview-seed", Input).value = "7"
+        self._refresh_variant_labels()
         self._refresh_preview()
 
     @staticmethod

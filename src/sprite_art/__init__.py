@@ -20,7 +20,7 @@ from .model import (
     Variant,
     View,
 )
-from .render import RenderRequest, compose_grid, render_sprite
+from .render import RenderRequest, compose_grid, render_sprite, selected_variants
 from .transform import RotationWarning, generate_rotated_view
 
 __all__ = [
@@ -45,4 +45,5 @@ __all__ = [
     "load_sprite",
     "load_sprite_directory",
     "render_sprite",
+    "selected_variants",
 ]

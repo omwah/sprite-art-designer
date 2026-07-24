@@ -412,6 +412,7 @@ class PreviewToolsTab(TabPane):
             yield Label("Highlight edit")
             yield Switch(value=self.highlight_enabled, id="preview-highlight")
             yield Button("Apply", id="apply-preview", variant="primary")
+            yield Button("Reset seed", id="reset-preview-seed")
 
 
 class ToolsPane(Vertical):
@@ -471,6 +472,7 @@ class PreviewMatrix(Static):
     seed = 7
     preview_size: tuple[int, int] = (56, 12)
     highlight_variant: Variant | None = None
+    variant_overrides: dict[int, Variant] | None = None
 
     @staticmethod
     def dimensions_for_view(
@@ -495,6 +497,7 @@ class PreviewMatrix(Static):
         seed: int,
         size: tuple[int, int],
         highlight_variant: Variant | None,
+        variant_overrides: dict[int, Variant] | None,
     ) -> None:
         self.sprite = sprite
         self.palettes = palettes
@@ -504,6 +507,7 @@ class PreviewMatrix(Static):
         self.seed = seed
         self.preview_size = size
         self.highlight_variant = highlight_variant
+        self.variant_overrides = variant_overrides
         self.refresh_previews()
 
     def refresh_previews(self) -> None:
@@ -525,6 +529,7 @@ class PreviewMatrix(Static):
             view_id=self.view_id,
             facing=self.facing,
             highlight_variant=self.highlight_variant,
+            variant_overrides=self.variant_overrides,
         )
         # The panel has one border cell and the matrix has one padding cell on
         # each side. Keeping the widget at this natural width lets its scroll

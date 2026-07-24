@@ -31,11 +31,57 @@ class RenderRequest:
     facing: str | None = None
 
 
-def _choose_variant(section: Section, rng: random.Random) -> Variant:
+def _choose_variant(
+    section: Section,
+    rng: random.Random,
+    variant_overrides: dict[int, Variant] | None = None,
+) -> Variant:
     weights = [variant.weight for variant in section.variants]
     if len(set(weights)) == 1:
-        return rng.choice(section.variants)
-    return rng.choices(section.variants, weights=weights, k=1)[0]
+        chosen = rng.choice(section.variants)
+    else:
+        chosen = rng.choices(section.variants, weights=weights, k=1)[0]
+    variant_override = (
+        variant_overrides.get(id(section.variants)) if variant_overrides else None
+    )
+    if variant_override is not None and any(
+        variant is variant_override for variant in section.variants
+    ):
+        return variant_override
+    return chosen
+
+
+def selected_variants(
+    sprite: Sprite,
+    palettes: PaletteCatalog,
+    *,
+    width: int,
+    height: int,
+    seed: int = 0,
+    archetype_id: str = "humanoid_diplomat",
+    view_id: str = "horizontal",
+    variant_overrides: dict[int, Variant] | None = None,
+) -> dict[int, Variant]:
+    """Return the variants used by the deterministic render for one preview."""
+
+    if width < 1 or height < 1:
+        raise ValueError("width and height must be positive")
+    sprite.validate()
+    palettes.validate()
+    if view_id not in sprite.views:
+        raise KeyError(f"sprite {sprite.id!r} has no view {view_id!r}")
+    rng_seed = f"{seed}|{sprite.kind}|{sprite.role}"
+    if archetype_id:
+        rng_seed += f"|{archetype_id}"
+    rng = random.Random(rng_seed)
+    palette = palettes.resolve(archetype_id)
+    rng.choice(palette.beacon)
+    rng.choice(palette.engine)
+    tier = _select_tier(sprite.views[view_id], width, height)
+    return {
+        id(section.variants): _choose_variant(section, rng, variant_overrides)
+        for section in tier.sections
+    }
 
 
 def _select_tier(view: View, width: int, height: int) -> Tier:
@@ -92,8 +138,11 @@ def _compose_horizontal(
     rng: random.Random,
     target: int,
     highlight_variant: Variant | None = None,
+    variant_overrides: dict[int, Variant] | None = None,
 ) -> tuple[list[str], list[str]]:
-    chosen = [_choose_variant(section, rng) for section in tier.sections]
+    chosen = [
+        _choose_variant(section, rng, variant_overrides) for section in tier.sections
+    ]
     repeats = _repeat_counts(tier.sections, chosen, target, horizontal=True)
     height = chosen[0].height
     rows = [
@@ -120,8 +169,11 @@ def _compose_vertical(
     rng: random.Random,
     target: int,
     highlight_variant: Variant | None = None,
+    variant_overrides: dict[int, Variant] | None = None,
 ) -> tuple[list[str], list[str]]:
-    chosen = [_choose_variant(section, rng) for section in tier.sections]
+    chosen = [
+        _choose_variant(section, rng, variant_overrides) for section in tier.sections
+    ]
     repeats = _repeat_counts(tier.sections, chosen, target, horizontal=False)
     rows: list[str] = []
     mask: list[str] = []
@@ -142,15 +194,20 @@ def compose_grid(
     height: int,
     view_id: str,
     facing: str | None = None,
+    variant_overrides: dict[int, Variant] | None = None,
 ) -> list[str]:
     view = sprite.views[view_id]
     tier = _select_tier(view, width, height)
     if view.axis == "horizontal":
-        rows, _mask = _compose_horizontal(tier, rng, width)
+        rows, _mask = _compose_horizontal(
+            tier, rng, width, variant_overrides=variant_overrides
+        )
     elif view.axis == "vertical":
-        rows, _mask = _compose_vertical(tier, rng, height)
+        rows, _mask = _compose_vertical(
+            tier, rng, height, variant_overrides=variant_overrides
+        )
     else:
-        rows = list(_choose_variant(tier.sections[0], rng).cells)
+        rows = list(_choose_variant(tier.sections[0], rng, variant_overrides).cells)
     requested_facing = facing or view.canonical_facing
     if view.mirror_facing is not None and requested_facing == view.mirror_facing:
         if view.axis == "horizontal":
@@ -168,15 +225,20 @@ def _compose_grid_with_highlight(
     view_id: str,
     highlight_variant: Variant | None,
     facing: str | None = None,
+    variant_overrides: dict[int, Variant] | None = None,
 ) -> tuple[list[str], list[str]]:
     view = sprite.views[view_id]
     tier = _select_tier(view, width, height)
     if view.axis == "horizontal":
-        rows, mask = _compose_horizontal(tier, rng, width, highlight_variant)
+        rows, mask = _compose_horizontal(
+            tier, rng, width, highlight_variant, variant_overrides
+        )
     elif view.axis == "vertical":
-        rows, mask = _compose_vertical(tier, rng, height, highlight_variant)
+        rows, mask = _compose_vertical(
+            tier, rng, height, highlight_variant, variant_overrides
+        )
     else:
-        variant = _choose_variant(tier.sections[0], rng)
+        variant = _choose_variant(tier.sections[0], rng, variant_overrides)
         rows = list(variant.cells)
         marker = "1" if highlight_variant in tier.sections[0].variants else "0"
         mask = [marker * variant.width for _ in range(variant.height)]
@@ -315,6 +377,7 @@ def render_sprite(
     view_id: str = "horizontal",
     facing: str | None = None,
     highlight_variant: Variant | None = None,
+    variant_overrides: dict[int, Variant] | None = None,
 ) -> Text:
     """Render one exact-sized, deterministic Rich sprite.
 
@@ -345,6 +408,7 @@ def render_sprite(
         view_id,
         highlight_variant,
         facing,
+        variant_overrides,
     )
     view = sprite.views[view_id]
     requested_facing = facing or view.canonical_facing

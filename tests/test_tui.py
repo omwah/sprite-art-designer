@@ -4,6 +4,7 @@ from pathlib import Path
 from shutil import copytree
 
 import pytest
+from textual.widgets import TabbedContent, Tree
 
 from sprite_art_designer.app import EdgeArtDesigner, HelpScreen, _new_sprite
 from sprite_art_designer.widgets import ArtCanvas, PreviewMatrix
@@ -112,6 +113,65 @@ async def test_preview_navigation_buttons_and_shortcuts_select_variants() -> Non
         assert app.selection.item is first
         await pilot.press("full_stop")
         assert app.selection.item is not first
+
+
+@pytest.mark.asyncio
+async def test_v_shortcut_cycles_variant_and_overrides_preview_selection() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        first = app.selection.item
+        await pilot.press("v")
+        assert app.selection is not None
+        assert app.selection.kind == "variant"
+        assert app.selection.item is not first
+        assert isinstance(app.selection.parent, list)
+        overrides = app.query_one("#preview-matrix", PreviewMatrix).variant_overrides
+        assert overrides is not None
+        assert overrides[id(app.selection.parent)] is app.selection.item
+
+
+@pytest.mark.asyncio
+async def test_explicit_variant_selection_persists_after_browsing_away() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        tree = app.query_one("#structure-tree", Tree)
+        section = tree.root.children[0].children[0].children[0]
+        first_variant, selected_variant = section.children[:2]
+        tree.select_node(selected_variant)
+        await pilot.pause()
+        assert selected_variant.label.style == "#d9e3ea"
+        assert first_variant.label.style == "dim #718096"
+
+        tree.select_node(section)
+        await pilot.pause()
+        overrides = app.query_one("#preview-matrix", PreviewMatrix).variant_overrides
+        assert overrides is not None
+        assert overrides[id(section.data.item.variants)] is selected_variant.data.item
+
+        tree.select_node(first_variant)
+        await pilot.pause()
+        await pilot.press("full_stop")
+        tree.select_node(section)
+        await pilot.pause()
+        overrides = app.query_one("#preview-matrix", PreviewMatrix).variant_overrides
+        assert overrides is not None
+        assert overrides[id(section.data.item.variants)] is first_variant.data.item
+
+
+@pytest.mark.asyncio
+async def test_preview_tab_can_reset_seed() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        app.query_one("#tool-tabs", TabbedContent).active = "preview-tab"
+        await pilot.pause()
+        app.preview_seed = 123
+        app.query_one("#preview-seed").value = "123"
+        app._reset_preview_seed()
+        assert app.preview_seed == 7
+        assert app.query_one("#preview-seed").value == "7"
 
 
 @pytest.mark.asyncio
