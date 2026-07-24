@@ -136,6 +136,42 @@ class ArtCanvas(Widget, can_focus=True):
         event.stop()
 
 
+class WorkspaceSplitter(Widget):
+    """One-row mouse-drag divider for the workspace's top and bottom rows."""
+
+    class Moved(Message):
+        def __init__(self, splitter: WorkspaceSplitter, screen_y: int) -> None:
+            self.splitter = splitter
+            self.screen_y = screen_y
+            super().__init__()
+
+    _dragging = False
+
+    def render(self) -> Text:
+        return Text()
+
+    def on_mouse_down(self, event: events.MouseDown) -> None:
+        if event.button != 1:
+            return
+        self._dragging = True
+        self.capture_mouse()
+        self.post_message(self.Moved(self, event.screen_y))
+        event.stop()
+
+    def on_mouse_move(self, event: events.MouseMove) -> None:
+        if not self._dragging:
+            return
+        self.post_message(self.Moved(self, event.screen_y))
+        event.stop()
+
+    def on_mouse_up(self, event: events.MouseUp) -> None:
+        if not self._dragging:
+            return
+        self._dragging = False
+        self.release_mouse()
+        event.stop()
+
+
 class GlyphPalette(ItemGrid):
     class Selected(Message):
         def __init__(self, glyph: str) -> None:

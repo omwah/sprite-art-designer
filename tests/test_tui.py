@@ -36,6 +36,11 @@ async def test_app_mounts_wide_and_populates_editor() -> None:
         assert previous.region.y * 2 + previous.region.height == (
             art_canvas.region.y * 2 + art_canvas.region.height
         )
+        top_row = app.query_one("#structure-tools")
+        bottom_row = app.query_one("#preview-canvas")
+        app._set_workspace_top_height(top_row.region.height - 4)
+        await pilot.pause()
+        assert top_row.region.height < bottom_row.region.height
 
 
 @pytest.mark.asyncio

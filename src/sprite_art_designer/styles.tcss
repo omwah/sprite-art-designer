@@ -53,12 +53,21 @@ Header {
     height: 1fr;
 }
 
-#structure-tools {
+#structure-tools,
+#preview-canvas {
     height: 1fr;
 }
 
+#workspace-splitter {
+    height: 1;
+    background: #315a74;
+}
+
+#workspace-splitter:hover {
+    background: #38bdf8;
+}
+
 #preview-canvas {
-    max-height: 18;
     width: 1fr;
 }
 

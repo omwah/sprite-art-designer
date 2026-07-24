@@ -51,6 +51,7 @@ from .widgets import (
     PreviewMatrix,
     PreviewPane,
     ToolsPane,
+    WorkspaceSplitter,
 )
 
 SelectionKind = Literal["sprite", "view", "tier", "section", "variant"]
@@ -282,6 +283,7 @@ class EdgeArtDesigner(App[None]):
         self._recovery_timer: Timer | None = None
         self._narrow = False
         self._narrow_panel = "canvas"
+        self._workspace_top_height: int | None = None
 
     def compose(self) -> ComposeResult:
         initial_sprite = self.editor.current_sprite
@@ -318,6 +320,7 @@ class EdgeArtDesigner(App[None]):
                         self.preview_size,
                         self.highlight_preview,
                     )
+                yield WorkspaceSplitter(id="workspace-splitter")
                 with Horizontal(id="preview-canvas"):
                     yield PreviewPane()
                     yield CanvasPane()
@@ -370,6 +373,8 @@ class EdgeArtDesigner(App[None]):
         self._narrow = narrow
         self.screen.set_class(narrow, "narrow")
         self._apply_responsive_panels()
+        if not narrow:
+            self.call_after_refresh(self._apply_workspace_row_heights)
 
     def _apply_responsive_panels(self) -> None:
         panel_ids = ("nav", "canvas", "tools", "preview")
@@ -377,6 +382,7 @@ class EdgeArtDesigner(App[None]):
         if not self._narrow:
             workspace.display = True
             self.query_one("#structure-tools").display = True
+            self.query_one("#workspace-splitter").display = True
             self.query_one("#preview-canvas").display = True
             for panel_id in panel_ids:
                 self.query_one(f"#{panel_id}-pane").display = True
@@ -390,9 +396,39 @@ class EdgeArtDesigner(App[None]):
             "canvas",
             "preview",
         }
+        self.query_one("#workspace-splitter").display = False
         for panel_id in ("nav", "canvas", "tools"):
             self.query_one(f"#{panel_id}-pane").display = panel_id == self._narrow_panel
         self.query_one("#preview-pane").display = self._narrow_panel == "preview"
+
+    def on_workspace_splitter_moved(self, event: WorkspaceSplitter.Moved) -> None:
+        workspace = self.query_one("#workspace")
+        self._set_workspace_top_height(event.screen_y - workspace.content_region.y)
+
+    def _set_workspace_top_height(self, height: int) -> None:
+        if self._narrow:
+            return
+        workspace = self.query_one("#workspace")
+        available = workspace.content_region.height - 1
+        if available < 2:
+            return
+        minimum = min(7, available // 2)
+        self._workspace_top_height = max(minimum, min(height, available - minimum))
+        self._apply_workspace_row_heights()
+
+    def _apply_workspace_row_heights(self) -> None:
+        if self._narrow or self._workspace_top_height is None:
+            return
+        workspace = self.query_one("#workspace")
+        available = workspace.content_region.height - 1
+        minimum = min(7, available // 2)
+        top_height = max(
+            minimum,
+            min(self._workspace_top_height, available - minimum),
+        )
+        self._workspace_top_height = top_height
+        self.query_one("#structure-tools").styles.height = top_height
+        self.query_one("#preview-canvas").styles.height = available - top_height
 
     def _show_narrow_panel(self, panel: str) -> None:
         self._narrow_panel = panel
