@@ -381,12 +381,15 @@ class EdgeArtDesigner(App[None]):
             for panel_id in panel_ids:
                 self.query_one(f"#{panel_id}-pane").display = True
             return
-        workspace.display = self._narrow_panel != "preview"
+        workspace.display = True
         self.query_one("#structure-tools").display = self._narrow_panel in {
             "nav",
             "tools",
         }
-        self.query_one("#preview-canvas").display = self._narrow_panel == "canvas"
+        self.query_one("#preview-canvas").display = self._narrow_panel in {
+            "canvas",
+            "preview",
+        }
         for panel_id in ("nav", "canvas", "tools"):
             self.query_one(f"#{panel_id}-pane").display = panel_id == self._narrow_panel
         self.query_one("#preview-pane").display = self._narrow_panel == "preview"

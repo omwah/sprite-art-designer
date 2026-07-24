@@ -46,10 +46,15 @@ async def test_narrow_layout_uses_switchable_panels() -> None:
         assert app._narrow
         assert app.query_one("#canvas-pane").display
         assert not app.query_one("#preview-pane").display
+        await pilot.click("#panel-nav")
+        await pilot.pause()
+        assert app.query_one("#nav-pane").region.width == 80
         await pilot.click("#panel-preview")
         await pilot.pause()
-        assert app.query_one("#preview-pane").display
-        assert not app.query_one("#workspace").display
+        preview = app.query_one("#preview-pane")
+        assert preview.display
+        assert preview.region.width == 80
+        assert app.query_one("#preview-matrix").region.width > 0
 
 
 @pytest.mark.asyncio

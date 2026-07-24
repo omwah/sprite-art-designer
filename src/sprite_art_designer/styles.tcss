@@ -308,11 +308,23 @@ ModalScreen {
     height: 1fr;
 }
 
+.narrow #structure-tools,
+.narrow #preview-canvas {
+    width: 1fr;
+    height: 1fr;
+    max-height: 9999;
+}
+
 .narrow #nav-pane,
 .narrow #canvas-pane,
 .narrow #tools-pane {
     width: 1fr;
     height: 1fr;
+}
+
+.narrow #nav-pane,
+.narrow #canvas-pane {
+    max-width: 9999;
 }
 
 .narrow #preview-pane {
