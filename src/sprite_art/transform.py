@@ -50,6 +50,19 @@ def _rotate_cells_ccw(
     return ["".join(line) for line in output], warnings
 
 
+def _compact_rotated_cells_for_terminal_aspect(cells: list[str]) -> list[str]:
+    """Fit a 90-degree rotation to 1:2 terminal cells with compact resampling.
+
+    A literal cell-grid rotation maps a source ``W×H`` shape to ``H×W`` cells.
+    The compact aspect-corrected result is ``2H×ceil(W/2)``: each rotated cell
+    is doubled horizontally, then every other row is retained. This deliberately
+    lossy downsampling keeps generated editable views practical in a TUI.
+    """
+
+    expanded = ["".join(glyph * 2 for glyph in row) for row in cells]
+    return expanded[::2]
+
+
 def generate_rotated_view(
     sprite: Sprite,
     source_view_id: str = "horizontal",
@@ -70,11 +83,14 @@ def generate_rotated_view(
     for tier in target.tiers:
         for section in tier.sections:
             for variant in section.variants:
-                variant.cells, variant_warnings = _rotate_cells_ccw(
+                rotated_cells, variant_warnings = _rotate_cells_ccw(
                     variant.cells,
                     tier_id=tier.id,
                     section_id=section.id,
                     variant_id=variant.id,
+                )
+                variant.cells = _compact_rotated_cells_for_terminal_aspect(
+                    rotated_cells
                 )
                 warnings.extend(variant_warnings)
     target.validate(sprite.id)

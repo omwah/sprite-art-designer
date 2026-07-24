@@ -436,6 +436,18 @@ class PreviewMatrix(Static):
     preview_size: tuple[int, int] = (56, 12)
     highlight_variant: Variant | None = None
 
+    @staticmethod
+    def dimensions_for_view(
+        axis: str,
+        configured_width: int,
+        configured_height: int,
+    ) -> tuple[int, int]:
+        """Return an aspect-corrected preview box for the stored view axis."""
+
+        if axis == "vertical":
+            return configured_height * 2, (configured_width + 1) // 2
+        return configured_width, configured_height
+
     def configure(
         self,
         *,
@@ -463,11 +475,9 @@ class PreviewMatrix(Static):
             self.update("No preview")
             return
         view = self.sprite.views[self.view_id]
-        configured_width, configured_height = self.preview_size
-        width, height = (
-            (configured_height, configured_width)
-            if view.axis == "vertical"
-            else (configured_width, configured_height)
+        width, height = self.dimensions_for_view(
+            view.axis,
+            *self.preview_size,
         )
         art = render_sprite(
             self.sprite,

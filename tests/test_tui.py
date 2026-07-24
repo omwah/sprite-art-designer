@@ -119,6 +119,11 @@ async def test_structure_selection_switches_preview_to_its_view() -> None:
         assert app.query_one("#preview-view").value == "vertical"
 
 
+def test_preview_dimensions_account_for_terminal_aspect() -> None:
+    assert PreviewMatrix.dimensions_for_view("horizontal", 56, 12) == (56, 12)
+    assert PreviewMatrix.dimensions_for_view("vertical", 56, 12) == (24, 28)
+
+
 def test_new_generic_sprite_uses_fixed_canvas_model() -> None:
     sprite = _new_sprite("test_icon", "Test Icon", "generic")
     assert sprite.kind == "generic"

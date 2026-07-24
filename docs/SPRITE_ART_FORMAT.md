@@ -134,11 +134,14 @@ Unknown archetypes resolve to `humanoid_diplomat`.
 ## Rotation and reflection
 
 “Generate vertical” rotates every horizontal tier, section variant, and cell 90°
-counter-clockwise. Known structural glyphs are rotated through an explicit
-mapping. An unmapped glyph becomes `◇`, and the editor reports the number of
-fallback cells. The generated view is then ordinary editable YAML.
+counter-clockwise. Because terminal cells are approximately twice as tall as
+they are wide, the generated view doubles each rotated cell horizontally and
+retains every other rotated row. This compact, deliberately lossy resampling
+produces a proportionate editable starting view without making it excessively
+wide. Known structural glyphs are rotated through an explicit mapping. An
+unmapped glyph becomes `◇`, and the editor reports the number of fallback cells.
+The generated view is then ordinary editable YAML.
 
 Left/right reflection reverses each row and swaps horizontal glyph twins.
 Up/down reflection reverses row order and swaps vertical twins. Both transforms
 are deterministic post-composition operations and consume no random values.
-

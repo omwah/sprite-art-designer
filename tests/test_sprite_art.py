@@ -198,6 +198,20 @@ def test_rotation_uses_fallback_and_reports_location() -> None:
     assert any("◇" in row for row in vertical.tiers[0].sections[0].variants[0].cells)
 
 
+def test_rotation_compacts_terminal_cell_aspect() -> None:
+    sprite = load_sprite(ASSETS / "sprites" / "ships" / "fighter.yaml")
+    source = sprite.views["horizontal"].tiers[0].sections[0].variants[0]
+    vertical, _warnings = generate_rotated_view(sprite)
+    rotated = vertical.tiers[0].sections[0].variants[0]
+    assert rotated.width == source.height * 2
+    assert rotated.height == (source.width + 1) // 2
+    assert all(
+        row[column : column + 2] == row[column] * 2
+        for row in rotated.cells
+        for column in range(0, rotated.width, 2)
+    )
+
+
 def test_yaml_round_trip(tmp_path: Path, palettes: PaletteCatalog) -> None:
     sprite = load_sprite(ASSETS / "sprites" / "ships" / "needle_picket.yaml")
     sprite_path = tmp_path / "sprite.yaml"
