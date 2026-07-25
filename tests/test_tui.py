@@ -103,6 +103,22 @@ async def test_preview_size_and_structure_tier_stay_in_sync() -> None:
 
 
 @pytest.mark.asyncio
+async def test_changing_ships_keeps_the_selected_preview_size() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        app.query_one("#preview-size").value = "30x5"
+        await pilot.pause()
+        sprite_select = app.query_one("#sprite-select")
+        sprite_select.value = next(
+            value for _, value in app._sprite_options() if value != app.editor.current_sprite_id
+        )
+        await pilot.pause()
+        assert app.preview_size == (30, 5)
+        assert app.query_one("#preview-size").value == "30x5"
+
+
+@pytest.mark.asyncio
 async def test_question_mark_opens_help_modal() -> None:
     app = EdgeArtDesigner(ROOT / "assets")
     async with app.run_test(size=(140, 50)) as pilot:

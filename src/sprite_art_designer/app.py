@@ -318,6 +318,7 @@ class EdgeArtDesigner(App[None]):
         self._persistent_variant_overrides: dict[int, Variant] = {}
         self._transient_variant_override: tuple[int, Variant] | None = None
         self._tree_variant_selection_persists = False
+        self._tree_selection_syncs_preview_size = True
 
     def compose(self) -> ComposeResult:
         initial_sprite = self.editor.current_sprite
@@ -509,13 +510,21 @@ class EdgeArtDesigner(App[None]):
                             selected_node = variant_node
         tree.root.expand_all()
         if selected_node is not None:
-            self._select_tree_node(selected_node, persist_variant=False)
+            self._select_tree_node(
+                selected_node,
+                persist_variant=False,
+                sync_preview_size=False,
+            )
         elif tree.root.children:
             first_view = tree.root.children[0]
             if first_view.children and first_view.children[0].children:
                 first_section = first_view.children[0].children[0]
                 if first_section.children:
-                    self._select_tree_node(first_section.children[0], persist_variant=False)
+                    self._select_tree_node(
+                        first_section.children[0],
+                        persist_variant=False,
+                        sync_preview_size=False,
+                    )
 
     def _variant_label(self, variant: Variant, variants_key: int) -> Text:
         label = f"{variant.id} · {variant.width}×{variant.height} · w{variant.weight}"
@@ -556,6 +565,8 @@ class EdgeArtDesigner(App[None]):
             return
         persist_variant = self._tree_variant_selection_persists
         self._tree_variant_selection_persists = True
+        sync_preview_size = self._tree_selection_syncs_preview_size
+        self._tree_selection_syncs_preview_size = True
         self.selection = selection
         self.call_after_refresh(self._sync_tree_cursor_to_selection)
         selected_view = self._view_for_structure(selection.item)
@@ -563,7 +574,7 @@ class EdgeArtDesigner(App[None]):
             self.current_view_id = selected_view.id
             self._refresh_preview_controls()
         selected_tier = self._tier_for_structure(selection.item)
-        if selected_tier is not None:
+        if selected_tier is not None and sync_preview_size:
             self._set_preview_size_for_tier(selected_tier)
         self._populate_inspector()
         canvas = self.query_one("#art-canvas", ArtCanvas)
@@ -759,8 +770,10 @@ class EdgeArtDesigner(App[None]):
         node: TreeNode[Any],
         *,
         persist_variant: bool,
+        sync_preview_size: bool = True,
     ) -> None:
         self._tree_variant_selection_persists = persist_variant
+        self._tree_selection_syncs_preview_size = sync_preview_size
         self.query_one("#structure-tree", Tree).select_node(node)
 
     def _select_adjacent_structure(self, delta: int) -> None:
