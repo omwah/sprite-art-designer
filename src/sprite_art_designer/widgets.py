@@ -17,10 +17,9 @@ from sprite_art import PaletteCatalog, Sprite, Variant, render_sprite
 from sprite_art.glyphs import AUTHORING_GLYPHS
 
 PREVIEW_SIZE_OPTIONS = [
-    ("18 × 3", "18x3"),
-    ("30 × 5", "30x5"),
-    ("40 × 7", "40x7"),
-    ("56 × 12", "56x12"),
+    ("Compact · 18 × 3", "18x3"),
+    ("Medium · 30 × 5", "30x5"),
+    ("Full · 40 × 7", "40x7"),
     ("Custom…", "custom"),
 ]
 
@@ -258,12 +257,13 @@ class NavPane(Vertical):
     def compose(self) -> ComposeResult:
         yield Label("Structure", classes="pane-title")
         yield Tree("Sprite", id="structure-tree")
-        with Grid(id="structure-actions"):
-            yield Button("+", id="add-item", tooltip="Add child")
-            yield Button("⧉", id="duplicate-item", tooltip="Duplicate")
-            yield Button("−", id="delete-item", tooltip="Delete")
-            yield Button("↑", id="move-up", tooltip="Move up")
-            yield Button("↓", id="move-down", tooltip="Move down")
+        with Horizontal(id="structure-actions-row"):
+            with Grid(id="structure-actions"):
+                yield Button("+", id="add-item", tooltip="Add child")
+                yield Button("⧉", id="duplicate-item", tooltip="Duplicate")
+                yield Button("−", id="delete-item", tooltip="Delete")
+                yield Button("↑", id="move-up", tooltip="Move up")
+                yield Button("↓", id="move-down", tooltip="Move down")
 
 
 class CanvasPane(Vertical):
@@ -399,7 +399,9 @@ class PreviewToolsTab(TabPane):
                 id="preview-facing",
             )
             yield Label("Seed")
-            yield Input(value=str(self.seed), type="integer", id="preview-seed")
+            with Horizontal(id="preview-seed-controls"):
+                yield Input(value=str(self.seed), type="integer", id="preview-seed")
+                yield Button("Reset", id="reset-preview-seed")
             yield Label("Size")
             with Horizontal(id="preview-size-controls"):
                 yield Select(
@@ -408,11 +410,10 @@ class PreviewToolsTab(TabPane):
                     allow_blank=False,
                     id="preview-size",
                 )
-                yield Input(placeholder="Custom: 56x12", id="preview-custom-size")
+                yield Input(placeholder="Custom: 40x7", id="preview-custom-size")
             yield Label("Highlight edit")
             yield Switch(value=self.highlight_enabled, id="preview-highlight")
             yield Button("Apply", id="apply-preview", variant="primary")
-            yield Button("Reset seed", id="reset-preview-seed")
 
 
 class ToolsPane(Vertical):
@@ -530,11 +531,12 @@ class PreviewMatrix(Static):
             facing=self.facing,
             highlight_variant=self.highlight_variant,
             variant_overrides=self.variant_overrides,
+            preview_margin=True,
         )
         # The panel has one border cell and the matrix has one padding cell on
         # each side. Keeping the widget at this natural width lets its scroll
         # parent center it instead of stretching it across the pane.
-        self.styles.width = width + 4
+        self.styles.width = width + 6
         self.update(
             Columns(
                 [

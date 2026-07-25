@@ -79,6 +79,21 @@ def test_every_ship_has_independent_horizontal_and_vertical_views(role: str) -> 
     assert sprite.views["horizontal"] is not sprite.views["vertical"]
 
 
+def test_ship_assets_have_full_medium_and_compact_horizontal_tiers() -> None:
+    for role in ORIGINAL_ROLES | NEW_ROLES:
+        sprite = load_sprite(ASSETS / "sprites" / "ships" / f"{role}.yaml")
+        tiers = sprite.views["horizontal"].tiers
+        assert [tier.id for tier in tiers] == ["full", "medium", "compact"]
+        assert [tier.cross_axis_size("horizontal") for tier in tiers] == [7, 5, 3]
+        for full_section, medium_section in zip(
+            tiers[0].sections, tiers[1].sections
+        ):
+            for full_variant, medium_variant in zip(
+                full_section.variants, medium_section.variants
+            ):
+                assert medium_variant.width == (full_variant.width * 3 + 2) // 4
+
+
 @pytest.mark.parametrize("role", sorted(ORIGINAL_ROLES | NEW_ROLES))
 def test_generation_is_deterministic_and_exact(role: str, palettes: PaletteCatalog) -> None:
     sprite = load_sprite(ASSETS / "sprites" / "ships" / f"{role}.yaml")
@@ -136,6 +151,27 @@ def test_highlighted_variant_preserves_text_and_marks_its_section(
     )
     assert highlighted.plain == normal.plain
     assert highlighted.spans != normal.spans
+
+
+def test_preview_margin_projects_highlights_along_the_view_cross_axis(
+    palettes: PaletteCatalog,
+) -> None:
+    sprite = load_sprite(ASSETS / "sprites" / "ships" / "fighter.yaml")
+    variant = sprite.views["horizontal"].tiers[0].sections[0].variants[0]
+    preview = render_sprite(
+        sprite,
+        palettes,
+        width=40,
+        height=7,
+        seed=13,
+        view_id="horizontal",
+        highlight_variant=variant,
+        preview_margin=True,
+    )
+    lines = preview.plain.splitlines()
+    assert len(lines) == 9
+    assert all(len(line) == 42 for line in lines)
+    assert "on #4c1d95" in str(preview.spans)
 
 
 def test_horizontal_facing_is_exact_glyph_reflection(palettes: PaletteCatalog) -> None:

@@ -26,15 +26,21 @@ views:
           weight: 1
           cells:
           - '    '
+          - '    '
           - ' YY▓'
           - ' Y█▓'
+          - '    '
+          - '    '
           - '    '
         - id: fork
           weight: 1
           cells:
+          - '    '
           - ' Y  '
           - ' Y▶▓'
           - ' Y▶▓'
+          - '    '
+          - '    '
           - '    '
       - id: sail_nodes
         name: Sail Nodes
@@ -48,17 +54,23 @@ views:
         - id: diamond
           weight: 1
           cells:
+          - '    '
           - ◢██◣
           - ▓██▓
           - ▓██▓
           - ◥██◤
+          - '    '
+          - '    '
         - id: open
           weight: 1
           cells:
+          - '    '
           - ' ▴  '
           - ▓██▓
           - ▓██▓
           - ' ▾  '
+          - '    '
+          - '    '
       - id: cabin
         name: Cabin
         primary_property: habitat
@@ -71,17 +83,23 @@ views:
         - id: window
           weight: 1
           cells:
+          - '    '
           - ' R  '
           - ████
           - █◇██
+          - '    '
+          - '    '
           - '    '
         - id: armored
           weight: 1
           cells:
           - '    '
+          - '    '
           - ◢██◣
           - █▒██
           - ◥██◤
+          - '    '
+          - '    '
       - id: landing_nose
         name: Landing Nose
         primary_property: utility
@@ -94,16 +112,123 @@ views:
           weight: 1
           cells:
           - '   '
+          - '   '
           - '▓▙ '
           - ██▶
           - '▓▛ '
+          - '   '
+          - '   '
         - id: probe
           weight: 1
           cells:
           - '   '
+          - '   '
           - '─▙ '
           - █▓▶
           - '─▛ '
+          - '   '
+          - '   '
+    - id: medium
+      name: Medium
+      sections:
+      - id: overdrive
+        name: Overdrive
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: single
+          weight: 1
+          cells:
+          - '   '
+          - ' Y▓'
+          - ' Y▓'
+          - '   '
+          - '   '
+        - id: fork
+          weight: 1
+          cells:
+          - ' Y '
+          - ' Y▓'
+          - ' Y▓'
+          - '   '
+          - '   '
+      - id: sail_nodes
+        name: Sail Nodes
+        primary_property: spindrive
+        secondary_properties:
+        - radiator
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: diamond
+          weight: 1
+          cells:
+          - ◢█◣
+          - ▓█▓
+          - ▓█▓
+          - ◥█◤
+          - '   '
+        - id: open
+          weight: 1
+          cells:
+          - ' ▴ '
+          - ▓█▓
+          - ▓█▓
+          - ' ▾ '
+          - '   '
+      - id: cabin
+        name: Cabin
+        primary_property: habitat
+        secondary_properties:
+        - sensors
+        repeat:
+          min: 1
+          max: 3
+        variants:
+        - id: window
+          weight: 1
+          cells:
+          - ' R '
+          - ███
+          - █◇█
+          - '   '
+          - '   '
+        - id: armored
+          weight: 1
+          cells:
+          - '   '
+          - ◢█◣
+          - █▒█
+          - ◥█◤
+          - '   '
+      - id: landing_nose
+        name: Landing Nose
+        primary_property: utility
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: round
+          weight: 1
+          cells:
+          - '  '
+          - '▓ '
+          - █▶
+          - '▓ '
+          - '  '
+        - id: probe
+          weight: 1
+          cells:
+          - '  '
+          - '─ '
+          - █▶
+          - '─ '
+          - '  '
     - id: compact
       name: Compact
       sections:
@@ -170,17 +295,13 @@ views:
         - id: single
           weight: 1
           cells:
-          - ' ▓▓ '
-          - ' Y█ '
-          - ' YY '
-          - '    '
+          - '    ▓▓▓▓      '
+          - '    YYYY      '
         - id: fork
           weight: 1
           cells:
-          - ' ▓▓ '
-          - ' ▴▴ '
-          - 'YYY '
-          - '    '
+          - '    ▓▓▓▓      '
+          - '  YYYYYY      '
       - id: sail_nodes
         name: Sail Nodes
         primary_property: spindrive
@@ -193,17 +314,13 @@ views:
         - id: diamond
           weight: 1
           cells:
-          - ◢▓▓◣
-          - ████
-          - ████
-          - ◥▓▓◤
+          - '  ◢◢▓▓▓▓◣◣    '
+          - '  ████████    '
         - id: open
           weight: 1
           cells:
-          - ' ▓▓ '
-          - ' ██ '
-          - ◀██▶
-          - ' ▓▓ '
+          - '    ▓▓▓▓      '
+          - '  ◀◀████▶▶    '
       - id: cabin
         name: Cabin
         primary_property: habitat
@@ -216,17 +333,13 @@ views:
         - id: window
           weight: 1
           cells:
-          - ' ██ '
-          - ' ██ '
-          - 'R█◇ '
-          - ' ██ '
+          - '    ████      '
+          - '  RR██◇◇      '
         - id: armored
           weight: 1
           cells:
-          - ' ◢█◣'
-          - ' ███'
-          - ' █▒█'
-          - ' ◥█◤'
+          - '    ◢◢██◣◣    '
+          - '    ██▒▒██    '
       - id: landing_nose
         name: Landing Nose
         primary_property: utility
@@ -238,15 +351,88 @@ views:
         - id: round
           weight: 1
           cells:
-          - '  ▴ '
-          - ' ▟█▙'
-          - ' ▓█▓'
+          - '      ▴▴      '
+          - '    ▓▓██▓▓    '
         - id: probe
           weight: 1
           cells:
-          - '  ▴ '
-          - ' ▟▓▙'
-          - ' │█│'
+          - '      ▴▴      '
+          - '    ││██││    '
+    - id: medium
+      name: Medium
+      sections:
+      - id: overdrive
+        name: Overdrive
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: single
+          weight: 1
+          cells:
+          - '  ▓▓▓▓    '
+          - '          '
+        - id: fork
+          weight: 1
+          cells:
+          - '  ▓▓▓▓    '
+          - '          '
+      - id: sail_nodes
+        name: Sail Nodes
+        primary_property: spindrive
+        secondary_properties:
+        - radiator
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: diamond
+          weight: 1
+          cells:
+          - '◢◢▓▓▓▓◣◣  '
+          - '◥◥▓▓▓▓◤◤  '
+        - id: open
+          weight: 1
+          cells:
+          - '  ▓▓▓▓    '
+          - '  ▓▓▓▓    '
+      - id: cabin
+        name: Cabin
+        primary_property: habitat
+        secondary_properties:
+        - sensors
+        repeat:
+          min: 1
+          max: 3
+        variants:
+        - id: window
+          weight: 1
+          cells:
+          - '  ████    '
+          - '  ████    '
+        - id: armored
+          weight: 1
+          cells:
+          - '  ◢◢██◣◣  '
+          - '  ◥◥██◤◤  '
+      - id: landing_nose
+        name: Landing Nose
+        primary_property: utility
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: round
+          weight: 1
+          cells:
+          - '    ▴▴    '
+        - id: probe
+          weight: 1
+          cells:
+          - '    ▴▴    '
     - id: compact
       name: Compact
       sections:
@@ -261,8 +447,7 @@ views:
         - id: drive
           weight: 1
           cells:
-          - ' ▓ '
-          - ' Y '
+          - '  ▓▓  '
       - id: body
         name: Body
         primary_property: hull
@@ -275,8 +460,7 @@ views:
         - id: cabin
           weight: 1
           cells:
-          - ◀█▶
-          - ' █ '
+          - ◀◀██▶▶
       - id: prow
         name: Prow
         primary_property: weapons
@@ -288,5 +472,4 @@ views:
         - id: nose
           weight: 1
           cells:
-          - ' ▴ '
-          - ' █ '
+          - '  ▴▴  '

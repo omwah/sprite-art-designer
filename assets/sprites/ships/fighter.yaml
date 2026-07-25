@@ -26,15 +26,21 @@ views:
           weight: 1
           cells:
           - '     '
+          - '     '
           - '  Y▶▓'
           - '  Y▶▓'
+          - '     '
+          - '     '
           - '     '
         - id: thrusters_2
           weight: 1
           cells:
           - '     '
+          - '     '
           - ' YY▶▓'
           - ' YY▶▓'
+          - '     '
+          - '     '
           - '     '
       - id: spindrive
         name: Spindrive
@@ -47,17 +53,23 @@ views:
         - id: spindrive_1
           weight: 1
           cells:
+          - '       '
           - ' Y▶══◥█'
           - ▓██████
           - ▓██████
           - ' Y▶══◢█'
+          - '       '
+          - '       '
         - id: spindrive_2
           weight: 1
           cells:
+          - '       '
           - '   ◥███'
           - ▓██████
           - ▓██████
           - '   ◢███'
+          - '       '
+          - '       '
       - id: hull
         name: Hull
         primary_property: hull
@@ -70,15 +82,21 @@ views:
           weight: 1
           cells:
           - '    '
+          - '    '
           - ████
           - ████
+          - '    '
+          - '    '
           - '    '
         - id: hull_2
           weight: 1
           cells:
           - '    '
+          - '    '
           - █▒▒█
           - █▒▒█
+          - '    '
+          - '    '
           - '    '
       - id: screens
         name: Screens
@@ -92,15 +110,21 @@ views:
           weight: 1
           cells:
           - '     '
+          - '     '
           - ◇▓███
           - █████
+          - '     '
+          - '     '
           - '     '
         - id: screens_2
           weight: 1
           cells:
           - '     '
+          - '     '
           - ◇▓███
           - █████
+          - '     '
+          - '     '
           - '     '
       - id: main_gun
         name: Main Gun
@@ -114,16 +138,145 @@ views:
           weight: 1
           cells:
           - '      '
+          - '      '
           - ─▓██▓▶
           - ' ▜██▛ '
+          - '      '
+          - '      '
           - '      '
         - id: main_gun_2
           weight: 1
           cells:
           - '      '
+          - '      '
           - ' ▟██▙ '
           - ─▓██▓▶
           - '      '
+          - '      '
+          - '      '
+    - id: medium
+      name: Medium
+      sections:
+      - id: thrusters
+        name: Thrusters
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: thrusters_1
+          weight: 1
+          cells:
+          - '    '
+          - '  Y▓'
+          - '  Y▓'
+          - '    '
+          - '    '
+        - id: thrusters_2
+          weight: 1
+          cells:
+          - '    '
+          - ' YY▓'
+          - ' YY▓'
+          - '    '
+          - '    '
+      - id: spindrive
+        name: Spindrive
+        primary_property: spindrive
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: spindrive_1
+          weight: 1
+          cells:
+          - ' Y══█'
+          - ▓████
+          - ▓████
+          - ' Y══█'
+          - '     '
+        - id: spindrive_2
+          weight: 1
+          cells:
+          - '  ◥██'
+          - ▓████
+          - ▓████
+          - '  ◢██'
+          - '     '
+      - id: hull
+        name: Hull
+        primary_property: hull
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 6
+        variants:
+        - id: hull_1
+          weight: 1
+          cells:
+          - '   '
+          - ███
+          - ███
+          - '   '
+          - '   '
+        - id: hull_2
+          weight: 1
+          cells:
+          - '   '
+          - █▒█
+          - █▒█
+          - '   '
+          - '   '
+      - id: screens
+        name: Screens
+        primary_property: screens
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: screens_1
+          weight: 1
+          cells:
+          - '    '
+          - ◇▓██
+          - ████
+          - '    '
+          - '    '
+        - id: screens_2
+          weight: 1
+          cells:
+          - '    '
+          - ◇▓██
+          - ████
+          - '    '
+          - '    '
+      - id: main_gun
+        name: Main Gun
+        primary_property: main_gun
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: main_gun_1
+          weight: 1
+          cells:
+          - '     '
+          - ─▓██▶
+          - ' ▜██ '
+          - '     '
+          - '     '
+        - id: main_gun_2
+          weight: 1
+          cells:
+          - '     '
+          - ' ▟██ '
+          - ─▓██▶
+          - '     '
+          - '     '
     - id: compact
       name: Compact
       sections:
@@ -195,19 +348,15 @@ views:
         - id: thrusters_1
           weight: 1
           cells:
-          - ' ▓▓ '
-          - ' ▴▴ '
-          - ' YY '
-          - '    '
-          - '    '
+          - '    ▓▓▓▓      '
+          - '    YYYY      '
+          - '              '
         - id: thrusters_2
           weight: 1
           cells:
-          - ' ▓▓ '
-          - ' ▴▴ '
-          - ' YY '
-          - ' YY '
-          - '    '
+          - '    ▓▓▓▓      '
+          - '    YYYY      '
+          - '              '
       - id: spindrive
         name: Spindrive
         primary_property: spindrive
@@ -219,23 +368,17 @@ views:
         - id: spindrive_1
           weight: 1
           cells:
-          - ████
-          - ◤██◥
-          - ║██║
-          - ║██║
-          - ▴██▴
-          - Y██Y
-          - ' ▓▓ '
+          - '  ████████    '
+          - '  ║║████║║    '
+          - '  ▴▴████▴▴    '
+          - '    ▓▓▓▓      '
         - id: spindrive_2
           weight: 1
           cells:
-          - ████
-          - ████
-          - ████
-          - ◤██◥
-          - ' ██ '
-          - ' ██ '
-          - ' ▓▓ '
+          - '  ████████    '
+          - '  ████████    '
+          - '    ████      '
+          - '    ▓▓▓▓      '
       - id: hull
         name: Hull
         primary_property: hull
@@ -247,17 +390,13 @@ views:
         - id: hull_1
           weight: 1
           cells:
-          - ' ██ '
-          - ' ██ '
-          - ' ██ '
-          - ' ██ '
+          - '    ████      '
+          - '    ████      '
         - id: hull_2
           weight: 1
           cells:
-          - ' ██ '
-          - ' ▒▒ '
-          - ' ▒▒ '
-          - ' ██ '
+          - '    ████      '
+          - '    ▒▒▒▒      '
       - id: screens
         name: Screens
         primary_property: screens
@@ -269,19 +408,15 @@ views:
         - id: screens_1
           weight: 1
           cells:
-          - ' ██ '
-          - ' ██ '
-          - ' ██ '
-          - ' ▓█ '
-          - ' ◇█ '
+          - '    ████      '
+          - '    ████      '
+          - '    ◇◇██      '
         - id: screens_2
           weight: 1
           cells:
-          - ' ██ '
-          - ' ██ '
-          - ' ██ '
-          - ' ▓█ '
-          - ' ◇█ '
+          - '    ████      '
+          - '    ████      '
+          - '    ◇◇██      '
       - id: main_gun
         name: Main Gun
         primary_property: main_gun
@@ -293,21 +428,112 @@ views:
         - id: main_gun_1
           weight: 1
           cells:
-          - ' ▴  '
-          - ' ▓▙ '
-          - ' ██ '
-          - ' ██ '
-          - ' ▓▛ '
-          - ' │  '
+          - '    ▴▴        '
+          - '    ████      '
+          - '    ▓▓▛▛      '
         - id: main_gun_2
           weight: 1
           cells:
-          - '  ▴ '
-          - ' ▟▓ '
-          - ' ██ '
-          - ' ██ '
-          - ' ▜▓ '
-          - '  │ '
+          - '      ▴▴      '
+          - '    ████      '
+          - '    ▜▜▓▓      '
+    - id: medium
+      name: Medium
+      sections:
+      - id: thrusters
+        name: Thrusters
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: thrusters_1
+          weight: 1
+          cells:
+          - '  ▓▓▓▓    '
+          - '          '
+        - id: thrusters_2
+          weight: 1
+          cells:
+          - '  ▓▓▓▓    '
+          - '  YYYY    '
+      - id: spindrive
+        name: Spindrive
+        primary_property: spindrive
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: spindrive_1
+          weight: 1
+          cells:
+          - '████████  '
+          - '║║████║║  '
+          - '  ▓▓▓▓    '
+        - id: spindrive_2
+          weight: 1
+          cells:
+          - '████████  '
+          - '◤◤████◥◥  '
+          - '  ▓▓▓▓    '
+      - id: hull
+        name: Hull
+        primary_property: hull
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 6
+        variants:
+        - id: hull_1
+          weight: 1
+          cells:
+          - '  ████    '
+          - '  ████    '
+        - id: hull_2
+          weight: 1
+          cells:
+          - '  ████    '
+          - '  ████    '
+      - id: screens
+        name: Screens
+        primary_property: screens
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: screens_1
+          weight: 1
+          cells:
+          - '  ████    '
+          - '  ▓▓██    '
+        - id: screens_2
+          weight: 1
+          cells:
+          - '  ████    '
+          - '  ▓▓██    '
+      - id: main_gun
+        name: Main Gun
+        primary_property: main_gun
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: main_gun_1
+          weight: 1
+          cells:
+          - '  ▴▴      '
+          - '  ████    '
+          - '  ││      '
+        - id: main_gun_2
+          weight: 1
+          cells:
+          - '    ▴▴    '
+          - '  ████    '
+          - '    ││    '
     - id: compact
       name: Compact
       sections:
@@ -322,8 +548,7 @@ views:
         - id: thrusters_1
           weight: 1
           cells:
-          - ' █ '
-          - ' Y '
+          - '  ██  '
       - id: hull
         name: Hull
         primary_property: hull
@@ -335,13 +560,11 @@ views:
         - id: hull_1
           weight: 1
           cells:
-          - ' █ '
-          - ' █ '
+          - '  ██  '
         - id: hull_2
           weight: 1
           cells:
-          - '◀█ '
-          - ' █ '
+          - '◀◀██  '
       - id: main_gun
         name: Main Gun
         primary_property: main_gun
@@ -353,5 +576,4 @@ views:
         - id: main_gun_1
           weight: 1
           cells:
-          - ' ▴ '
-          - ' █ '
+          - '  ▴▴  '

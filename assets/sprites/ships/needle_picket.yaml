@@ -26,17 +26,21 @@ views:
           weight: 1
           cells:
           - '     '
+          - '     '
           - '  Y▓ '
           - ' YY█▓'
           - '  Y▓ '
           - '     '
+          - '     '
         - id: split
           weight: 1
           cells:
+          - '     '
           - ' Y   '
           - '  Y▓ '
           - ' Y██▓'
           - '  Y▓ '
+          - '     '
           - '     '
       - id: drive_nodes
         name: Drive Nodes
@@ -50,18 +54,22 @@ views:
         - id: open
           weight: 1
           cells:
+          - '    '
           - ' ▴  '
           - ▓██═
           - ████
           - ▓██═
           - '    '
+          - '    '
         - id: veiled
           weight: 1
           cells:
+          - '    '
           - ' R  '
           - ◢██◣
           - ████
           - ◥██◤
+          - '    '
           - '    '
       - id: patrol_spine
         name: Patrol Spine
@@ -75,18 +83,22 @@ views:
         - id: sensor_rib
           weight: 1
           cells:
+          - '    '
           - ' R  '
           - ┌──┐
           - █▒▒█
           - └──┘
           - '    '
+          - '    '
         - id: plain_rib
           weight: 1
           cells:
           - '    '
+          - '    '
           - ◢██◣
           - █◇▒█
           - ◥██◤
+          - '    '
           - '    '
       - id: sensor_crown
         name: Sensor Crown
@@ -99,18 +111,22 @@ views:
         - id: crown
           weight: 1
           cells:
+          - '    '
           - ' ◢█◣'
           - ◇███
           - ████
           - ' ◥█◤'
           - '    '
+          - '    '
         - id: dish
           weight: 1
           cells:
+          - '    '
           - '  R '
           - ◢██◣
           - █☉██
           - ◥██◤
+          - '    '
           - '    '
       - id: needle
         name: Needle Prow
@@ -125,18 +141,148 @@ views:
           weight: 1
           cells:
           - '     '
+          - '     '
           - '  ╾▙ '
           - ──▓▓▶
           - '  ╾▛ '
+          - '     '
           - '     '
         - id: probe
           weight: 1
           cells:
           - '     '
+          - '     '
           - '  ─▙ '
           - ─██▓▶
           - '  ─▛ '
           - '     '
+          - '     '
+    - id: medium
+      name: Medium
+      sections:
+      - id: thrusters
+        name: Thruster Fork
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: fork
+          weight: 1
+          cells:
+          - '    '
+          - '  Y '
+          - ' YY▓'
+          - '  Y '
+          - '    '
+        - id: split
+          weight: 1
+          cells:
+          - ' Y  '
+          - '  Y '
+          - ' Y█▓'
+          - '  Y '
+          - '    '
+      - id: drive_nodes
+        name: Drive Nodes
+        primary_property: spindrive
+        secondary_properties:
+        - radiator
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: open
+          weight: 1
+          cells:
+          - ' ▴ '
+          - ▓█═
+          - ███
+          - ▓█═
+          - '   '
+        - id: veiled
+          weight: 1
+          cells:
+          - ' R '
+          - ◢█◣
+          - ███
+          - ◥█◤
+          - '   '
+      - id: patrol_spine
+        name: Patrol Spine
+        primary_property: hull
+        secondary_properties:
+        - sensors
+        repeat:
+          min: 1
+          max: 7
+        variants:
+        - id: sensor_rib
+          weight: 1
+          cells:
+          - ' R '
+          - ┌─┐
+          - █▒█
+          - └─┘
+          - '   '
+        - id: plain_rib
+          weight: 1
+          cells:
+          - '   '
+          - ◢█◣
+          - █◇█
+          - ◥█◤
+          - '   '
+      - id: sensor_crown
+        name: Sensor Crown
+        primary_property: sensors
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: crown
+          weight: 1
+          cells:
+          - ' ◢◣'
+          - ◇██
+          - ███
+          - ' ◥◤'
+          - '   '
+        - id: dish
+          weight: 1
+          cells:
+          - '   '
+          - ◢█◣
+          - █☉█
+          - ◥█◤
+          - '   '
+      - id: needle
+        name: Needle Prow
+        primary_property: main_gun
+        secondary_properties:
+        - sensors
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: long
+          weight: 1
+          cells:
+          - '    '
+          - '  ╾ '
+          - ──▓▶
+          - '  ╾ '
+          - '    '
+        - id: probe
+          weight: 1
+          cells:
+          - '    '
+          - '  ─ '
+          - ─██▶
+          - '  ─ '
+          - '    '
     - id: compact
       name: Compact
       sections:
@@ -209,19 +355,15 @@ views:
         - id: fork
           weight: 1
           cells:
-          - '  ▓  '
-          - ' ▓█▓ '
-          - ' YYY '
-          - '  Y  '
-          - '     '
+          - '      ▓▓      '
+          - '    YYYYYY    '
+          - '              '
         - id: split
           weight: 1
           cells:
-          - '  ▓  '
-          - ' ▓█▓ '
-          - ' Y█Y '
-          - 'Y Y  '
-          - '     '
+          - '      ▓▓      '
+          - '    YY██YY    '
+          - '              '
       - id: drive_nodes
         name: Drive Nodes
         primary_property: spindrive
@@ -234,17 +376,13 @@ views:
         - id: open
           weight: 1
           cells:
-          - ' ║█║ '
-          - ' ███ '
-          - '◀███ '
-          - ' ▓█▓ '
+          - '    ║║██║║    '
+          - '  ◀◀██████    '
         - id: veiled
           weight: 1
           cells:
-          - ' ◢█◣ '
-          - ' ███ '
-          - 'R███ '
-          - ' ◥█◤ '
+          - '    ◢◢██◣◣    '
+          - '  RR██████    '
       - id: patrol_spine
         name: Patrol Spine
         primary_property: hull
@@ -257,17 +395,13 @@ views:
         - id: sensor_rib
           weight: 1
           cells:
-          - ' ┌█┐ '
-          - ' │▒│ '
-          - 'R│▒│ '
-          - ' └█┘ '
+          - '    ┌┌██┐┐    '
+          - '  RR││▒▒││    '
         - id: plain_rib
           weight: 1
           cells:
-          - ' ◢█◣ '
-          - ' █▒█ '
-          - ' █◇█ '
-          - ' ◥█◤ '
+          - '    ◢◢██◣◣    '
+          - '    ██◇◇██    '
       - id: sensor_crown
         name: Sensor Crown
         primary_property: sensors
@@ -279,17 +413,13 @@ views:
         - id: crown
           weight: 1
           cells:
-          - '◢██◣ '
-          - '████ '
-          - '◥██◤ '
-          - ' ◇█  '
+          - '  ◢◢████◣◣    '
+          - '  ◥◥████◤◤    '
         - id: dish
           weight: 1
           cells:
-          - ' ◢█◣ '
-          - 'R███ '
-          - ' █☉█ '
-          - ' ◥█◤ '
+          - '    ◢◢██◣◣    '
+          - '    ██☉☉██    '
       - id: needle
         name: Needle Prow
         primary_property: main_gun
@@ -302,19 +432,111 @@ views:
         - id: long
           weight: 1
           cells:
-          - '  ▴  '
-          - ' ▟▓▙ '
-          - ' ╻▓╻ '
-          - '  │  '
-          - '  │  '
+          - '      ▴▴      '
+          - '    ╽╽▓▓╽╽    '
+          - '      ││      '
         - id: probe
           weight: 1
           cells:
-          - '  ▴  '
-          - ' ▟▓▙ '
-          - ' │█│ '
-          - '  █  '
-          - '  │  '
+          - '      ▴▴      '
+          - '    ││██││    '
+          - '      ││      '
+    - id: medium
+      name: Medium
+      sections:
+      - id: thrusters
+        name: Thruster Fork
+        primary_property: thrusters
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: fork
+          weight: 1
+          cells:
+          - '    ▓▓    '
+          - '    YY    '
+        - id: split
+          weight: 1
+          cells:
+          - '    ▓▓    '
+          - 'YY  YY    '
+      - id: drive_nodes
+        name: Drive Nodes
+        primary_property: spindrive
+        secondary_properties:
+        - radiator
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: open
+          weight: 1
+          cells:
+          - '  ║║██║║  '
+          - '  ▓▓██▓▓  '
+        - id: veiled
+          weight: 1
+          cells:
+          - '  ◢◢██◣◣  '
+          - '  ◥◥██◤◤  '
+      - id: patrol_spine
+        name: Patrol Spine
+        primary_property: hull
+        secondary_properties:
+        - sensors
+        repeat:
+          min: 1
+          max: 7
+        variants:
+        - id: sensor_rib
+          weight: 1
+          cells:
+          - '  ┌┌██┐┐  '
+          - '  └└██┘┘  '
+        - id: plain_rib
+          weight: 1
+          cells:
+          - '  ◢◢██◣◣  '
+          - '  ◥◥██◤◤  '
+      - id: sensor_crown
+        name: Sensor Crown
+        primary_property: sensors
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: crown
+          weight: 1
+          cells:
+          - '◢◢████◣◣  '
+          - '  ◇◇██    '
+        - id: dish
+          weight: 1
+          cells:
+          - '  ◢◢██◣◣  '
+          - '  ◥◥██◤◤  '
+      - id: needle
+        name: Needle Prow
+        primary_property: main_gun
+        secondary_properties:
+        - sensors
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: long
+          weight: 1
+          cells:
+          - '    ▴▴    '
+          - '    ││    '
+        - id: probe
+          weight: 1
+          cells:
+          - '    ▴▴    '
+          - '    ██    '
     - id: compact
       name: Compact
       sections:
@@ -329,8 +551,7 @@ views:
         - id: drive
           weight: 1
           cells:
-          - ' █ '
-          - ' Y '
+          - '  ██  '
       - id: body
         name: Body
         primary_property: hull
@@ -343,13 +564,11 @@ views:
         - id: spine
           weight: 1
           cells:
-          - '◀█ '
-          - ' █ '
+          - '◀◀██  '
         - id: sensor
           weight: 1
           cells:
-          - 'R◇ '
-          - ' █ '
+          - 'RR◇◇  '
       - id: prow
         name: Prow
         primary_property: weapons
@@ -361,6 +580,5 @@ views:
         - id: needle
           weight: 1
           cells:
-          - ' ▴ '
-          - ' ▓ '
-          - ' │ '
+          - '  ▴▴  '
+          - '  ││  '

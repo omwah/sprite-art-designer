@@ -26,19 +26,23 @@ views:
         - id: tendons
           weight: 1
           cells:
+          - '     '
           - ' Y   '
           - 'YY╲▓ '
           - Y▒██▓
           - 'YY╱▓ '
           - '     '
+          - '     '
         - id: spasm
           weight: 1
           cells:
+          - '     '
           - ' YY  '
           - 'Y╲▒▓ '
           - Y███▓
           - 'Y╱▒▓ '
           - '  Y  '
+          - '     '
       - id: marrow_knot
         name: Marrow Knot
         primary_property: spindrive
@@ -51,19 +55,23 @@ views:
         - id: joint
           weight: 1
           cells:
+          - '    '
           - ' ◢▒◣'
           - ╱███
           - █☉██
           - ╲███
           - ' ◥▒◤'
+          - '    '
         - id: scar
           weight: 1
           cells:
+          - '    '
           - '  ▴ '
           - ◢█▒◣
           - ██◊█
           - ◥█▒◤
           - '  ▾ '
+          - '    '
       - id: bound_spars
         name: Bound Spars
         primary_property: hull
@@ -76,19 +84,23 @@ views:
         - id: bones
           weight: 1
           cells:
+          - '    '
           - ╲  ╱
           - ▓██▓
           - █▒▒█
           - ▓██▓
           - ╱  ╲
+          - '    '
         - id: muscle
           weight: 1
           cells:
+          - '    '
           - ◢▒▒◣
           - █▓▓█
           - █◊▒█
           - █▓▓█
           - ◥▒▒◤
+          - '    '
       - id: nerve_cluster
         name: Nerve Cluster
         primary_property: sensors
@@ -101,19 +113,23 @@ views:
         - id: eye
           weight: 1
           cells:
+          - '     '
           - ' ◢█◣ '
           - █☉███
           - █████
           - █◇▒██
           - ' ◥█◤ '
+          - '     '
         - id: many_eyes
           weight: 1
           cells:
+          - '     '
           - ' R R '
           - ◢◇█◇◣
           - █████
           - ◥█◇█◤
           - '  ▾  '
+          - '     '
       - id: hardened_beak
         name: Hardened Beak
         primary_property: main_gun
@@ -126,18 +142,149 @@ views:
           weight: 1
           cells:
           - '    '
+          - '    '
           - '◢▒▙ '
           - ██▓▶
           - '◥▒▛ '
+          - '    '
           - '    '
         - id: barb
           weight: 1
           cells:
           - '    '
+          - '    '
           - '╲█▙ '
           - █▒▓▶
           - '╱█▛ '
           - '    '
+          - '    '
+    - id: medium
+      name: Medium
+      sections:
+      - id: sinew_drive
+        name: Sinew Drive
+        primary_property: thrusters
+        secondary_properties:
+        - reactor
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: tendons
+          weight: 1
+          cells:
+          - ' Y  '
+          - 'YY╲ '
+          - Y▒█▓
+          - 'YY╱ '
+          - '    '
+        - id: spasm
+          weight: 1
+          cells:
+          - ' YY '
+          - 'Y╲▒ '
+          - Y██▓
+          - 'Y╱▒ '
+          - '  Y '
+      - id: marrow_knot
+        name: Marrow Knot
+        primary_property: spindrive
+        secondary_properties:
+        - hull
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: joint
+          weight: 1
+          cells:
+          - ' ◢◣'
+          - ╱██
+          - █☉█
+          - ╲██
+          - ' ◥◤'
+        - id: scar
+          weight: 1
+          cells:
+          - '   '
+          - ◢█◣
+          - ███
+          - ◥█◤
+          - '   '
+      - id: bound_spars
+        name: Bound Spars
+        primary_property: hull
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 8
+        variants:
+        - id: bones
+          weight: 1
+          cells:
+          - ╲ ╱
+          - ▓█▓
+          - █▒█
+          - ▓█▓
+          - ╱ ╲
+        - id: muscle
+          weight: 1
+          cells:
+          - ◢▒◣
+          - █▓█
+          - █◊█
+          - █▓█
+          - ◥▒◤
+      - id: nerve_cluster
+        name: Nerve Cluster
+        primary_property: sensors
+        secondary_properties:
+        - weapons
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: eye
+          weight: 1
+          cells:
+          - ' ◢█ '
+          - █☉██
+          - ████
+          - █◇▒█
+          - ' ◥█ '
+        - id: many_eyes
+          weight: 1
+          cells:
+          - ' R  '
+          - ◢◇█◣
+          - ████
+          - ◥█◇◤
+          - '  ▾ '
+      - id: hardened_beak
+        name: Hardened Beak
+        primary_property: main_gun
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: fang
+          weight: 1
+          cells:
+          - '   '
+          - '◢▒ '
+          - ██▶
+          - '◥▒ '
+          - '   '
+        - id: barb
+          weight: 1
+          cells:
+          - '   '
+          - '╲█ '
+          - █▒▶
+          - '╱█ '
+          - '   '
     - id: compact
       name: Compact
       sections:
@@ -211,19 +358,15 @@ views:
         - id: tendons
           weight: 1
           cells:
-          - '  ▓  '
-          - ' ▓█▓ '
-          - ' ╱█╲ '
-          - 'YY▒Y '
-          - ' YYY '
+          - '      ▓▓      '
+          - '    ╱╱██╲╲    '
+          - '    YYYYYY    '
         - id: spasm
           weight: 1
           cells:
-          - '  ▓  '
-          - ' ▓█▓ '
-          - Y▒█▒Y
-          - 'Y╱█╲ '
-          - ' YYY '
+          - '      ▓▓      '
+          - '  YY▒▒██▒▒YY  '
+          - '    YYYYYY    '
       - id: marrow_knot
         name: Marrow Knot
         primary_property: spindrive
@@ -236,17 +379,13 @@ views:
         - id: joint
           weight: 1
           cells:
-          - ◢███◣
-          - ▒███▒
-          - ◥█☉█◤
-          - ' ╲█╱ '
+          - '  ◢◢██████◣◣  '
+          - '  ◥◥██☉☉██◤◤  '
         - id: scar
           weight: 1
           cells:
-          - ' ◢█◣ '
-          - ◀▒◊▒▶
-          - ' ███ '
-          - ' ◥█◤ '
+          - '    ◢◢██◣◣    '
+          - '    ██████    '
       - id: bound_spars
         name: Bound Spars
         primary_property: hull
@@ -259,17 +398,13 @@ views:
         - id: bones
           weight: 1
           cells:
-          - ╲▓█▓╱
-          - ' █▒█ '
-          - ' █▒█ '
-          - ╱▓█▓╲
+          - '  ╲╲▓▓██▓▓╱╱  '
+          - '    ██▒▒██    '
         - id: muscle
           weight: 1
           cells:
-          - ◢███◣
-          - ▒▓▒▓▒
-          - ▒▓◊▓▒
-          - ◥███◤
+          - '  ◢◢██████◣◣  '
+          - '  ▒▒▓▓◊◊▓▓▒▒  '
       - id: nerve_cluster
         name: Nerve Cluster
         primary_property: sensors
@@ -282,19 +417,15 @@ views:
         - id: eye
           weight: 1
           cells:
-          - ' ███ '
-          - ◢███◣
-          - ███▒█
-          - ◥☉█◇◤
-          - ' ███ '
+          - '    ██████    '
+          - '  ██████▒▒██  '
+          - '    ██████    '
         - id: many_eyes
           weight: 1
           cells:
-          - ' ◢█◣ '
-          - 'R◇██ '
-          - ' ██◇▶'
-          - 'R◇██ '
-          - ' ◥█◤ '
+          - '    ◢◢██◣◣    '
+          - '    ████◇◇▶▶  '
+          - '    ◥◥██◤◤    '
       - id: hardened_beak
         name: Hardened Beak
         primary_property: main_gun
@@ -306,17 +437,110 @@ views:
         - id: fang
           weight: 1
           cells:
-          - '  ▴  '
-          - ' ▟▓▙ '
-          - ' ▒█▒ '
-          - ' ◥█◤ '
+          - '      ▴▴      '
+          - '    ▒▒██▒▒    '
         - id: barb
           weight: 1
           cells:
-          - '  ▴  '
-          - ' ▟▓▙ '
-          - ' █▒█ '
-          - ' ╱█╲ '
+          - '      ▴▴      '
+          - '    ██▒▒██    '
+    - id: medium
+      name: Medium
+      sections:
+      - id: sinew_drive
+        name: Sinew Drive
+        primary_property: thrusters
+        secondary_properties:
+        - reactor
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: tendons
+          weight: 1
+          cells:
+          - '    ▓▓    '
+          - 'YYYY▒▒YY  '
+        - id: spasm
+          weight: 1
+          cells:
+          - '    ▓▓    '
+          - 'YY╱╱██╲╲  '
+      - id: marrow_knot
+        name: Marrow Knot
+        primary_property: spindrive
+        secondary_properties:
+        - hull
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: joint
+          weight: 1
+          cells:
+          - ◢◢██████◣◣
+          - '  ╲╲██╱╱  '
+        - id: scar
+          weight: 1
+          cells:
+          - '  ◢◢██◣◣  '
+          - '  ◥◥██◤◤  '
+      - id: bound_spars
+        name: Bound Spars
+        primary_property: hull
+        secondary_properties:
+        - armor
+        repeat:
+          min: 1
+          max: 8
+        variants:
+        - id: bones
+          weight: 1
+          cells:
+          - ╲╲▓▓██▓▓╱╱
+          - ╱╱▓▓██▓▓╲╲
+        - id: muscle
+          weight: 1
+          cells:
+          - ◢◢██████◣◣
+          - ◥◥██████◤◤
+      - id: nerve_cluster
+        name: Nerve Cluster
+        primary_property: sensors
+        secondary_properties:
+        - weapons
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: eye
+          weight: 1
+          cells:
+          - '  ██████  '
+          - ◥◥☉☉██◇◇◤◤
+        - id: many_eyes
+          weight: 1
+          cells:
+          - '  ◢◢██◣◣  '
+          - 'RR◇◇████  '
+      - id: hardened_beak
+        name: Hardened Beak
+        primary_property: main_gun
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: fang
+          weight: 1
+          cells:
+          - '    ▴▴    '
+          - '  ◥◥██◤◤  '
+        - id: barb
+          weight: 1
+          cells:
+          - '    ▴▴    '
+          - '  ╱╱██╲╲  '
     - id: compact
       name: Compact
       sections:
@@ -331,8 +555,7 @@ views:
         - id: drive
           weight: 1
           cells:
-          - ◀▒▶
-          - ' Y '
+          - ◀◀▒▒▶▶
       - id: body
         name: Body
         primary_property: hull
@@ -345,13 +568,11 @@ views:
         - id: bone
           weight: 1
           cells:
-          - █▒█
-          - ╱█╲
+          - ██▒▒██
         - id: muscle
           weight: 1
           cells:
-          - ▒◊▒
-          - ◥█◤
+          - ▒▒◊◊▒▒
       - id: prow
         name: Prow
         primary_property: weapons
@@ -363,6 +584,5 @@ views:
         - id: fang
           weight: 1
           cells:
-          - ' ▴ '
-          - ◥▓◤
-          - ' █ '
+          - '  ▴▴  '
+          - '  ██  '

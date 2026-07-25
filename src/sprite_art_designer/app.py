@@ -38,6 +38,7 @@ from sprite_art import (
     Variant,
     View,
     generate_rotated_view,
+    selected_tier,
     selected_variants,
 )
 from sprite_art.model import SCHEMA_VERSION
@@ -217,10 +218,34 @@ def _new_sprite(sprite_id: str, name: str, kind: str) -> Sprite:
                                     id="hull",
                                     name="Hull",
                                     primary_property="hull",
-                                    variants=[_blank_variant("hull_1", 8, 3)],
+                                    variants=[_blank_variant("hull_1", 8, 7)],
                                 )
                             ],
-                        )
+                        ),
+                        Tier(
+                            id="medium",
+                            name="Medium",
+                            sections=[
+                                Section(
+                                    id="hull",
+                                    name="Hull",
+                                    primary_property="hull",
+                                    variants=[_blank_variant("hull_1", 6, 5)],
+                                )
+                            ],
+                        ),
+                        Tier(
+                            id="compact",
+                            name="Compact",
+                            sections=[
+                                Section(
+                                    id="hull",
+                                    name="Hull",
+                                    primary_property="hull",
+                                    variants=[_blank_variant("hull_1", 4, 3)],
+                                )
+                            ],
+                        ),
                     ],
                 )
             },
@@ -280,7 +305,7 @@ class EdgeArtDesigner(App[None]):
         self.editor = EditorState.load(asset_root)
         self.selection: Selection | None = None
         self.selected_glyph = "█"
-        self.preview_size = (56, 12)
+        self.preview_size = (40, 7)
         self.highlight_preview = False
         self.preview_seed = 7
         self.current_archetype = "humanoid_diplomat"
@@ -532,10 +557,14 @@ class EdgeArtDesigner(App[None]):
         persist_variant = self._tree_variant_selection_persists
         self._tree_variant_selection_persists = True
         self.selection = selection
+        self.call_after_refresh(self._sync_tree_cursor_to_selection)
         selected_view = self._view_for_structure(selection.item)
         if selected_view is not None and self.current_view_id != selected_view.id:
             self.current_view_id = selected_view.id
             self._refresh_preview_controls()
+        selected_tier = self._tier_for_structure(selection.item)
+        if selected_tier is not None:
+            self._set_preview_size_for_tier(selected_tier)
         self._populate_inspector()
         canvas = self.query_one("#art-canvas", ArtCanvas)
         if selection.kind == "variant":
@@ -578,6 +607,24 @@ class EdgeArtDesigner(App[None]):
                     for variant in section.variants
                 ):
                     return view
+        return None
+
+    def _tier_for_structure(
+        self,
+        item: Sprite | View | Tier | Section | Variant,
+    ) -> Tier | None:
+        for view in self.editor.current_sprite.views.values():
+            for tier in view.tiers:
+                if tier is item:
+                    return tier
+                if any(section is item for section in tier.sections):
+                    return tier
+                if any(
+                    variant is item
+                    for section in tier.sections
+                    for variant in section.variants
+                ):
+                    return tier
         return None
 
     def _populate_inspector(self) -> None:
@@ -782,7 +829,11 @@ class EdgeArtDesigner(App[None]):
             custom_size = self.query_one("#preview-custom-size", Input)
             custom_size.display = value == "custom"
             if value != "custom":
-                self.preview_size = self._parse_preview_size(value)
+                size = self._parse_preview_size(value)
+                if size == self.preview_size:
+                    return
+                self.preview_size = size
+                self._select_tier_for_preview_size()
                 self._refresh_variant_labels()
                 self._refresh_preview()
 
@@ -796,6 +847,25 @@ class EdgeArtDesigner(App[None]):
             self.current_view_id = next(iter(sprite.views))
         view_select.value = self.current_view_id
         self._refresh_facing_options()
+
+    def _set_preview_size_for_tier(self, tier: Tier) -> None:
+        if tier.id == "compact":
+            size = (18, 3)
+        elif tier.id == "medium":
+            size = (30, 5)
+        else:
+            size = (40, 7)
+        self.preview_size = size
+        self.query_one("#preview-size", Select).value = f"{size[0]}x{size[1]}"
+
+    def _select_tier_for_preview_size(self) -> None:
+        tier = selected_tier(
+            self.editor.current_sprite,
+            width=self.preview_size[0],
+            height=self.preview_size[1],
+            view_id=self.current_view_id,
+        )
+        self._select_tree_item(tier, persist_variant=False)
 
     def _refresh_facing_options(self) -> None:
         view = self.editor.current_sprite.views[self.current_view_id]
@@ -1002,7 +1072,7 @@ class EdgeArtDesigner(App[None]):
                 size_value = self.query_one("#preview-custom-size", Input).value
             size = self._parse_preview_size(size_value)
         except ValueError:
-            self.notify("Use a size such as 18x3 or 56x12", severity="error")
+            self.notify("Use a size such as 18x3 or 40x7", severity="error")
             return
         self.preview_seed = seed
         self.preview_size = size

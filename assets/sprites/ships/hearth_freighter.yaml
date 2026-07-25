@@ -32,6 +32,7 @@ views:
           - Y██▓
           - 'Y▜▓ '
           - '    '
+          - '    '
         - id: patched
           weight: 1
           cells:
@@ -40,6 +41,7 @@ views:
           - ' ▟▓ '
           - Y██▓
           - ' ▜▓ '
+          - '    '
           - '    '
       - id: machine_shop
         name: Machine Shop
@@ -59,6 +61,7 @@ views:
           - │▒▒│
           - └──┘
           - ' ▾  '
+          - '    '
         - id: patched
           weight: 1
           cells:
@@ -67,6 +70,7 @@ views:
           - █▒◇█
           - █░▒█
           - ◥██◤
+          - '    '
           - '    '
       - id: cargo_modules
         name: Cargo Modules
@@ -86,6 +90,7 @@ views:
           - │▒◇▒▒│
           - └────┘
           - '      '
+          - '      '
         - id: pods
           weight: 1
           cells:
@@ -95,6 +100,7 @@ views:
           - ██◇▒██
           - ' ╱  ╲ '
           - ' ◥██◤ '
+          - '      '
       - id: hearth_drum
         name: Hearth Drum
         primary_property: habitat
@@ -113,6 +119,7 @@ views:
           - █☉████
           - ╲    ╱
           - ' ◥██◤ '
+          - '      '
         - id: locked
           weight: 1
           cells:
@@ -121,6 +128,7 @@ views:
           - █▒◇▒▒█
           - █▒☉▒▒█
           - ◥████◤
+          - '      '
           - '      '
       - id: mining_prow
         name: Mining Prow
@@ -140,6 +148,7 @@ views:
           - '  ▜  '
           - '     '
           - '     '
+          - '     '
         - id: tractor
           weight: 1
           cells:
@@ -149,6 +158,135 @@ views:
           - ' ◥█◤ '
           - '     '
           - '     '
+          - '     '
+    - id: medium
+      name: Medium
+      sections:
+      - id: retrofitted_drive
+        name: Retrofitted Drive
+        primary_property: thrusters
+        secondary_properties:
+        - spindrive
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: fusion
+          weight: 1
+          cells:
+          - '   '
+          - 'Y▟ '
+          - Y█▓
+          - 'Y▜ '
+          - '   '
+        - id: patched
+          weight: 1
+          cells:
+          - 'Y▶ '
+          - ' ▟ '
+          - Y█▓
+          - ' ▜ '
+          - '   '
+      - id: machine_shop
+        name: Machine Shop
+        primary_property: utility
+        secondary_properties:
+        - reactor
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: shop
+          weight: 1
+          cells:
+          - ┌─┐
+          - │◇│
+          - │▒│
+          - └─┘
+          - ' ▾ '
+        - id: patched
+          weight: 1
+          cells:
+          - ◢█◣
+          - █▒█
+          - █░█
+          - ◥█◤
+          - '   '
+      - id: cargo_modules
+        name: Cargo Modules
+        primary_property: cargo
+        secondary_properties:
+        - hull
+        repeat:
+          min: 1
+          max: 9
+        variants:
+        - id: stack
+          weight: 1
+          cells:
+          - ┌───┐
+          - │▒▒▒│
+          - │▒◇▒│
+          - └───┘
+          - '     '
+        - id: pods
+          weight: 1
+          cells:
+          - ' ╲   '
+          - ██▒▒█
+          - ██◇▒█
+          - ' ╱   '
+          - ' ◥██ '
+      - id: hearth_drum
+        name: Hearth Drum
+        primary_property: habitat
+        secondary_properties:
+        - bridge
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: turning
+          weight: 1
+          cells:
+          - ╱   ╲
+          - █◇███
+          - █☉███
+          - ╲   ╱
+          - ' ◥██ '
+        - id: locked
+          weight: 1
+          cells:
+          - ◢███◣
+          - █▒◇▒█
+          - █▒☉▒█
+          - ◥███◤
+          - '     '
+      - id: mining_prow
+        name: Mining Prow
+        primary_property: main_gun
+        secondary_properties:
+        - utility
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: laser
+          weight: 1
+          cells:
+          - '  ▟ '
+          - ──█▶
+          - '  ▜ '
+          - '    '
+          - '    '
+        - id: tractor
+          weight: 1
+          cells:
+          - ' ◢█ '
+          - ─█◇▶
+          - ' ◥█ '
+          - '    '
+          - '    '
     - id: compact
       name: Compact
       sections:
@@ -222,17 +360,13 @@ views:
         - id: fusion
           weight: 1
           cells:
-          - '   ▓  '
-          - '▴ ▓█▓ '
-          - 'Y ▜█▛ '
-          - '  YYY '
+          - '      ▓▓      '
+          - 'YY  ▜▜██▛▛    '
         - id: patched
           weight: 1
           cells:
-          - '   ▓  '
-          - 'Y▓▓█▓ '
-          - 'Y▴▜█▛ '
-          - ' Y Y  '
+          - '      ▓▓      '
+          - 'YY▴▴▜▜██▛▛    '
       - id: machine_shop
         name: Machine Shop
         primary_property: utility
@@ -245,17 +379,13 @@ views:
         - id: shop
           weight: 1
           cells:
-          - ' ┌──┐ '
-          - ' │▒▒│ '
-          - R│◇▒│▶
-          - ' └──┘ '
+          - '  ┌┌────┐┐    '
+          - 'RR││◇◇▒▒││▶▶  '
         - id: patched
           weight: 1
           cells:
-          - ' ◢██◣ '
-          - ' █◇▒█ '
-          - ' █▒░█ '
-          - ' ◥██◤ '
+          - '  ◢◢████◣◣    '
+          - '  ██▒▒░░██    '
       - id: cargo_modules
         name: Cargo Modules
         primary_property: cargo
@@ -268,21 +398,15 @@ views:
         - id: stack
           weight: 1
           cells:
-          - ' ┌──┐ '
-          - ' │▒▒│ '
-          - ' │▒▒│ '
-          - ' │▒◇│ '
-          - ' │▒▒│ '
-          - ' └──┘ '
+          - '  ┌┌────┐┐    '
+          - '  ││▒▒▒▒││    '
+          - '  ││▒▒▒▒││    '
         - id: pods
           weight: 1
           cells:
-          - '  ██  '
-          - ◢╲██╱◣
-          - █ ▒▒ █
-          - █ ▒◇ █
-          - ◥╱██╲◤
-          - '  ██  '
+          - '    ████      '
+          - '██  ▒▒▒▒  ██  '
+          - '◥◥╱╱████╲╲◤◤  '
       - id: hearth_drum
         name: Hearth Drum
         primary_property: habitat
@@ -295,21 +419,15 @@ views:
         - id: turning
           weight: 1
           cells:
-          - ' ╱██╲ '
-          - ◢ ██ ◣
-          - █ ██ █
-          - █ ██ █
-          - ◥ ◇☉ ◤
-          - ' ╲██╱ '
+          - '  ╱╱████╲╲    '
+          - '██  ████  ██  '
+          - '◥◥  ◇◇☉☉  ◤◤  '
         - id: locked
           weight: 1
           cells:
-          - ' ◢██◣ '
-          - ' █▒▒█ '
-          - ' █▒▒█ '
-          - ' █◇☉█ '
-          - ' █▒▒█ '
-          - ' ◥██◤ '
+          - '  ◢◢████◣◣    '
+          - '  ██▒▒▒▒██    '
+          - '  ██▒▒▒▒██    '
       - id: mining_prow
         name: Mining Prow
         primary_property: main_gun
@@ -322,19 +440,117 @@ views:
         - id: laser
           weight: 1
           cells:
-          - '  ▴   '
-          - '  ▓   '
-          - ' ▜█▛  '
-          - '  │   '
-          - '  │   '
+          - '    ▴▴        '
+          - '  ▜▜██▛▛      '
+          - '    ││        '
         - id: tractor
           weight: 1
           cells:
-          - '  ▴   '
-          - ' ◢█◣  '
-          - ' █◇█  '
-          - ' ◥█◤  '
-          - '  │   '
+          - '    ▴▴        '
+          - '  ██◇◇██      '
+          - '    ││        '
+    - id: medium
+      name: Medium
+      sections:
+      - id: retrofitted_drive
+        name: Retrofitted Drive
+        primary_property: thrusters
+        secondary_properties:
+        - spindrive
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: fusion
+          weight: 1
+          cells:
+          - '    ▓▓    '
+          - '  YYYYYY  '
+        - id: patched
+          weight: 1
+          cells:
+          - '    ▓▓    '
+          - 'YY  YY    '
+      - id: machine_shop
+        name: Machine Shop
+        primary_property: utility
+        secondary_properties:
+        - reactor
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: shop
+          weight: 1
+          cells:
+          - '┌┌────┐┐  '
+          - '└└────┘┘  '
+        - id: patched
+          weight: 1
+          cells:
+          - '◢◢████◣◣  '
+          - '◥◥████◤◤  '
+      - id: cargo_modules
+        name: Cargo Modules
+        primary_property: cargo
+        secondary_properties:
+        - hull
+        repeat:
+          min: 1
+          max: 9
+        variants:
+        - id: stack
+          weight: 1
+          cells:
+          - '┌┌────┐┐  '
+          - '││▒▒◇◇││  '
+          - '└└────┘┘  '
+        - id: pods
+          weight: 1
+          cells:
+          - '  ████    '
+          - '  ▒▒◇◇  ██'
+          - '  ████    '
+      - id: hearth_drum
+        name: Hearth Drum
+        primary_property: habitat
+        secondary_properties:
+        - bridge
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: turning
+          weight: 1
+          cells:
+          - '╱╱████╲╲  '
+          - '  ████  ██'
+          - '╲╲████╱╱  '
+        - id: locked
+          weight: 1
+          cells:
+          - '◢◢████◣◣  '
+          - '██◇◇☉☉██  '
+          - '◥◥████◤◤  '
+      - id: mining_prow
+        name: Mining Prow
+        primary_property: main_gun
+        secondary_properties:
+        - utility
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: laser
+          weight: 1
+          cells:
+          - '  ▴▴      '
+          - '  ││      '
+        - id: tractor
+          weight: 1
+          cells:
+          - '  ▴▴      '
+          - '◥◥██◤◤    '
     - id: compact
       name: Compact
       sections:
@@ -349,8 +565,7 @@ views:
         - id: drive
           weight: 1
           cells:
-          - '██ '
-          - ' Y '
+          - '████  '
       - id: body
         name: Body
         primary_property: hull
@@ -363,13 +578,11 @@ views:
         - id: cargo
           weight: 1
           cells:
-          - █▒█
-          - ███
+          - ██▒▒██
         - id: home
           weight: 1
           cells:
-          - █☉█
-          - ▌█▐
+          - ██☉☉██
       - id: prow
         name: Prow
         primary_property: weapons
@@ -381,6 +594,5 @@ views:
         - id: laser
           weight: 1
           cells:
-          - ' ▴ '
-          - ' █ '
-          - ' │ '
+          - '  ▴▴  '
+          - '  ││  '

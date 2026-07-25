@@ -159,6 +159,134 @@ views:
           - ◥████
           - '  ◥█◤'
           - '     '
+    - id: medium
+      name: Medium
+      sections:
+      - id: ciliary_drive
+        name: Ciliary Drive
+        primary_property: thrusters
+        secondary_properties:
+        - spindrive
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: fan
+          weight: 1
+          cells:
+          - 'Y◢ '
+          - Y█▓
+          - Y█▓
+          - 'Y◥ '
+          - '   '
+        - id: barbs
+          weight: 1
+          cells:
+          - 'Y▟ '
+          - Y█▓
+          - Y▒▓
+          - 'Y▜ '
+          - '   '
+      - id: rear_carapace
+        name: Rear Carapace
+        primary_property: armor
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: pearl
+          weight: 1
+          cells:
+          - ◢███
+          - ████
+          - █▒◇█
+          - ████
+          - ◥███
+        - id: scarred
+          weight: 1
+          cells:
+          - ◢███
+          - ██◇█
+          - █▒▒█
+          - ████
+          - ◥███
+      - id: weapon_ring
+        name: Weapon Ring
+        primary_property: weapons
+        secondary_properties:
+        - hangar
+        - hull
+        repeat:
+          min: 1
+          max: 5
+        variants:
+        - id: ports
+          weight: 1
+          cells:
+          - ◢███◣
+          - █◇█◇█
+          - ██☉██
+          - █◇███
+          - ◥███◤
+        - id: sealed
+          weight: 1
+          cells:
+          - ' ◢██ '
+          - ◢███◣
+          - █▒◊▒█
+          - ◥███◤
+          - ' ◥██ '
+      - id: troop_lobe
+        name: Troop Lobe
+        primary_property: hangar
+        secondary_properties:
+        - habitat
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: open
+          weight: 1
+          cells:
+          - ◢█◇█
+          - ████
+          - ██☉█
+          - ████
+          - ◥███
+        - id: heavy
+          weight: 1
+          cells:
+          - ◢███
+          - █▒▒█
+          - ██◇█
+          - ████
+          - ◥███
+      - id: beak
+        name: Carapace Beak
+        primary_property: screens
+        secondary_properties:
+        - sensors
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: hook
+          weight: 1
+          cells:
+          - ' ◢█ '
+          - ◢██▙
+          - ██◇▶
+          - ◥██▛
+          - '  ◥ '
+        - id: round
+          weight: 1
+          cells:
+          - '  ◢◣'
+          - ◢███
+          - ██☉▶
+          - ◥███
+          - '  ◥◤'
     - id: compact
       name: Compact
       sections:
@@ -232,17 +360,13 @@ views:
         - id: fan
           weight: 1
           cells:
-          - '  ▓▓   '
-          - 'Y▓██▓  '
-          - Y◥██◤ Y
-          - ' YYYY  '
+          - '    ▓▓▓▓      '
+          - YY◥◥████◤◤  YY
         - id: barbs
           weight: 1
           cells:
-          - '  ▓▓   '
-          - ▴▓██▓ ▴
-          - Y▜█▒▛ Y
-          - ' YYYY  '
+          - '    ▓▓▓▓      '
+          - YY▜▜██▒▒▛▛  YY
       - id: rear_carapace
         name: Rear Carapace
         primary_property: armor
@@ -254,19 +378,15 @@ views:
         - id: pearl
           weight: 1
           cells:
-          - ◢█████◣
-          - ███████
-          - ███◇███
-          - ◥██▒██◤
-          - ' ◥███◤ '
+          - ◢◢██████████◣◣
+          - ██████◇◇██████
+          - '  ◥◥██████◤◤  '
         - id: scarred
           weight: 1
           cells:
-          - ◢█████◣
-          - █▒███▒█
-          - ◥█◇▒██◤
-          - ' ██▒██ '
-          - ' ◥███◤ '
+          - ◢◢██████████◣◣
+          - ◥◥██◇◇▒▒████◤◤
+          - '  ◥◥██████◤◤  '
       - id: weapon_ring
         name: Weapon Ring
         primary_property: weapons
@@ -280,21 +400,15 @@ views:
         - id: ports
           weight: 1
           cells:
-          - ' ◢███◣ '
-          - ' ███◇█ '
-          - ' █◇███▶'
-          - ' ██☉██ '
-          - 'R█◇█◇█ '
-          - ' ◥███◤ '
+          - '  ◢◢██████◣◣  '
+          - '  ██◇◇██████▶▶'
+          - 'RR██◇◇██◇◇██  '
         - id: sealed
           weight: 1
           cells:
-          - '  ◢█◣  '
-          - ' ◢███◣ '
-          - ' ██▒██ '
-          - ' ██◊██ '
-          - ' ◥█▒█◤ '
-          - '  ◥█◤  '
+          - '    ◢◢██◣◣    '
+          - '  ████▒▒████  '
+          - '  ◥◥██▒▒██◤◤  '
       - id: troop_lobe
         name: Troop Lobe
         primary_property: hangar
@@ -307,19 +421,15 @@ views:
         - id: open
           weight: 1
           cells:
-          - ◢█████◣
-          - █████▒█
-          - █◇█☉██◤
-          - '◥█████ '
-          - ' ◥███◤ '
+          - ◢◢██████████◣◣
+          - ██◇◇██☉☉████◤◤
+          - '  ◥◥██████◤◤  '
         - id: heavy
           weight: 1
           cells:
-          - ◢█████◣
-          - ███████
-          - ◥█▒◇███
-          - ' █▒███◤'
-          - ' ◥███◤ '
+          - ◢◢██████████◣◣
+          - ◥◥██▒▒◇◇██████
+          - '  ◥◥██████◤◤  '
       - id: beak
         name: Carapace Beak
         primary_property: screens
@@ -332,19 +442,115 @@ views:
         - id: hook
           weight: 1
           cells:
-          - '  ▟▴▙  '
-          - ' ◢█▓██ '
-          - ' ██◇█◤ '
-          - ' ◥███  '
-          - '  ◥█◤  '
+          - '    ▟▟▴▴▙▙    '
+          - '  ████◇◇██◤◤  '
+          - '    ◥◥██◤◤    '
         - id: round
           weight: 1
           cells:
-          - ' ◢█▴█◣ '
-          - ' ██▓██ '
-          - ' ◥█☉█◤ '
-          - '  ███  '
-          - '  ◥█◤  '
+          - '  ◢◢██▴▴██◣◣  '
+          - '  ◥◥██☉☉██◤◤  '
+          - '    ◥◥██◤◤    '
+    - id: medium
+      name: Medium
+      sections:
+      - id: ciliary_drive
+        name: Ciliary Drive
+        primary_property: thrusters
+        secondary_properties:
+        - spindrive
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: fan
+          weight: 1
+          cells:
+          - '  ▓▓▓▓    '
+          - 'YYYYYYYY  '
+        - id: barbs
+          weight: 1
+          cells:
+          - '  ▓▓▓▓    '
+          - 'YYYYYYYY  '
+      - id: rear_carapace
+        name: Rear Carapace
+        primary_property: armor
+        secondary_properties: []
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: pearl
+          weight: 1
+          cells:
+          - ██████████
+          - ████▒▒████
+        - id: scarred
+          weight: 1
+          cells:
+          - ██████████
+          - ████▒▒████
+      - id: weapon_ring
+        name: Weapon Ring
+        primary_property: weapons
+        secondary_properties:
+        - hangar
+        - hull
+        repeat:
+          min: 1
+          max: 5
+        variants:
+        - id: ports
+          weight: 1
+          cells:
+          - ◢◢██████◣◣
+          - ████☉☉████
+          - ◥◥██████◤◤
+        - id: sealed
+          weight: 1
+          cells:
+          - '  ◢◢██◣◣  '
+          - ████◊◊████
+          - '  ◥◥██◤◤  '
+      - id: troop_lobe
+        name: Troop Lobe
+        primary_property: hangar
+        secondary_properties:
+        - habitat
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: open
+          weight: 1
+          cells:
+          - ██████████
+          - ██████████
+        - id: heavy
+          weight: 1
+          cells:
+          - ██████████
+          - ██▒▒██████
+      - id: beak
+        name: Carapace Beak
+        primary_property: screens
+        secondary_properties:
+        - sensors
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: hook
+          weight: 1
+          cells:
+          - '  ▟▟▴▴▙▙  '
+          - '◥◥██████  '
+        - id: round
+          weight: 1
+          cells:
+          - ◢◢██▴▴██◣◣
+          - '  ██████  '
     - id: compact
       name: Compact
       sections:
@@ -359,8 +565,7 @@ views:
         - id: drive
           weight: 1
           cells:
-          - ██▶
-          - ' Y '
+          - ████▶▶
       - id: body
         name: Body
         primary_property: hull
@@ -373,13 +578,11 @@ views:
         - id: shell
           weight: 1
           cells:
-          - █◇█
-          - ◥█◤
+          - ██◇◇██
         - id: ports
           weight: 1
           cells:
-          - █☉█
-          - ▌█▐
+          - ██☉☉██
       - id: prow
         name: Prow
         primary_property: weapons
@@ -391,6 +594,5 @@ views:
         - id: beak
           weight: 1
           cells:
-          - ' ▴ '
-          - ◥█◤
-          - ' █ '
+          - '  ▴▴  '
+          - '  ██  '

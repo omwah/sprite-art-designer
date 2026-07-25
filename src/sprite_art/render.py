@@ -103,6 +103,16 @@ def _select_tier(view: View, width: int, height: int) -> Tier:
     return view.tiers[-1]
 
 
+def selected_tier(sprite: Sprite, *, width: int, height: int, view_id: str) -> Tier:
+    """Return the structural tier selected for an exact render size."""
+
+    if width < 1 or height < 1:
+        raise ValueError("width and height must be positive")
+    if view_id not in sprite.views:
+        raise KeyError(f"sprite {sprite.id!r} has no view {view_id!r}")
+    return _select_tier(sprite.views[view_id], width, height)
+
+
 def _repeat_counts(
     sections: list[Section],
     chosen: list[Variant],
@@ -290,6 +300,41 @@ def _fit_grid(
     return fitted
 
 
+def _add_preview_margin(
+    rows: list[str],
+    highlight_mask: list[str],
+    axis: str,
+) -> tuple[list[str], list[str]]:
+    """Add a one-cell preview margin and project a selected part into it."""
+
+    width = len(rows[0])
+    blank_row = " " * (width + 2)
+    blank_mask = "0" * (width + 2)
+    padded_rows = [f" {row} " for row in rows]
+    padded_mask = [f"0{row}0" for row in highlight_mask]
+    if axis == "horizontal":
+        projected = "".join(
+            "1" if any(row[column] == "1" for row in highlight_mask) else "0"
+            for column in range(width)
+        )
+        margin_mask = f"0{projected}0"
+        return [blank_row, *padded_rows, blank_row], [
+            margin_mask,
+            *padded_mask,
+            margin_mask,
+        ]
+    if axis == "vertical":
+        padded_mask = [
+            f"{'1' if '1' in row else '0'}{row}{'1' if '1' in row else '0'}"
+            for row in highlight_mask
+        ]
+    return [blank_row, *padded_rows, blank_row], [
+        blank_mask,
+        *padded_mask,
+        blank_mask,
+    ]
+
+
 def _paint_grid(
     rows: list[str],
     palette: Palette,
@@ -300,6 +345,7 @@ def _paint_grid(
     height: int,
     reverse_vertical_bias: bool = False,
     highlight_mask: list[str] | None = None,
+    preview_margin_axis: str | None = None,
 ) -> Text:
     output = Text()
     fitted_rows = _fit_grid(
@@ -312,6 +358,14 @@ def _paint_grid(
         if highlight_mask is not None
         else ["0" * width for _ in range(height)]
     )
+    if preview_margin_axis is not None:
+        fitted_rows, fitted_mask = _add_preview_margin(
+            fitted_rows,
+            fitted_mask,
+            preview_margin_axis,
+        )
+        width += 2
+        height += 2
     for y, line in enumerate(fitted_rows):
         for x, glyph in enumerate(line):
             highlighted = fitted_mask[y][x] == "1"
@@ -378,8 +432,9 @@ def render_sprite(
     facing: str | None = None,
     highlight_variant: Variant | None = None,
     variant_overrides: dict[int, Variant] | None = None,
+    preview_margin: bool = False,
 ) -> Text:
-    """Render one exact-sized, deterministic Rich sprite.
+    """Render one deterministic Rich sprite, optionally with a preview margin.
 
     The seed string matches Edge's current ship generator for ship documents,
     allowing the converted horizontal grammars to preserve their identities.
@@ -427,4 +482,5 @@ def render_sprite(
         height,
         reverse_vertical_bias,
         highlight_mask=highlight_mask if highlight_variant is not None else None,
+        preview_margin_axis=view.axis if preview_margin else None,
     )

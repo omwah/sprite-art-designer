@@ -80,6 +80,29 @@ async def test_preview_size_select_supports_custom_size() -> None:
 
 
 @pytest.mark.asyncio
+async def test_preview_size_and_structure_tier_stay_in_sync() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        app.query_one("#preview-size").value = "18x3"
+        await pilot.pause()
+        assert app.selection is not None
+        assert app.selection.kind == "tier"
+        assert app.selection.item.id == "compact"
+
+        tree = app.query_one("#structure-tree", Tree)
+        full_tier = tree.root.children[0].children[0]
+        tree.select_node(full_tier)
+        await pilot.pause()
+        assert app.preview_size == (40, 7)
+
+        compact_variant = tree.root.children[0].children[2].children[0].children[0]
+        tree.select_node(compact_variant)
+        await pilot.pause()
+        assert app.query_one("#preview-size").value == "18x3"
+
+
+@pytest.mark.asyncio
 async def test_question_mark_opens_help_modal() -> None:
     app = EdgeArtDesigner(ROOT / "assets")
     async with app.run_test(size=(140, 50)) as pilot:
@@ -199,6 +222,13 @@ def test_new_generic_sprite_uses_fixed_canvas_model() -> None:
     assert sprite.kind == "generic"
     assert sprite.views["default"].axis == "fixed"
     assert sprite.views["default"].tiers[0].sections[0].variants[0].cells
+
+
+def test_new_ship_sprite_has_full_medium_and_compact_tiers() -> None:
+    sprite = _new_sprite("test_ship", "Test Ship", "ship")
+    tiers = sprite.views["horizontal"].tiers
+    assert [tier.id for tier in tiers] == ["full", "medium", "compact"]
+    assert [tier.cross_axis_size("horizontal") for tier in tiers] == [7, 5, 3]
 
 
 @pytest.mark.asyncio
