@@ -32,6 +32,12 @@ class ArtCanvas(Widget, can_focus=True):
             self.canvas = canvas
             super().__init__()
 
+    class GlyphPicked(Message):
+        def __init__(self, canvas: ArtCanvas, glyph: str) -> None:
+            self.canvas = canvas
+            self.glyph = glyph
+            super().__init__()
+
     variant: Variant | None = None
     selected_glyph: str = "█"
     cursor_x: int = 0
@@ -92,7 +98,18 @@ class ArtCanvas(Widget, can_focus=True):
 
     def on_mouse_down(self, event: events.MouseDown) -> None:
         cell = self._cell_from_event(event)
-        if cell is None or event.button not in (1, 3):
+        if cell is None:
+            return
+        if event.button == 2:
+            assert self.variant is not None
+            glyph = self.variant.cells[cell[1]][cell[0]]
+            self.cursor_x, self.cursor_y = cell
+            self.set_glyph(glyph)
+            self.refresh()
+            self.post_message(self.GlyphPicked(self, glyph))
+            event.stop()
+            return
+        if event.button not in (1, 3):
             return
         self.focus()
         self._painting_button = event.button
@@ -205,11 +222,18 @@ class GlyphPalette(ItemGrid):
                 classes="glyph-button",
             )
 
+    def set_selected_glyph(self, glyph: str) -> None:
+        for index, (candidate, _description) in enumerate(AUTHORING_GLYPHS):
+            button = self.query_one(f"#glyph-{index}", Button)
+            button.variant = "primary" if candidate == glyph else "default"
+
     def on_button_pressed(self, event: Button.Pressed) -> None:
         if not event.button.id or not event.button.id.startswith("glyph-"):
             return
         index = int(event.button.id.removeprefix("glyph-"))
-        self.post_message(self.Selected(AUTHORING_GLYPHS[index][0]))
+        glyph = AUTHORING_GLYPHS[index][0]
+        self.set_selected_glyph(glyph)
+        self.post_message(self.Selected(glyph))
 
 
 class DocumentBar(Horizontal):

@@ -6,6 +6,7 @@ from shutil import copytree
 import pytest
 from textual.widgets import TabbedContent, Tree
 
+from sprite_art.glyphs import AUTHORING_GLYPHS
 from sprite_art_designer.app import EdgeArtDesigner, HelpScreen, _new_sprite
 from sprite_art_designer.widgets import ArtCanvas, PreviewMatrix
 
@@ -268,3 +269,26 @@ async def test_mouse_paint_marks_dirty_and_writes_recovery(
         await pilot.pause(0.6)
         assert app.editor.current_sprite_id in app.editor.dirty_sprites
         assert app.editor.recovery_path(app.editor.current_sprite_id).exists()
+
+
+@pytest.mark.asyncio
+async def test_middle_click_picks_and_highlights_canvas_glyph() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        canvas = app.query_one("#art-canvas", ArtCanvas)
+        assert canvas.variant is not None
+        glyph = canvas.variant.cells[0][0]
+        offset = (
+            canvas.content_region.x - canvas.region.x,
+            canvas.content_region.y - canvas.region.y,
+        )
+        assert await pilot.click("#art-canvas", offset=offset, button=2)
+        await pilot.pause()
+        assert app.selected_glyph == glyph
+        glyph_index = next(
+            index
+            for index, (candidate, _description) in enumerate(AUTHORING_GLYPHS)
+            if candidate == glyph
+        )
+        assert app.query_one(f"#glyph-{glyph_index}").variant == "primary"

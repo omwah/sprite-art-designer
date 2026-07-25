@@ -370,6 +370,7 @@ class EdgeArtDesigner(App[None]):
     def on_mount(self) -> None:
         self._rebuild_tree()
         self.call_after_refresh(self._sync_tree_cursor_to_selection)
+        self._select_glyph(self.selected_glyph)
         self._refresh_palette_fields()
         self._refresh_preview_controls()
         self._refresh_preview()
@@ -706,10 +707,17 @@ class EdgeArtDesigner(App[None]):
     def on_art_canvas_changed(self, event: ArtCanvas.Changed) -> None:
         self._mark_changed()
 
+    def on_art_canvas_glyph_picked(self, event: ArtCanvas.GlyphPicked) -> None:
+        self._select_glyph(event.glyph)
+
     def on_glyph_palette_selected(self, event: GlyphPalette.Selected) -> None:
-        self.selected_glyph = event.glyph
-        self.query_one("#art-canvas", ArtCanvas).set_glyph(event.glyph)
-        shown = "space" if event.glyph == " " else event.glyph
+        self._select_glyph(event.glyph)
+
+    def _select_glyph(self, glyph: str) -> None:
+        self.selected_glyph = glyph
+        self.query_one("#art-canvas", ArtCanvas).set_glyph(glyph)
+        self.query_one("#glyph-palette", GlyphPalette).set_selected_glyph(glyph)
+        shown = "space" if glyph == " " else glyph
         self.query_one("#selected-glyph", Label).update(f"Selected: {shown}")
 
     def on_switch_changed(self, event: Switch.Changed) -> None:
