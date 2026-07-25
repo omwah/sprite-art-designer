@@ -292,3 +292,32 @@ async def test_middle_click_picks_and_highlights_canvas_glyph() -> None:
             if candidate == glyph
         )
         assert app.query_one(f"#glyph-{glyph_index}").variant == "primary"
+
+
+@pytest.mark.asyncio
+async def test_undo_and_redo_restore_canvas_edits() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        canvas = app.query_one("#art-canvas", ArtCanvas)
+        assert canvas.variant is not None
+        original = canvas.variant.cells[0][0]
+        canvas.set_glyph("◆" if original != "◆" else "█")
+        offset = (
+            canvas.content_region.x - canvas.region.x,
+            canvas.content_region.y - canvas.region.y,
+        )
+        assert await pilot.click("#art-canvas", offset=offset)
+        changed = app.query_one("#art-canvas", ArtCanvas).variant
+        assert changed is not None
+        assert changed.cells[0][0] != original
+
+        await pilot.press("ctrl+z")
+        restored = app.query_one("#art-canvas", ArtCanvas).variant
+        assert restored is not None
+        assert restored.cells[0][0] == original
+
+        await pilot.press("ctrl+y")
+        redone = app.query_one("#art-canvas", ArtCanvas).variant
+        assert redone is not None
+        assert redone.cells[0][0] != original

@@ -32,6 +32,7 @@ from textual.widgets.tree import TreeNode
 from sprite_art import (
     PROPERTY_IDS,
     Palette,
+    PaletteCatalog,
     Section,
     Sprite,
     Tier,
@@ -65,6 +66,17 @@ class Selection:
     kind: SelectionKind
     item: Sprite | View | Tier | Section | Variant
     parent: list[Any] | dict[str, View] | None = None
+
+
+@dataclass
+class HistoryEntry:
+    sprites: dict[str, Sprite]
+    palettes: PaletteCatalog
+    current_sprite_id: str
+    current_view_id: str
+    dirty_sprites: set[str]
+    palettes_dirty: bool
+    selection_locator: tuple[str, str, int, int, int] | None
 
 
 class ConfirmScreen(ModalScreen[bool]):
@@ -292,6 +304,9 @@ class EdgeArtDesigner(App[None]):
         ("ctrl+r", "restore_recovery", "Restore recovery"),
         ("ctrl+g", "rotate_vertical", "Generate vertical"),
         ("ctrl+d", "duplicate_item", "Duplicate"),
+        ("ctrl+z", "undo", "Undo"),
+        ("ctrl+y", "redo", "Redo"),
+        ("ctrl+shift+z", "redo", "Redo"),
         ("delete", "delete_item", "Delete"),
         ("h", "toggle_highlight", "Toggle highlight"),
         ("v", "next_variant", "Next variant"),
@@ -319,6 +334,8 @@ class EdgeArtDesigner(App[None]):
         self._transient_variant_override: tuple[int, Variant] | None = None
         self._tree_variant_selection_persists = False
         self._tree_selection_syncs_preview_size = True
+        self._history: list[HistoryEntry] = []
+        self._history_index = -1
 
     def compose(self) -> ComposeResult:
         initial_sprite = self.editor.current_sprite
@@ -375,6 +392,7 @@ class EdgeArtDesigner(App[None]):
         self._refresh_preview_controls()
         self._refresh_preview()
         self._update_dirty_indicator()
+        self._push_history_snapshot()
         if self.editor.has_newer_recovery():
             self.notify(
                 "A newer recovery snapshot exists. Press Ctrl+R to restore it.",
@@ -675,11 +693,105 @@ class EdgeArtDesigner(App[None]):
 
     def _mark_changed(self) -> None:
         self.editor.mark_sprite_dirty()
+        self._push_history_snapshot()
         self._update_dirty_indicator()
         self._refresh_preview()
         if self._recovery_timer is not None:
             self._recovery_timer.stop()
         self._recovery_timer = self.set_timer(0.4, self._write_recovery)
+
+    def _selection_locator(self) -> tuple[str, str, int, int, int] | None:
+        if self.selection is None:
+            return None
+        item = self.selection.item
+        for view_id, view in self.editor.current_sprite.views.items():
+            if item is view:
+                return "view", view_id, -1, -1, -1
+            for tier_index, tier in enumerate(view.tiers):
+                if item is tier:
+                    return "tier", view_id, tier_index, -1, -1
+                for section_index, section in enumerate(tier.sections):
+                    if item is section:
+                        return "section", view_id, tier_index, section_index, -1
+                    for variant_index, variant in enumerate(section.variants):
+                        if item is variant:
+                            return (
+                                "variant",
+                                view_id,
+                                tier_index,
+                                section_index,
+                                variant_index,
+                            )
+        return None
+
+    def _push_history_snapshot(self) -> None:
+        entry = HistoryEntry(
+            sprites=deepcopy(self.editor.sprites),
+            palettes=deepcopy(self.editor.palettes),
+            current_sprite_id=self.editor.current_sprite_id,
+            current_view_id=self.current_view_id,
+            dirty_sprites=set(self.editor.dirty_sprites),
+            palettes_dirty=self.editor.palettes_dirty,
+            selection_locator=self._selection_locator(),
+        )
+        del self._history[self._history_index + 1 :]
+        self._history.append(entry)
+        self._history_index = len(self._history) - 1
+
+    def _selection_from_locator(
+        self,
+        locator: tuple[str, str, int, int, int] | None,
+    ) -> Sprite | View | Tier | Section | Variant | None:
+        if locator is None:
+            return None
+        kind, view_id, tier_index, section_index, variant_index = locator
+        view = self.editor.current_sprite.views.get(view_id)
+        if view is None:
+            return None
+        if kind == "view":
+            return view
+        if not 0 <= tier_index < len(view.tiers):
+            return None
+        tier = view.tiers[tier_index]
+        if kind == "tier":
+            return tier
+        if not 0 <= section_index < len(tier.sections):
+            return None
+        section = tier.sections[section_index]
+        if kind == "section":
+            return section
+        if kind == "variant" and 0 <= variant_index < len(section.variants):
+            return section.variants[variant_index]
+        return None
+
+    def _restore_history_entry(self, entry: HistoryEntry) -> None:
+        self.editor.sprites = deepcopy(entry.sprites)
+        self.editor.palettes = deepcopy(entry.palettes)
+        self.editor.current_sprite_id = entry.current_sprite_id
+        self.editor.dirty_sprites = set(entry.dirty_sprites)
+        self.editor.palettes_dirty = entry.palettes_dirty
+        self.current_view_id = entry.current_view_id
+        self._persistent_variant_overrides.clear()
+        self._transient_variant_override = None
+        self._rebuild_tree(select_item=self._selection_from_locator(entry.selection_locator))
+        self._refresh_preview_controls()
+        self._refresh_palette_fields()
+        self._refresh_preview()
+        self._update_dirty_indicator()
+
+    def action_undo(self) -> None:
+        if self._history_index <= 0:
+            self.notify("Nothing to undo.")
+            return
+        self._history_index -= 1
+        self._restore_history_entry(self._history[self._history_index])
+
+    def action_redo(self) -> None:
+        if self._history_index >= len(self._history) - 1:
+            self.notify("Nothing to redo.")
+            return
+        self._history_index += 1
+        self._restore_history_entry(self._history[self._history_index])
 
     def _write_recovery(self) -> None:
         self._recovery_timer = None
@@ -1081,6 +1193,7 @@ class EdgeArtDesigner(App[None]):
             return
         self.editor.palettes.archetypes[self.current_archetype] = palette
         self.editor.mark_palettes_dirty()
+        self._push_history_snapshot()
         self._update_dirty_indicator()
         self._refresh_variant_labels()
         self._refresh_preview()
@@ -1212,6 +1325,7 @@ class EdgeArtDesigner(App[None]):
         self._refresh_preview_controls()
         self._refresh_preview()
         self._update_dirty_indicator()
+        self._push_history_snapshot()
         self.notify("Recovery snapshot restored.")
 
     def action_add_item(self) -> None:
