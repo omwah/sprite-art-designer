@@ -899,10 +899,16 @@ class EdgeArtDesigner(App[None]):
     def _select_adjacent_structure(self, delta: int) -> None:
         tree = self.query_one("#structure-tree", Tree)
         variants: list[TreeNode[Any]] = []
+        active_variants = self._preview_variants()
 
         def collect(node: TreeNode[Any]) -> None:
             if isinstance(node.data, Selection) and node.data.kind == "variant":
-                variants.append(node)
+                parent = node.data.parent
+                if (
+                    isinstance(parent, list)
+                    and active_variants.get(id(parent)) is node.data.item
+                ):
+                    variants.append(node)
             for child in node.children:
                 collect(child)
 

@@ -140,19 +140,29 @@ async def test_h_shortcut_toggles_preview_highlight() -> None:
 
 
 @pytest.mark.asyncio
-async def test_preview_navigation_buttons_and_shortcuts_select_variants() -> None:
+async def test_preview_navigation_buttons_and_shortcuts_skip_inactive_variants() -> None:
     app = EdgeArtDesigner(ROOT / "assets")
     async with app.run_test(size=(140, 50)) as pilot:
         await pilot.pause()
-        first = app.selection.item
+        tree = app.query_one("#structure-tree", Tree)
+        sections = tree.root.children[0].children[0].children
+        active_variants = app._preview_variants()
+        first_active = active_variants[id(sections[0].data.item.variants)]
+        second_active = active_variants[id(sections[1].data.item.variants)]
+        third_active = active_variants[id(sections[2].data.item.variants)]
+
+        assert app.selection is not None
+        assert app.selection.item is first_active
         await pilot.click("#next-structure")
         assert app.selection is not None
         assert app.selection.kind == "variant"
-        assert app.selection.item is not first
+        assert app.selection.item is second_active
         await pilot.press("comma")
-        assert app.selection.item is first
+        assert app.selection.item is first_active
         await pilot.press("full_stop")
-        assert app.selection.item is not first
+        assert app.selection.item is second_active
+        await pilot.press("full_stop")
+        assert app.selection.item is third_active
 
 
 @pytest.mark.asyncio
