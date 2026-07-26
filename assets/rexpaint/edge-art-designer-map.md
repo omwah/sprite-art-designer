@@ -7,16 +7,20 @@ cells use these indices in reading order.
 | Index | Glyph | Meaning |
 | ---: | :---: | --- |
 | 0 | space | Void |
-| 1–5 | █ ▓ ▒ ░ ■ | Hull tones |
-| 6–13 | ▄ ▀ ▌ ▐ ▟ ▙ ▜ ▛ | Half blocks and bevels |
-| 14–25 | ─ │ ═ ║ ╾ ╼ ╽ ╿ ╻ ╹ ╺ ╸ | Beams |
-| 26–40 | ┌ ┐ └ ┘ ├ ┤ ┬ ┴ ◢ ◣ ◥ ◤ ┼ ▤ ▦ | Single-line junctions, facet edges, and structural hulls |
-| 41–49 | ╔ ╗ ╚ ╝ ╠ ╣ ╦ ╩ ╬ | Double-line boxes and junctions |
-| 50–67 | ╞ ╟ ╡ ╢ ╖ ╕ ╜ ╛ ╧ ╨ ╤ ╥ ╙ ╘ ╒ ╓ ╫ ╪ | Mixed-line pipes |
-| 68–83 | ▬ ▮ ▶ ◀ ► ◄ ▴ ▾ ↑ ↓ → ← ↔ ↕ ▲ ▼ | Beams, muzzles, and arrows |
-| 84–85 | ╱ ╲ | Diagonals |
-| 86–104 | ◇ ◆ ◊ ☉ ° ≡ ◘ ◙ ☼ • ○ ♥ ♦ ♣ ♠ ∩ ∞ ⌐ ¬ | Facets |
-| 105–112 | R G B Y r g b y | Beacon, green, blue, and engine signal markers; lowercase reverses the signal orientation |
+| 1–5 | █ ■ ▓ ▒ ░ | Hull tones |
+| 6–9 | ▄ ▀ ▌ ▐ | Half blocks |
+| 10–15 | ▖ ▗ ▘ ▝ ▚ ▞ | Quarter blocks and diagonal splits |
+| 16–19 | ▟ ▙ ▜ ▛ | Three-quarter bevels |
+| 20–23 | ◢ ◣ ◥ ◤ | Half-cell facet edges |
+| 24–27 | ╭ ╮ ╰ ╯ | Rounded corners |
+| 28–39 | ─ │ ═ ║ ╾ ╼ ╽ ╿ ╻ ╹ ╺ ╸ | Beams |
+| 40–50 | ┌ ┐ └ ┘ ├ ┤ ┬ ┴ ┼ ▤ ▦ | Single-line junctions and structural hulls |
+| 51–59 | ╔ ╗ ╚ ╝ ╠ ╣ ╦ ╩ ╬ | Double-line boxes and junctions |
+| 60–77 | ╞ ╟ ╡ ╢ ╖ ╕ ╜ ╛ ╧ ╨ ╤ ╥ ╙ ╘ ╒ ╓ ╫ ╪ | Mixed-line pipes |
+| 78–93 | ▬ ▮ ▶ ◀ ► ◄ ▴ ▾ ↑ ↓ → ← ↔ ↕ ▲ ▼ | Beams, muzzles, and arrows |
+| 94–95 | ╱ ╲ | Diagonals |
+| 96–114 | ◇ ◆ ◊ ☉ ° ≡ ◘ ◙ ☼ • ○ ♥ ♦ ♣ ♠ ∩ ∞ ⌐ ¬ | Facets |
+| 115–122 | R G B Y r g b y | Beacon, green, blue, and engine signal markers; lowercase reverses the signal orientation |
 
 Install the PNG as an **art** font, not as REXPaint's GUI font. It must remain a
 16-column sheet; REXPaint 1.50+ supports the required extra rows. The exported

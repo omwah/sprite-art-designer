@@ -220,7 +220,7 @@ def test_generated_heavy_half_beams_remain_authorable_and_exportable(
 
     assert not warnings
     assert {"╻", "╹"} <= REXPAINT_GLYPH_INDICES.keys()
-    assert [REXPAINT_GLYPH_INDICES[glyph] for glyph in "╻╹╺╸"] == [22, 23, 24, 25]
+    assert [REXPAINT_GLYPH_INDICES[glyph] for glyph in "╻╹╺╸"] == [36, 37, 38, 39]
     assert any(
         "╹" in row
         for row in vertical.tiers[0].sections[0].variants[0].cells

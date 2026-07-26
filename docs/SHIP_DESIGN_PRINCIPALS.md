@@ -126,7 +126,8 @@ Reflection is glyph-aware:
 Examples include:
 
 ```text
-▟ ↔ ▙    ▜ ↔ ▛    ◢ ↔ ◣    ◥ ↔ ◤
+▟ ↔ ▙    ▜ ↔ ▛    ▖ ↔ ▗    ▘ ↔ ▝
+◢ ↔ ◣    ◥ ↔ ◤    ╭ ↔ ╮    ╰ ↔ ╯
 ┌ ↔ ┐    └ ↔ ┘    ╾ ↔ ╼    ▶ ↔ ◀
 ╱ ↔ ╲
 ```

@@ -107,7 +107,8 @@ section regardless of repeat count.
 
 - `█` and `■`: bright plating.
 - `▒` and `░`: dark recesses.
-- structural half-block, line, single/double/mixed box, corner, wedge, and bevel
+- structural fractional-block, line, rounded/square corner, single/double/mixed
+  box, wedge, and bevel
   glyphs: mid-tone hull.
 - `R` / `r`: palette-colored beacon markers, painted as `▀` / `▄`.
 - `Y` / `y`: palette-colored engine markers, painted as `▀` / `▄`.
@@ -128,11 +129,12 @@ block-glyph effects, while retaining their palette colors.
 The file is not an alternate editable source format: YAML remains authoritative.
 
 An `.xp` file stores glyph *indices* rather than glyph shapes. The exporter uses
-the stable index order in `sprite_art.rexpaint.REXPAINT_GLYPH_INDICES`; its
-matching font sheet is `assets/rexpaint/edge-art-designer.png`. Install that
-sheet as a 16-column REXPaint art font, retaining the supplied index order. An
-authored glyph absent from the map rejects export with its cell position rather
-than being silently substituted.
+the index order in `sprite_art.rexpaint.REXPAINT_GLYPH_INDICES`; its matching
+font sheet is `assets/rexpaint/edge-art-designer.png`. Install that sheet as a
+16-column REXPaint art font, retaining the supplied index order. An authored
+glyph absent from the map rejects export with its cell position rather than
+being silently substituted. The map and font evolve together, so an `.xp` file
+must be opened with the matching version of the art font.
 
 Import accepts only a one-layer `.xp` file using that same glyph map and is a
 round-trip editing operation: it splits a just-exported image into the active
