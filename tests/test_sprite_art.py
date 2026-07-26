@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import random
+import gzip
+import struct
 from copy import deepcopy
 from pathlib import Path
 
@@ -9,15 +11,24 @@ import pytest
 from sprite_art import (
     ARCHETYPE_IDS,
     PaletteCatalog,
+    REXPAINT_GLYPH_INDICES,
     SpriteLibrary,
     SpriteValidationError,
     generate_rotated_view,
     load_palette_catalog,
     load_sprite,
     load_sprite_directory,
+    RexPaintGlyphError,
+    export_rexpaint,
     render_sprite,
 )
-from sprite_art.glyphs import flip_rows_horizontal, flip_rows_vertical
+from sprite_art.glyphs import (
+    AUTHORING_GLYPHS,
+    ROTATE_CCW,
+    flip_rows_horizontal,
+    flip_rows_vertical,
+    transform_glyph,
+)
 from sprite_art.io import dump_palette_catalog, dump_sprite
 
 ROOT = Path(__file__).parents[1]
@@ -68,6 +79,70 @@ def test_palette_catalog_rejects_extra_archetype(palettes: PaletteCatalog) -> No
     )
     with pytest.raises(SpriteValidationError, match="controlled"):
         invalid.validate()
+
+
+def test_rexpaint_export_is_deterministic_and_uses_one_column_major_layer(
+    palettes: PaletteCatalog, tmp_path: Path
+) -> None:
+    sprite = load_sprite(ASSETS / "sprites" / "ships" / "fighter.yaml")
+    first = export_rexpaint(
+        sprite, palettes, tmp_path / "fighter.xp", width=40, height=7, seed=7
+    )
+    second = export_rexpaint(
+        sprite, palettes, tmp_path / "fighter-again.xp", width=40, height=7, seed=7
+    )
+
+    assert first.read_bytes() == second.read_bytes()
+    data = gzip.decompress(first.read_bytes())
+    version, layers, width, height = struct.unpack_from("<iiii", data)
+    assert (version, layers, width, height) == (-1, 1, 40, 7)
+    assert len(data) == 16 + 40 * 7 * 10
+    # The first serialized cell is the top-left cell, then the next row in the
+    # same column, which is REXPaint's documented column-major ordering.
+    first_glyph, *first_colors = struct.unpack_from("<I6B", data, 16)
+    second_glyph, *_ = struct.unpack_from("<I6B", data, 26)
+    assert first_glyph == 0
+    assert second_glyph == 0
+    assert first_colors == [0, 0, 0, 0, 0, 0]
+
+
+def test_rexpaint_export_rejects_unmapped_glyph(
+    palettes: PaletteCatalog, tmp_path: Path
+) -> None:
+    sprite = load_sprite(ASSETS / "sprites" / "ships" / "fighter.yaml")
+    sprite.views["horizontal"].tiers[0].sections[0].variants[0].cells[0] = "?    "
+    with pytest.raises(RexPaintGlyphError, match="no REXPaint font slot"):
+        export_rexpaint(sprite, palettes, tmp_path / "invalid.xp", width=40, height=7)
+
+
+def test_rexpaint_font_covers_every_authored_asset_glyph(
+    sprites: dict[str, object],
+) -> None:
+    used = {
+        glyph
+        for sprite in sprites.values()
+        if hasattr(sprite, "views")
+        for view in sprite.views.values()
+        for tier in view.tiers
+        for section in tier.sections
+        for variant in section.variants
+        for row in variant.cells
+        for glyph in row
+    }
+    assert used <= REXPAINT_GLYPH_INDICES.keys()
+
+
+def test_authoring_glyphs_have_reversible_reflections_and_rotation_support() -> None:
+    glyphs = [glyph for glyph, _ in AUTHORING_GLYPHS]
+    for glyph in glyphs:
+        if glyph != "≡":
+            assert glyph in ROTATE_CCW
+            rotated = glyph
+            for _ in range(4):
+                rotated = transform_glyph(rotated, ROTATE_CCW)
+            assert rotated == glyph
+        assert flip_rows_horizontal(flip_rows_horizontal([glyph])) == [glyph]
+        assert flip_rows_vertical(flip_rows_vertical([glyph])) == [glyph]
 
 
 @pytest.mark.parametrize("role", sorted(ORIGINAL_ROLES | NEW_ROLES))

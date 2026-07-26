@@ -255,6 +255,7 @@ class DocumentBar(Horizontal):
         yield Button("New", id="new-sprite")
         yield Button("Save", id="save", variant="success")
         yield Button("Save all", id="save-all")
+        yield Button("Export RexPaint", id="export-rexpaint")
         yield Button("Generate vertical", id="rotate-vertical")
         yield Label("", id="dirty-indicator")
 

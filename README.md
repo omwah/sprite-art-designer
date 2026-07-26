@@ -13,6 +13,7 @@ The project follows the constraints in `SHIP_DESIGN_PRINCIPALS.md`:
 - editable archetype palettes separated from geometry;
 - independently stored horizontal and vertical views;
 - glyph-aware reflection for four travel directions.
+- native REXPaint `.xp` export with a matching bundled art-font sheet.
 
 ## Run
 
@@ -43,3 +44,10 @@ archetype palette can be applied at render time.
 See `docs/SPRITE_ART_FORMAT.md` and `docs/EDGE_INTEGRATION.md` for the format and
 the vendoring seam.
 
+## REXPaint export
+
+Use **Export RexPaint** or `Ctrl+E` to write the current preview to
+`~/.edge-art-designer/exports/`. Crash-recovery snapshots are likewise stored
+under `~/.edge-art-designer/recovery/`. Install
+`assets/rexpaint/edge-art-designer.png` as a 16-column REXPaint art font; its
+slot order is documented in `assets/rexpaint/edge-art-designer-map.md`.

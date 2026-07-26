@@ -19,6 +19,7 @@ from sprite_art import (
 @dataclass
 class EditorState:
     asset_root: Path
+    data_root: Path
     palettes: PaletteCatalog
     sprites: dict[str, Sprite]
     sprite_paths: dict[str, Path]
@@ -27,7 +28,7 @@ class EditorState:
     palettes_dirty: bool = False
 
     @classmethod
-    def load(cls, asset_root: Path) -> EditorState:
+    def load(cls, asset_root: Path, data_root: Path | None = None) -> EditorState:
         root = asset_root.resolve()
         sprites = load_sprite_directory(root / "sprites")
         if not sprites:
@@ -39,6 +40,7 @@ class EditorState:
         }
         return cls(
             asset_root=root,
+            data_root=(data_root or Path.home() / ".edge-art-designer").resolve(),
             palettes=load_palette_catalog(root / "palettes.yaml"),
             sprites=sprites,
             sprite_paths=paths,
@@ -51,7 +53,11 @@ class EditorState:
 
     @property
     def recovery_root(self) -> Path:
-        return self.asset_root.parent / ".edge-art-designer" / "recovery"
+        return self.data_root / "recovery"
+
+    @property
+    def export_root(self) -> Path:
+        return self.data_root / "exports"
 
     def mark_sprite_dirty(self, sprite_id: str | None = None) -> None:
         self.dirty_sprites.add(sprite_id or self.current_sprite_id)
@@ -124,4 +130,3 @@ class EditorState:
         self.sprites[selected] = recovered
         self.mark_sprite_dirty(selected)
         return recovered
-

@@ -6,11 +6,12 @@ from collections.abc import Mapping
 
 ROTATION_FALLBACK = "◇"
 
-BRIGHT_CHARS = frozenset("█")
+BRIGHT_CHARS = frozenset("█■")
 DARK_CHARS = frozenset("▒░")
 MID_CHARS = frozenset(
     "▟▙▜▛▓▄▀▌▐╾╼╽╿╻╹╺╸─│◢◣◥◤▴▾"
-    "┌┐└┘├┤┬┴▤▦═║╱╲"
+    "┌┐└┘├┤┬┴┼▤▦═║╔╗╚╝╠╣╦╩╬"
+    "╡╢╖╕╜╛╧╨╤╥╙╘╒╓╫╪╞╟▬▮╱╲"
 )
 HULL_CHARS = BRIGHT_CHARS | DARK_CHARS | MID_CHARS
 
@@ -20,6 +21,7 @@ AUTHORING_GLYPHS: tuple[tuple[str, str], ...] = (
     ("▓", "Mid plating"),
     ("▒", "Dark plating"),
     ("░", "Deep recess"),
+    ("■", "Bright plating"),
     ("▄", "Lower half"),
     ("▀", "Upper half"),
     ("▌", "Left half"),
@@ -50,10 +52,50 @@ AUTHORING_GLYPHS: tuple[tuple[str, str], ...] = (
     ("◣", "Facet edge"),
     ("◥", "Facet edge"),
     ("◤", "Facet edge"),
+    ("┼", "Cross junction"),
+    ("╔", "Double corner"),
+    ("╗", "Double corner"),
+    ("╚", "Double corner"),
+    ("╝", "Double corner"),
+    ("╠", "Double junction"),
+    ("╣", "Double junction"),
+    ("╦", "Double junction"),
+    ("╩", "Double junction"),
+    ("╬", "Double cross junction"),
+    ("╞", "Mixed junction"),
+    ("╟", "Mixed junction"),
+    ("╡", "Mixed junction"),
+    ("╢", "Mixed junction"),
+    ("╖", "Mixed corner"),
+    ("╕", "Mixed corner"),
+    ("╜", "Mixed corner"),
+    ("╛", "Mixed corner"),
+    ("╧", "Mixed junction"),
+    ("╨", "Mixed junction"),
+    ("╤", "Mixed junction"),
+    ("╥", "Mixed junction"),
+    ("╙", "Mixed corner"),
+    ("╘", "Mixed corner"),
+    ("╒", "Mixed corner"),
+    ("╓", "Mixed corner"),
+    ("╫", "Mixed cross junction"),
+    ("╪", "Mixed cross junction"),
+    ("▬", "Heavy beam"),
+    ("▮", "Vertical heavy beam"),
     ("▶", "Muzzle"),
     ("◀", "Muzzle"),
+    ("►", "Muzzle"),
+    ("◄", "Muzzle"),
     ("▴", "Muzzle"),
     ("▾", "Muzzle"),
+    ("↑", "Arrow"),
+    ("↓", "Arrow"),
+    ("→", "Arrow"),
+    ("←", "Arrow"),
+    ("↔", "Double arrow"),
+    ("↕", "Double arrow"),
+    ("▲", "Muzzle"),
+    ("▼", "Muzzle"),
     ("╱", "Diagonal"),
     ("╲", "Diagonal"),
     ("R", "Beacon marker"),
@@ -64,7 +106,19 @@ AUTHORING_GLYPHS: tuple[tuple[str, str], ...] = (
     ("☉", "Facet"),
     ("°", "Facet"),
     ("≡", "Facet"),
-    ("⁐", "Facet"),
+    ("◘", "Facet"),
+    ("◙", "Facet"),
+    ("☼", "Facet"),
+    ("•", "Facet"),
+    ("○", "Facet"),
+    ("♥", "Facet"),
+    ("♦", "Facet"),
+    ("♣", "Facet"),
+    ("♠", "Facet"),
+    ("∩", "Facet"),
+    ("∞", "Facet"),
+    ("⌐", "Facet"),
+    ("¬", "Facet"),
 )
 
 
@@ -88,16 +142,24 @@ ROTATE_CCW: dict[str, str] = {
         "◢◥◤◣",
         "┌└┘┐",
         "├┴┤┬",
+        "╔╚╝╗",
+        "╠╩╣╦",
+        "╞╨╢╥",
+        "╟╧╡╤",
+        "╖╒╘╛",
+        "╕╓╙╜",
+        "╫╪",
         "▶▴◀▾",
         "►▲◄▼",
+        "→↑←↓",
+        "↔↕",
         "▬▮",
         "╱╲",
     ),
 }
-for _glyph in " █▓▒░R Y◇◆◊☉°◘◙":
+for _glyph in " █■▓▒░R Y◇◆◊☉°◘◙☼•○♥♦♣♠∩∞⌐¬┼╬":
     ROTATE_CCW[_glyph] = _glyph
 ROTATE_CCW["≡"] = "║"
-ROTATE_CCW["⁐"] = ROTATION_FALLBACK
 
 
 HORIZONTAL_FLIP: dict[str, str] = {}
@@ -113,8 +175,18 @@ for _left, _right in (
     ("┌", "┐"),
     ("└", "┘"),
     ("├", "┤"),
+    ("╔", "╗"),
+    ("╚", "╝"),
+    ("╠", "╣"),
+    ("╞", "╢"),
+    ("╟", "╡"),
+    ("╖", "╓"),
+    ("╕", "╒"),
+    ("╜", "╘"),
+    ("╛", "╙"),
     ("▶", "◀"),
     ("►", "◄"),
+    ("→", "←"),
     ("▴", "▴"),
     ("▾", "▾"),
     ("▲", "▲"),
@@ -136,9 +208,19 @@ for _top, _bottom in (
     ("◣", "◤"),
     ("┌", "└"),
     ("┐", "┘"),
+    ("╔", "╚"),
+    ("╗", "╝"),
+    ("╦", "╩"),
+    ("╖", "╜"),
+    ("╕", "╛"),
+    ("╒", "╘"),
+    ("╓", "╙"),
+    ("╧", "╤"),
+    ("╨", "╥"),
     ("┬", "┴"),
     ("▴", "▾"),
     ("▲", "▼"),
+    ("↑", "↓"),
     ("▄", "▀"),
     ("R", "r"),
     ("Y", "y"),

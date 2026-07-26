@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import gzip
+import struct
 from pathlib import Path
 from shutil import copytree
 
@@ -166,6 +168,33 @@ async def test_preview_navigation_buttons_and_shortcuts_skip_inactive_variants()
 
 
 @pytest.mark.asyncio
+async def test_rexpaint_export_uses_current_preview_configuration(tmp_path: Path) -> None:
+    asset_root = tmp_path / "assets"
+    copytree(ROOT / "assets", asset_root)
+    app = EdgeArtDesigner(asset_root, data_root=tmp_path / ".edge-art-designer")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        app.preview_size = (18, 3)
+        app.preview_seed = 42
+        sprite_id = app.editor.current_sprite.id
+        app.action_export_rexpaint()
+
+    output = (
+        tmp_path
+        / ".edge-art-designer"
+        / "exports"
+        / f"{sprite_id}-horizontal-right-18x3-seed42.xp"
+    )
+    assert output.exists()
+    assert struct.unpack_from("<iiii", gzip.decompress(output.read_bytes())) == (
+        -1,
+        1,
+        18,
+        3,
+    )
+
+
+@pytest.mark.asyncio
 async def test_v_shortcut_cycles_variant_and_overrides_preview_selection() -> None:
     app = EdgeArtDesigner(ROOT / "assets")
     async with app.run_test(size=(140, 50)) as pilot:
@@ -264,7 +293,7 @@ async def test_mouse_paint_marks_dirty_and_writes_recovery(
 ) -> None:
     asset_root = tmp_path / "assets"
     copytree(ROOT / "assets", asset_root)
-    app = EdgeArtDesigner(asset_root)
+    app = EdgeArtDesigner(asset_root, data_root=tmp_path / ".edge-art-designer")
     async with app.run_test(size=(120, 42)) as pilot:
         await pilot.pause()
         canvas = app.query_one("#art-canvas", ArtCanvas)

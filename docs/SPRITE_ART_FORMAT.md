@@ -99,15 +99,30 @@ section regardless of repeat count.
 
 ### Glyph semantics
 
-- `█`: bright plating.
+- `█` and `■`: bright plating.
 - `▒` and `░`: dark recesses.
-- structural half-block, line, corner, wedge, and bevel glyphs: mid-tone hull.
+- structural half-block, line, single/double/mixed box, corner, wedge, and bevel
+  glyphs: mid-tone hull.
 - `R`: palette-colored beacon marker, painted as `▀`.
 - `Y`: palette-colored engine marker, painted as `▄`.
 - space: transparent-looking terminal void.
 - other one-cell glyphs: facets painted over bright plating.
 
 All glyphs must occupy exactly one terminal cell.
+
+## REXPaint export
+
+The reusable library can export a rendered request as a deterministic, one-layer
+REXPaint `.xp` file. Export uses the same width, height, seed, palette,
+view, facing, variant overrides, and semantic painter as the Rich preview.
+The file is not an alternate editable source format: YAML remains authoritative.
+
+An `.xp` file stores glyph *indices* rather than glyph shapes. The exporter uses
+the stable index order in `sprite_art.rexpaint.REXPAINT_GLYPH_INDICES`; its
+matching font sheet is `assets/rexpaint/edge-art-designer.png`. Install that
+sheet as a 16-column REXPaint art font, retaining the supplied index order. An
+authored glyph absent from the map rejects export with its cell position rather
+than being silently substituted.
 
 ## Palette catalog
 

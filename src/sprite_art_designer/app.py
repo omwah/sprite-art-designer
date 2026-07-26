@@ -37,6 +37,7 @@ from sprite_art import (
     Sprite,
     Tier,
     Variant,
+    export_rexpaint,
     View,
     generate_rotated_view,
     selected_tier,
@@ -300,6 +301,7 @@ class EdgeArtDesigner(App[None]):
     BINDINGS = [
         ("ctrl+s", "save", "Save"),
         ("ctrl+shift+s", "save_all", "Save all"),
+        ("ctrl+e", "export_rexpaint", "Export RexPaint"),
         ("ctrl+n", "new_sprite", "New sprite"),
         ("ctrl+r", "restore_recovery", "Restore recovery"),
         ("ctrl+g", "rotate_vertical", "Generate vertical"),
@@ -315,9 +317,9 @@ class EdgeArtDesigner(App[None]):
         ("question_mark", "help", "Help"),
     ]
 
-    def __init__(self, asset_root: Path) -> None:
+    def __init__(self, asset_root: Path, data_root: Path | None = None) -> None:
         super().__init__()
-        self.editor = EditorState.load(asset_root)
+        self.editor = EditorState.load(asset_root, data_root)
         self.selection: Selection | None = None
         self.selected_glyph = "█"
         self.preview_size = (40, 7)
@@ -1067,6 +1069,8 @@ class EdgeArtDesigner(App[None]):
             self.action_save()
         elif button_id == "save-all":
             self.action_save_all()
+        elif button_id == "export-rexpaint":
+            self.action_export_rexpaint()
         elif button_id == "rotate-vertical":
             self.action_rotate_vertical()
         elif button_id == "apply-properties":
@@ -1250,6 +1254,33 @@ class EdgeArtDesigner(App[None]):
             return
         self._update_dirty_indicator()
         self.notify("Saved all modified sprites and palettes")
+
+    def action_export_rexpaint(self) -> None:
+        facing = self.current_facing or self.editor.current_sprite.views[
+            self.current_view_id
+        ].canonical_facing
+        filename = (
+            f"{self.editor.current_sprite.id}-{self.current_view_id}-{facing}-"
+            f"{self.preview_size[0]}x{self.preview_size[1]}-seed{self.preview_seed}.xp"
+        )
+        destination = self.editor.export_root / filename
+        try:
+            export_rexpaint(
+                self.editor.current_sprite,
+                self.editor.palettes,
+                destination,
+                width=self.preview_size[0],
+                height=self.preview_size[1],
+                seed=self.preview_seed,
+                archetype_id=self.current_archetype,
+                view_id=self.current_view_id,
+                facing=self.current_facing,
+                variant_overrides=self._preview_variant_overrides(),
+            )
+        except Exception as error:
+            self.notify(f"REXPaint export failed: {error}", severity="error")
+            return
+        self.notify(f"Exported REXPaint file: {destination}")
 
     def action_new_sprite(self) -> None:
         self.push_screen(NewSpriteScreen(), self._finish_new_sprite)
