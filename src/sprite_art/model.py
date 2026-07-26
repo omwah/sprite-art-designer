@@ -149,6 +149,7 @@ class Tier:
     id: str
     name: str
     sections: list[Section] = field(default_factory=list)
+    structure_lengths: dict[str, int] = field(default_factory=dict)
 
     def cross_axis_size(self, axis: Axis) -> int:
         if not self.sections:
@@ -166,6 +167,16 @@ class Tier:
             raise SpriteValidationError(f"{context}: tier id cannot be empty")
         if not self.sections:
             raise SpriteValidationError(f"{tier_context}: requires at least one section")
+        if axis != "fixed":
+            section_ids = {section.id for section in self.sections}
+            if set(self.structure_lengths) != section_ids:
+                raise SpriteValidationError(
+                    f"{tier_context}: structure_lengths must define every structure exactly once"
+                )
+            if any(length < 1 for length in self.structure_lengths.values()):
+                raise SpriteValidationError(
+                    f"{tier_context}: every structure length must be at least 1"
+                )
         if axis == "fixed" and len(self.sections) != 1:
             raise SpriteValidationError(
                 f"{tier_context}: fixed views require exactly one section"

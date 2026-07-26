@@ -43,7 +43,6 @@ from sprite_art import (
     generate_rotated_view,
     import_rexpaint_cells,
     segment_rexpaint_cells,
-    selected_tier,
     selected_variants,
 )
 from sprite_art.model import SCHEMA_VERSION
@@ -138,6 +137,8 @@ class HelpScreen(ModalScreen[None]):
                 "  Ctrl+D  Duplicate selection\n"
                 "  Delete  Delete selection\n"
                 "  H  Toggle selected-part preview highlight\n"
+                "  T  Switch to the next ship tier\n"
+                "  O  Switch horizontal / vertical orientation\n"
                 "  Click a Structure variant to select and keep it for its slot\n"
                 "  V  Select and keep the next variant in the selected slot\n"
                 "  , / .  Temporarily browse previous / next structure\n"
@@ -255,6 +256,7 @@ def _new_sprite(sprite_id: str, name: str, kind: str) -> Sprite:
                         Tier(
                             id="full",
                             name="Full Detail",
+                            structure_lengths={"hull": 1},
                             sections=[
                                 Section(
                                     id="hull",
@@ -267,6 +269,7 @@ def _new_sprite(sprite_id: str, name: str, kind: str) -> Sprite:
                         Tier(
                             id="medium",
                             name="Medium",
+                            structure_lengths={"hull": 1},
                             sections=[
                                 Section(
                                     id="hull",
@@ -279,6 +282,7 @@ def _new_sprite(sprite_id: str, name: str, kind: str) -> Sprite:
                         Tier(
                             id="compact",
                             name="Compact",
+                            structure_lengths={"hull": 1},
                             sections=[
                                 Section(
                                     id="hull",
@@ -341,6 +345,8 @@ class EdgeArtDesigner(App[None]):
         ("ctrl+shift+z", "redo", "Redo"),
         ("delete", "delete_item", "Delete"),
         ("h", "toggle_highlight", "Toggle highlight"),
+        ("t", "next_tier", "Next tier"),
+        ("o", "toggle_orientation", "Toggle orientation"),
         ("v", "next_variant", "Next variant"),
         ("comma", "previous_structure", "Previous structure"),
         ("full_stop", "next_structure", "Next structure"),
@@ -366,6 +372,9 @@ class EdgeArtDesigner(App[None]):
         self._transient_variant_override: tuple[int, Variant] | None = None
         self._tree_variant_selection_persists = False
         self._tree_selection_syncs_preview_size = True
+        self._updating_preview_tier_control = False
+        self._programmatic_preview_tier_value: str | None = None
+        self._preview_tier_selector_enabled = False
         self._history: list[HistoryEntry] = []
         self._history_index = -1
 
@@ -377,6 +386,7 @@ class EdgeArtDesigner(App[None]):
             else next(iter(initial_sprite.views))
         )
         initial_view = initial_sprite.views[initial_view_id]
+        initial_tier_id = initial_view.tiers[0].id
         initial_facings = [
             (initial_view.canonical_facing.title(), initial_view.canonical_facing)
         ]
@@ -402,6 +412,8 @@ class EdgeArtDesigner(App[None]):
                         initial_facings,
                         self.preview_seed,
                         self.preview_size,
+                        self._preview_tier_options(initial_view),
+                        initial_tier_id,
                         self.highlight_preview,
                     )
                 yield WorkspaceSplitter(id="workspace-splitter")
@@ -425,6 +437,7 @@ class EdgeArtDesigner(App[None]):
         self._refresh_preview()
         self._update_dirty_indicator()
         self._push_history_snapshot()
+        self.call_after_refresh(self._enable_preview_tier_selector)
         if self.editor.has_newer_recovery():
             self.notify(
                 "A newer recovery snapshot exists. Press Ctrl+R to restore it.",
@@ -448,6 +461,9 @@ class EdgeArtDesigner(App[None]):
             return None
 
         tree.move_cursor(find(tree.root))
+
+    def _enable_preview_tier_selector(self) -> None:
+        self._preview_tier_selector_enabled = True
 
     def action_help(self) -> None:
         self.push_screen(HelpScreen())
@@ -628,6 +644,7 @@ class EdgeArtDesigner(App[None]):
         if selected_tier is not None and sync_preview_size:
             self._set_preview_size_for_tier(selected_tier)
         self._populate_inspector()
+        self._populate_ship_config()
         canvas = self.query_one("#art-canvas", ArtCanvas)
         if selection.kind == "variant":
             variant = selection.item
@@ -714,14 +731,34 @@ class EdgeArtDesigner(App[None]):
             self.query_one("#secondary-properties", Input).value = ", ".join(
                 section_item.secondary_properties
             )
-            self.query_one("#repeat-min", Input).value = str(section_item.min_repeat)
-            self.query_one("#repeat-max", Input).value = str(section_item.max_repeat)
         elif kind == "variant":
             variant_item = item
             assert isinstance(variant_item, Variant)
             self.query_one("#variant-weight", Input).value = str(variant_item.weight)
             self.query_one("#variant-width", Input).value = str(variant_item.width)
             self.query_one("#variant-height", Input).value = str(variant_item.height)
+
+    def _populate_ship_config(self) -> None:
+        tier = self._tier_for_structure(self.selection.item) if self.selection else None
+        tier_label = self.query_one("#ship-config-tier", Label)
+        width_label = self.query_one("#ship-config-width", Label)
+        lengths_input = self.query_one("#ship-config-lengths", Input)
+        if tier is None:
+            tier_label.update("Tier: select a ship tier or structure")
+            width_label.update("Ship width: —")
+            lengths_input.value = ""
+            lengths_input.disabled = True
+            return
+        view = self._view_for_structure(tier)
+        assert view is not None
+        ship_width = tier.cross_axis_size(view.axis)
+        tier_label.update(f"Tier: {tier.name}")
+        width_label.update(f"Ship width: {ship_width}")
+        lengths_input.value = ", ".join(
+            f"{section.id}: {tier.structure_lengths[section.id]}"
+            for section in tier.sections
+        )
+        lengths_input.disabled = False
 
     def _mark_changed(self) -> None:
         self.editor.mark_sprite_dirty()
@@ -907,6 +944,92 @@ class EdgeArtDesigner(App[None]):
     def action_next_structure(self) -> None:
         self._select_adjacent_structure(1)
 
+    def action_next_tier(self) -> None:
+        """Select the next tier in the current view, wrapping at the end."""
+
+        view = self.editor.current_sprite.views[self.current_view_id]
+        if not view.tiers:
+            return
+        selection = self.selection
+        if selection is None:
+            return
+        selected = self._tier_for_structure(selection.item)
+        current_index = view.tiers.index(selected) if selected in view.tiers else -1
+        self._select_tree_item(
+            view.tiers[(current_index + 1) % len(view.tiers)],
+            persist_variant=False,
+        )
+
+    def action_toggle_orientation(self) -> None:
+        """Switch views while retaining the selected tier and structure."""
+
+        current_view = self.editor.current_sprite.views[self.current_view_id]
+        target_view = next(
+            (
+                view
+                for view in self.editor.current_sprite.views.values()
+                if view.axis != current_view.axis
+                and view.axis in {"horizontal", "vertical"}
+            ),
+            None,
+        )
+        if target_view is None:
+            self.notify("This sprite has no alternate orientation.", severity="warning")
+            return
+        selection = self.selection
+        if selection is None:
+            return
+        selected = self._tier_for_structure(selection.item)
+        target_tier = next(
+            (tier for tier in target_view.tiers if selected is not None and tier.id == selected.id),
+            None,
+        )
+        if target_tier is None:
+            self.notify("The alternate orientation has no matching tier.", severity="warning")
+            return
+        assert selected is not None
+        target_item: Tier | Section | Variant = target_tier
+        if isinstance(selection.item, Section):
+            target_section = next(
+                (
+                    section
+                    for section in target_tier.sections
+                    if section.id == selection.item.id
+                ),
+                None,
+            )
+            if target_section is not None:
+                target_item = target_section
+        elif isinstance(selection.item, Variant):
+            source_section = next(
+                (
+                    section
+                    for section in selected.sections
+                    if selection.item in section.variants
+                ),
+                None,
+            )
+            target_section = next(
+                (
+                    section
+                    for section in target_tier.sections
+                    if source_section is not None and section.id == source_section.id
+                ),
+                None,
+            )
+            if target_section is not None:
+                target_item = next(
+                    (
+                        variant
+                        for variant in target_section.variants
+                        if variant.id == selection.item.id
+                    ),
+                    target_section.variants[0],
+                )
+        self.current_view_id = target_view.id
+        self._refresh_preview_controls()
+        self._select_tree_item(target_item, persist_variant=False)
+
     def action_next_variant(self) -> None:
         if self.selection is None:
             return
@@ -1027,16 +1150,35 @@ class EdgeArtDesigner(App[None]):
             self.current_facing = value
             self._refresh_preview()
         elif select_id == "preview-size":
+            if not self._preview_tier_selector_enabled:
+                return
+            if value == self._programmatic_preview_tier_value:
+                self._programmatic_preview_tier_value = None
+                return
+            if self._updating_preview_tier_control:
+                return
             custom_size = self.query_one("#preview-custom-size", Input)
             custom_size.display = value == "custom"
             if value != "custom":
-                size = self._parse_preview_size(value)
-                if size == self.preview_size:
-                    return
-                self.preview_size = size
-                self._select_tier_for_preview_size()
-                self._refresh_variant_labels()
-                self._refresh_preview()
+                tier = next(
+                    (
+                        tier
+                        for tier in self.editor.current_sprite.views[
+                            self.current_view_id
+                        ].tiers
+                        if tier.id == value
+                    ),
+                    None,
+                )
+                if tier is not None:
+                    selected = (
+                        self._tier_for_structure(self.selection.item)
+                        if self.selection is not None
+                        else None
+                    )
+                    if tier is selected:
+                        return
+                    self._select_tree_item(tier, persist_variant=False)
 
     def _refresh_preview_controls(self) -> None:
         view_select = self.query_one("#preview-view", Select)
@@ -1047,26 +1189,51 @@ class EdgeArtDesigner(App[None]):
         if self.current_view_id not in sprite.views:
             self.current_view_id = next(iter(sprite.views))
         view_select.value = self.current_view_id
+        view = sprite.views[self.current_view_id]
+        tier_select = self.query_one("#preview-size", Select)
+        current_value = str(tier_select.value)
+        self._updating_preview_tier_control = True
+        try:
+            tier_select.set_options(self._preview_tier_options(view))
+            selected = self._tier_for_structure(self.selection.item) if self.selection else None
+            if current_value == "custom":
+                self._programmatic_preview_tier_value = "custom"
+                tier_select.value = "custom"
+            elif selected is not None and selected in view.tiers:
+                self._programmatic_preview_tier_value = selected.id
+                tier_select.value = selected.id
+            else:
+                self._programmatic_preview_tier_value = view.tiers[0].id
+                tier_select.value = view.tiers[0].id
+        finally:
+            self._updating_preview_tier_control = False
         self._refresh_facing_options()
 
-    def _set_preview_size_for_tier(self, tier: Tier) -> None:
-        if tier.id == "compact":
-            size = (18, 3)
-        elif tier.id == "medium":
-            size = (30, 5)
-        else:
-            size = (40, 7)
-        self.preview_size = size
-        self.query_one("#preview-size", Select).value = f"{size[0]}x{size[1]}"
+    @staticmethod
+    def _preview_tier_options(view: View) -> list[tuple[str, str]]:
+        return [(tier.name, tier.id) for tier in view.tiers] + [("Custom…", "custom")]
 
-    def _select_tier_for_preview_size(self) -> None:
-        tier = selected_tier(
-            self.editor.current_sprite,
-            width=self.preview_size[0],
-            height=self.preview_size[1],
-            view_id=self.current_view_id,
-        )
-        self._select_tree_item(tier, persist_variant=False)
+    def _set_preview_size_for_tier(self, tier: Tier) -> None:
+        view = self.editor.current_sprite.views[self.current_view_id]
+        if view.axis == "horizontal":
+            size = (sum(section.variants[0].width * tier.structure_lengths[section.id] for section in tier.sections), tier.cross_axis_size(view.axis))
+        elif view.axis == "vertical":
+            size = (sum(section.variants[0].height * tier.structure_lengths[section.id] for section in tier.sections) * 2, tier.cross_axis_size(view.axis))
+        else:
+            variant = tier.sections[0].variants[0]
+            size = (variant.width, variant.height)
+        self.preview_size = size
+        size_select = self.query_one("#preview-size", Select)
+        size_value = f"{size[0]}x{size[1]}"
+        custom_size = self.query_one("#preview-custom-size", Input)
+        custom_size.value = size_value
+        custom_size.display = False
+        self._updating_preview_tier_control = True
+        try:
+            self._programmatic_preview_tier_value = tier.id
+            size_select.value = tier.id
+        finally:
+            self._updating_preview_tier_control = False
 
     def _refresh_facing_options(self) -> None:
         view = self.editor.current_sprite.views[self.current_view_id]
@@ -1137,6 +1304,8 @@ class EdgeArtDesigner(App[None]):
             self.action_rotate_vertical()
         elif button_id == "apply-properties":
             self._apply_properties()
+        elif button_id == "apply-ship-config":
+            self._apply_ship_config()
         elif button_id == "apply-palette":
             self._apply_palette()
         elif button_id == "apply-preview":
@@ -1183,8 +1352,6 @@ class EdgeArtDesigner(App[None]):
                     raise ValueError(f"Unknown secondary properties: {sorted(invalid)}")
                 item.primary_property = primary
                 item.secondary_properties = secondary
-                item.min_repeat = int(self.query_one("#repeat-min", Input).value)
-                item.max_repeat = int(self.query_one("#repeat-max", Input).value)
             elif kind == "variant":
                 assert isinstance(item, Variant)
                 item.weight = int(self.query_one("#variant-weight", Input).value)
@@ -1199,6 +1366,31 @@ class EdgeArtDesigner(App[None]):
         self._rebuild_tree(select_item=item)
         if isinstance(item, Variant):
             self.query_one("#art-canvas", ArtCanvas).set_variant(item)
+        self._mark_changed()
+
+    def _apply_ship_config(self) -> None:
+        if self.selection is None:
+            return
+        tier = self._tier_for_structure(self.selection.item)
+        if tier is None:
+            self.notify("Select a ship tier or structure first.", severity="error")
+            return
+        try:
+            values = {
+                key.strip(): int(value.strip())
+                for entry in self.query_one("#ship-config-lengths", Input).value.split(",")
+                if entry.strip()
+                for key, value in [entry.split(":", 1)]
+            }
+            if set(values) != {section.id for section in tier.sections}:
+                raise ValueError("Provide one positive count for every structure.")
+            tier.structure_lengths = values
+            self.editor.current_sprite.validate()
+        except Exception as error:
+            self.notify(f"Invalid structure lengths: {error}", severity="error")
+            self._populate_ship_config()
+            return
+        self._set_preview_size_for_tier(tier)
         self._mark_changed()
 
     def _rename_selected(self, requested_id: str) -> None:
@@ -1274,9 +1466,13 @@ class EdgeArtDesigner(App[None]):
         try:
             seed = int(self.query_one("#preview-seed", Input).value)
             size_value = str(self.query_one("#preview-size", Select).value)
-            if size_value == "custom":
-                size_value = self.query_one("#preview-custom-size", Input).value
-            size = self._parse_preview_size(size_value)
+            size = (
+                self._parse_preview_size(
+                    self.query_one("#preview-custom-size", Input).value
+                )
+                if size_value == "custom"
+                else self.preview_size
+            )
         except ValueError:
             self.notify("Use a size such as 18x3 or 40x7", severity="error")
             return

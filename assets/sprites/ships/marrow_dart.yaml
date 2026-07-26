@@ -3,7 +3,8 @@ id: marrow_dart
 name: Marrow Dart
 kind: ship
 role: marrow_dart
-description: A reckless organic assault craft grown as bound spars, muscle bands, and a hardened beak.
+description: A reckless organic assault craft grown as bound spars, muscle bands,
+  and a hardened beak.
 views:
   horizontal:
     name: Horizontal
@@ -158,6 +159,12 @@ views:
           - '╱█▛ '
           - '    '
           - '    '
+      structure_lengths:
+        sinew_drive: 1
+        marrow_knot: 1
+        bound_spars: 5
+        nerve_cluster: 1
+        hardened_beak: 1
     - id: medium
       name: Medium
       sections:
@@ -285,6 +292,12 @@ views:
           - █▒▶
           - '╱█ '
           - '   '
+      structure_lengths:
+        sinew_drive: 1
+        marrow_knot: 1
+        bound_spars: 5
+        nerve_cluster: 1
+        hardened_beak: 1
     - id: compact
       name: Compact
       sections:
@@ -337,6 +350,10 @@ views:
           - ' ◢ '
           - █▓▶
           - ' ◥ '
+      structure_lengths:
+        drive: 1
+        body: 6
+        prow: 1
   vertical:
     name: Vertical
     axis: vertical
@@ -444,6 +461,12 @@ views:
           cells:
           - '      ▴▴      '
           - '    ██▒▒██    '
+      structure_lengths:
+        sinew_drive: 1
+        marrow_knot: 1
+        bound_spars: 8
+        nerve_cluster: 1
+        hardened_beak: 1
     - id: medium
       name: Medium
       sections:
@@ -541,6 +564,12 @@ views:
           cells:
           - '    ▴▴    '
           - '  ╱╱██╲╲  '
+      structure_lengths:
+        sinew_drive: 1
+        marrow_knot: 1
+        bound_spars: 8
+        nerve_cluster: 1
+        hardened_beak: 1
     - id: compact
       name: Compact
       sections:
@@ -586,3 +615,7 @@ views:
           cells:
           - '  ▴▴  '
           - '  ██  '
+      structure_lengths:
+        drive: 1
+        body: 12
+        prow: 1

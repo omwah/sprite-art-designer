@@ -164,6 +164,12 @@ views:
           - '▓██ '
           - '    '
           - '    '
+      structure_lengths:
+        thrusters: 1
+        spindrive: 1
+        hull: 6
+        screens: 1
+        main_gun: 1
     - id: medium
       name: Medium
       sections:
@@ -295,6 +301,12 @@ views:
           - ▓█▶
           - '▓█ '
           - '   '
+      structure_lengths:
+        thrusters: 1
+        spindrive: 1
+        hull: 6
+        screens: 1
+        main_gun: 1
     - id: compact
       name: Compact
       sections:
@@ -346,6 +358,10 @@ views:
           - '  '
           - █▶
           - '  '
+      structure_lengths:
+        thrusters: 1
+        hull: 4
+        main_gun: 1
   vertical:
     name: Vertical
     axis: vertical
@@ -450,6 +466,12 @@ views:
           cells:
           - '      ▴▴      '
           - '    ██████    '
+      structure_lengths:
+        thrusters: 1
+        spindrive: 1
+        hull: 8
+        screens: 1
+        main_gun: 1
     - id: medium
       name: Medium
       sections:
@@ -548,6 +570,12 @@ views:
           cells:
           - '    ▴▴    '
           - '  ▓▓▓▓▓▓  '
+      structure_lengths:
+        thrusters: 1
+        spindrive: 1
+        hull: 8
+        screens: 1
+        main_gun: 1
     - id: compact
       name: Compact
       sections:
@@ -593,3 +621,7 @@ views:
           weight: 1
           cells:
           - '  ▴▴  '
+      structure_lengths:
+        thrusters: 1
+        hull: 10
+        main_gun: 1

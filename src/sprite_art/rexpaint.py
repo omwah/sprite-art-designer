@@ -174,9 +174,7 @@ def segment_rexpaint_cells(
     )
     variants = [active[id(section.variants)] for section in tier.sections]
     horizontal = view.axis != "vertical"
-    repeats = _repeat_counts(
-        tier.sections, variants, width if horizontal else height, horizontal=horizontal
-    )
+    repeats = [tier.structure_lengths[section.id] for section in tier.sections]
 
     natural_width = sum(variant.width * repeat for variant, repeat in zip(variants, repeats))
     natural_height = (

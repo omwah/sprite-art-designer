@@ -3,7 +3,8 @@ id: broadside_citadel
 name: Broadside Citadel
 kind: ship
 role: broadside_citadel
-description: A capital linebreaker built around layered lateral batteries and a fortress spine.
+description: A capital linebreaker built around layered lateral batteries and a fortress
+  spine.
 views:
   horizontal:
     name: Horizontal
@@ -162,6 +163,12 @@ views:
           - ─████▛
           - '  ◥█◤ '
           - '      '
+      structure_lengths:
+        capital_drive: 1
+        drive_citadel: 1
+        broadside_decks: 3
+        command_keep: 1
+        siege_prow: 1
     - id: medium
       name: Medium
       sections:
@@ -293,6 +300,12 @@ views:
           - ─███▶
           - ─███▛
           - '  ◥█ '
+      structure_lengths:
+        capital_drive: 1
+        drive_citadel: 1
+        broadside_decks: 2
+        command_keep: 1
+        siege_prow: 1
     - id: compact
       name: Compact
       sections:
@@ -345,6 +358,10 @@ views:
           - ' ██'
           - ██▶
           - ' ██'
+      structure_lengths:
+        drive: 1
+        body: 6
+        prow: 1
   vertical:
     name: Vertical
     axis: vertical
@@ -462,6 +479,12 @@ views:
           - '    ▟▟▴▴▙▙    '
           - '  ██████████  '
           - '    ██████    '
+      structure_lengths:
+        capital_drive: 1
+        drive_citadel: 1
+        broadside_decks: 9
+        command_keep: 1
+        siege_prow: 1
     - id: medium
       name: Medium
       sections:
@@ -567,6 +590,12 @@ views:
           - '  ▟▟▴▴▙▙  '
           - ◥◥██████◤◤
           - '  ││││││  '
+      structure_lengths:
+        capital_drive: 1
+        drive_citadel: 1
+        broadside_decks: 10
+        command_keep: 1
+        siege_prow: 1
     - id: compact
       name: Compact
       sections:
@@ -612,3 +641,7 @@ views:
           cells:
           - ██▴▴██
           - '  ██  '
+      structure_lengths:
+        drive: 1
+        body: 15
+        prow: 1

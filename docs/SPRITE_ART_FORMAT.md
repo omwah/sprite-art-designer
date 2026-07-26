@@ -38,6 +38,7 @@ views:
     tiers:
       - id: full
         name: Full Detail
+        structure_lengths: {hull: 4}
         sections:
           - id: hull
             name: Hull
@@ -69,10 +70,15 @@ Horizontal and vertical views are separate stored art. The editor's rotation
 command only creates an editable starting point; rendering never rotates one
 view to obtain another.
 
-### Tiers
+### Tiers, ship width, and structure length
 
-Tiers are ordered richest/largest first. A horizontal view selects by available
-height; a vertical view selects by available width. A fixed view selects the
+Tiers are ordered richest/largest first. Each tier defines a ship's shared
+**ship width** (the cross-axis geometry of its structures); individual
+structures cannot set an independent width. `structure_lengths` gives one
+positive repeat count for every structure in the tier. A ship's **length** is
+the resulting sequence of structures, whose counts may differ. Rendering never
+grows those counts to fill a requested box. A horizontal view selects by
+available ship width; a vertical view selects by available ship width. A fixed view selects the
 first canvas that fits both dimensions. If none fit, the smallest tier is used
 and centered cropping provides the requested exact rectangle.
 

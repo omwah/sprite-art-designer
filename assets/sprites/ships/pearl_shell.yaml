@@ -3,7 +3,8 @@ id: pearl_shell
 name: Pearl Shell
 kind: ship
 role: pearl_shell
-description: An alien troop shell with offset carapace plates and a ring of recessed weapon ports.
+description: An alien troop shell with offset carapace plates and a ring of recessed
+  weapon ports.
 views:
   horizontal:
     name: Horizontal
@@ -159,6 +160,12 @@ views:
           - ◥████
           - '  ◥█◤'
           - '     '
+      structure_lengths:
+        ciliary_drive: 1
+        rear_carapace: 1
+        weapon_ring: 3
+        troop_lobe: 1
+        beak: 1
     - id: medium
       name: Medium
       sections:
@@ -287,6 +294,12 @@ views:
           - ██☉▶
           - ◥███
           - '  ◥◤'
+      structure_lengths:
+        ciliary_drive: 1
+        rear_carapace: 1
+        weapon_ring: 3
+        troop_lobe: 1
+        beak: 1
     - id: compact
       name: Compact
       sections:
@@ -339,6 +352,10 @@ views:
           - ' ◢ '
           - ██▶
           - ' ◥ '
+      structure_lengths:
+        drive: 1
+        body: 6
+        prow: 1
   vertical:
     name: Vertical
     axis: vertical
@@ -451,6 +468,12 @@ views:
           - '  ◢◢██▴▴██◣◣  '
           - '  ◥◥██☉☉██◤◤  '
           - '    ◥◥██◤◤    '
+      structure_lengths:
+        ciliary_drive: 1
+        rear_carapace: 1
+        weapon_ring: 5
+        troop_lobe: 1
+        beak: 1
     - id: medium
       name: Medium
       sections:
@@ -551,6 +574,12 @@ views:
           cells:
           - ◢◢██▴▴██◣◣
           - '  ██████  '
+      structure_lengths:
+        ciliary_drive: 1
+        rear_carapace: 1
+        weapon_ring: 5
+        troop_lobe: 1
+        beak: 1
     - id: compact
       name: Compact
       sections:
@@ -596,3 +625,7 @@ views:
           cells:
           - '  ▴▴  '
           - '  ██  '
+      structure_lengths:
+        drive: 1
+        body: 10
+        prow: 1

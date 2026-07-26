@@ -3,7 +3,8 @@ id: junction_pinnace
 name: Junction Pinnace
 kind: ship
 role: junction_pinnace
-description: A tiny courier and landing craft wrapped around drive, compensator, and cabin.
+description: A tiny courier and landing craft wrapped around drive, compensator, and
+  cabin.
 views:
   horizontal:
     name: Horizontal
@@ -128,6 +129,11 @@ views:
           - '─▛ '
           - '   '
           - '   '
+      structure_lengths:
+        overdrive: 1
+        sail_nodes: 1
+        cabin: 3
+        landing_nose: 1
     - id: medium
       name: Medium
       sections:
@@ -229,6 +235,11 @@ views:
           - █▶
           - '─ '
           - '  '
+      structure_lengths:
+        overdrive: 1
+        sail_nodes: 1
+        cabin: 3
+        landing_nose: 1
     - id: compact
       name: Compact
       sections:
@@ -275,6 +286,10 @@ views:
           - '  '
           - █▶
           - '  '
+      structure_lengths:
+        drive: 1
+        body: 4
+        prow: 1
   vertical:
     name: Vertical
     axis: vertical
@@ -358,6 +373,11 @@ views:
           cells:
           - '      ▴▴      '
           - '    ││██││    '
+      structure_lengths:
+        overdrive: 1
+        sail_nodes: 1
+        cabin: 3
+        landing_nose: 1
     - id: medium
       name: Medium
       sections:
@@ -433,6 +453,11 @@ views:
           weight: 1
           cells:
           - '    ▴▴    '
+      structure_lengths:
+        overdrive: 1
+        sail_nodes: 1
+        cabin: 3
+        landing_nose: 1
     - id: compact
       name: Compact
       sections:
@@ -473,3 +498,7 @@ views:
           weight: 1
           cells:
           - '  ▴▴  '
+      structure_lengths:
+        drive: 1
+        body: 4
+        prow: 1

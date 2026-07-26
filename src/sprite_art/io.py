@@ -69,13 +69,22 @@ def _tier_from_data(data: object, context: str) -> Tier:
     sections_data = item.get("sections", [])
     if not isinstance(sections_data, list):
         raise SpriteValidationError(f"{context}.sections must be a list")
+    sections = [
+        _section_from_data(section, f"{context}.sections[{index}]")
+        for index, section in enumerate(sections_data)
+    ]
+    lengths_data = item.get("structure_lengths")
+    if lengths_data is None:
+        structure_lengths = {section.id: section.min_repeat for section in sections}
+    else:
+        structure_lengths = {
+            key: int(value) for key, value in _mapping(lengths_data, f"{context}.structure_lengths").items()
+        }
     return Tier(
         id=str(item.get("id", "")),
         name=str(item.get("name", item.get("id", ""))),
-        sections=[
-            _section_from_data(section, f"{context}.sections[{index}]")
-            for index, section in enumerate(sections_data)
-        ],
+        sections=sections,
+        structure_lengths=structure_lengths,
     )
 
 
@@ -200,6 +209,7 @@ def _tier_to_data(tier: Tier) -> dict[str, object]:
     return {
         "id": tier.id,
         "name": tier.name,
+        "structure_lengths": dict(tier.structure_lengths),
         "sections": [_section_to_data(section) for section in tier.sections],
     }
 
@@ -271,4 +281,3 @@ def dump_sprite(sprite: Sprite, path: str | Path) -> None:
 def dump_palette_catalog(catalog: PaletteCatalog, path: str | Path) -> None:
     catalog.validate()
     _atomic_yaml_write(Path(path), palette_catalog_to_data(catalog))
-

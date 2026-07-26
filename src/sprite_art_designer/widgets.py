@@ -16,13 +16,6 @@ from textual.widgets import Button, Input, Label, Select, Static, Switch, Tabbed
 from sprite_art import PaletteCatalog, Sprite, Variant, render_sprite
 from sprite_art.glyphs import AUTHORING_GLYPHS, SEMANTIC_GLYPHS
 
-PREVIEW_SIZE_OPTIONS = [
-    ("Compact · 18 × 3", "18x3"),
-    ("Medium · 30 × 5", "30x5"),
-    ("Full · 40 × 7", "40x7"),
-    ("Custom…", "custom"),
-]
-
 SEMANTIC_BUTTON_RENDERING = {
     "R": ("▀", "#f87171"),
     "Y": ("▀", "#facc15"),
@@ -410,10 +403,6 @@ class PropertiesToolsTab(TabPane):
                 )
                 yield Label("Secondary properties (comma-separated)")
                 yield Input(id="secondary-properties")
-                yield Label("Repeat min / max")
-                with Horizontal():
-                    yield Input(value="1", type="integer", id="repeat-min")
-                    yield Input(value="1", type="integer", id="repeat-max")
             with Vertical(id="variant-fields"):
                 yield Label("Selection weight")
                 yield Input(value="1", type="integer", id="variant-weight")
@@ -456,6 +445,22 @@ class PaletteToolsTab(TabPane):
             yield Button("Apply palette", id="apply-palette", variant="primary")
 
 
+class ShipConfigToolsTab(TabPane):
+    """Per-tier ship width and structure-length configuration."""
+
+    def __init__(self) -> None:
+        super().__init__("Ship Config", id="ship-config-tab")
+
+    def compose(self) -> ComposeResult:
+        with VerticalScroll():
+            yield Label("Select a tier to configure its ship width and structure lengths.")
+            yield Label("Tier", id="ship-config-tier")
+            yield Label("Ship width", id="ship-config-width")
+            yield Label("Structure lengths (structure: count)")
+            yield Input(id="ship-config-lengths")
+            yield Button("Apply ship config", id="apply-ship-config", variant="primary")
+
+
 class PreviewToolsTab(TabPane):
     """Preview view, random seed, and size controls tab."""
 
@@ -466,6 +471,8 @@ class PreviewToolsTab(TabPane):
         facing_options: list[tuple[str, str]],
         seed: int,
         size: tuple[int, int],
+        tier_options: list[tuple[str, str]],
+        initial_tier_id: str,
         highlight_enabled: bool,
     ) -> None:
         super().__init__("Preview", id="preview-tab")
@@ -474,6 +481,8 @@ class PreviewToolsTab(TabPane):
         self.facing_options = facing_options
         self.seed = seed
         self.preview_size = size
+        self.tier_options = tier_options
+        self.initial_tier_id = initial_tier_id
         self.highlight_enabled = highlight_enabled
 
     def compose(self) -> ComposeResult:
@@ -491,11 +500,11 @@ class PreviewToolsTab(TabPane):
             with Horizontal(id="preview-seed-controls"):
                 yield Input(value=str(self.seed), type="integer", id="preview-seed")
                 yield Button("Reset", id="reset-preview-seed")
-            yield Label("Size")
+            yield Label("Tier")
             with Horizontal(id="preview-size-controls"):
                 yield Select(
-                    PREVIEW_SIZE_OPTIONS,
-                    value=f"{self.preview_size[0]}x{self.preview_size[1]}",
+                    self.tier_options,
+                    value=Select.NULL,
                     allow_blank=False,
                     id="preview-size",
                 )
@@ -516,6 +525,8 @@ class ToolsPane(Vertical):
         facing_options: list[tuple[str, str]],
         seed: int,
         size: tuple[int, int],
+        tier_options: list[tuple[str, str]],
+        initial_tier_id: str,
         highlight_enabled: bool,
     ) -> None:
         super().__init__(id="tools-pane", classes="pane")
@@ -525,6 +536,8 @@ class ToolsPane(Vertical):
         self.facing_options = facing_options
         self.seed = seed
         self.preview_size = size
+        self.tier_options = tier_options
+        self.initial_tier_id = initial_tier_id
         self.highlight_enabled = highlight_enabled
 
     def compose(self) -> ComposeResult:
@@ -536,9 +549,12 @@ class ToolsPane(Vertical):
                 self.facing_options,
                 self.seed,
                 self.preview_size,
+                self.tier_options,
+                self.initial_tier_id,
                 self.highlight_enabled,
             )
             yield PropertiesToolsTab()
+            yield ShipConfigToolsTab()
             yield PaletteToolsTab(self.current_archetype)
 
 

@@ -97,42 +97,57 @@ async def test_preview_size_select_supports_custom_size() -> None:
 
 
 @pytest.mark.asyncio
-async def test_preview_size_and_structure_tier_stay_in_sync() -> None:
+async def test_tier_selection_updates_preview_tier_selector() -> None:
     app = EdgeArtDesigner(ROOT / "assets")
     async with app.run_test(size=(140, 50)) as pilot:
         await pilot.pause()
-        app.query_one("#preview-size").value = "18x3"
-        await pilot.pause()
-        assert app.selection is not None
-        assert app.selection.kind == "tier"
-        assert app.selection.item.id == "compact"
-
         tree = app.query_one("#structure-tree", Tree)
         full_tier = tree.root.children[0].children[0]
         tree.select_node(full_tier)
         await pilot.pause()
-        assert app.preview_size == (40, 7)
-
-        compact_variant = tree.root.children[0].children[2].children[0].children[0]
-        tree.select_node(compact_variant)
-        await pilot.pause()
-        assert app.query_one("#preview-size").value == "18x3"
+        assert app.preview_size[1] == full_tier.data.item.cross_axis_size("horizontal")
+        assert app.query_one("#preview-size").value == full_tier.data.item.id
 
 
 @pytest.mark.asyncio
-async def test_changing_ships_keeps_the_selected_preview_size() -> None:
+async def test_preview_tier_selector_selects_the_matching_tier() -> None:
     app = EdgeArtDesigner(ROOT / "assets")
     async with app.run_test(size=(140, 50)) as pilot:
         await pilot.pause()
-        app.query_one("#preview-size").value = "30x5"
+        tier_select = app.query_one("#preview-size", Select)
+        tier_select.value = "medium"
         await pilot.pause()
-        sprite_select = app.query_one("#sprite-select")
-        sprite_select.value = next(
-            value for _, value in app._sprite_options() if value != app.editor.current_sprite_id
-        )
+        assert app.selection is not None
+        assert app.selection.kind == "tier"
+        assert app.selection.item.id == "medium"
+        assert tier_select.value == "medium"
+
+
+@pytest.mark.asyncio
+async def test_t_shortcut_cycles_ship_tiers() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
         await pilot.pause()
-        assert app.preview_size == (30, 5)
-        assert app.query_one("#preview-size").value == "30x5"
+        await pilot.press("t")
+        assert app.selection is not None
+        assert app.selection.kind == "tier"
+        assert app.selection.item.id == "medium"
+        assert app.query_one("#preview-size", Select).value == "medium"
+
+
+@pytest.mark.asyncio
+async def test_o_shortcut_switches_orientation_and_loads_matching_variant() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        source = app.query_one("#art-canvas", ArtCanvas).variant
+        assert source is not None
+        await pilot.press("o")
+        assert app.current_view_id == "vertical"
+        assert app.selection is not None
+        assert app.selection.kind == "variant"
+        assert app.selection.item.id == source.id
+        assert app.query_one("#art-canvas", ArtCanvas).variant is app.selection.item
 
 
 @pytest.mark.asyncio

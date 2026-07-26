@@ -3,7 +3,8 @@ id: hearth_freighter
 name: Hearth Freighter
 kind: ship
 role: hearth_freighter
-description: A century-old modular transport made homelike through repairs, cargo, and a rotating drum.
+description: A century-old modular transport made homelike through repairs, cargo,
+  and a rotating drum.
 views:
   horizontal:
     name: Horizontal
@@ -159,6 +160,12 @@ views:
           - '     '
           - '     '
           - '     '
+      structure_lengths:
+        retrofitted_drive: 1
+        machine_shop: 1
+        cargo_modules: 3
+        hearth_drum: 1
+        mining_prow: 1
     - id: medium
       name: Medium
       sections:
@@ -287,6 +294,12 @@ views:
           - ' ◥█ '
           - '    '
           - '    '
+      structure_lengths:
+        retrofitted_drive: 1
+        machine_shop: 1
+        cargo_modules: 3
+        hearth_drum: 1
+        mining_prow: 1
     - id: compact
       name: Compact
       sections:
@@ -339,6 +352,10 @@ views:
           - '   '
           - ─█▶
           - '   '
+      structure_lengths:
+        drive: 1
+        body: 6
+        prow: 1
   vertical:
     name: Vertical
     axis: vertical
@@ -449,6 +466,12 @@ views:
           - '    ▴▴        '
           - '  ██◇◇██      '
           - '    ││        '
+      structure_lengths:
+        retrofitted_drive: 1
+        machine_shop: 1
+        cargo_modules: 9
+        hearth_drum: 1
+        mining_prow: 1
     - id: medium
       name: Medium
       sections:
@@ -551,6 +574,12 @@ views:
           cells:
           - '  ▴▴      '
           - '◥◥██◤◤    '
+      structure_lengths:
+        retrofitted_drive: 1
+        machine_shop: 1
+        cargo_modules: 9
+        hearth_drum: 1
+        mining_prow: 1
     - id: compact
       name: Compact
       sections:
@@ -596,3 +625,7 @@ views:
           cells:
           - '  ▴▴  '
           - '  ││  '
+      structure_lengths:
+        drive: 1
+        body: 14
+        prow: 1

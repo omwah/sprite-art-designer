@@ -3,7 +3,8 @@ id: needle_picket
 name: Needle Picket
 kind: ship
 role: needle_picket
-description: A lean independent patrol hull with exposed drive nodes and an oversized sensor prow.
+description: A lean independent patrol hull with exposed drive nodes and an oversized
+  sensor prow.
 views:
   horizontal:
     name: Horizontal
@@ -157,6 +158,12 @@ views:
           - '  ─▛ '
           - '     '
           - '     '
+      structure_lengths:
+        thrusters: 1
+        drive_nodes: 1
+        patrol_spine: 5
+        sensor_crown: 1
+        needle: 1
     - id: medium
       name: Medium
       sections:
@@ -283,6 +290,12 @@ views:
           - ─██▶
           - '  ─ '
           - '    '
+      structure_lengths:
+        thrusters: 1
+        drive_nodes: 1
+        patrol_spine: 5
+        sensor_crown: 1
+        needle: 1
     - id: compact
       name: Compact
       sections:
@@ -335,6 +348,10 @@ views:
           - '   '
           - ─▓▶
           - '   '
+      structure_lengths:
+        drive: 1
+        body: 6
+        prow: 1
   vertical:
     name: Vertical
     axis: vertical
@@ -441,6 +458,12 @@ views:
           - '      ▴▴      '
           - '    ││██││    '
           - '      ││      '
+      structure_lengths:
+        thrusters: 1
+        drive_nodes: 1
+        patrol_spine: 7
+        sensor_crown: 1
+        needle: 1
     - id: medium
       name: Medium
       sections:
@@ -537,6 +560,12 @@ views:
           cells:
           - '    ▴▴    '
           - '    ██    '
+      structure_lengths:
+        thrusters: 1
+        drive_nodes: 1
+        patrol_spine: 7
+        sensor_crown: 1
+        needle: 1
     - id: compact
       name: Compact
       sections:
@@ -582,3 +611,7 @@ views:
           cells:
           - '  ▴▴  '
           - '  ││  '
+      structure_lengths:
+        drive: 1
+        body: 12
+        prow: 1

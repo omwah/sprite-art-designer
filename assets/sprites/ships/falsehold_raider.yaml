@@ -3,7 +3,8 @@ id: falsehold_raider
 name: Falsehold Raider
 kind: ship
 role: falsehold_raider
-description: An armed merchant hull whose cargo seams conceal batteries and reinforced magazines.
+description: An armed merchant hull whose cargo seams conceal batteries and reinforced
+  magazines.
 views:
   horizontal:
     name: Horizontal
@@ -159,6 +160,12 @@ views:
           - '▓█▛ '
           - '    '
           - '    '
+      structure_lengths:
+        merchant_drive: 1
+        armored_buttress: 1
+        false_holds: 4
+        masked_battery: 1
+        merchant_prow: 1
     - id: medium
       name: Medium
       sections:
@@ -287,6 +294,12 @@ views:
           - ██▶
           - '▓█ '
           - '   '
+      structure_lengths:
+        merchant_drive: 1
+        armored_buttress: 1
+        false_holds: 3
+        masked_battery: 1
+        merchant_prow: 1
     - id: compact
       name: Compact
       sections:
@@ -339,6 +352,10 @@ views:
           - '   '
           - ██▶
           - '   '
+      structure_lengths:
+        drive: 1
+        body: 6
+        prow: 1
   vertical:
     name: Vertical
     axis: vertical
@@ -445,6 +462,12 @@ views:
           cells:
           - '      ▴▴      '
           - '    ██████    '
+      structure_lengths:
+        merchant_drive: 1
+        armored_buttress: 1
+        false_holds: 8
+        masked_battery: 1
+        merchant_prow: 1
     - id: medium
       name: Medium
       sections:
@@ -545,6 +568,12 @@ views:
           cells:
           - '    ▴▴    '
           - '  ▓▓██▓▓  '
+      structure_lengths:
+        merchant_drive: 1
+        armored_buttress: 1
+        false_holds: 8
+        masked_battery: 1
+        merchant_prow: 1
     - id: compact
       name: Compact
       sections:
@@ -590,3 +619,7 @@ views:
           cells:
           - '  ▴▴  '
           - '  ██  '
+      structure_lengths:
+        drive: 1
+        body: 12
+        prow: 1

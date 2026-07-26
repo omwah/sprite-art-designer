@@ -3,7 +3,8 @@ id: radiant_lance
 name: Radiant Lance
 kind: ship
 role: radiant_lance
-description: A glittering military spine with folding diamond radiators and petal habitats.
+description: A glittering military spine with folding diamond radiators and petal
+  habitats.
 views:
   horizontal:
     name: Horizontal
@@ -159,6 +160,12 @@ views:
           - '─▓█▛ '
           - '     '
           - '     '
+      structure_lengths:
+        fusion_bell: 1
+        engine_swell: 1
+        diamond_radiators: 5
+        habitat_petals: 1
+        lance: 1
     - id: medium
       name: Medium
       sections:
@@ -287,6 +294,12 @@ views:
           - ─██▶
           - '─▓█ '
           - '    '
+      structure_lengths:
+        fusion_bell: 1
+        engine_swell: 1
+        diamond_radiators: 5
+        habitat_petals: 1
+        lance: 1
     - id: compact
       name: Compact
       sections:
@@ -339,6 +352,10 @@ views:
           - '   '
           - ─█▶
           - '   '
+      structure_lengths:
+        drive: 1
+        body: 6
+        prow: 1
   vertical:
     name: Vertical
     axis: vertical
@@ -445,6 +462,12 @@ views:
           - '      ▴▴      '
           - '    ██████    '
           - '    ││││││    '
+      structure_lengths:
+        fusion_bell: 1
+        engine_swell: 1
+        diamond_radiators: 6
+        habitat_petals: 1
+        lance: 1
     - id: medium
       name: Medium
       sections:
@@ -543,6 +566,12 @@ views:
           cells:
           - '    ▴▴    '
           - '  ▓▓██▓▓  '
+      structure_lengths:
+        fusion_bell: 1
+        engine_swell: 1
+        diamond_radiators: 6
+        habitat_petals: 1
+        lance: 1
     - id: compact
       name: Compact
       sections:
@@ -588,3 +617,7 @@ views:
           cells:
           - '  ▴▴  '
           - '  ││  '
+      structure_lengths:
+        drive: 1
+        body: 11
+        prow: 1
