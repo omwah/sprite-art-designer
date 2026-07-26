@@ -9,14 +9,14 @@ cells use these indices in reading order.
 | 0 | space | Void |
 | 1–5 | █ ▓ ▒ ░ ■ | Hull tones |
 | 6–13 | ▄ ▀ ▌ ▐ ▟ ▙ ▜ ▛ | Half blocks and bevels |
-| 14–23 | ─ │ ═ ║ ╾ ╼ ╽ ╿ ╺ ╸ | Beams |
-| 24–38 | ┌ ┐ └ ┘ ├ ┤ ┬ ┴ ◢ ◣ ◥ ◤ ┼ ▤ ▦ | Single-line junctions, facet edges, and structural hulls |
-| 39–47 | ╔ ╗ ╚ ╝ ╠ ╣ ╦ ╩ ╬ | Double-line boxes and junctions |
-| 48–65 | ╞ ╟ ╡ ╢ ╖ ╕ ╜ ╛ ╧ ╨ ╤ ╥ ╙ ╘ ╒ ╓ ╫ ╪ | Mixed-line pipes |
-| 66–81 | ▬ ▮ ▶ ◀ ► ◄ ▴ ▾ ↑ ↓ → ← ↔ ↕ ▲ ▼ | Beams, muzzles, and arrows |
-| 82–83 | ╱ ╲ | Diagonals |
-| 84–102 | ◇ ◆ ◊ ☉ ° ≡ ◘ ◙ ☼ • ○ ♥ ♦ ♣ ♠ ∩ ∞ ⌐ ¬ | Facets |
-| 103–110 | R G B Y r g b y | Beacon, green, blue, and engine signal markers; lowercase reverses the signal orientation |
+| 14–25 | ─ │ ═ ║ ╾ ╼ ╽ ╿ ╻ ╹ ╺ ╸ | Beams |
+| 26–40 | ┌ ┐ └ ┘ ├ ┤ ┬ ┴ ◢ ◣ ◥ ◤ ┼ ▤ ▦ | Single-line junctions, facet edges, and structural hulls |
+| 41–49 | ╔ ╗ ╚ ╝ ╠ ╣ ╦ ╩ ╬ | Double-line boxes and junctions |
+| 50–67 | ╞ ╟ ╡ ╢ ╖ ╕ ╜ ╛ ╧ ╨ ╤ ╥ ╙ ╘ ╒ ╓ ╫ ╪ | Mixed-line pipes |
+| 68–83 | ▬ ▮ ▶ ◀ ► ◄ ▴ ▾ ↑ ↓ → ← ↔ ↕ ▲ ▼ | Beams, muzzles, and arrows |
+| 84–85 | ╱ ╲ | Diagonals |
+| 86–104 | ◇ ◆ ◊ ☉ ° ≡ ◘ ◙ ☼ • ○ ♥ ♦ ♣ ♠ ∩ ∞ ⌐ ¬ | Facets |
+| 105–112 | R G B Y r g b y | Beacon, green, blue, and engine signal markers; lowercase reverses the signal orientation |
 
 Install the PNG as an **art** font, not as REXPaint's GUI font. It must remain a
 16-column sheet; REXPaint 1.50+ supports the required extra rows. The exported
@@ -39,7 +39,7 @@ changes its appearance.
    matching Edge GUI font while selecting the Edge atlas as the art font:
 
    ```text
-   "Edge Art Designer 10x20"  edge-art-designer-gui  16  16  edge-art-designer  16  7  edge-art-designer-unicode  edge-art-designer-mirror  1
+   "Edge Art Designer 10x20"  edge-art-designer-gui  16  16  edge-art-designer  16  8  edge-art-designer-unicode  edge-art-designer-mirror  1
    ```
 
 4. Restart REXPaint and choose **Edge Art Designer 10x20** with the font

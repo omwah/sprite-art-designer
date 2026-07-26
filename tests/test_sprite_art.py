@@ -207,6 +207,35 @@ def test_authoring_glyphs_have_reversible_reflections_and_rotation_support() -> 
         assert flip_rows_vertical(flip_rows_vertical([glyph])) == [glyph]
 
 
+def test_generated_heavy_half_beams_remain_authorable_and_exportable(
+    palettes: PaletteCatalog, tmp_path: Path
+) -> None:
+    sprite = load_sprite(ASSETS / "sprites" / "ships" / "fighter.yaml")
+    changed = deepcopy(sprite)
+    changed.views.pop("vertical")
+    variant = changed.views["horizontal"].tiers[0].sections[0].variants[0]
+    variant.cells[0] = "╺" + variant.cells[0][1:]
+
+    vertical, warnings = generate_rotated_view(changed)
+
+    assert not warnings
+    assert {"╻", "╹"} <= REXPAINT_GLYPH_INDICES.keys()
+    assert [REXPAINT_GLYPH_INDICES[glyph] for glyph in "╻╹╺╸"] == [22, 23, 24, 25]
+    assert any(
+        "╹" in row
+        for row in vertical.tiers[0].sections[0].variants[0].cells
+    )
+    changed.views["vertical"] = vertical
+    export_rexpaint(
+        changed,
+        palettes,
+        tmp_path / "vertical-half-beam.xp",
+        width=14,
+        height=7,
+        view_id="vertical",
+    )
+
+
 @pytest.mark.parametrize("role", sorted(ORIGINAL_ROLES | NEW_ROLES))
 def test_every_ship_has_independent_horizontal_and_vertical_views(role: str) -> None:
     sprite = load_sprite(ASSETS / "sprites" / "ships" / f"{role}.yaml")

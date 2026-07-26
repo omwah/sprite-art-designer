@@ -40,6 +40,8 @@ AUTHORING_GLYPHS: tuple[tuple[str, str], ...] = (
     ("╼", "Tapered beam"),
     ("╽", "Tapered beam"),
     ("╿", "Tapered beam"),
+    ("╻", "Heavy half beam"),
+    ("╹", "Heavy half beam"),
     ("╺", "Heavy half beam"),
     ("╸", "Heavy half beam"),
     ("┌", "Corner"),
