@@ -27,21 +27,21 @@ views:
           weight: 1
           cells:
           - '     '
-          - ' Y   '
-          - 'YY╲▓ '
-          - Y▒██▓
-          - 'YY╱▓ '
+          - ' y   '
+          - 'yy╲▓ '
+          - y▒██▓
+          - 'yy╱▓ '
           - '     '
           - '     '
         - id: spasm
           weight: 1
           cells:
           - '     '
-          - ' YY  '
-          - 'Y╲▒▓ '
-          - Y███▓
-          - 'Y╱▒▓ '
-          - '  Y  '
+          - ' yy  '
+          - 'y╲▒▓ '
+          - y███▓
+          - 'y╱▒▓ '
+          - '  y  '
           - '     '
       - id: marrow_knot
         name: Marrow Knot
@@ -173,19 +173,19 @@ views:
         - id: tendons
           weight: 1
           cells:
-          - ' Y  '
-          - 'YY╲ '
-          - Y▒█▓
-          - 'YY╱ '
+          - ' y  '
+          - 'yy╲ '
+          - y▒█▓
+          - 'yy╱ '
           - '    '
         - id: spasm
           weight: 1
           cells:
-          - ' YY '
-          - 'Y╲▒ '
-          - Y██▓
-          - 'Y╱▒ '
-          - '  Y '
+          - ' yy '
+          - 'y╲▒ '
+          - y██▓
+          - 'y╱▒ '
+          - '  y '
       - id: marrow_knot
         name: Marrow Knot
         primary_property: spindrive
@@ -300,7 +300,7 @@ views:
           weight: 1
           cells:
           - ' ▴'
-          - Y▒
+          - y▒
           - ' ▾'
       - id: body
         name: Body
@@ -360,13 +360,13 @@ views:
           cells:
           - '      ▓▓      '
           - '    ╱╱██╲╲    '
-          - '    YYYYYY    '
+          - '    yyyyyy    '
         - id: spasm
           weight: 1
           cells:
           - '      ▓▓      '
-          - '  YY▒▒██▒▒YY  '
-          - '    YYYYYY    '
+          - '  yy▒▒██▒▒yy  '
+          - '    yyyyyy    '
       - id: marrow_knot
         name: Marrow Knot
         primary_property: spindrive
@@ -460,12 +460,12 @@ views:
           weight: 1
           cells:
           - '    ▓▓    '
-          - 'YYYY▒▒YY  '
+          - 'yyyy▒▒yy  '
         - id: spasm
           weight: 1
           cells:
           - '    ▓▓    '
-          - 'YY╱╱██╲╲  '
+          - 'yy╱╱██╲╲  '
       - id: marrow_knot
         name: Marrow Knot
         primary_property: spindrive

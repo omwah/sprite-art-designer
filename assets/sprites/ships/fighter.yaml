@@ -27,8 +27,8 @@ views:
           cells:
           - '     '
           - '     '
-          - '  Y▶▓'
-          - '  Y▶▓'
+          - '  y▶▓'
+          - '  y▶▓'
           - '     '
           - '     '
           - '     '
@@ -37,8 +37,8 @@ views:
           cells:
           - '     '
           - '     '
-          - ' YY▶▓'
-          - ' YY▶▓'
+          - ' yy▶▓'
+          - ' yy▶▓'
           - '     '
           - '     '
           - '     '
@@ -54,10 +54,10 @@ views:
           weight: 1
           cells:
           - '       '
-          - ' Y▶══◥█'
+          - ' y▶══◥█'
           - ▓██████
           - ▓██████
-          - ' Y▶══◢█'
+          - ' y▶══◢█'
           - '       '
           - '       '
         - id: spindrive_2
@@ -169,16 +169,16 @@ views:
           weight: 1
           cells:
           - '    '
-          - '  Y▓'
-          - '  Y▓'
+          - '  y▓'
+          - '  y▓'
           - '    '
           - '    '
         - id: thrusters_2
           weight: 1
           cells:
           - '    '
-          - ' YY▓'
-          - ' YY▓'
+          - ' yy▓'
+          - ' yy▓'
           - '    '
           - '    '
       - id: spindrive
@@ -192,10 +192,10 @@ views:
         - id: spindrive_1
           weight: 1
           cells:
-          - ' Y══█'
+          - ' y══█'
           - ▓████
           - ▓████
-          - ' Y══█'
+          - ' y══█'
           - '     '
         - id: spindrive_2
           weight: 1
@@ -292,7 +292,7 @@ views:
           weight: 1
           cells:
           - '  '
-          - Y█
+          - y█
           - '  '
       - id: hull
         name: Hull
@@ -349,13 +349,13 @@ views:
           weight: 1
           cells:
           - '    ▓▓▓▓      '
-          - '    YYYY      '
+          - '    yyyy      '
           - '              '
         - id: thrusters_2
           weight: 1
           cells:
           - '    ▓▓▓▓      '
-          - '    YYYY      '
+          - '    yyyy      '
           - '              '
       - id: spindrive
         name: Spindrive
@@ -457,7 +457,7 @@ views:
           weight: 1
           cells:
           - '  ▓▓▓▓    '
-          - '  YYYY    '
+          - '  yyyy    '
       - id: spindrive
         name: Spindrive
         primary_property: spindrive

@@ -10,14 +10,13 @@ cells use these indices in reading order.
 | 1–5 | █ ▓ ▒ ░ ■ | Hull tones |
 | 6–13 | ▄ ▀ ▌ ▐ ▟ ▙ ▜ ▛ | Half blocks and bevels |
 | 14–23 | ─ │ ═ ║ ╾ ╼ ╽ ╿ ╺ ╸ | Beams |
-| 24–36 | ┌ ┐ └ ┘ ├ ┤ ┬ ┴ ◢ ◣ ◥ ◤ ┼ | Single-line junctions and facet edges |
-| 37–45 | ╔ ╗ ╚ ╝ ╠ ╣ ╦ ╩ ╬ | Double-line boxes and junctions |
-| 46–63 | ╞ ╟ ╡ ╢ ╖ ╕ ╜ ╛ ╧ ╨ ╤ ╥ ╙ ╘ ╒ ╓ ╫ ╪ | Mixed-line pipes |
-| 64–79 | ▬ ▮ ▶ ◀ ► ◄ ▴ ▾ ↑ ↓ → ← ↔ ↕ ▲ ▼ | Beams, muzzles, and arrows |
-| 80–81 | ╱ ╲ | Diagonals |
-| 82–83 | R Y | Beacon and engine markers |
+| 24–38 | ┌ ┐ └ ┘ ├ ┤ ┬ ┴ ◢ ◣ ◥ ◤ ┼ ▤ ▦ | Single-line junctions, facet edges, and structural hulls |
+| 39–47 | ╔ ╗ ╚ ╝ ╠ ╣ ╦ ╩ ╬ | Double-line boxes and junctions |
+| 48–65 | ╞ ╟ ╡ ╢ ╖ ╕ ╜ ╛ ╧ ╨ ╤ ╥ ╙ ╘ ╒ ╓ ╫ ╪ | Mixed-line pipes |
+| 66–81 | ▬ ▮ ▶ ◀ ► ◄ ▴ ▾ ↑ ↓ → ← ↔ ↕ ▲ ▼ | Beams, muzzles, and arrows |
+| 82–83 | ╱ ╲ | Diagonals |
 | 84–102 | ◇ ◆ ◊ ☉ ° ≡ ◘ ◙ ☼ • ○ ♥ ♦ ♣ ♠ ∩ ∞ ⌐ ¬ | Facets |
-| 103–104 | ▤ ▦ | Structural hull glyphs used by existing assets |
+| 103–110 | R G B Y r g b y | Beacon, green, blue, and engine signal markers; lowercase reverses the signal orientation |
 
 Install the PNG as an **art** font, not as REXPaint's GUI font. It must remain a
 16-column sheet; REXPaint 1.50+ supports the required extra rows. The exported

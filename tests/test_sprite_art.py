@@ -12,15 +12,19 @@ from sprite_art import (
     ARCHETYPE_IDS,
     PaletteCatalog,
     REXPAINT_GLYPH_INDICES,
+    RexPaintImportError,
     SpriteLibrary,
     SpriteValidationError,
+    active_variant_at_cell,
     generate_rotated_view,
     load_palette_catalog,
     load_sprite,
     load_sprite_directory,
     RexPaintGlyphError,
     export_rexpaint,
+    import_rexpaint_cells,
     render_sprite,
+    segment_rexpaint_cells,
 )
 from sprite_art.glyphs import (
     AUTHORING_GLYPHS,
@@ -113,6 +117,64 @@ def test_rexpaint_export_rejects_unmapped_glyph(
     sprite.views["horizontal"].tiers[0].sections[0].variants[0].cells[0] = "?    "
     with pytest.raises(RexPaintGlyphError, match="no REXPaint font slot"):
         export_rexpaint(sprite, palettes, tmp_path / "invalid.xp", width=40, height=7)
+
+
+def test_rexpaint_import_round_trips_exported_geometry(
+    palettes: PaletteCatalog, tmp_path: Path
+) -> None:
+    sprite = load_sprite(ASSETS / "sprites" / "ships" / "fighter.yaml")
+    export_path = export_rexpaint(
+        sprite, palettes, tmp_path / "fighter.xp", width=40, height=7, seed=7
+    )
+    assert import_rexpaint_cells(export_path) == render_sprite(
+        sprite, palettes, width=40, height=7, seed=7, preserve_authoring_markers=True
+    ).plain.splitlines()
+    assert "y" in "".join(import_rexpaint_cells(export_path))
+
+
+def test_active_variant_hit_testing_matches_preview_geometry(
+    palettes: PaletteCatalog,
+) -> None:
+    sprite = load_sprite(ASSETS / "sprites" / "ships" / "fighter.yaml")
+    variant = active_variant_at_cell(
+        sprite,
+        palettes,
+        x=10,
+        y=3,
+        width=40,
+        height=7,
+        seed=7,
+    )
+    assert variant is not None
+    assert any(
+        variant in section.variants
+        for section in sprite.views["horizontal"].tiers[0].sections
+    )
+
+
+def test_rexpaint_import_segments_active_variants(
+    palettes: PaletteCatalog, tmp_path: Path
+) -> None:
+    sprite = load_sprite(ASSETS / "sprites" / "ships" / "fighter.yaml")
+    export_path = export_rexpaint(
+        sprite, palettes, tmp_path / "fighter.xp", width=40, height=7, seed=7
+    )
+    segments = segment_rexpaint_cells(
+        import_rexpaint_cells(export_path),
+        sprite,
+        palettes,
+        width=40,
+        height=7,
+        seed=7,
+    )
+    assert all(cells == variant.cells for variant, cells in segments)
+
+
+def test_rexpaint_import_rejects_multiple_layers(tmp_path: Path) -> None:
+    path = tmp_path / "layers.xp"
+    path.write_bytes(gzip.compress(struct.pack("<ii", -1, 2), mtime=0))
+    with pytest.raises(RexPaintImportError, match="expected one layer"):
+        import_rexpaint_cells(path)
 
 
 def test_rexpaint_font_covers_every_authored_asset_glyph(

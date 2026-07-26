@@ -27,8 +27,8 @@ views:
           cells:
           - '    '
           - '    '
-          - ' YY▓'
-          - ' Y█▓'
+          - ' yy▓'
+          - ' y█▓'
           - '    '
           - '    '
           - '    '
@@ -36,9 +36,9 @@ views:
           weight: 1
           cells:
           - '    '
-          - ' Y  '
-          - ' Y▶▓'
-          - ' Y▶▓'
+          - ' y  '
+          - ' y▶▓'
+          - ' y▶▓'
           - '    '
           - '    '
           - '    '
@@ -143,16 +143,16 @@ views:
           weight: 1
           cells:
           - '   '
-          - ' Y▓'
-          - ' Y▓'
+          - ' y▓'
+          - ' y▓'
           - '   '
           - '   '
         - id: fork
           weight: 1
           cells:
-          - ' Y '
-          - ' Y▓'
-          - ' Y▓'
+          - ' y '
+          - ' y▓'
+          - ' y▓'
           - '   '
           - '   '
       - id: sail_nodes
@@ -244,7 +244,7 @@ views:
           weight: 1
           cells:
           - '  '
-          - Y▓
+          - y▓
           - '  '
       - id: body
         name: Body
@@ -296,12 +296,12 @@ views:
           weight: 1
           cells:
           - '    ▓▓▓▓      '
-          - '    YYYY      '
+          - '    yyyy      '
         - id: fork
           weight: 1
           cells:
           - '    ▓▓▓▓      '
-          - '  YYYYYY      '
+          - '  yyyyyy      '
       - id: sail_nodes
         name: Sail Nodes
         primary_property: spindrive

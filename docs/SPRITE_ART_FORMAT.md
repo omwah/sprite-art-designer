@@ -103,8 +103,10 @@ section regardless of repeat count.
 - `▒` and `░`: dark recesses.
 - structural half-block, line, single/double/mixed box, corner, wedge, and bevel
   glyphs: mid-tone hull.
-- `R`: palette-colored beacon marker, painted as `▀`.
-- `Y`: palette-colored engine marker, painted as `▄`.
+- `R` / `r`: palette-colored beacon markers, painted as `▀` / `▄`.
+- `Y` / `y`: palette-colored engine markers, painted as `▀` / `▄`.
+- `G` / `g`: always-green signal markers, painted as `▀` / `▄`.
+- `B` / `b`: always-blue signal markers, painted as `▀` / `▄`.
 - space: transparent-looking terminal void.
 - other one-cell glyphs: facets painted over bright plating.
 
@@ -114,7 +116,9 @@ All glyphs must occupy exactly one terminal cell.
 
 The reusable library can export a rendered request as a deterministic, one-layer
 REXPaint `.xp` file. Export uses the same width, height, seed, palette,
-view, facing, variant overrides, and semantic painter as the Rich preview.
+view, facing, and variant overrides as the Rich preview. It preserves authored
+semantic marker glyphs instead of substituting their preview-only
+block-glyph effects, while retaining their palette colors.
 The file is not an alternate editable source format: YAML remains authoritative.
 
 An `.xp` file stores glyph *indices* rather than glyph shapes. The exporter uses
@@ -123,6 +127,15 @@ matching font sheet is `assets/rexpaint/edge-art-designer.png`. Install that
 sheet as a 16-column REXPaint art font, retaining the supplied index order. An
 authored glyph absent from the map rejects export with its cell position rather
 than being silently substituted.
+
+Import accepts only a one-layer `.xp` file using that same glyph map and is a
+round-trip editing operation: it splits a just-exported image into the active
+variants of the current preview's selected tier. The file dimensions, preview
+size, seed, view, facing, and active variant selections must therefore still
+match the export. Repeated copies must match one another; the importer cannot
+infer separate source art from a repeated section. Unchanged semantic authoring
+markers are recovered from their rendered block-glyph forms using
+the current active source variant; edits to those cells become literal glyphs.
 
 ## Palette catalog
 

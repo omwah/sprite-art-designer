@@ -6,7 +6,7 @@ from pathlib import Path
 from shutil import copytree
 
 import pytest
-from textual.widgets import TabbedContent, Tree
+from textual.widgets import Select, TabbedContent, Tree
 
 from sprite_art.glyphs import AUTHORING_GLYPHS
 from sprite_art_designer.app import EdgeArtDesigner, HelpScreen, _new_sprite
@@ -45,6 +45,20 @@ async def test_app_mounts_wide_and_populates_editor() -> None:
         app._set_workspace_top_height(top_row.region.height - 4)
         await pilot.pause()
         assert top_row.region.height < bottom_row.region.height
+
+
+@pytest.mark.asyncio
+async def test_preview_structure_selection_activates_clicked_variant() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        preview = app.query_one("#preview-matrix", PreviewMatrix)
+        app.on_preview_matrix_structure_selected(
+            PreviewMatrix.StructureSelected(preview, 10, 3)
+        )
+        await pilot.pause()
+        assert app.selection is not None
+        assert app.selection.kind == "variant"
 
 
 @pytest.mark.asyncio
@@ -192,6 +206,24 @@ async def test_rexpaint_export_uses_current_preview_configuration(tmp_path: Path
         18,
         3,
     )
+
+
+@pytest.mark.asyncio
+async def test_rexpaint_import_updates_current_structure_without_new_view(tmp_path: Path) -> None:
+    asset_root = tmp_path / "assets"
+    copytree(ROOT / "assets", asset_root)
+    app = EdgeArtDesigner(asset_root, data_root=tmp_path / ".edge-art-designer")
+    async with app.run_test(size=(80, 32)) as pilot:
+        await pilot.pause()
+        current_view_id = app.current_view_id
+        view_count = len(app.editor.current_sprite.views)
+        app.action_export_rexpaint()
+        export_path = next(app.editor.export_root.glob("*.xp"))
+        app._finish_import_rexpaint(export_path)
+        await pilot.pause()
+        assert app.current_view_id == current_view_id
+        assert len(app.editor.current_sprite.views) == view_count
+        assert isinstance(app.query_one("#document-actions"), Select)
 
 
 @pytest.mark.asyncio

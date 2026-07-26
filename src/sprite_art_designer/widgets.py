@@ -14,7 +14,7 @@ from textual.widget import Widget
 from textual.widgets import Button, Input, Label, Select, Static, Switch, TabbedContent, TabPane, Tree
 
 from sprite_art import PaletteCatalog, Sprite, Variant, render_sprite
-from sprite_art.glyphs import AUTHORING_GLYPHS
+from sprite_art.glyphs import AUTHORING_GLYPHS, SEMANTIC_GLYPHS
 
 PREVIEW_SIZE_OPTIONS = [
     ("Compact · 18 × 3", "18x3"),
@@ -22,6 +22,17 @@ PREVIEW_SIZE_OPTIONS = [
     ("Full · 40 × 7", "40x7"),
     ("Custom…", "custom"),
 ]
+
+SEMANTIC_BUTTON_RENDERING = {
+    "R": ("▀", "#f87171"),
+    "Y": ("▀", "#facc15"),
+    "G": ("▀", "#22c55e"),
+    "B": ("▀", "#3b82f6"),
+    "r": ("▄", "#f87171"),
+    "y": ("▄", "#facc15"),
+    "g": ("▄", "#22c55e"),
+    "b": ("▄", "#3b82f6"),
+}
 
 
 class ArtCanvas(Widget, can_focus=True):
@@ -201,6 +212,8 @@ class GlyphPalette(ItemGrid):
         id: str | None = None,
         classes: str | None = None,
         disabled: bool = False,
+        glyphs: tuple[tuple[str, str], ...] = AUTHORING_GLYPHS,
+        button_prefix: str = "glyph",
     ) -> None:
         super().__init__(
             *children,
@@ -211,27 +224,65 @@ class GlyphPalette(ItemGrid):
             min_column_width=3,
             stretch_height=False,
         )
+        self.glyphs = glyphs
+        self.button_prefix = button_prefix
 
     def compose(self) -> ComposeResult:
-        for index, (glyph, description) in enumerate(AUTHORING_GLYPHS):
+        for index, (glyph, description) in enumerate(self.glyphs):
             label = "␠" if glyph == " " else glyph
             yield Button(
                 label,
-                id=f"glyph-{index}",
+                id=f"{self.button_prefix}-{index}",
                 tooltip=description,
                 classes="glyph-button",
             )
 
     def set_selected_glyph(self, glyph: str) -> None:
-        for index, (candidate, _description) in enumerate(AUTHORING_GLYPHS):
-            button = self.query_one(f"#glyph-{index}", Button)
+        for index, (candidate, _description) in enumerate(self.glyphs):
+            button = self.query_one(f"#{self.button_prefix}-{index}", Button)
             button.variant = "primary" if candidate == glyph else "default"
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
-        if not event.button.id or not event.button.id.startswith("glyph-"):
+        if not event.button.id or not event.button.id.startswith(f"{self.button_prefix}-"):
             return
-        index = int(event.button.id.removeprefix("glyph-"))
-        glyph = AUTHORING_GLYPHS[index][0]
+        index = int(event.button.id.removeprefix(f"{self.button_prefix}-"))
+        glyph = self.glyphs[index][0]
+        self.set_selected_glyph(glyph)
+        self.post_message(self.Selected(glyph))
+
+
+class SemanticGlyphRow(Horizontal):
+    """A compact, contiguous row of semantic marker buttons."""
+
+    class Selected(Message):
+        def __init__(self, glyph: str) -> None:
+            self.glyph = glyph
+            super().__init__()
+
+    glyphs = tuple(item for item in AUTHORING_GLYPHS if item[0] in SEMANTIC_GLYPHS)
+
+    def compose(self) -> ComposeResult:
+        for index, (glyph, description) in enumerate(self.glyphs):
+            rendered_glyph, color = SEMANTIC_BUTTON_RENDERING[glyph]
+            label = Text.assemble((rendered_glyph, color), f" ({glyph})")
+            row = "upper" if index < 4 else "lower"
+            yield Button(
+                label,
+                id=f"semantic-glyph-{index}",
+                tooltip=description,
+                classes=f"glyph-button semantic-{row}",
+            )
+
+    def set_selected_glyph(self, glyph: str) -> None:
+        for index, (candidate, _description) in enumerate(self.glyphs):
+            button = self.query_one(f"#semantic-glyph-{index}", Button)
+            button.variant = "primary" if candidate == glyph else "default"
+
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        if not event.button.id or not event.button.id.startswith("semantic-glyph-"):
+            return
+        index = int(event.button.id.removeprefix("semantic-glyph-"))
+        glyph = self.glyphs[index][0]
         self.set_selected_glyph(glyph)
         self.post_message(self.Selected(glyph))
 
@@ -252,11 +303,18 @@ class DocumentBar(Horizontal):
             allow_blank=False,
             id="sprite-select",
         )
-        yield Button("New", id="new-sprite")
-        yield Button("Save", id="save", variant="success")
-        yield Button("Save all", id="save-all")
-        yield Button("Export RexPaint", id="export-rexpaint")
-        yield Button("Generate vertical", id="rotate-vertical")
+        yield Select(
+            [
+                ("New sprite", "new-sprite"),
+                ("Save", "save"),
+                ("Save all", "save-all"),
+                ("Import RexPaint", "import-rexpaint"),
+                ("Export RexPaint", "export-rexpaint"),
+                ("Generate vertical", "rotate-vertical"),
+            ],
+            prompt="Actions",
+            id="document-actions",
+        )
         yield Label("", id="dirty-indicator")
 
 
@@ -317,7 +375,13 @@ class GlyphToolsTab(TabPane):
 
     def compose(self) -> ComposeResult:
         with VerticalScroll():
-            yield GlyphPalette(id="glyph-palette")
+            yield GlyphPalette(
+                id="glyph-palette",
+                glyphs=tuple(item for item in AUTHORING_GLYPHS if item[0] not in SEMANTIC_GLYPHS),
+            )
+            with Vertical(id="semantic-glyph-row"):
+                yield SemanticGlyphRow(id="semantic-glyph-upper")
+                yield SemanticGlyphRow(id="semantic-glyph-lower")
             yield Label("Selected: █", id="selected-glyph")
 
 
@@ -490,6 +554,15 @@ class PreviewPane(Vertical):
 
 
 class PreviewMatrix(Static):
+    class StructureSelected(Message):
+        """A click on a rendered art cell that may belong to a structure."""
+
+        def __init__(self, preview: PreviewMatrix, x: int, y: int) -> None:
+            self.preview = preview
+            self.x = x
+            self.y = y
+            super().__init__()
+
     sprite: Sprite | None = None
     palettes: PaletteCatalog | None = None
     archetype_id = "humanoid_diplomat"
@@ -577,3 +650,16 @@ class PreviewMatrix(Static):
                 padding=(0, 1),
             )
         )
+
+    def on_mouse_down(self, event: events.MouseDown) -> None:
+        """Translate a click through the Columns, Panel, and preview margins."""
+
+        if event.button != 1 or self.sprite is None:
+            return
+        view = self.sprite.views[self.view_id]
+        width, height = self.dimensions_for_view(view.axis, *self.preview_size)
+        x = event.screen_x - self.content_region.x - 3
+        y = event.screen_y - self.content_region.y - 2
+        if 0 <= x < width and 0 <= y < height:
+            self.post_message(self.StructureSelected(self, x, y))
+            event.stop()

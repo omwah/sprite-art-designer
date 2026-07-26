@@ -27,23 +27,23 @@ views:
         - id: seven_bell
           weight: 1
           cells:
-          - ' Y▶═ '
           - '     '
-          - 'Y▟▓▓ '
-          - Y███▓
-          - Y███▓
-          - 'Y▜▓▓ '
-          - ' Y▶═ '
+          - ' y▶═ '
+          - 'y▟▓▓ '
+          - y███▓
+          - 'y▜▓▓ '
+          - ' y▶═ '
+          - '     '
         - id: armored
           weight: 1
           cells:
-          - ' YY═ '
-          - 'Y▶▓  '
+          - ' yy═ '
+          - 'y▶▓  '
           - ' ▟██▓'
-          - Y████
-          - Y███▓
+          - y████
+          - y███▓
           - ' ▜██▓'
-          - ' YY═ '
+          - ' yy═ '
       - id: drive_citadel
         name: Drive Citadel
         primary_property: armor
@@ -56,13 +56,13 @@ views:
         - id: buttress
           weight: 1
           cells:
-          - ▓███═
-          - ' │   '
+          - '     '
+          - ▓│██═
           - ┌───┐
-          - │▒▒▒│
           - │▒◇▒│
           - └───┘
-          - ▓███═
+          - ▓│██═
+          - '     '
         - id: layered
           weight: 1
           cells:
@@ -92,7 +92,7 @@ views:
           - │▒◇▒▒│
           - └────┘
           - ▓█▶▓█▶
-          - ' ▾    '
+          - ' R    '
         - id: gunwalls
           weight: 1
           cells:
@@ -179,17 +179,17 @@ views:
           weight: 1
           cells:
           - '    '
-          - 'Y▟▓ '
-          - Y██▓
-          - Y██▓
-          - 'Y▜▓ '
+          - 'y▟▓ '
+          - y██▓
+          - y██▓
+          - 'y▜▓ '
         - id: armored
           weight: 1
           cells:
-          - 'Y▶▓ '
+          - 'y▶▓ '
           - ' ▟█▓'
-          - Y███
-          - Y██▓
+          - y███
+          - y██▓
           - ' ▜█▓'
       - id: drive_citadel
         name: Drive Citadel
@@ -308,7 +308,7 @@ views:
           weight: 1
           cells:
           - ██
-          - Y█
+          - y█
           - ██
       - id: body
         name: Body
@@ -369,13 +369,13 @@ views:
           cells:
           - '      ▓▓▓▓    '
           - ▴▴  ▓▓████▓▓▴▴
-          - '    YYYYYYYY  '
+          - '    yyyyyyyy  '
         - id: armored
           weight: 1
           cells:
           - '    ▓▓██▓▓▓▓  '
-          - YY▓▓████████YY
-          - '  YY  YYYY    '
+          - yy▓▓████████yy
+          - '  yy  yyyy    '
       - id: drive_citadel
         name: Drive Citadel
         primary_property: armor

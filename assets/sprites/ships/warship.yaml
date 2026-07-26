@@ -26,21 +26,21 @@ views:
           weight: 1
           cells:
           - '    '
-          - ' Y▶═'
+          - ' y▶═'
           - ' ▟▓▓'
-          - Y███
+          - y███
           - ' ▜▓▓'
-          - ' Y▶═'
+          - ' y▶═'
           - '    '
         - id: thrusters_2
           weight: 1
           cells:
           - '    '
-          - ' Y▶═'
-          - Y▟▓▓
-          - Y███
-          - Y▜▓▓
-          - ' Y▶═'
+          - ' y▶═'
+          - y▟▓▓
+          - y███
+          - y▜▓▓
+          - ' y▶═'
           - '    '
       - id: spindrive
         name: Spindrive
@@ -178,19 +178,19 @@ views:
         - id: thrusters_1
           weight: 1
           cells:
-          - ' Y═'
+          - ' y═'
           - ' ▟▓'
-          - Y██
+          - y██
           - ' ▜▓'
-          - ' Y═'
+          - ' y═'
         - id: thrusters_2
           weight: 1
           cells:
-          - ' Y═'
-          - Y▟▓
-          - Y██
-          - Y▜▓
-          - ' Y═'
+          - ' y═'
+          - y▟▓
+          - y██
+          - y▜▓
+          - ' y═'
       - id: spindrive
         name: Spindrive
         primary_property: spindrive
@@ -310,7 +310,7 @@ views:
           weight: 1
           cells:
           - '  '
-          - Y█
+          - y█
           - '  '
       - id: hull
         name: Hull
@@ -367,12 +367,12 @@ views:
           weight: 1
           cells:
           - '  ║║▓▓██▓▓║║  '
-          - '  YY▜▜██▛▛YY  '
+          - '  yy▜▜██▛▛yy  '
         - id: thrusters_2
           weight: 1
           cells:
           - '  ║║▓▓██▓▓║║  '
-          - '  YY▜▜██▛▛YY  '
+          - '  yy▜▜██▛▛yy  '
       - id: spindrive
         name: Spindrive
         primary_property: spindrive
@@ -467,12 +467,12 @@ views:
           weight: 1
           cells:
           - ║║▓▓██▓▓║║
-          - '    YY    '
+          - '    yy    '
         - id: thrusters_2
           weight: 1
           cells:
           - ║║▓▓██▓▓║║
-          - '  YYYYYY  '
+          - '  yyyyyy  '
       - id: spindrive
         name: Spindrive
         primary_property: spindrive

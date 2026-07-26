@@ -27,21 +27,21 @@ views:
           weight: 1
           cells:
           - '    '
-          - ' Y▶ '
+          - ' y▶ '
           - '    '
-          - Y██▓
+          - y██▓
           - '    '
-          - ' Y▶ '
+          - ' y▶ '
           - '    '
         - id: dirty
           weight: 1
           cells:
           - '    '
-          - ' YY '
-          - 'Y▶▓ '
-          - Y██▓
+          - ' yy '
+          - 'y▶▓ '
+          - y██▓
           - '    '
-          - ' Y▶ '
+          - ' y▶ '
           - '    '
       - id: armored_buttress
         name: Armored Buttress
@@ -174,19 +174,19 @@ views:
         - id: triple
           weight: 1
           cells:
-          - ' Y '
+          - ' y '
           - '   '
-          - Y█▓
+          - y█▓
           - '   '
-          - ' Y '
+          - ' y '
         - id: dirty
           weight: 1
           cells:
-          - ' Y '
-          - 'Y▶ '
-          - Y█▓
+          - ' y '
+          - 'y▶ '
+          - y█▓
           - '   '
-          - ' Y '
+          - ' y '
       - id: armored_buttress
         name: Armored Buttress
         primary_property: armor
@@ -302,7 +302,7 @@ views:
           weight: 1
           cells:
           - ' █'
-          - Y█
+          - y█
           - ' █'
       - id: body
         name: Body
@@ -361,12 +361,12 @@ views:
           weight: 1
           cells:
           - '      ▓▓      '
-          - '  YY  ██  YY  '
+          - '  yy  ██  yy  '
         - id: dirty
           weight: 1
           cells:
           - '      ▓▓      '
-          - '  YY▴▴██  YY  '
+          - '  yy▴▴██  yy  '
       - id: armored_buttress
         name: Armored Buttress
         primary_property: armor
@@ -461,12 +461,12 @@ views:
           weight: 1
           cells:
           - '    ▓▓    '
-          - '    YY    '
+          - '    yy    '
         - id: dirty
           weight: 1
           cells:
           - '    ▓▓    '
-          - '  YYYY    '
+          - '  yyyy    '
       - id: armored_buttress
         name: Armored Buttress
         primary_property: armor

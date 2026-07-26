@@ -26,23 +26,23 @@ views:
         - id: focused
           weight: 1
           cells:
-          - ' Y▶═'
+          - ' y▶═'
           - '    '
-          - ' Y▓ '
-          - Y██▓
-          - ' Y▓ '
+          - ' y▓ '
+          - y██▓
+          - ' y▓ '
           - '    '
-          - ' Y▶═'
+          - ' y▶═'
         - id: hot
           weight: 1
           cells:
-          - ' YY═'
-          - ' Y  '
-          - 'Y▟▓ '
-          - Y██▓
-          - 'Y▜▓ '
-          - ' Y  '
-          - ' YY═'
+          - ' yy═'
+          - ' y  '
+          - 'y▟▓ '
+          - y██▓
+          - 'y▜▓ '
+          - ' y  '
+          - ' yy═'
       - id: engine_swell
         name: Engine Swell
         primary_property: spindrive
@@ -175,18 +175,18 @@ views:
           weight: 1
           cells:
           - '   '
-          - ' Y '
-          - Y█▓
-          - ' Y '
+          - ' y '
+          - y█▓
+          - ' y '
           - '   '
         - id: hot
           weight: 1
           cells:
-          - ' Y '
-          - 'Y▟ '
-          - Y█▓
-          - 'Y▜ '
-          - ' Y '
+          - ' y '
+          - 'y▟ '
+          - y█▓
+          - 'y▜ '
+          - ' y '
       - id: engine_swell
         name: Engine Swell
         primary_property: spindrive
@@ -302,7 +302,7 @@ views:
           weight: 1
           cells:
           - ' ▴'
-          - Y█
+          - y█
           - ' ▾'
       - id: body
         name: Body
@@ -361,12 +361,12 @@ views:
           weight: 1
           cells:
           - ║║    ▓▓    ║║
-          - YY  YY██YY  YY
+          - yy  yy██yy  yy
         - id: hot
           weight: 1
           cells:
           - ║║    ▓▓    ║║
-          - YYYY▜▜██▛▛YYYY
+          - yyyy▜▜██▛▛yyyy
       - id: engine_swell
         name: Engine Swell
         primary_property: spindrive
@@ -461,12 +461,12 @@ views:
           weight: 1
           cells:
           - '    ▓▓    '
-          - '    YY    '
+          - '    yy    '
         - id: hot
           weight: 1
           cells:
           - '    ▓▓    '
-          - '  YYYYYY  '
+          - '  yyyyyy  '
       - id: engine_swell
         name: Engine Swell
         primary_property: spindrive

@@ -113,6 +113,74 @@ def selected_tier(sprite: Sprite, *, width: int, height: int, view_id: str) -> T
     return _select_tier(sprite.views[view_id], width, height)
 
 
+def active_variant_at_cell(
+    sprite: Sprite,
+    palettes: PaletteCatalog,
+    *,
+    x: int,
+    y: int,
+    width: int,
+    height: int,
+    seed: int = 0,
+    archetype_id: str = "humanoid_diplomat",
+    view_id: str = "horizontal",
+    facing: str | None = None,
+    variant_overrides: dict[int, Variant] | None = None,
+) -> Variant | None:
+    """Return the active source variant occupying one rendered preview cell."""
+
+    if not 0 <= x < width or not 0 <= y < height:
+        return None
+    view = sprite.views[view_id]
+    tier = _select_tier(view, width, height)
+    active = selected_variants(
+        sprite,
+        palettes,
+        width=width,
+        height=height,
+        seed=seed,
+        archetype_id=archetype_id,
+        view_id=view_id,
+        variant_overrides=variant_overrides,
+    )
+    variants = [active[id(section.variants)] for section in tier.sections]
+    horizontal = view.axis != "vertical"
+    repeats = _repeat_counts(tier.sections, variants, width if horizontal else height, horizontal)
+    natural_width = sum(variant.width * repeat for variant, repeat in zip(variants, repeats))
+    natural_height = (
+        variants[0].height
+        if horizontal
+        else sum(variant.height * repeat for variant, repeat in zip(variants, repeats))
+    )
+    requested_facing = facing or view.canonical_facing
+    if view.mirror_facing is not None and requested_facing == view.mirror_facing:
+        if horizontal:
+            x = width - 1 - x
+        else:
+            y = height - 1 - y
+    natural_x = x - (width - natural_width) // 2 if natural_width <= width else x + (natural_width - width) // 2
+    natural_y = y - (height - natural_height) // 2 if natural_height <= height else y + (natural_height - height) // 2
+    if horizontal:
+        if not 0 <= natural_y < natural_height:
+            return None
+        cursor = 0
+        for variant, repeat in zip(variants, repeats):
+            length = variant.width * repeat
+            if cursor <= natural_x < cursor + length:
+                return variant
+            cursor += length
+    else:
+        if not 0 <= natural_x < natural_width:
+            return None
+        cursor = 0
+        for variant, repeat in reversed(list(zip(variants, repeats))):
+            length = variant.height * repeat
+            if cursor <= natural_y < cursor + length:
+                return variant
+            cursor += length
+    return None
+
+
 def _repeat_counts(
     sections: list[Section],
     chosen: list[Variant],
@@ -346,6 +414,7 @@ def _paint_grid(
     reverse_vertical_bias: bool = False,
     highlight_mask: list[str] | None = None,
     preview_margin_axis: str | None = None,
+    preserve_authoring_markers: bool = False,
 ) -> Text:
     output = Text()
     fitted_rows = _fit_grid(
@@ -374,31 +443,51 @@ def _paint_grid(
                 output.append(" ", style=f"on {background}" if highlighted else "")
             elif glyph == "R":
                 output.append(
-                    "▀",
+                    glyph if preserve_authoring_markers else "▀",
                     style=f"{beacon_color} on {background}"
                     if highlighted
                     else beacon_color,
                 )
             elif glyph == "r":
                 output.append(
-                    "▄",
+                    glyph if preserve_authoring_markers else "▄",
                     style=f"{beacon_color} on {background}"
                     if highlighted
                     else beacon_color,
                 )
             elif glyph == "Y":
                 output.append(
-                    "▄",
+                    glyph if preserve_authoring_markers else "▀",
                     style=f"{engine_color} on {background}"
                     if highlighted
                     else engine_color,
                 )
             elif glyph == "y":
                 output.append(
-                    "▀",
+                    glyph if preserve_authoring_markers else "▄",
                     style=f"{engine_color} on {background}"
                     if highlighted
                     else engine_color,
+                )
+            elif glyph == "G":
+                output.append(
+                    glyph if preserve_authoring_markers else "▀",
+                    style=f"#22c55e on {background}" if highlighted else "#22c55e",
+                )
+            elif glyph == "B":
+                output.append(
+                    glyph if preserve_authoring_markers else "▀",
+                    style=f"#3b82f6 on {background}" if highlighted else "#3b82f6",
+                )
+            elif glyph == "g":
+                output.append(
+                    glyph if preserve_authoring_markers else "▄",
+                    style=f"#22c55e on {background}" if highlighted else "#22c55e",
+                )
+            elif glyph == "b":
+                output.append(
+                    glyph if preserve_authoring_markers else "▄",
+                    style=f"#3b82f6 on {background}" if highlighted else "#3b82f6",
                 )
             elif glyph in HULL_CHARS:
                 if glyph in BRIGHT_CHARS and rng.random() < WINDOW_PROBABILITY:
@@ -433,6 +522,7 @@ def render_sprite(
     highlight_variant: Variant | None = None,
     variant_overrides: dict[int, Variant] | None = None,
     preview_margin: bool = False,
+    preserve_authoring_markers: bool = False,
 ) -> Text:
     """Render one deterministic Rich sprite, optionally with a preview margin.
 
@@ -483,4 +573,5 @@ def render_sprite(
         reverse_vertical_bias,
         highlight_mask=highlight_mask if highlight_variant is not None else None,
         preview_margin_axis=view.axis if preview_margin else None,
+        preserve_authoring_markers=preserve_authoring_markers,
     )

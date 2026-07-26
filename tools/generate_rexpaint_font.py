@@ -14,6 +14,8 @@ CELL_WIDTH = 10
 CELL_HEIGHT = 20
 COLUMNS = 16
 FALLBACK_FONT = "/usr/share/fonts/truetype/noto/NotoSansMono-Regular.ttf"
+# CP437's decorative control glyphs begin at slot 1; slot 0 is blank. The
+# offset matters for the heart/suit/facet characters in the art atlas.
 CONTROL_GLYPHS = "☺☻♥♦♣♠•◘○◙♂♀♪♫☼►◄↕‼¶§▬↨↑↓→←∟↔▲▼"
 
 
@@ -24,7 +26,7 @@ def _run(*args: str) -> None:
 def _cp437_slots() -> dict[str, int]:
     characters = list(bytes(range(32, 256)).decode("cp437"))
     slots = {glyph: index + 32 for index, glyph in enumerate(characters)}
-    slots.update({glyph: index for index, glyph in enumerate(CONTROL_GLYPHS)})
+    slots.update({glyph: index + 1 for index, glyph in enumerate(CONTROL_GLYPHS)})
     return slots
 
 

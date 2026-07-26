@@ -31,6 +31,7 @@ from textual.widgets.tree import TreeNode
 
 from sprite_art import (
     PROPERTY_IDS,
+    active_variant_at_cell,
     Palette,
     PaletteCatalog,
     Section,
@@ -40,6 +41,8 @@ from sprite_art import (
     export_rexpaint,
     View,
     generate_rotated_view,
+    import_rexpaint_cells,
+    segment_rexpaint_cells,
     selected_tier,
     selected_variants,
 )
@@ -55,6 +58,7 @@ from .widgets import (
     NavPane,
     PreviewMatrix,
     PreviewPane,
+    SemanticGlyphRow,
     ToolsPane,
     WorkspaceSplitter,
 )
@@ -130,6 +134,7 @@ class HelpScreen(ModalScreen[None]):
                 "  Ctrl+N  Create a sprite\n"
                 "  Ctrl+R  Restore recovery snapshot\n"
                 "  Ctrl+G  Generate vertical view\n"
+                "  Ctrl+I  Import RexPaint image\n"
                 "  Ctrl+D  Duplicate selection\n"
                 "  Delete  Delete selection\n"
                 "  H  Toggle selected-part preview highlight\n"
@@ -177,6 +182,30 @@ class NewSpriteScreen(ModalScreen[tuple[str, str, str] | None]):
             return
         kind = str(self.query_one("#new-kind", Select).value)
         self.dismiss((sprite_id, name or sprite_id.replace("_", " ").title(), kind))
+
+
+class RexPaintImportScreen(ModalScreen[Path | None]):
+    """Request a native REXPaint file to split into active source variants."""
+
+    def compose(self) -> ComposeResult:
+        with Container(id="dialog"):
+            yield Label("Import RexPaint", classes="dialog-title")
+            yield Label("File path (.xp, one layer, exported with the Edge font map)")
+            yield Input(placeholder="/path/to/sprite.xp", id="rexpaint-path")
+            yield Label("Segments replace the current preview's active variants.", classes="hint")
+            with Horizontal(classes="dialog-buttons"):
+                yield Button("Cancel", id="cancel")
+                yield Button("Import", id="import", variant="primary")
+
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        if event.button.id == "cancel":
+            self.dismiss(None)
+            return
+        source = self.query_one("#rexpaint-path", Input).value.strip()
+        if not source:
+            self.notify("Enter the .xp file path.", severity="error")
+            return
+        self.dismiss(Path(source).expanduser())
 
 
 def _unique_id(existing: set[str], base: str) -> str:
@@ -302,6 +331,7 @@ class EdgeArtDesigner(App[None]):
         ("ctrl+s", "save", "Save"),
         ("ctrl+shift+s", "save_all", "Save all"),
         ("ctrl+e", "export_rexpaint", "Export RexPaint"),
+        ("ctrl+i", "import_rexpaint", "Import RexPaint"),
         ("ctrl+n", "new_sprite", "New sprite"),
         ("ctrl+r", "restore_recovery", "Restore recovery"),
         ("ctrl+g", "rotate_vertical", "Generate vertical"),
@@ -827,10 +857,37 @@ class EdgeArtDesigner(App[None]):
     def on_glyph_palette_selected(self, event: GlyphPalette.Selected) -> None:
         self._select_glyph(event.glyph)
 
+    def on_semantic_glyph_row_selected(self, event: SemanticGlyphRow.Selected) -> None:
+        self._select_glyph(event.glyph)
+
+    def on_preview_matrix_structure_selected(
+        self, event: PreviewMatrix.StructureSelected
+    ) -> None:
+        view = self.editor.current_sprite.views[self.current_view_id]
+        width, height = PreviewMatrix.dimensions_for_view(view.axis, *self.preview_size)
+        variant = active_variant_at_cell(
+            self.editor.current_sprite,
+            self.editor.palettes,
+            x=event.x,
+            y=event.y,
+            width=width,
+            height=height,
+            seed=self.preview_seed,
+            archetype_id=self.current_archetype,
+            view_id=self.current_view_id,
+            facing=self.current_facing,
+            variant_overrides=self._preview_variant_overrides(),
+        )
+        if variant is not None:
+            self._select_tree_item(variant, persist_variant=True)
+
     def _select_glyph(self, glyph: str) -> None:
         self.selected_glyph = glyph
         self.query_one("#art-canvas", ArtCanvas).set_glyph(glyph)
-        self.query_one("#glyph-palette", GlyphPalette).set_selected_glyph(glyph)
+        for palette in self.query(GlyphPalette):
+            palette.set_selected_glyph(glyph)
+        for row in self.query(SemanticGlyphRow):
+            row.set_selected_glyph(glyph)
         shown = "space" if glyph == " " else glyph
         self.query_one("#selected-glyph", Label).update(f"Selected: {shown}")
 
@@ -952,6 +1009,9 @@ class EdgeArtDesigner(App[None]):
                     "This sprite has a newer recovery snapshot; Ctrl+R restores it.",
                     severity="warning",
                 )
+        elif select_id == "document-actions":
+            self._finish_document_action(value)
+            event.select.value = Select.NULL
         elif select_id == "palette-archetype":
             self.current_archetype = value
             self._refresh_palette_fields()
@@ -1069,6 +1129,8 @@ class EdgeArtDesigner(App[None]):
             self.action_save()
         elif button_id == "save-all":
             self.action_save_all()
+        elif button_id == "import-rexpaint":
+            self.action_import_rexpaint()
         elif button_id == "export-rexpaint":
             self.action_export_rexpaint()
         elif button_id == "rotate-vertical":
@@ -1281,6 +1343,54 @@ class EdgeArtDesigner(App[None]):
             self.notify(f"REXPaint export failed: {error}", severity="error")
             return
         self.notify(f"Exported REXPaint file: {destination}")
+
+    def _finish_document_action(self, action: str | None) -> None:
+        if action is None:
+            return
+        actions = {
+            "new-sprite": self.action_new_sprite,
+            "save": self.action_save,
+            "save-all": self.action_save_all,
+            "import-rexpaint": self.action_import_rexpaint,
+            "export-rexpaint": self.action_export_rexpaint,
+            "rotate-vertical": self.action_rotate_vertical,
+        }
+        selected_action = actions.get(action)
+        if selected_action is not None:
+            selected_action()
+
+    def action_import_rexpaint(self) -> None:
+        self.push_screen(RexPaintImportScreen(), self._finish_import_rexpaint)
+
+    def _finish_import_rexpaint(self, source: Path | None) -> None:
+        if source is None:
+            return
+        try:
+            cells = import_rexpaint_cells(source)
+            segments = segment_rexpaint_cells(
+                cells,
+                self.editor.current_sprite,
+                self.editor.palettes,
+                width=self.preview_size[0],
+                height=self.preview_size[1],
+                seed=self.preview_seed,
+                archetype_id=self.current_archetype,
+                view_id=self.current_view_id,
+                facing=self.current_facing,
+                variant_overrides=self._preview_variant_overrides(),
+            )
+            originals = [(variant, list(variant.cells)) for variant, _cells in segments]
+            for variant, imported_cells in segments:
+                variant.cells = imported_cells
+            self.editor.current_sprite.validate()
+        except Exception as error:
+            for variant, original_cells in locals().get("originals", []):
+                variant.cells = original_cells
+            self.notify(f"REXPaint import failed: {error}", severity="error")
+            return
+        self._rebuild_tree(select_item=self.selection.item if self.selection is not None else None)
+        self._mark_changed()
+        self.notify(f"Imported {source.name} into {len(segments)} active structure variants.")
 
     def action_new_sprite(self) -> None:
         self.push_screen(NewSpriteScreen(), self._finish_new_sprite)

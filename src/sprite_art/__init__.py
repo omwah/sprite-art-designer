@@ -22,6 +22,7 @@ from .model import (
 )
 from .render import (
     RenderRequest,
+    active_variant_at_cell,
     compose_grid,
     render_sprite,
     selected_tier,
@@ -31,13 +32,17 @@ from .rexpaint import (
     REXPAINT_FONT_COLUMNS,
     REXPAINT_GLYPH_INDICES,
     RexPaintGlyphError,
+    RexPaintImportError,
     export_rexpaint,
+    import_rexpaint_cells,
     rexpaint_bytes,
+    segment_rexpaint_cells,
 )
 from .transform import RotationWarning, generate_rotated_view
 
 __all__ = [
     "ARCHETYPE_IDS",
+    "active_variant_at_cell",
     "PROPERTY_IDS",
     "Palette",
     "PaletteCatalog",
@@ -45,6 +50,7 @@ __all__ = [
     "REXPAINT_FONT_COLUMNS",
     "REXPAINT_GLYPH_INDICES",
     "RexPaintGlyphError",
+    "RexPaintImportError",
     "RotationWarning",
     "Section",
     "Sprite",
@@ -58,6 +64,7 @@ __all__ = [
     "dump_sprite",
     "export_rexpaint",
     "generate_rotated_view",
+    "import_rexpaint_cells",
     "load_palette_catalog",
     "load_sprite",
     "load_sprite_directory",
@@ -65,4 +72,5 @@ __all__ = [
     "rexpaint_bytes",
     "selected_tier",
     "selected_variants",
+    "segment_rexpaint_cells",
 ]
