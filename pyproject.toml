@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "A Textual sprite-art editor for Edge of the Unknown"
 authors = [{ name = "James McDuffie", email = "mcduffie@pitfall.org" }]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = ["textual-colorpicker>=0.1.0,<0.2"]
 
 [project.scripts]
 edge-art-designer = "sprite_art_designer.app:main"

@@ -6,11 +6,19 @@ from pathlib import Path
 from shutil import copytree
 
 import pytest
-from textual.widgets import Select, TabbedContent, Tree
+from textual.color import Color as TextualColor
+from textual.containers import Horizontal, ItemGrid
+from textual.widgets import Label, Select, TabbedContent, TabPane, Tree
+from textual_colorpicker import ColorPicker
 
 from sprite_art.glyphs import AUTHORING_GLYPHS
-from sprite_art_designer.app import EdgeArtDesigner, HelpScreen, _new_sprite
-from sprite_art_designer.widgets import ArtCanvas, PreviewMatrix
+from sprite_art_designer.app import EdgeArtDesigner, HelpScreen, PaletteColorScreen, _new_sprite
+from sprite_art_designer.widgets import (
+    ArtCanvas,
+    PaletteColorGroup,
+    PaletteColorSwatch,
+    PreviewMatrix,
+)
 
 ROOT = Path(__file__).parents[1]
 
@@ -45,6 +53,60 @@ async def test_app_mounts_wide_and_populates_editor() -> None:
         app._set_workspace_top_height(top_row.region.height - 4)
         await pilot.pause()
         assert top_row.region.height < bottom_row.region.height
+
+
+@pytest.mark.asyncio
+async def test_palette_is_second_tool_tab_and_displays_color_swatches() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        tabs = app.query_one("#tool-tabs", TabbedContent)
+        assert [pane.id for pane in tabs.query(TabPane)][:2] == [
+            "glyph-tab",
+            "palette-tab",
+        ]
+        tabs.active = "palette-tab"
+        await pilot.pause()
+        swatch = app.query_one("#palette-color-bright-0", PaletteColorSwatch)
+        assert swatch.label == ""
+        assert swatch.tooltip == "Edit bright: grey85"
+        assert swatch.styles.background is not None
+        assert isinstance(swatch.parent, Horizontal)
+        assert isinstance(swatch.parent.parent, PaletteColorGroup)
+        assert isinstance(swatch.parent.parent.parent, ItemGrid)
+        assert swatch.parent.parent.region.height == 3
+        assert swatch.region.height == 2
+        engine = app.query_one("#palette-color-engine-0", PaletteColorSwatch)
+        assert isinstance(engine.parent, Horizontal)
+        labels = app.query(".palette-group-label").results(Label)
+        assert [label.content for label in labels] == [
+            "Surface colors",
+            "Beacon",
+            "Engine",
+            "Window",
+        ]
+        assert len(list(app.query(PaletteColorGroup))) == 4
+        assert not app.query_one("#palette-color-beacon-2", PaletteColorSwatch).display
+
+
+@pytest.mark.asyncio
+async def test_palette_swatch_opens_color_picker_and_updates_palette() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        app.query_one("#tool-tabs", TabbedContent).active = "palette-tab"
+        await pilot.pause()
+        assert await pilot.click("#palette-color-bright-0")
+        await pilot.pause()
+        assert isinstance(app.screen, PaletteColorScreen)
+        picker = app.screen.query_one("#palette-color-picker", ColorPicker)
+        picker.color = TextualColor.parse("#123456")
+        assert await pilot.click("#confirm")
+        await pilot.pause()
+        assert app.editor.palettes.archetypes[app.current_archetype].bright == "#123456"
+        assert app.editor.palettes_dirty
+        swatch = app.query_one("#palette-color-bright-0", PaletteColorSwatch)
+        assert swatch.color_value == "#123456"
 
 
 @pytest.mark.asyncio

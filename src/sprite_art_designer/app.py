@@ -9,10 +9,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Literal
 
-from rich.color import Color
 from rich.text import Text
+from rich.color import Color as RichColor
 from textual import events
 from textual.app import App, ComposeResult
+from textual.color import Color as TextualColor
 from textual.containers import Container, Horizontal, Vertical, VerticalScroll
 from textual.screen import ModalScreen
 from textual.timer import Timer
@@ -28,11 +29,11 @@ from textual.widgets import (
     Tree,
 )
 from textual.widgets.tree import TreeNode
+from textual_colorpicker import ColorPicker
 
 from sprite_art import (
     PROPERTY_IDS,
     active_variant_at_cell,
-    Palette,
     PaletteCatalog,
     Section,
     Sprite,
@@ -55,6 +56,7 @@ from .widgets import (
     GlyphPalette,
     NarrowTabs,
     NavPane,
+    PaletteColorSwatch,
     PreviewMatrix,
     PreviewPane,
     SemanticGlyphRow,
@@ -207,6 +209,34 @@ class RexPaintImportScreen(ModalScreen[Path | None]):
             self.notify("Enter the .xp file path.", severity="error")
             return
         self.dismiss(Path(source).expanduser())
+
+
+class PaletteColorScreen(ModalScreen[str | None]):
+    """Choose one palette color with the packaged Textual color picker."""
+
+    def __init__(self, label: str, color: str) -> None:
+        super().__init__()
+        self.label = label
+        rich_color = RichColor.parse(color).get_truecolor()
+        self.color = TextualColor(rich_color.red, rich_color.green, rich_color.blue)
+
+    CSS = """
+    PaletteColorScreen { align: center middle; background: #0009; }
+    """
+
+    def compose(self) -> ComposeResult:
+        with VerticalScroll(id="color-dialog"):
+            yield Label(f"Select {self.label}", classes="dialog-title")
+            yield ColorPicker(self.color, id="palette-color-picker")
+            with Horizontal(classes="dialog-buttons"):
+                yield Button("Cancel", id="cancel")
+                yield Button("Use color", id="confirm", variant="primary")
+
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        if event.button.id == "cancel":
+            self.dismiss(None)
+            return
+        self.dismiss(self.query_one("#palette-color-picker", ColorPicker).color.hex)
 
 
 def _unique_id(existing: set[str], base: str) -> str:
@@ -897,6 +927,19 @@ class EdgeArtDesigner(App[None]):
     def on_semantic_glyph_row_selected(self, event: SemanticGlyphRow.Selected) -> None:
         self._select_glyph(event.glyph)
 
+    def on_palette_color_swatch_selected(self, event: PaletteColorSwatch.Selected) -> None:
+        swatch = event.swatch
+        color = swatch.color_value
+
+        def apply_selection(selected: str | None) -> None:
+            if selected is not None:
+                self._set_palette_color(swatch.field_name, swatch.color_index, selected)
+
+        self.push_screen(
+            PaletteColorScreen(swatch.field_name.replace("_", " ").title(), color),
+            apply_selection,
+        )
+
     def on_preview_matrix_structure_selected(
         self, event: PreviewMatrix.StructureSelected
     ) -> None:
@@ -1274,17 +1317,25 @@ class EdgeArtDesigner(App[None]):
 
     def _refresh_palette_fields(self) -> None:
         palette = self.editor.palettes.archetypes[self.current_archetype]
-        values = {
+        scalar_colors = {
             "bright": palette.bright,
             "mid": palette.mid,
             "dark": palette.dark,
-            "beacon": ", ".join(palette.beacon),
-            "engine": ", ".join(palette.engine),
-            "window": ", ".join(palette.window),
             "facet": palette.facet,
         }
-        for field_name, value in values.items():
-            self.query_one(f"#palette-{field_name}", Input).value = value
+        for field_name, color in scalar_colors.items():
+            self.query_one(f"#palette-color-{field_name}-0", PaletteColorSwatch).set_color(
+                color
+            )
+        for field_name, colors in (
+            ("beacon", palette.beacon),
+            ("engine", palette.engine),
+            ("window", palette.window),
+        ):
+            for index in range(3):
+                self.query_one(
+                    f"#palette-color-{field_name}-{index}", PaletteColorSwatch
+                ).set_color(colors[index] if index < len(colors) else None)
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         button_id = event.button.id or ""
@@ -1306,8 +1357,6 @@ class EdgeArtDesigner(App[None]):
             self._apply_properties()
         elif button_id == "apply-ship-config":
             self._apply_ship_config()
-        elif button_id == "apply-palette":
-            self._apply_palette()
         elif button_id == "apply-preview":
             self._apply_preview_configuration()
         elif button_id == "reset-preview-seed":
@@ -1426,39 +1475,28 @@ class EdgeArtDesigner(App[None]):
             rows.append(source[:width].ljust(width))
         variant.cells = rows
 
-    def _apply_palette(self) -> None:
-        try:
-            scalar = {
-                field: self.query_one(f"#palette-{field}", Input).value.strip()
-                for field in ("bright", "mid", "dark", "facet")
-            }
-            pools = {
-                field: [
-                    value.strip()
-                    for value in self.query_one(f"#palette-{field}", Input).value.split(",")
-                    if value.strip()
-                ]
-                for field in ("beacon", "engine", "window")
-            }
-            for color in [*scalar.values(), *(value for pool in pools.values() for value in pool)]:
-                Color.parse(color)
-            palette = Palette(
-                bright=scalar["bright"],
-                mid=scalar["mid"],
-                dark=scalar["dark"],
-                beacon=pools["beacon"],
-                engine=pools["engine"],
-                window=pools["window"],
-                facet=scalar["facet"],
-            )
-            palette.validate(self.current_archetype)
-        except Exception as error:
-            self.notify(f"Invalid palette: {error}", severity="error")
-            return
-        self.editor.palettes.archetypes[self.current_archetype] = palette
+    def _set_palette_color(self, field_name: str, index: int, color: str) -> None:
+        palette = self.editor.palettes.archetypes[self.current_archetype]
+        if field_name == "bright":
+            palette.bright = color
+        elif field_name == "mid":
+            palette.mid = color
+        elif field_name == "dark":
+            palette.dark = color
+        elif field_name == "facet":
+            palette.facet = color
+        elif field_name == "beacon":
+            palette.beacon[index] = color
+        elif field_name == "engine":
+            palette.engine[index] = color
+        elif field_name == "window":
+            palette.window[index] = color
+        else:
+            raise ValueError(f"Unknown palette field {field_name!r}")
         self.editor.mark_palettes_dirty()
         self._push_history_snapshot()
         self._update_dirty_indicator()
+        self._refresh_palette_fields()
         self._refresh_variant_labels()
         self._refresh_preview()
 

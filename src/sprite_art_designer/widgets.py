@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from rich.color import Color
 from rich.columns import Columns
 from rich.panel import Panel
 from rich.text import Text
@@ -431,18 +432,70 @@ class PaletteToolsTab(TabPane):
                 allow_blank=False,
                 id="palette-archetype",
             )
-            for field_name in (
-                "bright",
-                "mid",
-                "dark",
-                "beacon",
-                "engine",
-                "window",
-                "facet",
+            with ItemGrid(
+                min_column_width=25,
+                regular=False,
+                classes="palette-swatch-row",
             ):
-                yield Label(field_name.replace("_", " ").title())
-                yield Input(id=f"palette-{field_name}")
-            yield Button("Apply palette", id="apply-palette", variant="primary")
+                yield PaletteColorGroup(
+                    "Surface colors",
+                    (("bright", 0), ("mid", 0), ("dark", 0), ("facet", 0)),
+                )
+                for field_name in ("beacon", "engine", "window"):
+                    yield PaletteColorGroup(
+                        field_name.replace("_", " ").title(),
+                        tuple((field_name, index) for index in range(3)),
+                    )
+
+
+class PaletteColorGroup(Vertical):
+    """A labeled palette color pool that can wrap as one responsive unit."""
+
+    def __init__(self, label: str, swatches: tuple[tuple[str, int], ...]) -> None:
+        super().__init__(classes="palette-color-group")
+        self.label = label
+        self.swatches = swatches
+
+    def compose(self) -> ComposeResult:
+        yield Label(self.label, classes="palette-group-label")
+        with Horizontal(classes="palette-color-group-swatches"):
+            for field_name, index in self.swatches:
+                yield PaletteColorSwatch(field_name, index)
+
+    def get_content_height(self, container: Size, viewport: Size, width: int) -> int:
+        """Reserve one label row and two complete swatch rows in an ItemGrid."""
+        return 3
+
+
+class PaletteColorSwatch(Button):
+    """A clickable palette color shown against its own background."""
+
+    class Selected(Message):
+        def __init__(self, swatch: PaletteColorSwatch) -> None:
+            super().__init__()
+            self.swatch = swatch
+
+    def __init__(self, field_name: str, index: int) -> None:
+        super().__init__("", id=f"palette-color-{field_name}-{index}")
+        self.field_name = field_name
+        self.color_index = index
+        self.color_value = ""
+
+    def set_color(self, color: str | None) -> None:
+        self.display = color is not None
+        if color is None:
+            return
+        parsed = Color.parse(color).get_truecolor()
+        self.color_value = color
+        self.label = ""
+        self.tooltip = f"Edit {self.field_name.replace('_', ' ')}: {color}"
+        self.styles.background = f"#{parsed.red:02x}{parsed.green:02x}{parsed.blue:02x}"
+        luminance = (parsed.red * 299 + parsed.green * 587 + parsed.blue * 114) / 1000
+        self.styles.color = "black" if luminance >= 140 else "white"
+
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        event.stop()
+        self.post_message(self.Selected(self))
 
 
 class ShipConfigToolsTab(TabPane):
@@ -543,6 +596,7 @@ class ToolsPane(Vertical):
     def compose(self) -> ComposeResult:
         with TabbedContent(id="tool-tabs"):
             yield GlyphToolsTab()
+            yield PaletteToolsTab(self.current_archetype)
             yield PreviewToolsTab(
                 self.view_options,
                 self.initial_view_id,
@@ -555,7 +609,6 @@ class ToolsPane(Vertical):
             )
             yield PropertiesToolsTab()
             yield ShipConfigToolsTab()
-            yield PaletteToolsTab(self.current_archetype)
 
 
 class PreviewPane(Vertical):

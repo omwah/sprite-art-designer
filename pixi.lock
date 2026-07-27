@@ -64,6 +64,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/tzdata-2026c-h151e31d_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/uc-micro-py-2.0.0-pyhcf101f3_0.conda
       - pypi: .
+      - pypi: https://files.pythonhosted.org/packages/ba/5e/e6f4341c7ae01f2a79e083be242aa2040d09c22435e0f94e3e3770dca14b/textual_colorpicker-0.1.0-py3-none-any.whl
 packages:
 - conda: https://conda.anaconda.org/conda-forge/linux-64/_openmp_mutex-4.5-20_gnu.conda
   build_number: 20
@@ -844,4 +845,21 @@ packages:
   timestamp: 1772479008776
 - pypi: .
   name: edge-art-designer
+  requires_dist:
+  - textual-colorpicker>=0.1.0,<0.2
   requires_python: '>=3.12'
+- pypi: https://files.pythonhosted.org/packages/ba/5e/e6f4341c7ae01f2a79e083be242aa2040d09c22435e0f94e3e3770dca14b/textual_colorpicker-0.1.0-py3-none-any.whl
+  name: textual-colorpicker
+  version: 0.1.0
+  sha256: 7d034b789eb5954a7aafb725f81815d83c90a42cfa80a4c4a0cb698f34f4ed18
+  requires_dist:
+  - textual>=3.3.0
+  - black ; extra == 'dev'
+  - flake8 ; extra == 'dev'
+  - isort ; extra == 'dev'
+  - mypy ; extra == 'dev'
+  - pytest ; extra == 'dev'
+  - pytest-asyncio ; extra == 'dev'
+  - pytest-cov ; extra == 'dev'
+  - textual-dev ; extra == 'dev'
+  requires_python: '>=3.8'

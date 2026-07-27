@@ -4,6 +4,9 @@
 PyYAML, both already present in Edge of the Unknown. The editor package does not
 need to be vendored into the game.
 
+The editor-only color-well modal uses `textual-colorpicker`; it is not a
+dependency of `sprite_art` and is therefore not part of the game vendoring seam.
+
 ## Vendoring
 
 Copy:
@@ -92,4 +95,3 @@ the same request.
 
 Vertical art is new. `up` uses the stored canonical vertical view; `down` is its
 glyph-aware reflection.
-
