@@ -13,6 +13,12 @@ views:
     tiers:
     - id: full
       name: Full Detail
+      structure_lengths:
+        sinew_drive: 1
+        marrow_knot: 1
+        bound_spars: 7
+        nerve_cluster: 1
+        hardened_beak: 1
       sections:
       - id: sinew_drive
         name: Sinew Drive
@@ -27,10 +33,10 @@ views:
           weight: 1
           cells:
           - '     '
-          - ' ▄   '
-          - '▄▄╲▓ '
-          - ▄▒██▓
-          - '▄▄╱▓ '
+          - ' ▀   '
+          - '▀▀╲▓ '
+          - ▀▒██▓
+          - '▀▀╱▓ '
           - '     '
           - '     '
           color_mask:
@@ -45,11 +51,11 @@ views:
           weight: 1
           cells:
           - '     '
-          - ' ▄▄  '
-          - '▄╲▒▓ '
-          - ▄███▓
-          - '▄╱▒▓ '
-          - '  ▄  '
+          - ' ▀▀  '
+          - '▀╲▒▓ '
+          - ▀███▓
+          - '▀╱▒▓ '
+          - '  ▀  '
           - '     '
           color_mask:
           - SSSSS
@@ -72,17 +78,17 @@ views:
           weight: 1
           cells:
           - '    '
-          - ' ◢▒◣'
+          - ' ▗▒▖'
           - ╱███
-          - █☉██
+          - █☼██
           - ╲███
-          - ' ◥▒◤'
+          - ' ▝▒▘'
           - '    '
           color_mask:
           - SSSS
           - SSSS
           - SSSS
-          - SSSS
+          - SBSS
           - SSSS
           - SSSS
           - SSSS
@@ -135,11 +141,11 @@ views:
           weight: 1
           cells:
           - '    '
-          - ◢▒▒◣
+          - ▗▒▒▖
           - █▓▓█
-          - █◊▒█
+          - █∞▒█
           - █▓▓█
-          - ◥▒▒◤
+          - ▝▒▒▘
           - '    '
           color_mask:
           - SSSS
@@ -162,18 +168,18 @@ views:
           weight: 1
           cells:
           - '     '
-          - ' ◢█◣ '
-          - █☉███
+          - ' ☼█☼ '
+          - █☼███
           - █████
-          - █◇▒██
+          - █☼▒██
           - ' ◥█◤ '
           - '     '
           color_mask:
           - SSSSS
+          - SBSBS
+          - SBSSS
           - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
+          - SBSSS
           - SSSSS
           - SSSSS
         - id: many_eyes
@@ -181,17 +187,17 @@ views:
           cells:
           - '     '
           - ' ▀ ▀ '
-          - ◢◇█◇◣
+          - ◢☼█☼◣
           - █████
-          - ◥█◇█◤
+          - ◥█☼█◤
           - '  ▾  '
           - '     '
           color_mask:
           - SSSSS
           - SBSBS
+          - SBSBS
           - SSSSS
-          - SSSSS
-          - SSSSS
+          - SSBSS
           - SSSSS
           - SSSSS
       - id: hardened_beak
@@ -208,7 +214,7 @@ views:
           - '    '
           - '    '
           - '◢▒▙ '
-          - ██▓▶
+          - ██▀►
           - '◥▒▛ '
           - '    '
           - '    '
@@ -216,7 +222,7 @@ views:
           - SSSS
           - SSSS
           - SSSS
-          - SSSS
+          - SSAA
           - SSSS
           - SSSS
           - SSSS
@@ -226,7 +232,7 @@ views:
           - '    '
           - '    '
           - '╲█▙ '
-          - █▒▓▶
+          - █▒▀►
           - '╱█▛ '
           - '    '
           - '    '
@@ -234,18 +240,18 @@ views:
           - SSSS
           - SSSS
           - SSSS
+          - SSAA
           - SSSS
           - SSSS
           - SSSS
-          - SSSS
+    - id: medium
+      name: Medium
       structure_lengths:
         sinew_drive: 1
         marrow_knot: 1
-        bound_spars: 5
+        bound_spars: 7
         nerve_cluster: 1
         hardened_beak: 1
-    - id: medium
-      name: Medium
       sections:
       - id: sinew_drive
         name: Sinew Drive
@@ -259,10 +265,10 @@ views:
         - id: tendons
           weight: 1
           cells:
-          - ' ▄  '
-          - '▄▄╲ '
-          - ▄▒█▓
-          - '▄▄╱ '
+          - ' ▀  '
+          - '▀▀╲ '
+          - ▀▒█▓
+          - '▀▀╱ '
           - '    '
           color_mask:
           - SESS
@@ -273,11 +279,11 @@ views:
         - id: spasm
           weight: 1
           cells:
-          - ' ▄▄ '
-          - '▄╲▒ '
-          - ▄██▓
-          - '▄╱▒ '
-          - '  ▄ '
+          - ' ▀▀ '
+          - '▀╲▒ '
+          - ▀██▓
+          - '▀╱▒ '
+          - '  ▀ '
           color_mask:
           - SEES
           - ESSS
@@ -296,15 +302,15 @@ views:
         - id: joint
           weight: 1
           cells:
-          - ' ◢◣'
+          - ' ▗▖'
           - ╱██
-          - █☉█
+          - █☼█
           - ╲██
-          - ' ◥◤'
+          - ' ▝▘'
           color_mask:
           - SSS
           - SSS
-          - SSS
+          - SBS
           - SSS
           - SSS
         - id: scar
@@ -347,11 +353,11 @@ views:
         - id: muscle
           weight: 1
           cells:
-          - ◢▒◣
+          - ▗▒▖
           - █▓█
-          - █◊█
+          - █∞█
           - █▓█
-          - ◥▒◤
+          - ▝▒▘
           color_mask:
           - SSS
           - SSS
@@ -370,30 +376,30 @@ views:
         - id: eye
           weight: 1
           cells:
-          - ' ◢█ '
-          - █☉██
+          - ' ☼█ '
+          - █☼██
           - ████
-          - █◇▒█
+          - █☼▒█
           - ' ◥█ '
           color_mask:
+          - SBSS
+          - SBSS
           - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
+          - SBSS
           - SSSS
         - id: many_eyes
           weight: 1
           cells:
           - ' ▀  '
-          - ◢◇█◣
+          - ◢☼█◣
           - ████
-          - ◥█◇◤
+          - ◥█☼◤
           - '  ▾ '
           color_mask:
           - SBSS
+          - SBSS
           - SSSS
-          - SSSS
-          - SSSS
+          - SSBS
           - SSSS
       - id: hardened_beak
         name: Hardened Beak
@@ -408,13 +414,13 @@ views:
           cells:
           - '   '
           - '◢▒ '
-          - ██▶
+          - ██►
           - '◥▒ '
           - '   '
           color_mask:
           - SSS
           - SSS
-          - SSS
+          - SSA
           - SSS
           - SSS
         - id: barb
@@ -422,23 +428,21 @@ views:
           cells:
           - '   '
           - '╲█ '
-          - █▒▶
+          - █▒►
           - '╱█ '
           - '   '
           color_mask:
           - SSS
           - SSS
+          - SSA
           - SSS
           - SSS
-          - SSS
-      structure_lengths:
-        sinew_drive: 1
-        marrow_knot: 1
-        bound_spars: 5
-        nerve_cluster: 1
-        hardened_beak: 1
     - id: compact
       name: Compact
+      structure_lengths:
+        drive: 1
+        body: 6
+        prow: 1
       sections:
       - id: drive
         name: Drive
@@ -452,7 +456,7 @@ views:
           weight: 1
           cells:
           - ' ▴'
-          - ▄▒
+          - ▀▒
           - ' ▾'
           color_mask:
           - SS
@@ -499,16 +503,12 @@ views:
           weight: 1
           cells:
           - ' ◢ '
-          - █▓▶
+          - █▀►
           - ' ◥ '
           color_mask:
           - SSS
+          - SAA
           - SSS
-          - SSS
-      structure_lengths:
-        drive: 1
-        body: 6
-        prow: 1
   vertical:
     name: Vertical
     axis: vertical
@@ -517,6 +517,12 @@ views:
     tiers:
     - id: full
       name: Full Detail
+      structure_lengths:
+        sinew_drive: 1
+        marrow_knot: 1
+        bound_spars: 7
+        nerve_cluster: 1
+        hardened_beak: 1
       sections:
       - id: sinew_drive
         name: Sinew Drive
@@ -532,7 +538,7 @@ views:
           cells:
           - '      ▓▓      '
           - '    ╱╱██╲╲    '
-          - '    ▄▄▄▄▄▄    '
+          - '    ▌▌▌▌▌▌    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -541,8 +547,8 @@ views:
           weight: 1
           cells:
           - '      ▓▓      '
-          - '  ▄▄▒▒██▒▒▄▄  '
-          - '    ▄▄▄▄▄▄    '
+          - '  ▌▌▒▒██▒▒▌▌  '
+          - '    ▌▌▌▌▌▌    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSEESSSSSSEESS
@@ -559,11 +565,11 @@ views:
         - id: joint
           weight: 1
           cells:
-          - '  ◢◢██████◣◣  '
-          - '  ◥◥██☉☉██◤◤  '
+          - '  ▗▗██████▖▖  '
+          - '  ▝▝██☼☼██▘▘  '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSSSBBSSSSSS
         - id: scar
           weight: 1
           cells:
@@ -592,8 +598,8 @@ views:
         - id: muscle
           weight: 1
           cells:
-          - '  ◢◢██████◣◣  '
-          - '  ▒▒▓▓◊◊▓▓▒▒  '
+          - '  ▗▗██████▖▖  '
+          - '  ▒▒▓▓∞∞▓▓▒▒  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -620,11 +626,11 @@ views:
           weight: 1
           cells:
           - '    ◢◢██◣◣    '
-          - '    ████◇◇▶▶  '
+          - '    ████☼☼▶▶  '
           - '    ◥◥██◤◤    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSSSSSBBSSSS
           - SSSSSSSSSSSSSS
       - id: hardened_beak
         name: Hardened Beak
@@ -637,27 +643,27 @@ views:
         - id: fang
           weight: 1
           cells:
-          - '      ▴▴      '
+          - '      ▲▲      '
           - '    ▒▒██▒▒    '
           color_mask:
-          - SSSSSSSSSSSSSS
+          - SSSSSSAASSSSSS
           - SSSSSSSSSSSSSS
         - id: barb
           weight: 1
           cells:
-          - '      ▴▴      '
+          - '      ▲▲      '
           - '    ██▒▒██    '
           color_mask:
+          - SSSSSSAASSSSSS
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+    - id: medium
+      name: Medium
       structure_lengths:
         sinew_drive: 1
         marrow_knot: 1
-        bound_spars: 8
+        bound_spars: 7
         nerve_cluster: 1
         hardened_beak: 1
-    - id: medium
-      name: Medium
       sections:
       - id: sinew_drive
         name: Sinew Drive
@@ -672,7 +678,7 @@ views:
           weight: 1
           cells:
           - '    ▓▓    '
-          - '▄▄▄▄▒▒▄▄  '
+          - '▌▌▌▌▒▒▌▌  '
           color_mask:
           - SSSSSSSSSS
           - EEEESSEESS
@@ -680,7 +686,7 @@ views:
           weight: 1
           cells:
           - '    ▓▓    '
-          - '▄▄╱╱██╲╲  '
+          - '▌▌╱╱██╲╲  '
           color_mask:
           - SSSSSSSSSS
           - EESSSSSSSS
@@ -696,7 +702,7 @@ views:
         - id: joint
           weight: 1
           cells:
-          - ◢◢██████◣◣
+          - ▗▗██████▖▖
           - '  ╲╲██╱╱  '
           color_mask:
           - SSSSSSSSSS
@@ -729,8 +735,8 @@ views:
         - id: muscle
           weight: 1
           cells:
-          - ◢◢██████◣◣
-          - ◥◥██████◤◤
+          - ▗▗██████▖▖
+          - ▝▝██████▘▘
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -747,18 +753,18 @@ views:
           weight: 1
           cells:
           - '  ██████  '
-          - ◥◥☉☉██◇◇◤◤
+          - ☼☼☼☼██☼☼◤◤
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
+          - BBBBSSBBSS
         - id: many_eyes
           weight: 1
           cells:
           - '  ◢◢██◣◣  '
-          - '▀▀◇◇████  '
+          - '▌▌☼☼████  '
           color_mask:
           - SSSSSSSSSS
-          - BBSSSSSSSS
+          - BBBBSSSSSS
       - id: hardened_beak
         name: Hardened Beak
         primary_property: main_gun
@@ -770,27 +776,25 @@ views:
         - id: fang
           weight: 1
           cells:
-          - '    ▴▴    '
+          - '    ▲▲    '
           - '  ◥◥██◤◤  '
           color_mask:
-          - SSSSSSSSSS
+          - SSSSAASSSS
           - SSSSSSSSSS
         - id: barb
           weight: 1
           cells:
-          - '    ▴▴    '
+          - '    ▲▲    '
           - '  ╱╱██╲╲  '
           color_mask:
+          - SSSSAASSSS
           - SSSSSSSSSS
-          - SSSSSSSSSS
-      structure_lengths:
-        sinew_drive: 1
-        marrow_knot: 1
-        bound_spars: 8
-        nerve_cluster: 1
-        hardened_beak: 1
     - id: compact
       name: Compact
+      structure_lengths:
+        drive: 1
+        body: 6
+        prow: 1
       sections:
       - id: drive
         name: Drive
@@ -838,12 +842,8 @@ views:
         - id: fang
           weight: 1
           cells:
-          - '  ▴▴  '
+          - '  ▲▲  '
           - '  ██  '
           color_mask:
+          - SSAASS
           - SSSSSS
-          - SSSSSS
-      structure_lengths:
-        drive: 1
-        body: 12
-        prow: 1

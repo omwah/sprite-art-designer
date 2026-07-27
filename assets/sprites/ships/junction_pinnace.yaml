@@ -13,6 +13,11 @@ views:
     tiers:
     - id: full
       name: Full Detail
+      structure_lengths:
+        overdrive: 1
+        sail_nodes: 1
+        cabin: 3
+        landing_nose: 1
       sections:
       - id: overdrive
         name: Overdrive
@@ -27,8 +32,8 @@ views:
           cells:
           - '    '
           - '    '
-          - ' ▄▄▓'
-          - ' ▄█▓'
+          - ' ▀▀▓'
+          - ' ▀█▓'
           - '    '
           - '    '
           - '    '
@@ -44,9 +49,9 @@ views:
           weight: 1
           cells:
           - '    '
-          - ' ▄  '
-          - ' ▄▶▓'
-          - ' ▄▶▓'
+          - ' ▀  '
+          - ' ▀▶▓'
+          - ' ▀▶▓'
           - '    '
           - '    '
           - '    '
@@ -71,10 +76,10 @@ views:
           weight: 1
           cells:
           - '    '
-          - ◢██◣
+          - ▗▄▄▖
           - ▓██▓
           - ▓██▓
-          - ◥██◤
+          - ▝▀▀▘
           - '    '
           - '    '
           color_mask:
@@ -89,10 +94,10 @@ views:
           weight: 1
           cells:
           - '    '
-          - ' ▴  '
+          - ' ◆  '
           - ▓██▓
           - ▓██▓
-          - ' ▾  '
+          - ' ◇  '
           - '    '
           - '    '
           color_mask:
@@ -117,16 +122,16 @@ views:
           cells:
           - '    '
           - ' ▀  '
-          - ████
-          - █◇██
-          - '    '
+          - ╭──╮
+          - █◆◆█
+          - ╰──╯
           - '    '
           - '    '
           color_mask:
           - SSSS
           - SBSS
           - SSSS
-          - SSSS
+          - SWWS
           - SSSS
           - SSSS
           - SSSS
@@ -135,16 +140,16 @@ views:
           cells:
           - '    '
           - '    '
-          - ◢██◣
-          - █▒██
-          - ◥██◤
+          - ▗▄▄▖
+          - █◆▒█
+          - ▝▀▀▘
           - '    '
           - '    '
           color_mask:
           - SSSS
           - SSSS
           - SSSS
-          - SSSS
+          - SWSS
           - SSSS
           - SSSS
           - SSSS
@@ -161,17 +166,17 @@ views:
           cells:
           - '   '
           - '   '
-          - '▓▙ '
-          - ██▶
-          - '▓▛ '
+          - '◇▙ '
+          - ◇█►
+          - '◇▛ '
           - '   '
           - '   '
           color_mask:
           - SSS
           - SSS
-          - SSS
-          - SSS
-          - SSS
+          - DSS
+          - DSS
+          - DSS
           - SSS
           - SSS
         - id: probe
@@ -179,26 +184,26 @@ views:
           cells:
           - '   '
           - '   '
-          - '─▙ '
-          - █▓▶
-          - '─▛ '
+          - '◇▙ '
+          - █◆►
+          - '◇▛ '
           - '   '
           - '   '
           color_mask:
           - SSS
           - SSS
+          - DSS
+          - SWS
+          - DSS
           - SSS
           - SSS
-          - SSS
-          - SSS
-          - SSS
+    - id: medium
+      name: Medium
       structure_lengths:
         overdrive: 1
         sail_nodes: 1
         cabin: 3
         landing_nose: 1
-    - id: medium
-      name: Medium
       sections:
       - id: overdrive
         name: Overdrive
@@ -212,8 +217,8 @@ views:
           weight: 1
           cells:
           - '   '
-          - ' ▄▓'
-          - ' ▄▓'
+          - ' ▀▓'
+          - ' ▀▓'
           - '   '
           - '   '
           color_mask:
@@ -225,9 +230,9 @@ views:
         - id: fork
           weight: 1
           cells:
-          - ' ▄ '
-          - ' ▄▓'
-          - ' ▄▓'
+          - ' ▀ '
+          - ' ▀▓'
+          - ' ▀▓'
           - '   '
           - '   '
           color_mask:
@@ -248,10 +253,10 @@ views:
         - id: diamond
           weight: 1
           cells:
-          - ◢█◣
+          - ▗▄▖
           - ▓█▓
           - ▓█▓
-          - ◥█◤
+          - ▝▀▘
           - '   '
           color_mask:
           - SSS
@@ -262,10 +267,10 @@ views:
         - id: open
           weight: 1
           cells:
-          - ' ▴ '
+          - ' ◆ '
           - ▓█▓
           - ▓█▓
-          - ' ▾ '
+          - ' ◇ '
           - '   '
           color_mask:
           - SSS
@@ -286,28 +291,28 @@ views:
           weight: 1
           cells:
           - ' ▀ '
-          - ███
-          - █◇█
-          - '   '
+          - ╭─╮
+          - █◆█
+          - ╰─╯
           - '   '
           color_mask:
           - SBS
           - SSS
-          - SSS
+          - SWS
           - SSS
           - SSS
         - id: armored
           weight: 1
           cells:
           - '   '
-          - ◢█◣
-          - █▒█
-          - ◥█◤
+          - ▗▄▖
+          - █◆█
+          - ▝▀▘
           - '   '
           color_mask:
           - SSS
           - SSS
-          - SSS
+          - SWS
           - SSS
           - SSS
       - id: landing_nose
@@ -322,37 +327,36 @@ views:
           weight: 1
           cells:
           - '  '
-          - '▓ '
-          - █▶
-          - '▓ '
+          - '◇ '
+          - ◇►
+          - '◇ '
           - '  '
           color_mask:
           - SS
-          - SS
-          - SS
-          - SS
+          - DS
+          - DS
+          - DS
           - SS
         - id: probe
           weight: 1
           cells:
           - '  '
-          - '─ '
-          - █▶
-          - '─ '
+          - '◇ '
+          - █►
+          - '◇ '
           - '  '
           color_mask:
           - SS
+          - DS
           - SS
+          - DS
           - SS
-          - SS
-          - SS
-      structure_lengths:
-        overdrive: 1
-        sail_nodes: 1
-        cabin: 3
-        landing_nose: 1
     - id: compact
       name: Compact
+      structure_lengths:
+        drive: 1
+        body: 4
+        prow: 1
       sections:
       - id: drive
         name: Drive
@@ -366,7 +370,7 @@ views:
           weight: 1
           cells:
           - '  '
-          - ▄▓
+          - ▀▓
           - '  '
           color_mask:
           - SS
@@ -384,13 +388,13 @@ views:
         - id: cabin
           weight: 1
           cells:
-          - ' ▴'
-          - ██
-          - ' ▾'
+          - ' ▀◆'
+          - █◆█
+          - ' ▄ '
           color_mask:
-          - SS
-          - SS
-          - SS
+          - SBW
+          - SWS
+          - SSS
       - id: prow
         name: Prow
         primary_property: weapons
@@ -402,17 +406,13 @@ views:
         - id: nose
           weight: 1
           cells:
-          - '  '
-          - █▶
-          - '  '
+          - ' ◇'
+          - ◇►
+          - ' ◇'
           color_mask:
-          - SS
-          - SS
-          - SS
-      structure_lengths:
-        drive: 1
-        body: 4
-        prow: 1
+          - SD
+          - DS
+          - SD
   vertical:
     name: Vertical
     axis: vertical
@@ -421,6 +421,11 @@ views:
     tiers:
     - id: full
       name: Full Detail
+      structure_lengths:
+        overdrive: 1
+        sail_nodes: 1
+        cabin: 3
+        landing_nose: 1
       sections:
       - id: overdrive
         name: Overdrive
@@ -434,7 +439,7 @@ views:
           weight: 1
           cells:
           - '    ▓▓▓▓      '
-          - '    ▄▄▄▄      '
+          - '    ▌▌▌▌      '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSEEEESSSSSS
@@ -442,7 +447,7 @@ views:
           weight: 1
           cells:
           - '    ▓▓▓▓      '
-          - '  ▄▄▄▄▄▄      '
+          - '  ▌▌▌▌▌▌      '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSEEEEEESSSSSS
@@ -458,8 +463,8 @@ views:
         - id: diamond
           weight: 1
           cells:
-          - '  ◢◢▓▓▓▓◣◣    '
-          - '  ████████    '
+          - '  ▗▗▓▓▓▓▖▖    '
+          - '  ▐▐████▌▌    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -467,7 +472,7 @@ views:
           weight: 1
           cells:
           - '    ▓▓▓▓      '
-          - '  ◀◀████▶▶    '
+          - '  ◆◆████◇◇    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -483,19 +488,19 @@ views:
         - id: window
           weight: 1
           cells:
-          - '    ████      '
-          - '  ▀▀██◇◇      '
+          - '    ╭╭██╮╮    '
+          - '  ▌▌││◆◆││    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSBBSSSSSSSSSS
+          - SSBBSSWWSSSSSS
         - id: armored
           weight: 1
           cells:
-          - '    ◢◢██◣◣    '
-          - '    ██▒▒██    '
+          - '    ▗▗██▖▖    '
+          - '    ▐▐◆◆▌▌    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSSSWWSSSSSS
       - id: landing_nose
         name: Landing Nose
         primary_property: utility
@@ -507,26 +512,26 @@ views:
         - id: round
           weight: 1
           cells:
-          - '      ▴▴      '
-          - '    ▓▓██▓▓    '
+          - '      ▲▲      '
+          - '    ◇◇◇◇◇◇    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSDDDDDDSSSS
         - id: probe
           weight: 1
           cells:
-          - '      ▴▴      '
-          - '    ││██││    '
+          - '      ▲▲      '
+          - '    ◇◇██◇◇    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSDDSSDDSSSS
+    - id: medium
+      name: Medium
       structure_lengths:
         overdrive: 1
         sail_nodes: 1
         cabin: 3
         landing_nose: 1
-    - id: medium
-      name: Medium
       sections:
       - id: overdrive
         name: Overdrive
@@ -564,8 +569,8 @@ views:
         - id: diamond
           weight: 1
           cells:
-          - '◢◢▓▓▓▓◣◣  '
-          - '◥◥▓▓▓▓◤◤  '
+          - '▗▗▓▓▓▓▖▖  '
+          - '▝▝▓▓▓▓▘▘  '
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -589,16 +594,16 @@ views:
         - id: window
           weight: 1
           cells:
-          - '  ████    '
-          - '  ████    '
+          - '  ╭╭██╮╮  '
+          - '  ╰╰██╯╯  '
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
         - id: armored
           weight: 1
           cells:
-          - '  ◢◢██◣◣  '
-          - '  ◥◥██◤◤  '
+          - '  ▗▗██▖▖  '
+          - '  ▝▝██▘▘  '
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -613,22 +618,21 @@ views:
         - id: round
           weight: 1
           cells:
-          - '    ▴▴    '
+          - '    ▲▲    '
           color_mask:
           - SSSSSSSSSS
         - id: probe
           weight: 1
           cells:
-          - '    ▴▴    '
+          - '    ▲▲    '
           color_mask:
           - SSSSSSSSSS
-      structure_lengths:
-        overdrive: 1
-        sail_nodes: 1
-        cabin: 3
-        landing_nose: 1
     - id: compact
       name: Compact
+      structure_lengths:
+        drive: 1
+        body: 4
+        prow: 1
       sections:
       - id: drive
         name: Drive
@@ -656,8 +660,10 @@ views:
         - id: cabin
           weight: 1
           cells:
-          - ◀◀██▶▶
+          - '◆◆██  '
+          - '  ██  '
           color_mask:
+          - WWSSSS
           - SSSSSS
       - id: prow
         name: Prow
@@ -670,10 +676,6 @@ views:
         - id: nose
           weight: 1
           cells:
-          - '  ▴▴  '
+          - ◇◇▲▲◇◇
           color_mask:
-          - SSSSSS
-      structure_lengths:
-        drive: 1
-        body: 4
-        prow: 1
+          - DDSSDD

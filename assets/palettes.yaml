@@ -19,9 +19,9 @@ archetypes:
       - bright_yellow
       - grey100
       weapons:
-      - '#22c55e'
+      - '#DF7070'
       defensive:
-      - '#3b82f6'
+      - '#60a5fa'
   canid_technologist:
     color_sets:
       surface:
@@ -39,9 +39,9 @@ archetypes:
       - gold1
       - bright_white
       weapons:
-      - '#22c55e'
+      - '#DF7070'
       defensive:
-      - '#3b82f6'
+      - '#2563eb'
   tentacled_envoy:
     color_sets:
       surface:
@@ -59,9 +59,9 @@ archetypes:
       - pale_turquoise1
       - bright_white
       weapons:
-      - '#22c55e'
+      - '#DF7070'
       defensive:
-      - '#3b82f6'
+      - '#22d3ee'
   brain_dome_automaton:
     color_sets:
       surface:
@@ -79,9 +79,9 @@ archetypes:
       - bright_cyan
       - grey100
       weapons:
-      - '#22c55e'
+      - '#DF7070'
       defensive:
-      - '#3b82f6'
+      - '#38bdf8'
   ribbon_salvager:
     color_sets:
       surface:
@@ -99,9 +99,9 @@ archetypes:
       - orange1
       - red
       weapons:
-      - '#22c55e'
+      - '#DF7070'
       defensive:
-      - '#3b82f6'
+      - '#1d4ed8'
   temporal_broker:
     color_sets:
       surface:
@@ -119,9 +119,9 @@ archetypes:
       - plum1
       - bright_white
       weapons:
-      - '#22c55e'
+      - '#DF7070'
       defensive:
-      - '#3b82f6'
+      - '#818cf8'
   cosmic_arbiter:
     color_sets:
       surface:
@@ -139,9 +139,9 @@ archetypes:
       - gold1
       - bright_white
       weapons:
-      - '#22c55e'
+      - '#DF7070'
       defensive:
-      - '#3b82f6'
+      - '#0ea5e9'
   telepath_aristocrat:
     color_sets:
       surface:
@@ -159,9 +159,9 @@ archetypes:
       - orchid
       - bright_white
       weapons:
-      - '#22c55e'
+      - '#DF7070'
       defensive:
-      - '#3b82f6'
+      - '#6366f1'
   engineered_aesthete:
     color_sets:
       surface:
@@ -179,7 +179,7 @@ archetypes:
       - gold1
       - pink1
       weapons:
-      - '#22c55e'
+      - '#DF7070'
       defensive:
       - '#3b82f6'
   amorous_imp:
@@ -199,9 +199,9 @@ archetypes:
       - light_pink1
       - bright_white
       weapons:
-      - '#22c55e'
+      - '#DF7070'
       defensive:
-      - '#3b82f6'
+      - '#7dd3fc'
   horned_grudgekeeper:
     color_sets:
       surface:
@@ -219,9 +219,9 @@ archetypes:
       - red
       - orange1
       weapons:
-      - '#22c55e'
+      - '#DF7070'
       defensive:
-      - '#3b82f6'
+      - '#0284c7'
   psionic_overlord:
     color_sets:
       surface:
@@ -239,9 +239,9 @@ archetypes:
       - slate_blue1
       - bright_cyan
       weapons:
-      - '#22c55e'
+      - '#DF7070'
       defensive:
-      - '#3b82f6'
+      - '#4f46e5'
   colonial_broodmaster:
     color_sets:
       surface:
@@ -259,9 +259,9 @@ archetypes:
       - green_yellow
       - bright_yellow
       weapons:
-      - '#22c55e'
+      - '#DF7070'
       defensive:
-      - '#3b82f6'
+      - '#93c5fd'
   winged_schemer:
     color_sets:
       surface:
@@ -279,6 +279,6 @@ archetypes:
       - cyan
       - grey100
       weapons:
-      - '#22c55e'
+      - '#DF7070'
       defensive:
-      - '#3b82f6'
+      - '#0891b2'

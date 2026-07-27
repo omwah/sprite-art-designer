@@ -1,29 +1,46 @@
-"""Generate the eight original, literature-inspired ship role files."""
+"""Generate the complete role-specific ship asset roster.
+
+The compact marker alphabet keeps glyph and semantic color authorship adjacent:
+``Y/y`` is engine glow, ``R/r/O`` is a beacon, ``C/c`` is a window,
+``G/g/K/L`` is armament, and ``B/b/P`` is defensive energy. The markers become
+appropriate blocks, facets, beams, or muzzles and never reach schema-v2 YAML.
+"""
 
 from __future__ import annotations
 
+from copy import deepcopy
 from pathlib import Path
 
 from sprite_art import Section, Sprite, Tier, Variant, View, dump_sprite
 from sprite_art.model import SCHEMA_VERSION
 from sprite_art.transform import generate_rotated_view
 
-LEGACY_MARKERS = {
-    "R": ("▀", "B"), "r": ("▄", "B"),
-    "Y": ("▀", "E"), "y": ("▄", "E"),
-    "G": ("▀", "A"), "g": ("▄", "A"),
-    "B": ("▀", "D"), "b": ("▄", "D"),
+COLOR_MARKERS = {
+    "R": ("▀", "B"),
+    "r": ("▄", "B"),
+    "Y": ("▀", "E"),
+    "y": ("▄", "E"),
+    "G": ("▀", "A"),
+    "g": ("▄", "A"),
+    "B": ("▀", "D"),
+    "b": ("▄", "D"),
+    "C": ("◆", "W"),
+    "c": ("◇", "W"),
+    "K": ("►", "A"),
+    "L": ("═", "A"),
+    "P": ("◇", "D"),
+    "O": ("☼", "B"),
 }
+
+TIER_TARGETS = {"full": 48, "medium": 36, "compact": 18}
 
 
 def variant(variant_id: str, *cells: str, weight: int = 1) -> Variant:
     migrated = [
-        "".join(LEGACY_MARKERS.get(glyph, (glyph, "S"))[0] for glyph in row)
-        for row in cells
+        "".join(COLOR_MARKERS.get(glyph, (glyph, "S"))[0] for glyph in row) for row in cells
     ]
     color_mask = [
-        "".join(LEGACY_MARKERS.get(glyph, (glyph, "S"))[1] for glyph in row)
-        for row in cells
+        "".join(COLOR_MARKERS.get(glyph, (glyph, "S"))[1] for glyph in row) for row in cells
     ]
     return Variant(
         id=variant_id,
@@ -79,6 +96,75 @@ def compact(
     )
 
 
+def _fit_rows(rows: list[str], height: int, fill: str) -> list[str]:
+    """Center-crop or pad an authored grid without repairing its geometry."""
+
+    width = len(rows[0])
+    if len(rows) > height:
+        start = (len(rows) - height) // 2
+        return rows[start : start + height]
+    padding = height - len(rows)
+    top = padding // 2
+    return [fill * width] * top + rows + [fill * width] * (padding - top)
+
+
+def _scale_columns(rows: list[str]) -> list[str]:
+    """Create the documented three-quarter-width medium structure."""
+
+    width = len(rows[0])
+    target = (width * 3 + 2) // 4
+    if target == width:
+        return list(rows)
+    if target == 1:
+        indices = [width // 2]
+    else:
+        indices = [index * (width - 1) // (target - 1) for index in range(target)]
+    return ["".join(row[index] for index in indices) for row in rows]
+
+
+def _normalize_tier(tier: Tier, height: int) -> None:
+    for part in tier.sections:
+        for authored in part.variants:
+            widths = {len(row) for row in authored.cells}
+            if len(widths) != 1:
+                raise ValueError(
+                    f"{tier.id}/{part.id}/{authored.id} has row widths {sorted(widths)}"
+                )
+            authored.cells = _fit_rows(authored.cells, height, " ")
+            authored.color_mask = _fit_rows(authored.color_mask, height, "S")
+
+
+def _medium_tier(full: Tier) -> Tier:
+    medium = deepcopy(full)
+    medium.id = "medium"
+    medium.name = "Medium"
+    _normalize_tier(medium, 5)
+    for part in medium.sections:
+        for authored in part.variants:
+            authored.cells = _scale_columns(authored.cells)
+            authored.color_mask = _scale_columns(authored.color_mask)
+    return medium
+
+
+def _structure_lengths(tier: Tier, target: int) -> dict[str, int]:
+    sizes = [part.variants[0].width for part in tier.sections]
+    repeats = [part.min_repeat for part in tier.sections]
+    total = sum(size * repeat for size, repeat in zip(sizes, repeats))
+    while True:
+        changed = False
+        for index, part in enumerate(tier.sections):
+            if repeats[index] < part.max_repeat and total + sizes[index] <= target:
+                repeats[index] += 1
+                total += sizes[index]
+                changed = True
+        if not changed:
+            return {part.id: repeat for part, repeat in zip(tier.sections, repeats)}
+
+
+def _set_structure_lengths(tier: Tier) -> None:
+    tier.structure_lengths = _structure_lengths(tier, TIER_TARGETS[tier.id])
+
+
 def ship(
     role: str,
     name: str,
@@ -86,6 +172,12 @@ def ship(
     full_sections: list[Section],
     compact_tier: Tier,
 ) -> Sprite:
+    full = Tier(id="full", name="Full Detail", sections=full_sections)
+    _normalize_tier(full, 7)
+    medium = _medium_tier(full)
+    _normalize_tier(compact_tier, 3)
+    for tier in (full, medium, compact_tier):
+        _set_structure_lengths(tier)
     sprite = Sprite(
         schema_version=SCHEMA_VERSION,
         id=role,
@@ -100,10 +192,7 @@ def ship(
                 axis="horizontal",
                 canonical_facing="right",
                 mirror_facing="left",
-                tiers=[
-                    Tier(id="full", name="Full Detail", sections=full_sections),
-                    compact_tier,
-                ],
+                tiers=[full, medium, compact_tier],
             )
         },
     )
@@ -115,6 +204,395 @@ def ship(
 
 
 def build() -> list[Sprite]:
+    fighter = ship(
+        "fighter",
+        "Fighter",
+        "A fast, fragile interceptor built as a short path from engine flare to forward gun.",
+        [
+            section(
+                "thrusters",
+                "Swept Thrusters",
+                "thrusters",
+                [
+                    variant(
+                        "split_flare", "     ", " y╺Y ", "y▖▓▘ ", "y█▓═ ", "y▘▓▖ ", " y╺Y ", "     "
+                    ),
+                    variant(
+                        "hot_fork", "     ", "y▘ Y ", " y▙▓ ", "y█▓═ ", " y▛▓ ", "y▖ Y ", "     "
+                    ),
+                ],
+                secondary=("spindrive",),
+            ),
+            section(
+                "spindrive",
+                "Drive Swell",
+                "spindrive",
+                [
+                    variant(
+                        "faceted",
+                        "      ",
+                        " ▗▓▖  ",
+                        "◢███◣ ",
+                        "█░██░█",
+                        "◥███◤ ",
+                        " ▝▓▘  ",
+                        "      ",
+                    ),
+                    variant(
+                        "open", "      ", " ╲  ╱ ", "▟███▙ ", "█▒██▒█", "▜███▛ ", " ╱  ╲ ", "      "
+                    ),
+                ],
+                secondary=("reactor",),
+            ),
+            section(
+                "hull",
+                "Narrow Fuselage",
+                "hull",
+                [
+                    variant("cockpit_rib", "   ", " ╱ ", "▟█═", "█C█", "▜█═", " ╲ ", "   "),
+                    variant("gun_rib", "   ", "   ", "▖◆╺", "█▒█", "▘◆╺", "   ", "   "),
+                ],
+                secondary=("armor", "bridge"),
+                maximum=5,
+            ),
+            section(
+                "screens",
+                "Screened Cockpit",
+                "screens",
+                [
+                    variant("cockpit", "    ", " P  ", "◢█▙ ", "PC█═", "◥█▛ ", "    ", "    "),
+                    variant("low_screen", "    ", "    ", "P▟█ ", "PC█═", "P▜█ ", "    ", "    "),
+                ],
+                secondary=("bridge",),
+            ),
+            section(
+                "main_gun",
+                "Forward Gun",
+                "main_gun",
+                [
+                    variant(
+                        "needle",
+                        "      ",
+                        "      ",
+                        "╺═▓▙  ",
+                        "╺LL█GK",
+                        "╺═▓▛  ",
+                        "      ",
+                        "      ",
+                    ),
+                    variant(
+                        "forked",
+                        "      ",
+                        "      ",
+                        " ╺═█▙ ",
+                        "╺L██GK",
+                        " ╺═█▛ ",
+                        "      ",
+                        "      ",
+                    ),
+                ],
+                secondary=("weapons",),
+            ),
+        ],
+        compact(
+            tail=variant("flare", "  ", "y═", "  "),
+            body=[variant("dart", " ▘", "█C", " ▖"), variant("thin", "  ", "█═", "  ")],
+            nose=variant("muzzle", "   ", "LGK", "   "),
+            maximum=5,
+        ),
+    )
+
+    transport = ship(
+        "transport",
+        "Transport",
+        "A dependable modular carrier whose countable container bays determine its capacity.",
+        [
+            section(
+                "thrusters",
+                "Cargo Thrusters",
+                "thrusters",
+                [
+                    variant(
+                        "cluster", "     ", " yY  ", "y▟▓═ ", "y██▓ ", "y▜▓═ ", " yY  ", "     "
+                    ),
+                    variant("tug", "     ", "y▘Y  ", "y▙▓  ", "y██▓ ", "y▛▓  ", "y▖Y  ", "     "),
+                ],
+                secondary=("spindrive",),
+            ),
+            section(
+                "spindrive",
+                "Drive Frame",
+                "spindrive",
+                [
+                    variant("braced", "    ", "╔══╗", "╠██╣", "║▒▒║", "╠██╣", "╚══╝", "    "),
+                    variant("serviceable", "    ", "╭──╮", "│██│", "├░░┤", "│██│", "╰──╯", "    "),
+                ],
+                secondary=("utility",),
+            ),
+            section(
+                "hull",
+                "Container Bays",
+                "cargo",
+                [
+                    variant(
+                        "double_doors",
+                        "      ",
+                        "╭─┬─╮ ",
+                        "│▒│▒│ ",
+                        "┤░┼░├╺",
+                        "│▒│▒│ ",
+                        "╰─┴─╯ ",
+                        "      ",
+                    ),
+                    variant(
+                        "pod", "      ", "▗▄▄▄▖ ", "▟█▒▒▙ ", "█▒◆▒█╺", "▜█▒▒▛ ", "▝▀▀▀▘ ", "      "
+                    ),
+                    variant(
+                        "rail_bay",
+                        "      ",
+                        "╔═══╗ ",
+                        "║░▒░║ ",
+                        "╠═╬═╣╺",
+                        "║░▒░║ ",
+                        "╚═══╝ ",
+                        "      ",
+                    ),
+                ],
+                secondary=("hull", "utility"),
+                maximum=7,
+            ),
+            section(
+                "screens",
+                "Control Collar",
+                "screens",
+                [
+                    variant("bridge", "    ", " R  ", "▟██▙", "PC C", "▜██▛", "    ", "    "),
+                    variant("utility", "    ", "    ", "◢██◣", "PCC█", "◥██◤", "    ", "    "),
+                ],
+                secondary=("bridge", "sensors"),
+            ),
+            section(
+                "main_gun",
+                "Utility Prow",
+                "main_gun",
+                [
+                    variant("stub", "    ", "    ", "██▙ ", "█▓GK", "██▛ ", "    ", "    "),
+                    variant("clamp", "    ", "    ", "▟█▙ ", "█╬█►", "▜█▛ ", "    ", "    "),
+                ],
+                secondary=("utility", "weapons"),
+            ),
+        ],
+        compact(
+            tail=variant("drive", "  ", "y█", "  "),
+            body=[variant("bay", "▀▀▀", "█▒█", "▄▄▄"), variant("door", "╭─╮", "│░│", "╰─╯")],
+            nose=variant("cab", " ▀", "PC", " ▄"),
+            maximum=5,
+        ),
+    )
+
+    warship = ship(
+        "warship",
+        "Warship",
+        "A dense line combatant organized around armor, a defensive collar, and one weapon axis.",
+        [
+            section(
+                "thrusters",
+                "Armored Thrusters",
+                "thrusters",
+                [
+                    variant("boxed", "    ", "yY═ ", "y▟▓ ", "y██▓", "y▜▓ ", "yY═ ", "    "),
+                    variant("split", "    ", "y▘Y ", "y▙▓ ", "y██▓", "y▛▓ ", "y▖Y ", "    "),
+                ],
+                secondary=("spindrive", "armor"),
+            ),
+            section(
+                "spindrive",
+                "Armored Drive",
+                "spindrive",
+                [
+                    variant("collared", "    ", "▓█═ ", "◢██◣", "█░░█", "◥██◤", "▓█═ ", "    "),
+                    variant("slab", "    ", "▗▄▖ ", "▟██▙", "█▒▒█", "▜██▛", "▝▀▘ ", "    "),
+                ],
+                secondary=("armor",),
+            ),
+            section(
+                "hull",
+                "Armored Spine",
+                "armor",
+                [
+                    variant(
+                        "magazine", "     ", "▓██═ ", "◢███◣", "█░░░█", "◥███◤", "▓██═ ", "     "
+                    ),
+                    variant(
+                        "faceted", "     ", " ▀▀  ", "▟█▒█▙", "█◇░◇█", "▜█▒█▛", " ▄▄  ", "     "
+                    ),
+                ],
+                secondary=("hull", "weapons"),
+                maximum=6,
+            ),
+            section(
+                "screens",
+                "Screen Collar",
+                "screens",
+                [
+                    variant("projectors", "    ", " P  ", "P▟█▙", "P█C█", "P▜█▛", " P  ", "    "),
+                    variant("armored", "    ", "    ", "P◢█◣", "P███", "P◥█◤", "    ", "    "),
+                ],
+                secondary=("sensors",),
+            ),
+            section(
+                "main_gun",
+                "Spinal Gun",
+                "main_gun",
+                [
+                    variant(
+                        "barrel",
+                        "      ",
+                        "      ",
+                        "╺═██▙ ",
+                        "╺LL█GK",
+                        "╺═██▛ ",
+                        "      ",
+                        "      ",
+                    ),
+                    variant(
+                        "heavy",
+                        "      ",
+                        "      ",
+                        "═███▙ ",
+                        "L███GK",
+                        "═███▛ ",
+                        "      ",
+                        "      ",
+                    ),
+                ],
+                secondary=("weapons",),
+            ),
+        ],
+        compact(
+            tail=variant("drive", "  ", "y█", "  "),
+            body=[variant("armor", "▗▖", "█▒", "▝▘"), variant("gun_rib", "▀G", "██", "▄g")],
+            nose=variant("gun", "   ", "LGK", "   "),
+            maximum=6,
+        ),
+    )
+
+    capital_warship = ship(
+        "capital_warship",
+        "Capital Warship",
+        "A command-scale fleet anchor with clustered drives, layered decks, and an embedded heavy prow.",
+        [
+            section(
+                "thrusters",
+                "Capital Thrusters",
+                "thrusters",
+                [
+                    variant(
+                        "cluster", " yY  ", "y╺Y═ ", "y▟▓▓ ", "y███▓", "y▜▓▓ ", "y╺Y═ ", " yY  "
+                    ),
+                    variant(
+                        "fortified", "y▘Y  ", "y▙▓═ ", "y██▓ ", "y█░█▓", "y██▓ ", "y▛▓═ ", "y▖Y  "
+                    ),
+                ],
+                secondary=("spindrive", "reactor"),
+            ),
+            section(
+                "spindrive",
+                "Drive Bastion",
+                "spindrive",
+                [
+                    variant(
+                        "bastion", "▓█═  ", "╔═╦═╗", "╠███╣", "║░▒░║", "╠███╣", "╚═╩═╝", "▓█═  "
+                    ),
+                    variant(
+                        "reactor", " ▀▀  ", "▟███▙", "█▒◆▒█", "█◆░◆█", "█▒◆▒█", "▜███▛", " ▄▄  "
+                    ),
+                ],
+                secondary=("armor", "reactor"),
+            ),
+            section(
+                "hull",
+                "Layered Heavy Hull",
+                "armor",
+                [
+                    variant(
+                        "decks",
+                        "  R   ",
+                        "╔═╦══╗",
+                        "╠█C██╣",
+                        "║░▒▒░║",
+                        "╠████╣",
+                        "╚═╩══╝",
+                        "  ▄   ",
+                    ),
+                    variant(
+                        "terrace",
+                        " ╭─╮  ",
+                        "╭╯C╰╮ ",
+                        "▟███▙ ",
+                        "█░▒░█╺",
+                        "▜███▛ ",
+                        "╰╮ ╭╯ ",
+                        " ╰─╯  ",
+                    ),
+                    variant(
+                        "keel", " ▀▀▀  ", "◢███◣ ", "█▒█▒█╺", "█░◇░█╺", "█▒█▒█╺", "◥███◤ ", " ▄▄▄  "
+                    ),
+                ],
+                secondary=("hull", "bridge"),
+                maximum=6,
+            ),
+            section(
+                "screens",
+                "Forward Screen Complex",
+                "screens",
+                [
+                    variant(
+                        "citadel", " P   ", "╭─╮  ", "P▟██▙", "P█C██", "P▜██▛", "╰─╯  ", " P   "
+                    ),
+                    variant(
+                        "shoulders", "     ", "P▀ P ", "P◢█◣ ", "P█C█═", "P◥█◤ ", "P▄ P ", "     "
+                    ),
+                ],
+                secondary=("bridge", "sensors"),
+            ),
+            section(
+                "main_gun",
+                "Heavy Battery",
+                "main_gun",
+                [
+                    variant(
+                        "embedded",
+                        "       ",
+                        "  ▗▄▖  ",
+                        "═████▙ ",
+                        "L████GK",
+                        "═████▛ ",
+                        "  ▝▀▘  ",
+                        "       ",
+                    ),
+                    variant(
+                        "fortress",
+                        "       ",
+                        " ╭──╮  ",
+                        "═████▙ ",
+                        "L█G█G█K",
+                        "═████▛ ",
+                        " ╰──╯  ",
+                        "       ",
+                    ),
+                ],
+                secondary=("weapons", "armor"),
+            ),
+        ],
+        compact(
+            tail=variant("drive", "y█", "y█", "y█"),
+            body=[variant("decks", "▀C▀", "█▒█", "▄█▄"), variant("tower", " ▀ ", "█C█", "███")],
+            nose=variant("battery", " ▀▀ ", "█G█K", " ▄▄ "),
+            maximum=7,
+        ),
+    )
+
     needle_picket = ship(
         "needle_picket",
         "Needle Picket",
@@ -125,8 +603,8 @@ def build() -> list[Sprite]:
                 "Thruster Fork",
                 "thrusters",
                 [
-                    variant("fork", "     ", "  Y▓ ", " YY█▓", "  Y▓ ", "     "),
-                    variant("split", " Y   ", "  Y▓ ", " Y██▓", "  Y▓ ", "     "),
+                    variant("fork", "     ", " y╺Y ", "y▖█▓ ", "y██▓ ", "y▘█▓ ", "     "),
+                    variant("split", " y   ", "y▘Y▓ ", " y██▓", "y▖Y▓ ", "     "),
                 ],
             ),
             section(
@@ -134,8 +612,8 @@ def build() -> list[Sprite]:
                 "Drive Nodes",
                 "spindrive",
                 [
-                    variant("open", " ▴  ", "▓██═", "████", "▓██═", "    "),
-                    variant("veiled", " R  ", "◢██◣", "████", "◥██◤", "    "),
+                    variant("open", " O  ", "▓██═", "█░██", "▓██═", "    "),
+                    variant("veiled", " R  ", "╭██╮", "█▒██", "╰██╯", "    "),
                 ],
                 secondary=("radiator",),
             ),
@@ -144,8 +622,8 @@ def build() -> list[Sprite]:
                 "Patrol Spine",
                 "hull",
                 [
-                    variant("sensor_rib", " R  ", "┌──┐", "█▒▒█", "└──┘", "    "),
-                    variant("plain_rib", "    ", "◢██◣", "█◇▒█", "◥██◤", "    "),
+                    variant("sensor_rib", " R  ", "╭──╮", "█░c█", "╰──╯", "    "),
+                    variant("plain_rib", "    ", "▗▄▄▖", "█▒░█", "▝▀▀▘", "    "),
                 ],
                 secondary=("sensors",),
                 maximum=7,
@@ -155,8 +633,8 @@ def build() -> list[Sprite]:
                 "Sensor Crown",
                 "sensors",
                 [
-                    variant("crown", " ◢█◣", "◇███", "████", " ◥█◤", "    "),
-                    variant("dish", "  R ", "◢██◣", "█☉██", "◥██◤", "    "),
+                    variant("crown", " O█O", "◇█C█", "O██O", " ◥█◤", "    "),
+                    variant("dish", "  R ", "╭██╮", "O█C█", "╰██╯", "    "),
                 ],
             ),
             section(
@@ -164,8 +642,8 @@ def build() -> list[Sprite]:
                 "Needle Prow",
                 "main_gun",
                 [
-                    variant("long", "     ", "  ╾▙ ", "──▓▓▶", "  ╾▛ ", "     "),
-                    variant("probe", "     ", "  ─▙ ", "─██▓▶", "  ─▛ ", "     "),
+                    variant("long", "     ", "  ╾▙ ", "╺═▓GK", "  ╾▛ ", "     "),
+                    variant("probe", "     ", "  ─▙ ", "╺██GK", "  ─▛ ", "     "),
                 ],
                 secondary=("sensors",),
             ),
@@ -174,9 +652,9 @@ def build() -> list[Sprite]:
             tail=variant("drive", "  ", "Y█", "  "),
             body=[
                 variant("spine", " ▴", "██", "  "),
-                variant("sensor", " R", "█◇", "  "),
+                variant("sensor", " R", "█O", "  "),
             ],
-            nose=variant("needle", "   ", "─▓▶", "   "),
+            nose=variant("needle", "   ", "─GK", "   "),
             maximum=12,
         ),
     )
@@ -201,8 +679,8 @@ def build() -> list[Sprite]:
                 "Armored Buttress",
                 "armor",
                 [
-                    variant("ribbed", "▓██═", "┌──┐", "█▒▒█", "└──┘", "▓██═"),
-                    variant("sealed", "◢██◣", "████", "█░░█", "████", "◥██◤"),
+                    variant("ribbed", "▓██═", "╭──╮", "P▒▒P", "╰──╯", "▓██═"),
+                    variant("sealed", "◢██◣", "█P P", "█░░█", "█P P", "◥██◤"),
                 ],
             ),
             section(
@@ -210,8 +688,8 @@ def build() -> list[Sprite]:
                 "False Cargo Holds",
                 "cargo",
                 [
-                    variant("doors", " R    ", "┌────┐", "│▒◇▒▒│", "└────┘", " ▾    "),
-                    variant("containers", "      ", "◢████◣", "█▒┤├▒█", "◥████◤", "      "),
+                    variant("doors", " R    ", "╭────╮", "│▒C▒G│", "╰────╯", " ▾    "),
+                    variant("containers", "      ", "╔════╗", "║▒G░C║", "╚════╝", "      "),
                 ],
                 secondary=("weapons", "hull"),
                 maximum=8,
@@ -221,8 +699,8 @@ def build() -> list[Sprite]:
                 "Masked Battery",
                 "weapons",
                 [
-                    variant("closed", "    ", "◢██◣", "█≡██", "◥██◤", "    "),
-                    variant("open", " ▴  ", "▓█▶ ", "████", "▓█▶ ", " ▾  "),
+                    variant("closed", "    ", "◢██◣", "█G█G", "◥██◤", "    "),
+                    variant("open", " G  ", "▓█K ", "█G█G", "▓█K ", " g  "),
                 ],
                 secondary=("armor",),
             ),
@@ -231,8 +709,8 @@ def build() -> list[Sprite]:
                 "Merchant Prow",
                 "hull",
                 [
-                    variant("blunt", "    ", "██▙ ", "██▓▶", "██▛ ", "    "),
-                    variant("tapered", "    ", "▓█▙ ", "███▶", "▓█▛ ", "    "),
+                    variant("blunt", "    ", "██▙ ", "█C▓►", "██▛ ", "    "),
+                    variant("tapered", "    ", "▓█▙ ", "█C█►", "▓█▛ ", "    "),
                 ],
                 secondary=("main_gun",),
             ),
@@ -241,9 +719,9 @@ def build() -> list[Sprite]:
             tail=variant("drive", " █", "Y█", " █"),
             body=[
                 variant("hold", "██", "█▒", "██"),
-                variant("gun_hold", "▀█", "█◇", "▄█"),
+                variant("gun_hold", "▀G", "█C", "▄g"),
             ],
-            nose=variant("prow", "   ", "██▶", "   "),
+            nose=variant("prow", "   ", "█GK", "   "),
             maximum=12,
         ),
     )
@@ -267,8 +745,8 @@ def build() -> list[Sprite]:
                 "Sail Nodes",
                 "spindrive",
                 [
-                    variant("diamond", "◢██◣", "▓██▓", "▓██▓", "◥██◤"),
-                    variant("open", " ▴  ", "▓██▓", "▓██▓", " ▾  "),
+                    variant("diamond", "▗▄▄▖", "▓██▓", "▓██▓", "▝▀▀▘"),
+                    variant("open", " ◆  ", "▓██▓", "▓██▓", " ◇  "),
                 ],
                 secondary=("radiator",),
             ),
@@ -277,8 +755,8 @@ def build() -> list[Sprite]:
                 "Cabin",
                 "habitat",
                 [
-                    variant("window", " R  ", "████", "█◇██", "    "),
-                    variant("armored", "    ", "◢██◣", "█▒██", "◥██◤"),
+                    variant("window", " R  ", "╭──╮", "█CC█", "╰──╯"),
+                    variant("armored", "    ", "▗▄▄▖", "█C▒█", "▝▀▀▘"),
                 ],
                 secondary=("sensors",),
                 maximum=3,
@@ -288,15 +766,15 @@ def build() -> list[Sprite]:
                 "Landing Nose",
                 "utility",
                 [
-                    variant("round", "   ", "▓▙ ", "██▶", "▓▛ "),
-                    variant("probe", "   ", "─▙ ", "█▓▶", "─▛ "),
+                    variant("round", "   ", "P▙ ", "P█►", "P▛ "),
+                    variant("probe", "   ", "P▙ ", "█C►", "P▛ "),
                 ],
             ),
         ],
         compact(
             tail=variant("drive", "  ", "Y▓", "  "),
-            body=[variant("cabin", " ▴", "██", " ▾")],
-            nose=variant("nose", "  ", "█▶", "  "),
+            body=[variant("cabin", " RC", "█C█", " ▄ ")],
+            nose=variant("nose", " P", "P►", " P"),
             maximum=4,
         ),
     )
@@ -322,7 +800,7 @@ def build() -> list[Sprite]:
                 "spindrive",
                 [
                     variant("swell", " ▴  ", "◢██◣", "▓██▓", "█▒▒█", "▓██▓", "◥██◤", " ▾  "),
-                    variant("veined", " R  ", "◢█◇◣", "▓██▓", "█▒▒█", "▓██▓", "◥█◇◤", " ▾  "),
+                    variant("veined", " O  ", "◢█O◣", "▓██▓", "█▒▒█", "▓██▓", "◥█O◤", " ▾  "),
                 ],
                 secondary=("reactor",),
             ),
@@ -331,8 +809,8 @@ def build() -> list[Sprite]:
                 "Diamond Radiators",
                 "radiator",
                 [
-                    variant("open", "◢█◣ ", " ╲  ", "┌──┐", "│▒▒│", "└──┘", " ╱  ", "◥█◤ "),
-                    variant("folded", " ▴  ", " │  ", "┌──┐", "│◇▒│", "└──┘", " │  ", " ▾  "),
+                    variant("open", "◢█◣ ", " ╲  ", "╭──╮", "│ ∞│", "╰──╯", " ╱  ", "◥█◤ "),
+                    variant("folded", " ♦  ", " │  ", "▗▄▄▖", "█ ▒█", "▝▀▀▘", " │  ", " ◇  "),
                 ],
                 secondary=("hull",),
                 maximum=6,
@@ -342,8 +820,8 @@ def build() -> list[Sprite]:
                 "Habitat Petals",
                 "habitat",
                 [
-                    variant("spread", "◢██◣", " ╲╱ ", "████", "█☉██", "████", " ╱╲ ", "◥██◤"),
-                    variant("folded", "    ", "◢██◣", "████", "█◇██", "████", "◥██◤", "    "),
+                    variant("spread", "◢██◣", " ╲╱ ", "█C█C", "█O██", "█C█C", " ╱╲ ", "◥██◤"),
+                    variant("folded", "    ", "╭██╮", "█C██", "█O█C", "████", "╰██╯", "    "),
                 ],
                 secondary=("bridge",),
             ),
@@ -352,8 +830,10 @@ def build() -> list[Sprite]:
                 "Lance",
                 "main_gun",
                 [
-                    variant("needle", "     ", "     ", "  ─▙ ", "──█▓▶", "  ─▛ ", "     ", "     "),
-                    variant("fork", "     ", "     ", "─▓█▙ ", "─██▓▶", "─▓█▛ ", "     ", "     "),
+                    variant(
+                        "needle", "     ", "     ", "  ─▙ ", "─L█GK", "  ─▛ ", "     ", "     "
+                    ),
+                    variant("fork", "     ", "     ", "─G█▙ ", "L██GK", "─g█▛ ", "     ", "     "),
                 ],
                 secondary=("weapons",),
             ),
@@ -362,9 +842,9 @@ def build() -> list[Sprite]:
             tail=variant("drive", " ▴", "Y█", " ▾"),
             body=[
                 variant("fins", "◢█", "██", "◥█"),
-                variant("petal", "▀█", "█◇", "▄█"),
+                variant("petal", "▀C", "█O", "▄C"),
             ],
-            nose=variant("lance", "   ", "─█▶", "   "),
+            nose=variant("lance", "   ", "LGK", "   "),
             maximum=11,
         ),
     )
@@ -389,8 +869,8 @@ def build() -> list[Sprite]:
                 "Machine Shop",
                 "utility",
                 [
-                    variant("shop", " R  ", "┌──┐", "│◇▒│", "│▒▒│", "└──┘", " ▾  "),
-                    variant("patched", "    ", "◢██◣", "█▒◇█", "█░▒█", "◥██◤", "    "),
+                    variant("shop", " R  ", "╭──╮", "│C▒│", "├▒▒┤", "╰──╯", " ▾  "),
+                    variant("patched", "    ", "▗▄▄▖", "█▒C█", "█░▒█", "▝▀▀▘", "    "),
                 ],
                 secondary=("reactor",),
             ),
@@ -399,8 +879,8 @@ def build() -> list[Sprite]:
                 "Cargo Modules",
                 "cargo",
                 [
-                    variant("stack", "      ", "┌────┐", "│▒▒▒▒│", "│▒◇▒▒│", "└────┘", "      "),
-                    variant("pods", " ◢██◣ ", " ╲  ╱ ", "██▒▒██", "██◇▒██", " ╱  ╲ ", " ◥██◤ "),
+                    variant("stack", "      ", "╭────╮", "│▒▒▒▒│", "├▒C▒▒┤", "╰────╯", "      "),
+                    variant("pods", " ▗▄▄▖ ", " ╲  ╱ ", "██▒▒██", "██C▒██", " ╱  ╲ ", " ▝▀▀▘ "),
                 ],
                 secondary=("hull",),
                 maximum=9,
@@ -410,8 +890,8 @@ def build() -> list[Sprite]:
                 "Hearth Drum",
                 "habitat",
                 [
-                    variant("turning", " ◢██◣ ", "╱    ╲", "█◇████", "█☉████", "╲    ╱", " ◥██◤ "),
-                    variant("locked", "      ", "◢████◣", "█▒◇▒▒█", "█▒☉▒▒█", "◥████◤", "      "),
+                    variant("turning", " ╭██╮ ", "╱ C C╲", "█C██C█", "█O██C█", "╲ C C╱", " ╰██╯ "),
+                    variant("locked", "      ", "╭████╮", "█▒C▒C█", "█▒O▒C█", "╰████╯", "      "),
                 ],
                 secondary=("bridge",),
             ),
@@ -420,8 +900,8 @@ def build() -> list[Sprite]:
                 "Mining Prow",
                 "main_gun",
                 [
-                    variant("laser", "     ", "  ▟  ", "──█▓▶", "  ▜  ", "     ", "     "),
-                    variant("tractor", "     ", " ◢█◣ ", "─█◇█▶", " ◥█◤ ", "     ", "     "),
+                    variant("laser", "     ", "  ▟  ", "──█GK", "  ▜  ", "     ", "     "),
+                    variant("tractor", "     ", " ╭█╮ ", "─█G█K", " ╰█╯ ", "     ", "     "),
                 ],
                 secondary=("utility",),
             ),
@@ -430,9 +910,9 @@ def build() -> list[Sprite]:
             tail=variant("drive", " █", "Y█", "  "),
             body=[
                 variant("cargo", "██", "█▒", "██"),
-                variant("home", "▀█", "█☉", "▄█"),
+                variant("home", "▀C", "█O", "▄C"),
             ],
-            nose=variant("laser", "   ", "─█▶", "   "),
+            nose=variant("laser", "   ", "─GK", "   "),
             maximum=14,
         ),
     )
@@ -457,8 +937,10 @@ def build() -> list[Sprite]:
                 "Rear Carapace",
                 "armor",
                 [
-                    variant("pearl", " ◢██◣", "◢████", "█████", "█▒◇██", "█████", "◥████", " ◥██◤"),
-                    variant("scarred", "  ◢█◣", "◢██▒█", "██◇██", "█▒▒██", "█████", "◥██▒█", "  ◥█◤"),
+                    variant("pearl", " ╭██╮", "╭████", "█████", "█▒◇██", "█████", "╰████", " ╰██╯"),
+                    variant(
+                        "scarred", "  ▗▄▖", "▗▄█▒█", "██◇██", "█▒▒██", "█████", "▝▀█▒█", "  ▝▀▘"
+                    ),
                 ],
             ),
             section(
@@ -466,8 +948,26 @@ def build() -> list[Sprite]:
                 "Weapon Ring",
                 "weapons",
                 [
-                    variant("ports", " R    ", "◢████◣", "█◇█◇██", "██☉███", "█◇██◇█", "◥████◤", "   ▾  "),
-                    variant("sealed", "      ", " ◢██◣ ", "◢████◣", "█▒◊▒██", "◥████◤", " ◥██◤ ", "      "),
+                    variant(
+                        "ports",
+                        " R    ",
+                        "╭████╮",
+                        "█G█G██",
+                        "██O███",
+                        "█G██G█",
+                        "╰████╯",
+                        "   g  ",
+                    ),
+                    variant(
+                        "sealed",
+                        "      ",
+                        " ▗▄▄▖ ",
+                        "▗▄██▄▖",
+                        "█▒G▒██",
+                        "▝▀██▀▘",
+                        " ▝▀▀▘ ",
+                        "      ",
+                    ),
                 ],
                 secondary=("hangar", "hull"),
                 maximum=5,
@@ -477,8 +977,8 @@ def build() -> list[Sprite]:
                 "Troop Lobe",
                 "hangar",
                 [
-                    variant("open", " ◢██◣", "◢█◇██", "█████", "██☉██", "█████", "◥██▒█", "  ◥█◤"),
-                    variant("heavy", "  ◢█◣", "◢████", "█▒▒██", "██◇██", "█████", "◥████", " ◥██◤"),
+                    variant("open", " ╭██╮", "╭█O██", "█████", "██○██", "█████", "╰██▒█", "  ╰█╯"),
+                    variant("heavy", "  ▗▄▖", "▗▄███", "█▒▒██", "██O██", "█████", "▝▀███", " ▝▀▀▘"),
                 ],
                 secondary=("habitat",),
             ),
@@ -487,8 +987,8 @@ def build() -> list[Sprite]:
                 "Carapace Beak",
                 "screens",
                 [
-                    variant("hook", "     ", " ◢█◣ ", "◢███▙", "██◇▓▶", "◥███▛", "  ◥█ ", "     "),
-                    variant("round", "     ", "  ◢█◣", "◢████", "██☉▓▶", "◥████", "  ◥█◤", "     "),
+                    variant("hook", "     ", " P█P ", "P███▙", "P█O▓►", "P███▛", "  P█ ", "     "),
+                    variant("round", "     ", "  P█P", "P███P", "P█O▓►", "P███P", "  P█P", "     "),
                 ],
                 secondary=("sensors",),
             ),
@@ -497,9 +997,9 @@ def build() -> list[Sprite]:
             tail=variant("drive", " █", "Y█", " ▾"),
             body=[
                 variant("shell", "◢█", "█◇", "◥█"),
-                variant("ports", "▀█", "█☉", "▄█"),
+                variant("ports", "G█", "█O", "g█"),
             ],
-            nose=variant("beak", " ◢ ", "██▶", " ◥ "),
+            nose=variant("beak", " P ", "P█►", " P "),
             maximum=10,
         ),
     )
@@ -524,7 +1024,7 @@ def build() -> list[Sprite]:
                 "Marrow Knot",
                 "spindrive",
                 [
-                    variant("joint", " ◢▒◣", "╱███", "█☉██", "╲███", " ◥▒◤"),
+                    variant("joint", " ▗▒▖", "╱███", "█O██", "╲███", " ▝▒▘"),
                     variant("scar", "  ▴ ", "◢█▒◣", "██◊█", "◥█▒◤", "  ▾ "),
                 ],
                 secondary=("hull",),
@@ -535,7 +1035,7 @@ def build() -> list[Sprite]:
                 "hull",
                 [
                     variant("bones", "╲  ╱", "▓██▓", "█▒▒█", "▓██▓", "╱  ╲"),
-                    variant("muscle", "◢▒▒◣", "█▓▓█", "█◊▒█", "█▓▓█", "◥▒▒◤"),
+                    variant("muscle", "▗▒▒▖", "█▓▓█", "█∞▒█", "█▓▓█", "▝▒▒▘"),
                 ],
                 secondary=("armor",),
                 maximum=8,
@@ -545,8 +1045,8 @@ def build() -> list[Sprite]:
                 "Nerve Cluster",
                 "sensors",
                 [
-                    variant("eye", " ◢█◣ ", "█☉███", "█████", "█◇▒██", " ◥█◤ "),
-                    variant("many_eyes", " R R ", "◢◇█◇◣", "█████", "◥█◇█◤", "  ▾  "),
+                    variant("eye", " O█O ", "█O███", "█████", "█O▒██", " ◥█◤ "),
+                    variant("many_eyes", " R R ", "◢O█O◣", "█████", "◥█O█◤", "  ▾  "),
                 ],
                 secondary=("weapons",),
             ),
@@ -555,8 +1055,8 @@ def build() -> list[Sprite]:
                 "Hardened Beak",
                 "main_gun",
                 [
-                    variant("fang", "    ", "◢▒▙ ", "██▓▶", "◥▒▛ ", "    "),
-                    variant("barb", "    ", "╲█▙ ", "█▒▓▶", "╱█▛ ", "    "),
+                    variant("fang", "    ", "◢▒▙ ", "██GK", "◥▒▛ ", "    "),
+                    variant("barb", "    ", "╲█▙ ", "█▒GK", "╱█▛ ", "    "),
                 ],
             ),
         ],
@@ -566,7 +1066,7 @@ def build() -> list[Sprite]:
                 variant("bone", "╲█", "█▒", "╱█"),
                 variant("muscle", "◢▒", "█◊", "◥▒"),
             ],
-            nose=variant("fang", " ◢ ", "█▓▶", " ◥ "),
+            nose=variant("fang", " ◢ ", "█GK", " ◥ "),
             maximum=12,
         ),
     )
@@ -581,8 +1081,12 @@ def build() -> list[Sprite]:
                 "Capital Drive",
                 "thrusters",
                 [
-                    variant("seven_bell", " Y▶═ ", "     ", "Y▟▓▓ ", "Y███▓", "Y███▓", "Y▜▓▓ ", " Y▶═ "),
-                    variant("armored", " YY═ ", "Y▶▓  ", " ▟██▓", "Y████", "Y███▓", " ▜██▓", " YY═ "),
+                    variant(
+                        "seven_bell", " Y▶═ ", "     ", "Y▟▓▓ ", "Y███▓", "Y███▓", "Y▜▓▓ ", " Y▶═ "
+                    ),
+                    variant(
+                        "armored", " YY═ ", "Y▶▓  ", " ▟██▓", "Y████", "Y███▓", " ▜██▓", " YY═ "
+                    ),
                 ],
                 secondary=("reactor", "spindrive"),
             ),
@@ -591,8 +1095,12 @@ def build() -> list[Sprite]:
                 "Drive Citadel",
                 "armor",
                 [
-                    variant("buttress", "▓███═", " │   ", "┌───┐", "│▒▒▒│", "│▒◇▒│", "└───┘", "▓███═"),
-                    variant("layered", "◢███◣", "▓███▓", "█████", "█▒▒▒█", "█████", "▓███▓", "◥███◤"),
+                    variant(
+                        "buttress", "▓███═", " ║   ", "╔═╦═╗", "║▒▒▒║", "╠P▒P╣", "╚═╩═╝", "▓███═"
+                    ),
+                    variant(
+                        "layered", "◢███◣", "▓███▓", "█████", "█▒▒▒█", "█████", "▓███▓", "◥███◤"
+                    ),
                 ],
                 secondary=("spindrive",),
             ),
@@ -601,8 +1109,26 @@ def build() -> list[Sprite]:
                 "Broadside Decks",
                 "weapons",
                 [
-                    variant("open_bays", " R    ", "▓█▶▓█▶", "┌────┐", "│▒◇▒▒│", "└────┘", "▓█▶▓█▶", " ▾    "),
-                    variant("gunwalls", "▓███═ ", "─▓▙   ", "██████", "█◇▒◇██", "██████", "─▓▛   ", "▓███═ "),
+                    variant(
+                        "open_bays",
+                        " R    ",
+                        "▓▀K▓▀K",
+                        "╔════╗",
+                        "║▒◇▒▒║",
+                        "╚════╝",
+                        "▓▀K▓▀K",
+                        " r    ",
+                    ),
+                    variant(
+                        "gunwalls",
+                        "▓███L ",
+                        "─G▙   ",
+                        "██████",
+                        "█G▒G██",
+                        "██████",
+                        "─g▛   ",
+                        "▓███L ",
+                    ),
                 ],
                 secondary=("hull", "armor"),
                 maximum=10,
@@ -612,8 +1138,10 @@ def build() -> list[Sprite]:
                 "Command Keep",
                 "bridge",
                 [
-                    variant("tower", "  R  ", " ┌─┐ ", "◢███◣", "█☉███", "█████", "◥███◤", "  ▾  "),
-                    variant("low_keep", "     ", " ◢█◣ ", "◢███◣", "█◇███", "█████", "◥███◤", "     "),
+                    variant("tower", "  R  ", " ╭─╮ ", "◢█C█◣", "█O█C█", "█████", "◥███◤", "  ▾  "),
+                    variant(
+                        "low_keep", "     ", " ▗▄▖ ", "◢█C█◣", "█O█C█", "█████", "◥███◤", "     "
+                    ),
                 ],
                 secondary=("sensors", "screens"),
             ),
@@ -622,8 +1150,19 @@ def build() -> list[Sprite]:
                 "Siege Prow",
                 "main_gun",
                 [
-                    variant("triple", "      ", "      ", "─███▙ ", "─██▓▓▶", "─███▛ ", "      ", "      "),
-                    variant("ram", "      ", "  ◢█◣ ", "─████▙", "─███▓▶", "─████▛", "  ◥█◤ ", "      "),
+                    variant(
+                        "triple",
+                        "      ",
+                        "      ",
+                        "─█G█▙ ",
+                        "L█G█GK",
+                        "─█G█▛ ",
+                        "      ",
+                        "      ",
+                    ),
+                    variant(
+                        "ram", "      ", "  P█P ", "P████▙", "P█G█GK", "P████▛", "  P█P ", "      "
+                    ),
                 ],
                 secondary=("armor",),
             ),
@@ -631,15 +1170,19 @@ def build() -> list[Sprite]:
         compact(
             tail=variant("drive", "██", "Y█", "██"),
             body=[
-                variant("gunwall", "█▶", "██", "█▶"),
-                variant("armor", "██", "█◇", "██"),
+                variant("gunwall", "GK", "██", "gK"),
+                variant("armor", "P█", "█C", "P█"),
             ],
-            nose=variant("siege", " ██", "██▶", " ██"),
+            nose=variant("siege", " P█", "PGK", " P█"),
             maximum=15,
         ),
     )
 
     return [
+        fighter,
+        transport,
+        warship,
+        capital_warship,
         needle_picket,
         falsehold_raider,
         junction_pinnace,

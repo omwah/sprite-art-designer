@@ -13,6 +13,12 @@ views:
     tiers:
     - id: full
       name: Full Detail
+      structure_lengths:
+        thrusters: 1
+        drive_nodes: 1
+        patrol_spine: 7
+        sensor_crown: 1
+        needle: 1
       sections:
       - id: thrusters
         name: Thruster Fork
@@ -26,18 +32,18 @@ views:
           weight: 1
           cells:
           - '     '
-          - '     '
-          - '  ▄▓ '
-          - ' ▄▄█▓'
-          - '  ▄▓ '
+          - ' ▄╺▀ '
+          - '▄▖█▓ '
+          - '▄██▓ '
+          - '▄▘█▓ '
           - '     '
           - '     '
           color_mask:
           - SSSSS
-          - SSSSS
-          - SSESS
-          - SEESS
-          - SSESS
+          - SESES
+          - ESSSS
+          - ESSSS
+          - ESSSS
           - SSSSS
           - SSSSS
         - id: split
@@ -45,17 +51,17 @@ views:
           cells:
           - '     '
           - ' ▄   '
-          - '  ▄▓ '
+          - '▄▘▀▓ '
           - ' ▄██▓'
-          - '  ▄▓ '
+          - '▄▖▀▓ '
           - '     '
           - '     '
           color_mask:
           - SSSSS
           - SESSS
-          - SSESS
+          - ESESS
           - SESSS
-          - SSESS
+          - ESESS
           - SSSSS
           - SSSSS
       - id: drive_nodes
@@ -71,15 +77,15 @@ views:
           weight: 1
           cells:
           - '    '
-          - ' ▴  '
+          - ' ☼  '
           - ▓██═
-          - ████
+          - █░██
           - ▓██═
           - '    '
           - '    '
           color_mask:
           - SSSS
-          - SSSS
+          - SBSS
           - SSSS
           - SSSS
           - SSSS
@@ -90,9 +96,9 @@ views:
           cells:
           - '    '
           - ' ▀  '
-          - ◢██◣
-          - ████
-          - ◥██◤
+          - ╭██╮
+          - █▒██
+          - ╰██╯
           - '    '
           - '    '
           color_mask:
@@ -117,16 +123,16 @@ views:
           cells:
           - '    '
           - ' ▀  '
-          - ┌──┐
-          - █▒▒█
-          - └──┘
+          - ╭──╮
+          - █░◇█
+          - ╰──╯
           - '    '
           - '    '
           color_mask:
           - SSSS
           - SBSS
           - SSSS
-          - SSSS
+          - SSWS
           - SSSS
           - SSSS
           - SSSS
@@ -135,9 +141,9 @@ views:
           cells:
           - '    '
           - '    '
-          - ◢██◣
-          - █◇▒█
-          - ◥██◤
+          - ▗▄▄▖
+          - █▒░█
+          - ▝▀▀▘
           - '    '
           - '    '
           color_mask:
@@ -160,17 +166,17 @@ views:
           weight: 1
           cells:
           - '    '
-          - ' ◢█◣'
-          - ◇███
-          - ████
+          - ' ☼█☼'
+          - ◇█◆█
+          - ☼██☼
           - ' ◥█◤'
           - '    '
           - '    '
           color_mask:
           - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
+          - SBSB
+          - SSWS
+          - BSSB
           - SSSS
           - SSSS
           - SSSS
@@ -179,16 +185,16 @@ views:
           cells:
           - '    '
           - '  ▀ '
-          - ◢██◣
-          - █☉██
-          - ◥██◤
+          - ╭██╮
+          - ☼█◆█
+          - ╰██╯
           - '    '
           - '    '
           color_mask:
           - SSSS
           - SSBS
           - SSSS
-          - SSSS
+          - BSWS
           - SSSS
           - SSSS
           - SSSS
@@ -207,7 +213,7 @@ views:
           - '     '
           - '     '
           - '  ╾▙ '
-          - ──▓▓▶
+          - ╺═▓▀►
           - '  ╾▛ '
           - '     '
           - '     '
@@ -215,7 +221,7 @@ views:
           - SSSSS
           - SSSSS
           - SSSSS
-          - SSSSS
+          - SSSAA
           - SSSSS
           - SSSSS
           - SSSSS
@@ -225,7 +231,7 @@ views:
           - '     '
           - '     '
           - '  ─▙ '
-          - ─██▓▶
+          - ╺██▀►
           - '  ─▛ '
           - '     '
           - '     '
@@ -233,18 +239,18 @@ views:
           - SSSSS
           - SSSSS
           - SSSSS
+          - SSSAA
           - SSSSS
           - SSSSS
           - SSSSS
-          - SSSSS
+    - id: medium
+      name: Medium
       structure_lengths:
         thrusters: 1
         drive_nodes: 1
-        patrol_spine: 5
+        patrol_spine: 7
         sensor_crown: 1
         needle: 1
-    - id: medium
-      name: Medium
       sections:
       - id: thrusters
         name: Thruster Fork
@@ -257,30 +263,30 @@ views:
         - id: fork
           weight: 1
           cells:
-          - '    '
-          - '  ▄ '
-          - ' ▄▄▓'
-          - '  ▄ '
+          - ' ▄╺ '
+          - '▄▖█ '
+          - '▄██ '
+          - '▄▘█ '
           - '    '
           color_mask:
-          - SSSS
-          - SSES
-          - SEES
-          - SSES
+          - SESS
+          - ESSS
+          - ESSS
+          - ESSS
           - SSSS
         - id: split
           weight: 1
           cells:
           - ' ▄  '
-          - '  ▄ '
+          - '▄▘▀ '
           - ' ▄█▓'
-          - '  ▄ '
+          - '▄▖▀ '
           - '    '
           color_mask:
           - SESS
-          - SSES
+          - ESES
           - SESS
-          - SSES
+          - ESES
           - SSSS
       - id: drive_nodes
         name: Drive Nodes
@@ -294,13 +300,13 @@ views:
         - id: open
           weight: 1
           cells:
-          - ' ▴ '
+          - ' ☼ '
           - ▓█═
-          - ███
+          - █░█
           - ▓█═
           - '   '
           color_mask:
-          - SSS
+          - SBS
           - SSS
           - SSS
           - SSS
@@ -309,9 +315,9 @@ views:
           weight: 1
           cells:
           - ' ▀ '
-          - ◢█◣
-          - ███
-          - ◥█◤
+          - ╭█╮
+          - █▒█
+          - ╰█╯
           - '   '
           color_mask:
           - SBS
@@ -332,9 +338,9 @@ views:
           weight: 1
           cells:
           - ' ▀ '
-          - ┌─┐
-          - █▒█
-          - └─┘
+          - ╭─╮
+          - █░█
+          - ╰─╯
           - '   '
           color_mask:
           - SBS
@@ -346,9 +352,9 @@ views:
           weight: 1
           cells:
           - '   '
-          - ◢█◣
-          - █◇█
-          - ◥█◤
+          - ▗▄▖
+          - █▒█
+          - ▝▀▘
           - '   '
           color_mask:
           - SSS
@@ -367,29 +373,29 @@ views:
         - id: crown
           weight: 1
           cells:
-          - ' ◢◣'
+          - ' ☼☼'
           - ◇██
-          - ███
+          - ☼█☼
           - ' ◥◤'
           - '   '
           color_mask:
+          - SBB
           - SSS
-          - SSS
-          - SSS
+          - BSB
           - SSS
           - SSS
         - id: dish
           weight: 1
           cells:
           - '   '
-          - ◢█◣
-          - █☉█
-          - ◥█◤
+          - ╭█╮
+          - ☼██
+          - ╰█╯
           - '   '
           color_mask:
           - SSS
           - SSS
-          - SSS
+          - BSS
           - SSS
           - SSS
       - id: needle
@@ -406,13 +412,13 @@ views:
           cells:
           - '    '
           - '  ╾ '
-          - ──▓▶
+          - ╺═▓►
           - '  ╾ '
           - '    '
           color_mask:
           - SSSS
           - SSSS
-          - SSSS
+          - SSSA
           - SSSS
           - SSSS
         - id: probe
@@ -420,23 +426,21 @@ views:
           cells:
           - '    '
           - '  ─ '
-          - ─██▶
+          - ╺██►
           - '  ─ '
           - '    '
           color_mask:
           - SSSS
           - SSSS
+          - SSSA
           - SSSS
           - SSSS
-          - SSSS
-      structure_lengths:
-        thrusters: 1
-        drive_nodes: 1
-        patrol_spine: 5
-        sensor_crown: 1
-        needle: 1
     - id: compact
       name: Compact
+      structure_lengths:
+        drive: 1
+        body: 6
+        prow: 1
       sections:
       - id: drive
         name: Drive
@@ -450,7 +454,7 @@ views:
           weight: 1
           cells:
           - '  '
-          - ▄█
+          - ▀█
           - '  '
           color_mask:
           - SS
@@ -479,11 +483,11 @@ views:
           weight: 1
           cells:
           - ' ▀'
-          - █◇
+          - █☼
           - '  '
           color_mask:
           - SB
-          - SS
+          - SB
           - SS
       - id: prow
         name: Prow
@@ -497,16 +501,12 @@ views:
           weight: 1
           cells:
           - '   '
-          - ─▓▶
+          - ─▀►
           - '   '
           color_mask:
           - SSS
+          - SAA
           - SSS
-          - SSS
-      structure_lengths:
-        drive: 1
-        body: 6
-        prow: 1
   vertical:
     name: Vertical
     axis: vertical
@@ -515,6 +515,12 @@ views:
     tiers:
     - id: full
       name: Full Detail
+      structure_lengths:
+        thrusters: 1
+        drive_nodes: 1
+        patrol_spine: 7
+        sensor_crown: 1
+        needle: 1
       sections:
       - id: thrusters
         name: Thruster Fork
@@ -527,23 +533,23 @@ views:
         - id: fork
           weight: 1
           cells:
-          - '      ▓▓      '
-          - '    ▄▄▄▄▄▄    '
           - '              '
+          - '  ╹╹██████    '
+          - '    ▐▐▐▐▐▐    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSEEEEEESSSS
           - SSSSSSSSSSSSSS
+          - SSSSEEEEEESSSS
         - id: split
           weight: 1
           cells:
           - '      ▓▓      '
-          - '    ▄▄██▄▄    '
-          - '              '
+          - '    ▌▌██▌▌    '
+          - '    ▐▐  ▐▐    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSEESSEESSSS
-          - SSSSSSSSSSSSSS
+          - SSSSEESSEESSSS
       - id: drive_nodes
         name: Drive Nodes
         primary_property: spindrive
@@ -557,15 +563,15 @@ views:
           weight: 1
           cells:
           - '    ║║██║║    '
-          - '  ◀◀██████    '
+          - '  ☼☼██░░██    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSBBSSSSSSSSSS
         - id: veiled
           weight: 1
           cells:
-          - '    ◢◢██◣◣    '
-          - '  ▀▀██████    '
+          - '    ╭╭██╮╮    '
+          - '  ▌▌██▒▒██    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSBBSSSSSSSSSS
@@ -581,16 +587,16 @@ views:
         - id: sensor_rib
           weight: 1
           cells:
-          - '    ┌┌██┐┐    '
-          - '  ▀▀││▒▒││    '
+          - '    ╭╭██╮╮    '
+          - '  ▌▌││░░││    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSBBSSSSSSSSSS
         - id: plain_rib
           weight: 1
           cells:
-          - '    ◢◢██◣◣    '
-          - '    ██◇◇██    '
+          - '    ▗▗██▖▖    '
+          - '    ▐▐▒▒▌▌    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -605,16 +611,16 @@ views:
         - id: crown
           weight: 1
           cells:
-          - '  ◢◢████◣◣    '
-          - '  ◥◥████◤◤    '
+          - '  ☼☼██☼☼◣◣    '
+          - '  ☼☼████◤◤    '
           color_mask:
-          - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSBBSSBBSSSSSS
+          - SSBBSSSSSSSSSS
         - id: dish
           weight: 1
           cells:
-          - '    ◢◢██◣◣    '
-          - '    ██☉☉██    '
+          - '    ╭╭██╮╮    '
+          - '    ██████    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -630,31 +636,31 @@ views:
         - id: long
           weight: 1
           cells:
-          - '      ▴▴      '
+          - '      ▲▲      '
           - '    ╽╽▓▓╽╽    '
-          - '      ││      '
+          - '      ╹╹      '
           color_mask:
-          - SSSSSSSSSSSSSS
+          - SSSSSSAASSSSSS
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
         - id: probe
           weight: 1
           cells:
-          - '      ▴▴      '
+          - '      ▲▲      '
           - '    ││██││    '
-          - '      ││      '
+          - '      ╹╹      '
           color_mask:
+          - SSSSSSAASSSSSS
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+    - id: medium
+      name: Medium
       structure_lengths:
         thrusters: 1
         drive_nodes: 1
         patrol_spine: 7
         sensor_crown: 1
         needle: 1
-    - id: medium
-      name: Medium
       sections:
       - id: thrusters
         name: Thruster Fork
@@ -667,16 +673,16 @@ views:
         - id: fork
           weight: 1
           cells:
-          - '    ▓▓    '
-          - '    ▄▄    '
+          - '          '
+          - '▐▐▗▗██▖▖  '
           color_mask:
           - SSSSSSSSSS
-          - SSSSEESSSS
+          - EESSSSSSSS
         - id: split
           weight: 1
           cells:
           - '    ▓▓    '
-          - '▄▄  ▄▄    '
+          - '▐▐▖▖▐▐▗▗  '
           color_mask:
           - SSSSSSSSSS
           - EESSEESSSS
@@ -700,8 +706,8 @@ views:
         - id: veiled
           weight: 1
           cells:
-          - '  ◢◢██◣◣  '
-          - '  ◥◥██◤◤  '
+          - '  ╭╭██╮╮  '
+          - '  ╰╰██╯╯  '
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -717,16 +723,16 @@ views:
         - id: sensor_rib
           weight: 1
           cells:
-          - '  ┌┌██┐┐  '
-          - '  └└██┘┘  '
+          - '  ╭╭██╮╮  '
+          - '  ╰╰██╯╯  '
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
         - id: plain_rib
           weight: 1
           cells:
-          - '  ◢◢██◣◣  '
-          - '  ◥◥██◤◤  '
+          - '  ▗▗██▖▖  '
+          - '  ▝▝██▘▘  '
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -741,19 +747,19 @@ views:
         - id: crown
           weight: 1
           cells:
-          - '◢◢████◣◣  '
-          - '  ◇◇██    '
+          - '☼☼██☼☼◣◣  '
+          - '  ◇◇☼☼    '
           color_mask:
-          - SSSSSSSSSS
-          - SSSSSSSSSS
+          - BBSSBBSSSS
+          - SSSSBBSSSS
         - id: dish
           weight: 1
           cells:
-          - '  ◢◢██◣◣  '
-          - '  ◥◥██◤◤  '
+          - '  ╭╭██╮╮  '
+          - '  ╰╰☼☼╯╯  '
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
+          - SSSSBBSSSS
       - id: needle
         name: Needle Prow
         primary_property: main_gun
@@ -766,27 +772,25 @@ views:
         - id: long
           weight: 1
           cells:
-          - '    ▴▴    '
-          - '    ││    '
+          - '    ▲▲    '
+          - '    ║║    '
           color_mask:
-          - SSSSSSSSSS
+          - SSSSAASSSS
           - SSSSSSSSSS
         - id: probe
           weight: 1
           cells:
-          - '    ▴▴    '
+          - '    ▲▲    '
           - '    ██    '
           color_mask:
+          - SSSSAASSSS
           - SSSSSSSSSS
-          - SSSSSSSSSS
-      structure_lengths:
-        thrusters: 1
-        drive_nodes: 1
-        patrol_spine: 7
-        sensor_crown: 1
-        needle: 1
     - id: compact
       name: Compact
+      structure_lengths:
+        drive: 1
+        body: 6
+        prow: 1
       sections:
       - id: drive
         name: Drive
@@ -820,9 +824,9 @@ views:
         - id: sensor
           weight: 1
           cells:
-          - '▀▀◇◇  '
+          - '▌▌☼☼  '
           color_mask:
-          - BBSSSS
+          - BBBBSS
       - id: prow
         name: Prow
         primary_property: weapons
@@ -834,12 +838,8 @@ views:
         - id: needle
           weight: 1
           cells:
-          - '  ▴▴  '
+          - '  ▲▲  '
           - '  ││  '
           color_mask:
+          - SSAASS
           - SSSSSS
-          - SSSSSS
-      structure_lengths:
-        drive: 1
-        body: 12
-        prow: 1

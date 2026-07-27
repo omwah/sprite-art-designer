@@ -3,7 +3,7 @@ id: transport
 name: Transport
 kind: ship
 role: transport
-description: Translated from Edge of the Unknown's original ship grammar.
+description: A dependable modular carrier whose countable container bays determine its capacity.
 views:
   horizontal:
     name: Horizontal
@@ -13,68 +13,76 @@ views:
     tiers:
     - id: full
       name: Full Detail
+      structure_lengths:
+        thrusters: 1
+        spindrive: 1
+        hull: 5
+        screens: 1
+        main_gun: 1
       sections:
       - id: thrusters
-        name: Thrusters
+        name: Cargo Thrusters
         primary_property: thrusters
-        secondary_properties: []
+        secondary_properties:
+        - spindrive
         repeat:
           min: 1
           max: 1
         variants:
-        - id: thrusters_1
+        - id: cluster
           weight: 1
           cells:
-          - '    '
-          - ' ▄▶═'
-          - ' ▟▓▓'
-          - ▄█▓▓
-          - ' ▜▓▓'
-          - ' ▄▶═'
-          - '    '
+          - '     '
+          - ' ▄▀  '
+          - '▄▟▓═ '
+          - '▄██▓ '
+          - '▄▜▓═ '
+          - ' ▄▀  '
+          - '     '
           color_mask:
-          - SSSS
-          - SESS
-          - SSSS
-          - ESSS
-          - SSSS
-          - SESS
-          - SSSS
-        - id: thrusters_2
+          - SSSSS
+          - SEESS
+          - ESSSS
+          - ESSSS
+          - ESSSS
+          - SEESS
+          - SSSSS
+        - id: tug
           weight: 1
           cells:
-          - '    '
-          - ' ▄▶═'
-          - ▄▟▓▓
-          - ▄█▓▓
-          - ▄▜▓▓
-          - ' ▄▶═'
-          - '    '
+          - '     '
+          - '▄▘▀  '
+          - '▄▙▓  '
+          - '▄██▓ '
+          - '▄▛▓  '
+          - '▄▖▀  '
+          - '     '
           color_mask:
-          - SSSS
-          - SESS
-          - ESSS
-          - ESSS
-          - ESSS
-          - SESS
-          - SSSS
+          - SSSSS
+          - ESESS
+          - ESSSS
+          - ESSSS
+          - ESSSS
+          - ESESS
+          - SSSSS
       - id: spindrive
-        name: Spindrive
+        name: Drive Frame
         primary_property: spindrive
-        secondary_properties: []
+        secondary_properties:
+        - utility
         repeat:
           min: 1
           max: 1
         variants:
-        - id: spindrive_1
+        - id: braced
           weight: 1
           cells:
           - '    '
-          - ' ≡≡ '
-          - ▓███
-          - ▓█▓█
-          - ▓███
-          - ' ≡≡ '
+          - ╔══╗
+          - ╠██╣
+          - ║▒▒║
+          - ╠██╣
+          - ╚══╝
           - '    '
           color_mask:
           - SSSS
@@ -84,15 +92,15 @@ views:
           - SSSS
           - SSSS
           - SSSS
-        - id: spindrive_2
+        - id: serviceable
           weight: 1
           cells:
           - '    '
-          - ' │  '
-          - ▓███
-          - ▓█▓█
-          - ▓███
-          - ' │  '
+          - ╭──╮
+          - │██│
+          - ├░░┤
+          - │██│
+          - ╰──╯
           - '    '
           color_mask:
           - SSSS
@@ -103,127 +111,151 @@ views:
           - SSSS
           - SSSS
       - id: hull
-        name: Hull
-        primary_property: hull
-        secondary_properties: []
+        name: Container Bays
+        primary_property: cargo
+        secondary_properties:
+        - hull
+        - utility
         repeat:
           min: 1
-          max: 8
+          max: 7
         variants:
-        - id: hull_1
+        - id: double_doors
           weight: 1
           cells:
-          - '    '
-          - '    '
-          - ┌──┐
-          - │▦▦│
-          - └──┘
-          - '    '
-          - '    '
+          - '      '
+          - '╭─┬─╮ '
+          - '│▒│▒│ '
+          - ┤░┼░├╺
+          - '│▒│▒│ '
+          - '╰─┴─╯ '
+          - '      '
           color_mask:
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-        - id: hull_2
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+        - id: pod
           weight: 1
           cells:
-          - '    '
-          - ' ▀  '
-          - ┌──┐
-          - │▤▤│
-          - └──┘
-          - ' ▾  '
-          - '    '
+          - '      '
+          - '▗▄▄▄▖ '
+          - '▟█▒▒▙ '
+          - █▒◆▒█╺
+          - '▜█▒▒▛ '
+          - '▝▀▀▀▘ '
+          - '      '
           color_mask:
-          - SSSS
-          - SBSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-        - id: hull_3
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+        - id: rail_bay
           weight: 1
           cells:
-          - '    '
-          - ▓██═
-          - ┌──┐
-          - │≡≡│
-          - └──┘
-          - ▓██═
-          - '    '
+          - '      '
+          - '╔═══╗ '
+          - '║░▒░║ '
+          - ╠═╬═╣╺
+          - '║░▒░║ '
+          - '╚═══╝ '
+          - '      '
           color_mask:
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
       - id: screens
-        name: Screens
+        name: Control Collar
         primary_property: screens
-        secondary_properties: []
+        secondary_properties:
+        - bridge
+        - sensors
         repeat:
           min: 1
           max: 1
         variants:
-        - id: screens_1
+        - id: bridge
           weight: 1
           cells:
           - '    '
           - ' ▀  '
-          - ◇▓██
-          - ████
-          - ◇▓██
+          - ▟██▙
+          - ◇◆ ◆
+          - ▜██▛
           - '    '
           - '    '
           color_mask:
           - SSSS
           - SBSS
           - SSSS
+          - DWSW
           - SSSS
           - SSSS
           - SSSS
-          - SSSS
-        - id: screens_2
+        - id: utility
           weight: 1
           cells:
           - '    '
           - '    '
-          - ◇▓██
-          - ████
-          - ◇▓██
+          - ◢██◣
+          - ◇◆◆█
+          - ◥██◤
           - '    '
           - '    '
           color_mask:
           - SSSS
           - SSSS
           - SSSS
-          - SSSS
+          - DWWS
           - SSSS
           - SSSS
           - SSSS
       - id: main_gun
-        name: Main Gun
+        name: Utility Prow
         primary_property: main_gun
-        secondary_properties: []
+        secondary_properties:
+        - utility
+        - weapons
         repeat:
           min: 1
           max: 1
         variants:
-        - id: main_gun_1
+        - id: stub
           weight: 1
           cells:
           - '    '
           - '    '
-          - '▓█▙ '
-          - ▓█▓▶
-          - '▓█▛ '
+          - '██▙ '
+          - █▓▀►
+          - '██▛ '
+          - '    '
+          - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSAA
+          - SSSS
+          - SSSS
+          - SSSS
+        - id: clamp
+          weight: 1
+          cells:
+          - '    '
+          - '    '
+          - '▟█▙ '
+          - █╬█►
+          - '▜█▛ '
           - '    '
           - '    '
           color_mask:
@@ -234,99 +266,83 @@ views:
           - SSSS
           - SSSS
           - SSSS
-        - id: main_gun_2
-          weight: 1
-          cells:
-          - '    '
-          - '    '
-          - '▓██ '
-          - ▓██▶
-          - '▓██ '
-          - '    '
-          - '    '
-          color_mask:
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-      structure_lengths:
-        thrusters: 1
-        spindrive: 1
-        hull: 6
-        screens: 1
-        main_gun: 1
     - id: medium
       name: Medium
+      structure_lengths:
+        thrusters: 1
+        spindrive: 1
+        hull: 4
+        screens: 1
+        main_gun: 1
       sections:
       - id: thrusters
-        name: Thrusters
+        name: Cargo Thrusters
         primary_property: thrusters
-        secondary_properties: []
+        secondary_properties:
+        - spindrive
         repeat:
           min: 1
           max: 1
         variants:
-        - id: thrusters_1
+        - id: cluster
           weight: 1
           cells:
-          - ' ▄═'
-          - ' ▟▓'
-          - ▄█▓
-          - ' ▜▓'
-          - ' ▄═'
+          - ' ▄▀ '
+          - '▄▟▓ '
+          - '▄██ '
+          - '▄▜▓ '
+          - ' ▄▀ '
           color_mask:
-          - SES
-          - SSS
-          - ESS
-          - SSS
-          - SES
-        - id: thrusters_2
+          - SEES
+          - ESSS
+          - ESSS
+          - ESSS
+          - SEES
+        - id: tug
           weight: 1
           cells:
-          - ' ▄═'
-          - ▄▟▓
-          - ▄█▓
-          - ▄▜▓
-          - ' ▄═'
+          - '▄▘▀ '
+          - '▄▙▓ '
+          - '▄██ '
+          - '▄▛▓ '
+          - '▄▖▀ '
           color_mask:
-          - SES
-          - ESS
-          - ESS
-          - ESS
-          - SES
+          - ESES
+          - ESSS
+          - ESSS
+          - ESSS
+          - ESES
       - id: spindrive
-        name: Spindrive
+        name: Drive Frame
         primary_property: spindrive
-        secondary_properties: []
+        secondary_properties:
+        - utility
         repeat:
           min: 1
           max: 1
         variants:
-        - id: spindrive_1
+        - id: braced
           weight: 1
           cells:
-          - ' ≡ '
-          - ▓██
-          - ▓██
-          - ▓██
-          - ' ≡ '
+          - ╔═╗
+          - ╠█╣
+          - ║▒║
+          - ╠█╣
+          - ╚═╝
           color_mask:
           - SSS
           - SSS
           - SSS
           - SSS
           - SSS
-        - id: spindrive_2
+        - id: serviceable
           weight: 1
           cells:
-          - ' │ '
-          - ▓██
-          - ▓██
-          - ▓██
-          - ' │ '
+          - ╭─╮
+          - │█│
+          - ├░┤
+          - │█│
+          - ╰─╯
           color_mask:
           - SSS
           - SSS
@@ -334,106 +350,126 @@ views:
           - SSS
           - SSS
       - id: hull
-        name: Hull
-        primary_property: hull
-        secondary_properties: []
+        name: Container Bays
+        primary_property: cargo
+        secondary_properties:
+        - hull
+        - utility
         repeat:
           min: 1
-          max: 8
+          max: 7
         variants:
-        - id: hull_1
+        - id: double_doors
           weight: 1
           cells:
-          - '   '
-          - ┌─┐
-          - │▦│
-          - └─┘
-          - '   '
+          - '╭─┬─ '
+          - '│▒│▒ '
+          - ┤░┼░╺
+          - '│▒│▒ '
+          - '╰─┴─ '
           color_mask:
-          - SSS
-          - SSS
-          - SSS
-          - SSS
-          - SSS
-        - id: hull_2
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+        - id: pod
           weight: 1
           cells:
-          - ' ▀ '
-          - ┌─┐
-          - │▤│
-          - └─┘
-          - ' ▾ '
+          - '▗▄▄▄ '
+          - '▟█▒▒ '
+          - █▒◆▒╺
+          - '▜█▒▒ '
+          - '▝▀▀▀ '
           color_mask:
-          - SBS
-          - SSS
-          - SSS
-          - SSS
-          - SSS
-        - id: hull_3
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+        - id: rail_bay
           weight: 1
           cells:
-          - ▓█═
-          - ┌─┐
-          - │≡│
-          - └─┘
-          - ▓█═
+          - '╔═══ '
+          - '║░▒░ '
+          - ╠═╬═╺
+          - '║░▒░ '
+          - '╚═══ '
           color_mask:
-          - SSS
-          - SSS
-          - SSS
-          - SSS
-          - SSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
       - id: screens
-        name: Screens
+        name: Control Collar
         primary_property: screens
-        secondary_properties: []
+        secondary_properties:
+        - bridge
+        - sensors
         repeat:
           min: 1
           max: 1
         variants:
-        - id: screens_1
+        - id: bridge
           weight: 1
           cells:
           - ' ▀ '
-          - ◇▓█
-          - ███
-          - ◇▓█
+          - ▟█▙
+          - ◇◆◆
+          - ▜█▛
           - '   '
           color_mask:
           - SBS
           - SSS
+          - DWW
           - SSS
           - SSS
-          - SSS
-        - id: screens_2
+        - id: utility
           weight: 1
           cells:
           - '   '
-          - ◇▓█
-          - ███
-          - ◇▓█
+          - ◢█◣
+          - ◇◆█
+          - ◥█◤
           - '   '
           color_mask:
           - SSS
           - SSS
-          - SSS
+          - DWS
           - SSS
           - SSS
       - id: main_gun
-        name: Main Gun
+        name: Utility Prow
         primary_property: main_gun
-        secondary_properties: []
+        secondary_properties:
+        - utility
+        - weapons
         repeat:
           min: 1
           max: 1
         variants:
-        - id: main_gun_1
+        - id: stub
           weight: 1
           cells:
           - '   '
-          - '▓█ '
-          - ▓█▶
-          - '▓█ '
+          - '██ '
+          - █▓►
+          - '██ '
+          - '   '
+          color_mask:
+          - SSS
+          - SSS
+          - SSA
+          - SSS
+          - SSS
+        - id: clamp
+          weight: 1
+          cells:
+          - '   '
+          - '▟█ '
+          - █╬►
+          - '▜█ '
           - '   '
           color_mask:
           - SSS
@@ -441,38 +477,22 @@ views:
           - SSS
           - SSS
           - SSS
-        - id: main_gun_2
-          weight: 1
-          cells:
-          - '   '
-          - '▓█ '
-          - ▓█▶
-          - '▓█ '
-          - '   '
-          color_mask:
-          - SSS
-          - SSS
-          - SSS
-          - SSS
-          - SSS
-      structure_lengths:
-        thrusters: 1
-        spindrive: 1
-        hull: 6
-        screens: 1
-        main_gun: 1
     - id: compact
       name: Compact
+      structure_lengths:
+        drive: 1
+        body: 4
+        prow: 1
       sections:
-      - id: thrusters
-        name: Thrusters
+      - id: drive
+        name: Drive
         primary_property: thrusters
         secondary_properties: []
         repeat:
           min: 1
           max: 1
         variants:
-        - id: thrusters_1
+        - id: drive
           weight: 1
           cells:
           - '  '
@@ -482,56 +502,53 @@ views:
           - SS
           - ES
           - SS
-      - id: hull
-        name: Hull
+      - id: body
+        name: Body
         primary_property: hull
-        secondary_properties: []
+        secondary_properties:
+        - armor
         repeat:
           min: 1
-          max: 10
+          max: 5
         variants:
-        - id: hull_1
+        - id: bay
           weight: 1
           cells:
-          - '   '
-          - ▟█▙
-          - '   '
+          - ▀▀▀
+          - █▒█
+          - ▄▄▄
           color_mask:
           - SSS
           - SSS
           - SSS
-        - id: hull_2
+        - id: door
           weight: 1
           cells:
-          - '   '
-          - ███
-          - '   '
+          - ╭─╮
+          - │░│
+          - ╰─╯
           color_mask:
           - SSS
           - SSS
           - SSS
-      - id: main_gun
-        name: Main Gun
-        primary_property: main_gun
+      - id: prow
+        name: Prow
+        primary_property: weapons
         secondary_properties: []
         repeat:
           min: 1
           max: 1
         variants:
-        - id: main_gun_1
+        - id: cab
           weight: 1
           cells:
-          - '  '
-          - █▶
-          - '  '
+          - ' ▀'
+          - ◇◆
+          - ' ▄'
           color_mask:
           - SS
+          - DW
           - SS
-          - SS
-      structure_lengths:
-        thrusters: 1
-        hull: 4
-        main_gun: 1
   vertical:
     name: Vertical
     axis: vertical
@@ -540,334 +557,367 @@ views:
     tiers:
     - id: full
       name: Full Detail
+      structure_lengths:
+        thrusters: 1
+        spindrive: 1
+        hull: 5
+        screens: 1
+        main_gun: 1
       sections:
       - id: thrusters
-        name: Thrusters
+        name: Cargo Thrusters
         primary_property: thrusters
-        secondary_properties: []
+        secondary_properties:
+        - spindrive
         repeat:
           min: 1
           max: 1
         variants:
-        - id: thrusters_1
+        - id: cluster
           weight: 1
           cells:
-          - '  ║║▓▓▓▓▓▓║║  '
-          - '  ▄▄▜▜██▛▛▄▄  '
+          - '              '
+          - '  ▌▌▓▓██▓▓▌▌  '
+          - '    ▐▐▐▐▐▐    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSEESSSSSSEESS
-        - id: thrusters_2
+          - SSSSEEEEEESSSS
+        - id: tug
           weight: 1
           cells:
-          - '  ║║▓▓▓▓▓▓║║  '
-          - '  ▄▄▜▜██▛▛▄▄  '
+          - '              '
+          - '  ▌▌▓▓██▓▓▌▌  '
+          - '  ▐▐▐▐▐▐▐▐▐▐  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSEESSSSSSEESS
+          - SSEEEEEEEEEESS
       - id: spindrive
-        name: Spindrive
+        name: Drive Frame
         primary_property: spindrive
-        secondary_properties: []
+        secondary_properties:
+        - utility
         repeat:
           min: 1
           max: 1
         variants:
-        - id: spindrive_1
+        - id: braced
           weight: 1
           cells:
-          - '    ██████    '
-          - '  ║║██████║║  '
+          - '  ╔╔╦╦══╦╦╗╗  '
+          - '  ║║██▒▒██║║  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-        - id: spindrive_2
+        - id: serviceable
           weight: 1
           cells:
-          - '    ██████    '
-          - '  ──██████──  '
+          - '  ╭╭──┬┬──╮╮  '
+          - '  ││██░░██││  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
       - id: hull
-        name: Hull
-        primary_property: hull
-        secondary_properties: []
+        name: Container Bays
+        primary_property: cargo
+        secondary_properties:
+        - hull
+        - utility
         repeat:
           min: 1
-          max: 8
+          max: 7
         variants:
-        - id: hull_1
+        - id: double_doors
           weight: 1
           cells:
-          - '    ┌┌──┐┐    '
-          - '    ││◇◇││    '
+          - '      ╹╹      '
+          - '  ││▒▒░░▒▒││  '
+          - '  ││▒▒░░▒▒││  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-        - id: hull_2
+          - SSSSSSSSSSSSSS
+        - id: pod
           weight: 1
           cells:
-          - '    ┌┌──┐┐    '
-          - '  ▀▀││◇◇││▶▶  '
+          - '      ╹╹      '
+          - '  ▐▐▒▒▒▒▒▒▌▌  '
+          - '  ▐▐██▒▒██▌▌  '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSBBSSSSSSSSSS
-        - id: hull_3
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+        - id: rail_bay
           weight: 1
           cells:
-          - '  ║║┌┌──┐┐║║  '
-          - '  ██││║║││██  '
+          - '      ╹╹      '
+          - '  ║║░░║║░░║║  '
+          - '  ║║░░║║░░║║  '
           color_mask:
+          - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
       - id: screens
-        name: Screens
+        name: Control Collar
         primary_property: screens
-        secondary_properties: []
+        secondary_properties:
+        - bridge
+        - sensors
         repeat:
           min: 1
           max: 1
         variants:
-        - id: screens_1
+        - id: bridge
           weight: 1
           cells:
-          - '    ██████    '
-          - '  ▀▀▓▓██▓▓    '
+          - '    ▟▟◆◆▙▙    '
+          - '  ▌▌██◆◆██    '
           color_mask:
-          - SSSSSSSSSSSSSS
-          - SSBBSSSSSSSSSS
-        - id: screens_2
+          - SSSSSSWWSSSSSS
+          - SSBBSSWWSSSSSS
+        - id: utility
           weight: 1
           cells:
-          - '    ██████    '
-          - '    ▓▓██▓▓    '
+          - '    ◢◢██◣◣    '
+          - '    ██◆◆██    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSSSWWSSSSSS
       - id: main_gun
-        name: Main Gun
+        name: Utility Prow
         primary_property: main_gun
-        secondary_properties: []
+        secondary_properties:
+        - utility
+        - weapons
         repeat:
           min: 1
           max: 1
         variants:
-        - id: main_gun_1
+        - id: stub
           weight: 1
           cells:
-          - '      ▴▴      '
-          - '    ██████    '
+          - '      ▲▲      '
+          - '    ██▓▓██    '
+          color_mask:
+          - SSSSSSAASSSSSS
+          - SSSSSSSSSSSSSS
+        - id: clamp
+          weight: 1
+          cells:
+          - '      ▲▲      '
+          - '    ██╬╬██    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-        - id: main_gun_2
-          weight: 1
-          cells:
-          - '      ▴▴      '
-          - '    ██████    '
-          color_mask:
-          - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
-      structure_lengths:
-        thrusters: 1
-        spindrive: 1
-        hull: 8
-        screens: 1
-        main_gun: 1
     - id: medium
       name: Medium
-      sections:
-      - id: thrusters
-        name: Thrusters
-        primary_property: thrusters
-        secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
-        variants:
-        - id: thrusters_1
-          weight: 1
-          cells:
-          - ║║▓▓▓▓▓▓║║
-          - '    ▄▄    '
-          color_mask:
-          - SSSSSSSSSS
-          - SSSSEESSSS
-        - id: thrusters_2
-          weight: 1
-          cells:
-          - ║║▓▓▓▓▓▓║║
-          - '  ▄▄▄▄▄▄  '
-          color_mask:
-          - SSSSSSSSSS
-          - SSEEEEEESS
-      - id: spindrive
-        name: Spindrive
-        primary_property: spindrive
-        secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
-        variants:
-        - id: spindrive_1
-          weight: 1
-          cells:
-          - '  ██████  '
-          - '  ▓▓▓▓▓▓  '
-          color_mask:
-          - SSSSSSSSSS
-          - SSSSSSSSSS
-        - id: spindrive_2
-          weight: 1
-          cells:
-          - '  ██████  '
-          - '  ▓▓▓▓▓▓  '
-          color_mask:
-          - SSSSSSSSSS
-          - SSSSSSSSSS
-      - id: hull
-        name: Hull
-        primary_property: hull
-        secondary_properties: []
-        repeat:
-          min: 1
-          max: 8
-        variants:
-        - id: hull_1
-          weight: 1
-          cells:
-          - '  ┌┌──┐┐  '
-          - '  └└──┘┘  '
-          color_mask:
-          - SSSSSSSSSS
-          - SSSSSSSSSS
-        - id: hull_2
-          weight: 1
-          cells:
-          - '  ┌┌──┐┐  '
-          - '  └└──┘┘  '
-          color_mask:
-          - SSSSSSSSSS
-          - SSSSSSSSSS
-        - id: hull_3
-          weight: 1
-          cells:
-          - ║║┌┌──┐┐║║
-          - ▓▓└└──┘┘▓▓
-          color_mask:
-          - SSSSSSSSSS
-          - SSSSSSSSSS
-      - id: screens
-        name: Screens
-        primary_property: screens
-        secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
-        variants:
-        - id: screens_1
-          weight: 1
-          cells:
-          - '  ██████  '
-          - '  ◇◇██◇◇  '
-          color_mask:
-          - SSSSSSSSSS
-          - SSSSSSSSSS
-        - id: screens_2
-          weight: 1
-          cells:
-          - '  ██████  '
-          - '  ◇◇██◇◇  '
-          color_mask:
-          - SSSSSSSSSS
-          - SSSSSSSSSS
-      - id: main_gun
-        name: Main Gun
-        primary_property: main_gun
-        secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
-        variants:
-        - id: main_gun_1
-          weight: 1
-          cells:
-          - '    ▴▴    '
-          - '  ▓▓▓▓▓▓  '
-          color_mask:
-          - SSSSSSSSSS
-          - SSSSSSSSSS
-        - id: main_gun_2
-          weight: 1
-          cells:
-          - '    ▴▴    '
-          - '  ▓▓▓▓▓▓  '
-          color_mask:
-          - SSSSSSSSSS
-          - SSSSSSSSSS
       structure_lengths:
         thrusters: 1
         spindrive: 1
-        hull: 8
+        hull: 4
         screens: 1
         main_gun: 1
-    - id: compact
-      name: Compact
       sections:
       - id: thrusters
-        name: Thrusters
+        name: Cargo Thrusters
+        primary_property: thrusters
+        secondary_properties:
+        - spindrive
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: cluster
+          weight: 1
+          cells:
+          - '          '
+          - ▐▐▜▜██▛▛▐▐
+          color_mask:
+          - SSSSSSSSSS
+          - EESSSSSSEE
+        - id: tug
+          weight: 1
+          cells:
+          - '          '
+          - ▖▖▟▟██▙▙▗▗
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
+      - id: spindrive
+        name: Drive Frame
+        primary_property: spindrive
+        secondary_properties:
+        - utility
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: braced
+          weight: 1
+          cells:
+          - ╔╔╦╦══╦╦╗╗
+          - ╚╚╩╩══╩╩╝╝
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
+        - id: serviceable
+          weight: 1
+          cells:
+          - ╭╭──┬┬──╮╮
+          - ╰╰──┴┴──╯╯
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
+      - id: hull
+        name: Container Bays
+        primary_property: cargo
+        secondary_properties:
+        - hull
+        - utility
+        repeat:
+          min: 1
+          max: 7
+        variants:
+        - id: double_doors
+          weight: 1
+          cells:
+          - '    ╹╹    '
+          - ├├──┼┼──┤┤
+          - ╰╰──┬┬──╯╯
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
+          - SSSSSSSSSS
+        - id: pod
+          weight: 1
+          cells:
+          - '    ╹╹    '
+          - ▐▐▒▒◆◆▒▒▌▌
+          - ▝▝▜▜██▛▛▘▘
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
+          - SSSSSSSSSS
+        - id: rail_bay
+          weight: 1
+          cells:
+          - '    ╹╹    '
+          - ║║▒▒╬╬▒▒║║
+          - ╚╚══╩╩══╝╝
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
+          - SSSSSSSSSS
+      - id: screens
+        name: Control Collar
+        primary_property: screens
+        secondary_properties:
+        - bridge
+        - sensors
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: bridge
+          weight: 1
+          cells:
+          - '  ▟▟◆◆▙▙  '
+          - '  ▜▜◇◇▛▛  '
+          color_mask:
+          - SSSSWWSSSS
+          - SSSSDDSSSS
+        - id: utility
+          weight: 1
+          cells:
+          - '  ◢◢██◣◣  '
+          - '  ◥◥◇◇◤◤  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSDDSSSS
+      - id: main_gun
+        name: Utility Prow
+        primary_property: main_gun
+        secondary_properties:
+        - utility
+        - weapons
+        repeat:
+          min: 1
+          max: 1
+        variants:
+        - id: stub
+          weight: 1
+          cells:
+          - '    ▲▲    '
+          - '  ██████  '
+          color_mask:
+          - SSSSAASSSS
+          - SSSSSSSSSS
+        - id: clamp
+          weight: 1
+          cells:
+          - '    ▲▲    '
+          - '  ▜▜██▛▛  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
+    - id: compact
+      name: Compact
+      structure_lengths:
+        drive: 1
+        body: 4
+        prow: 1
+      sections:
+      - id: drive
+        name: Drive
         primary_property: thrusters
         secondary_properties: []
         repeat:
           min: 1
           max: 1
         variants:
-        - id: thrusters_1
+        - id: drive
           weight: 1
           cells:
           - '  ██  '
           color_mask:
           - SSSSSS
-      - id: hull
-        name: Hull
+      - id: body
+        name: Body
         primary_property: hull
-        secondary_properties: []
+        secondary_properties:
+        - armor
         repeat:
           min: 1
-          max: 10
+          max: 5
         variants:
-        - id: hull_1
+        - id: bay
           weight: 1
           cells:
-          - '  ▟▟  '
-          - '  ▜▜  '
+          - ▌▌██▐▐
+          - ▌▌██▐▐
           color_mask:
           - SSSSSS
           - SSSSSS
-        - id: hull_2
+        - id: door
           weight: 1
           cells:
-          - '  ██  '
-          - '  ██  '
+          - ╭╭──╮╮
+          - ╰╰──╯╯
           color_mask:
           - SSSSSS
           - SSSSSS
-      - id: main_gun
-        name: Main Gun
-        primary_property: main_gun
+      - id: prow
+        name: Prow
+        primary_property: weapons
         secondary_properties: []
         repeat:
           min: 1
           max: 1
         variants:
-        - id: main_gun_1
+        - id: cab
           weight: 1
           cells:
-          - '  ▴▴  '
+          - ▌▌◆◆▐▐
           color_mask:
-          - SSSSSS
-      structure_lengths:
-        thrusters: 1
-        hull: 10
-        main_gun: 1
+          - SSWWSS

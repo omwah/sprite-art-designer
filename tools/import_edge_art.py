@@ -27,23 +27,40 @@ from sprite_art import (
 from sprite_art.model import SCHEMA_VERSION
 
 LEGACY_MARKERS = {
-    "R": ("▀", "B"), "r": ("▄", "B"),
-    "Y": ("▀", "E"), "y": ("▄", "E"),
-    "G": ("▀", "A"), "g": ("▄", "A"),
-    "B": ("▀", "D"), "b": ("▄", "D"),
+    "R": ("▀", "B"),
+    "r": ("▄", "B"),
+    "Y": ("▀", "E"),
+    "y": ("▄", "E"),
+    "G": ("▀", "A"),
+    "g": ("▄", "A"),
+    "B": ("▀", "D"),
+    "b": ("▄", "D"),
+}
+DEFENSIVE_COLORS = {
+    "humanoid_diplomat": "#60a5fa",
+    "canid_technologist": "#2563eb",
+    "tentacled_envoy": "#22d3ee",
+    "brain_dome_automaton": "#38bdf8",
+    "ribbon_salvager": "#1d4ed8",
+    "temporal_broker": "#818cf8",
+    "cosmic_arbiter": "#0ea5e9",
+    "telepath_aristocrat": "#6366f1",
+    "engineered_aesthete": "#3b82f6",
+    "amorous_imp": "#7dd3fc",
+    "horned_grudgekeeper": "#0284c7",
+    "psionic_overlord": "#4f46e5",
+    "colonial_broodmaster": "#93c5fd",
+    "winged_schemer": "#0891b2",
 }
 
 
 def _migrate_rows(rows: tuple[str, ...]) -> tuple[list[str], list[str]]:
-    cells = [
-        "".join(LEGACY_MARKERS.get(glyph, (glyph, "S"))[0] for glyph in row)
-        for row in rows
-    ]
+    cells = ["".join(LEGACY_MARKERS.get(glyph, (glyph, "S"))[0] for glyph in row) for row in rows]
     color_mask = [
-        "".join(LEGACY_MARKERS.get(glyph, (glyph, "S"))[1] for glyph in row)
-        for row in rows
+        "".join(LEGACY_MARKERS.get(glyph, (glyph, "S"))[1] for glyph in row) for row in rows
     ]
     return cells, color_mask
+
 
 FULL_SECTIONS = (
     ("thrusters", "Thrusters", "thrusters"),
@@ -129,14 +146,12 @@ def main() -> None:
         archetypes={
             archetype_id: Palette(
                 color_sets={
-                    "surface": ColorSet(
-                        [style.bright, style.mid, style.dark, style.facet]
-                    ),
+                    "surface": ColorSet([style.bright, style.mid, style.dark, style.facet]),
                     "engine": ColorSet(list(style.bottom)),
                     "beacon": ColorSet(list(style.top)),
                     "window": ColorSet(list(style.window)),
-                    "weapons": ColorSet(["#22c55e"]),
-                    "defensive": ColorSet(["#3b82f6"]),
+                    "weapons": ColorSet(["#DF7070"]),
+                    "defensive": ColorSet([DEFENSIVE_COLORS.get(archetype_id, "#60a5fa")]),
                 }
             )
             for archetype_id, style in ARCHETYPE_STYLES.items()

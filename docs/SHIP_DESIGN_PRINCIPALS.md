@@ -59,7 +59,7 @@ panels, or different engine blocks.
 
 ## 2. A ship is a readable sequence of functional sections
 
-Full-detail ships are authored nose-right as a left-to-right sequence:
+The four classic roles use a nose-right five-part sequence:
 
 ```text
 THRUSTERS → SPINDRIVE → HULL → SCREENS → MAIN GUN
@@ -84,16 +84,26 @@ gets a broad, repeatable container backbone; a fighter is thin and swept; a
 warship emphasizes armour, screens, and a spinal weapon; a capital warship
 gains a tall superstructure and heavy prow.
 
-The current public role vocabulary is:
+Specialist roles use the same tail-to-nose reasoning with role-specific section
+names and properties; `SHIP_TYPE_PRINCIPLES.md` defines each grammar. The
+current public role vocabulary is:
 
 - `fighter`
 - `transport`
 - `warship`
 - `capital_warship`
+- `needle_picket`
+- `falsehold_raider`
+- `junction_pinnace`
+- `radiant_lance`
+- `hearth_freighter`
+- `pearl_shell`
+- `marrow_dart`
+- `broadside_citadel`
 
-An unknown role falls back to the fighter grammar inside `ShipGenerator`,
-while coverage tests ensure that every role shipped in game configuration maps
-to a real art subtype rather than silently relying on that fallback.
+An unknown role falls back to the fighter grammar inside `SpriteLibrary`, while
+coverage tests ensure that every role shipped in game configuration maps to a
+real art subtype rather than silently relying on that fallback.
 
 ## 3. Asymmetry is essential to “ship-ness”
 

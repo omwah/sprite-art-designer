@@ -13,6 +13,12 @@ views:
     tiers:
     - id: full
       name: Full Detail
+      structure_lengths:
+        capital_drive: 1
+        drive_citadel: 1
+        broadside_decks: 4
+        command_keep: 1
+        siege_prow: 1
       sections:
       - id: capital_drive
         name: Capital Drive
@@ -27,31 +33,31 @@ views:
         - id: seven_bell
           weight: 1
           cells:
+          - ' ▀▶═ '
           - '     '
-          - ' ▄▶═ '
-          - '▄▟▓▓ '
-          - ▄███▓
-          - '▄▜▓▓ '
-          - ' ▄▶═ '
-          - '     '
+          - '▀▟▓▓ '
+          - ▀███▓
+          - ▀███▓
+          - '▀▜▓▓ '
+          - ' ▀▶═ '
           color_mask:
-          - SSSSS
-          - SESSS
-          - ESSSS
-          - ESSSS
-          - ESSSS
           - SESSS
           - SSSSS
+          - ESSSS
+          - ESSSS
+          - ESSSS
+          - ESSSS
+          - SESSS
         - id: armored
           weight: 1
           cells:
-          - ' ▄▄═ '
-          - '▄▶▓  '
+          - ' ▀▀═ '
+          - '▀▶▓  '
           - ' ▟██▓'
-          - ▄████
-          - ▄███▓
+          - ▀████
+          - ▀███▓
           - ' ▜██▓'
-          - ' ▄▄═ '
+          - ' ▀▀═ '
           color_mask:
           - SEESS
           - ESSSS
@@ -72,19 +78,19 @@ views:
         - id: buttress
           weight: 1
           cells:
-          - '     '
-          - ▓│██═
-          - ┌───┐
-          - │▒◇▒│
-          - └───┘
-          - ▓│██═
-          - '     '
+          - ▓███═
+          - ' ║   '
+          - ╔═╦═╗
+          - ║▒▒▒║
+          - ╠◇▒◇╣
+          - ╚═╩═╝
+          - ▓███═
           color_mask:
           - SSSSS
           - SSSSS
           - SSSSS
           - SSSSS
-          - SSSSS
+          - SDSDS
           - SSSSS
           - SSSSS
         - id: layered
@@ -118,39 +124,39 @@ views:
         - id: open_bays
           weight: 1
           cells:
-          - ' ▀    '
-          - ▓█▶▓█▶
-          - ┌────┐
-          - │▒◇▒▒│
-          - └────┘
-          - ▓█▶▓█▶
-          - ' ▀    '
+          - '      '
+          - ▓▀↑▓▀↑
+          - ╔════╗
+          - ║▒◇▒▒║
+          - ╚════╝
+          - ▓▀↓▓▀↓
+          - '      '
           color_mask:
-          - SBSSSS
+          - SSSSSS
+          - SSASSA
           - SSSSSS
           - SSSSSS
           - SSSSSS
+          - SSASSA
           - SSSSSS
-          - SSSSSS
-          - SBSSSS
         - id: gunwalls
           weight: 1
           cells:
           - '▓███═ '
-          - '─▓▙   '
+          - '─▀▙   '
           - ██████
-          - █◇▒◇██
+          - █▀▒▀██
           - ██████
-          - '─▓▛   '
+          - '─▄▛   '
           - '▓███═ '
           color_mask:
+          - SSSSAS
+          - SASSSS
           - SSSSSS
+          - SASASS
           - SSSSSS
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
+          - SASSSS
+          - SSSSAS
       - id: command_keep
         name: Command Keep
         primary_property: bridge
@@ -165,17 +171,17 @@ views:
           weight: 1
           cells:
           - '  ▀  '
-          - ' ┌─┐ '
-          - ◢███◣
-          - █☉███
+          - ' ╭─╮ '
+          - ◢█◆█◣
+          - █☼█◆█
           - █████
           - ◥███◤
           - '  ▾  '
           color_mask:
           - SSBSS
           - SSSSS
-          - SSSSS
-          - SSSSS
+          - SSWSS
+          - SBSWS
           - SSSSS
           - SSSSS
           - SSSSS
@@ -183,17 +189,17 @@ views:
           weight: 1
           cells:
           - '     '
-          - ' ◢█◣ '
-          - ◢███◣
-          - █◇███
+          - ' ▗▄▖ '
+          - ◢█◆█◣
+          - █☼█◆█
           - █████
           - ◥███◤
           - '     '
           color_mask:
           - SSSSS
           - SSSSS
-          - SSSSS
-          - SSSSS
+          - SSWSS
+          - SBSWS
           - SSSSS
           - SSSSS
           - SSSSS
@@ -211,45 +217,45 @@ views:
           cells:
           - '      '
           - '      '
-          - '─███▙ '
-          - ─██▓▓▶
-          - '─███▛ '
+          - '─█▀█▙ '
+          - ═█▀█▀►
+          - '─█▀█▛ '
           - '      '
           - '      '
           color_mask:
           - SSSSSS
           - SSSSSS
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
+          - SSASSS
+          - ASASAA
+          - SSASSS
           - SSSSSS
           - SSSSSS
         - id: ram
           weight: 1
           cells:
           - '      '
-          - '  ◢█◣ '
-          - ─████▙
-          - ─███▓▶
-          - ─████▛
-          - '  ◥█◤ '
+          - '  ◇█◇ '
+          - ◇████▙
+          - ◇█▀█▀►
+          - ◇████▛
+          - '  ◇█◇ '
           - '      '
           color_mask:
           - SSSSSS
+          - SSDSDS
+          - DSSSSS
+          - DSASAA
+          - DSSSSS
+          - SSDSDS
           - SSSSSS
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
+    - id: medium
+      name: Medium
       structure_lengths:
         capital_drive: 1
         drive_citadel: 1
         broadside_decks: 3
         command_keep: 1
         siege_prow: 1
-    - id: medium
-      name: Medium
       sections:
       - id: capital_drive
         name: Capital Drive
@@ -265,10 +271,10 @@ views:
           weight: 1
           cells:
           - '    '
-          - '▄▟▓ '
-          - ▄██▓
-          - ▄██▓
-          - '▄▜▓ '
+          - '▀▟▓ '
+          - ▀██▓
+          - ▀██▓
+          - '▀▜▓ '
           color_mask:
           - SSSS
           - ESSS
@@ -278,10 +284,10 @@ views:
         - id: armored
           weight: 1
           cells:
-          - '▄▶▓ '
+          - '▀▶▓ '
           - ' ▟█▓'
-          - ▄███
-          - ▄██▓
+          - ▀███
+          - ▀██▓
           - ' ▜█▓'
           color_mask:
           - ESSS
@@ -301,16 +307,16 @@ views:
         - id: buttress
           weight: 1
           cells:
-          - ' │  '
-          - ┌──┐
-          - │▒▒│
-          - │▒◇│
-          - └──┘
+          - ' ║  '
+          - ╔═╦╗
+          - ║▒▒║
+          - ╠◇▒╣
+          - ╚═╩╝
           color_mask:
           - SSSS
           - SSSS
           - SSSS
-          - SSSS
+          - SDSS
           - SSSS
         - id: layered
           weight: 1
@@ -339,31 +345,31 @@ views:
         - id: open_bays
           weight: 1
           cells:
-          - ▓█▶▓▶
-          - ┌───┐
-          - │▒◇▒│
-          - └───┘
-          - ▓█▶▓▶
+          - ▓▀►▓►
+          - ╔═══╗
+          - ║▒◇▒║
+          - ╚═══╝
+          - ▓▀►▓►
           color_mask:
+          - SSASA
           - SSSSS
           - SSSSS
           - SSSSS
-          - SSSSS
-          - SSSSS
+          - SSASA
         - id: gunwalls
           weight: 1
           cells:
-          - '─▓▙  '
+          - '─▀▙  '
           - █████
-          - █◇▒◇█
+          - █▀▒▀█
           - █████
-          - '─▓▛  '
+          - '─▄▛  '
           color_mask:
+          - SASSS
           - SSSSS
+          - SASAS
           - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
+          - SASSS
       - id: command_keep
         name: Command Keep
         primary_property: bridge
@@ -377,29 +383,29 @@ views:
         - id: tower
           weight: 1
           cells:
-          - ' ┌─ '
-          - ◢██◣
-          - █☉██
+          - ' ╭─ '
+          - ◢█◆◣
+          - █☼██
           - ████
           - ◥██◤
           color_mask:
           - SSSS
-          - SSSS
-          - SSSS
+          - SSWS
+          - SBSS
           - SSSS
           - SSSS
         - id: low_keep
           weight: 1
           cells:
-          - ' ◢█ '
-          - ◢██◣
-          - █◇██
+          - ' ▗▄ '
+          - ◢█◆◣
+          - █☼██
           - ████
           - ◥██◤
           color_mask:
           - SSSS
-          - SSSS
-          - SSSS
+          - SSWS
+          - SBSS
           - SSSS
           - SSSS
       - id: siege_prow
@@ -415,38 +421,36 @@ views:
           weight: 1
           cells:
           - '     '
-          - '─███ '
-          - ─██▓▶
-          - '─███ '
+          - '─█▀█ '
+          - ═█▀█►
+          - '─█▀█ '
           - '     '
           color_mask:
           - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
+          - SSASS
+          - ASASA
+          - SSASS
           - SSSSS
         - id: ram
           weight: 1
           cells:
-          - '  ◢█ '
-          - ─███▙
-          - ─███▶
-          - ─███▛
-          - '  ◥█ '
+          - '  ◇█ '
+          - ◇███▙
+          - ◇█▀█►
+          - ◇███▛
+          - '  ◇█ '
           color_mask:
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
-      structure_lengths:
-        capital_drive: 1
-        drive_citadel: 1
-        broadside_decks: 2
-        command_keep: 1
-        siege_prow: 1
+          - SSDSS
+          - DSSSS
+          - DSASA
+          - DSSSS
+          - SSDSS
     - id: compact
       name: Compact
+      structure_lengths:
+        drive: 1
+        body: 6
+        prow: 1
       sections:
       - id: drive
         name: Drive
@@ -460,7 +464,7 @@ views:
           weight: 1
           cells:
           - ██
-          - ▄█
+          - ▀█
           - ██
           color_mask:
           - SS
@@ -478,23 +482,23 @@ views:
         - id: gunwall
           weight: 1
           cells:
-          - █▶
+          - ▀►
           - ██
-          - █▶
+          - ▄►
           color_mask:
+          - AA
           - SS
-          - SS
-          - SS
+          - AA
         - id: armor
           weight: 1
           cells:
-          - ██
-          - █◇
-          - ██
+          - ◇█
+          - █◆
+          - ◇█
           color_mask:
-          - SS
-          - SS
-          - SS
+          - DS
+          - SW
+          - DS
       - id: prow
         name: Prow
         primary_property: weapons
@@ -506,17 +510,13 @@ views:
         - id: siege
           weight: 1
           cells:
-          - ' ██'
-          - ██▶
-          - ' ██'
+          - ' ◇█'
+          - ◇▀►
+          - ' ◇█'
           color_mask:
-          - SSS
-          - SSS
-          - SSS
-      structure_lengths:
-        drive: 1
-        body: 6
-        prow: 1
+          - SDS
+          - DAA
+          - SDS
   vertical:
     name: Vertical
     axis: vertical
@@ -525,6 +525,12 @@ views:
     tiers:
     - id: full
       name: Full Detail
+      structure_lengths:
+        capital_drive: 1
+        drive_citadel: 1
+        broadside_decks: 4
+        command_keep: 1
+        siege_prow: 1
       sections:
       - id: capital_drive
         name: Capital Drive
@@ -541,7 +547,7 @@ views:
           cells:
           - '      ▓▓▓▓    '
           - ▴▴  ▓▓████▓▓▴▴
-          - '    ▄▄▄▄▄▄▄▄  '
+          - '    ▌▌▌▌▌▌▌▌  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -550,8 +556,8 @@ views:
           weight: 1
           cells:
           - '    ▓▓██▓▓▓▓  '
-          - ▄▄▓▓████████▄▄
-          - '  ▄▄  ▄▄▄▄    '
+          - ▌▌▓▓████████▌▌
+          - '  ▌▌  ▌▌▌▌    '
           color_mask:
           - SSSSSSSSSSSSSS
           - EESSSSSSSSSSEE
@@ -568,9 +574,9 @@ views:
         - id: buttress
           weight: 1
           cells:
-          - ║║  ┌┌────┐┐║║
-          - ██  ││▒▒◇◇││██
-          - ▓▓  └└────┘┘▓▓
+          - ║║  ╔╔══╦╦╗╗║║
+          - ██  ╠╠▒▒▒▒╣╣██
+          - ▓▓  ╚╚══╩╩╝╝▓▓
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -598,23 +604,23 @@ views:
         - id: open_bays
           weight: 1
           cells:
-          - '  ▴▴┌┌──┐┐▴▴  '
-          - '  ▓▓││▒▒││▓▓  '
-          - ▀▀██││▒▒││██▶▶
+          - '  ▲▲╔╔══╗╗▲▲  '
+          - '  ▓▓║║▒▒║║▓▓  '
+          - ▌▌▌▌║║▒▒║║▌▌▐▐
           color_mask:
+          - SSAASSSSSSAASS
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
-          - BBSSSSSSSSSSSS
+          - BBSSSSSSSSSSBB
         - id: gunwalls
           weight: 1
           cells:
           - '    ██████    '
-          - ██  ██◇◇██  ██
-          - ██▓▓██◇◇██▓▓██
+          - ██  ██▌▌██  ██
+          - ██▌▌██▌▌██▐▐██
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSSSAASSSSSS
+          - SSAASSAASSAASS
       - id: command_keep
         name: Command Keep
         primary_property: bridge
@@ -629,21 +635,21 @@ views:
           weight: 1
           cells:
           - '    ◢◢████◣◣  '
-          - ▀▀││████████▶▶
+          - ▌▌││◆◆██████▶▶
           - '    ◥◥████◤◤  '
           color_mask:
           - SSSSSSSSSSSSSS
-          - BBSSSSSSSSSSSS
+          - BBSSWWSSSSSSSS
           - SSSSSSSSSSSSSS
         - id: low_keep
           weight: 1
           cells:
           - '    ◢◢████◣◣  '
-          - '  ██████████  '
+          - '  ▐▐◆◆██████  '
           - '    ◥◥████◤◤  '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSWWSSSSSSSS
           - SSSSSSSSSSSSSS
       - id: siege_prow
         name: Siege Prow
@@ -657,31 +663,31 @@ views:
         - id: triple
           weight: 1
           cells:
-          - '      ▴▴      '
-          - '    ██▓▓██    '
+          - '      ▲▲      '
+          - '    ██████    '
           - '    ██████    '
           color_mask:
-          - SSSSSSSSSSSSSS
+          - SSSSSSAASSSSSS
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
         - id: ram
           weight: 1
           cells:
-          - '    ▟▟▴▴▙▙    '
+          - '    ▟▟▲▲▙▙    '
           - '  ██████████  '
           - '    ██████    '
           color_mask:
+          - SSSSSSAASSSSSS
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+    - id: medium
+      name: Medium
       structure_lengths:
         capital_drive: 1
         drive_citadel: 1
-        broadside_decks: 9
+        broadside_decks: 3
         command_keep: 1
         siege_prow: 1
-    - id: medium
-      name: Medium
       sections:
       - id: capital_drive
         name: Capital Drive
@@ -721,11 +727,11 @@ views:
         - id: buttress
           weight: 1
           cells:
-          - '  ┌┌────┐┐'
-          - ──││▒▒▒▒││
+          - '  ╔╔══╦╦╗╗'
+          - ══║║▒▒◇◇║║
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
+          - SSSSSSDDSS
         - id: layered
           weight: 1
           cells:
@@ -747,12 +753,12 @@ views:
         - id: open_bays
           weight: 1
           cells:
-          - ▴▴┌┌──┐┐▴▴
-          - ▴▴││◇◇││▴▴
-          - ▓▓└└──┘┘▓▓
+          - ▲▲╔╔══╗╗▲▲
+          - ▲▲║║◇◇║║▲▲
+          - ▓▓╚╚══╝╝▓▓
           color_mask:
-          - SSSSSSSSSS
-          - SSSSSSSSSS
+          - AASSSSSSAA
+          - AASSSSSSAA
           - SSSSSSSSSS
         - id: gunwalls
           weight: 1
@@ -778,18 +784,18 @@ views:
           weight: 1
           cells:
           - '  ◢◢████◣◣'
-          - └└██☉☉████
+          - ╰╰██☼☼████
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
+          - SSSSBBSSSS
         - id: low_keep
           weight: 1
           cells:
           - '  ◢◢████◣◣'
-          - ◥◥██◇◇████
+          - ▝▝██☼☼████
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
+          - SSSSBBSSSS
       - id: siege_prow
         name: Siege Prow
         primary_property: main_gun
@@ -802,31 +808,29 @@ views:
         - id: triple
           weight: 1
           cells:
-          - '    ▴▴    '
-          - '  ██████  '
-          - '  ││││││  '
+          - '    ▲▲    '
+          - '  ▌▌▌▌▌▌  '
+          - '  ││║║││  '
           color_mask:
-          - SSSSSSSSSS
-          - SSSSSSSSSS
-          - SSSSSSSSSS
+          - SSSSAASSSS
+          - SSAAAAAASS
+          - SSSSAASSSS
         - id: ram
           weight: 1
           cells:
-          - '  ▟▟▴▴▙▙  '
-          - ◥◥██████◤◤
-          - '  ││││││  '
+          - '  ▟▟▲▲▙▙  '
+          - ◇◇██▌▌██◇◇
+          - '  ◇◇◇◇◇◇  '
           color_mask:
-          - SSSSSSSSSS
-          - SSSSSSSSSS
-          - SSSSSSSSSS
-      structure_lengths:
-        capital_drive: 1
-        drive_citadel: 1
-        broadside_decks: 10
-        command_keep: 1
-        siege_prow: 1
+          - SSSSAASSSS
+          - DDSSAASSDD
+          - SSDDDDDDSS
     - id: compact
       name: Compact
+      structure_lengths:
+        drive: 1
+        body: 6
+        prow: 1
       sections:
       - id: drive
         name: Drive
@@ -854,15 +858,15 @@ views:
         - id: gunwall
           weight: 1
           cells:
-          - ▴▴██▴▴
+          - ▲▲██▲▲
           color_mask:
-          - SSSSSS
+          - AASSAA
         - id: armor
           weight: 1
           cells:
-          - ██◇◇██
+          - ██◆◆██
           color_mask:
-          - SSSSSS
+          - SSWWSS
       - id: prow
         name: Prow
         primary_property: weapons
@@ -874,12 +878,8 @@ views:
         - id: siege
           weight: 1
           cells:
-          - ██▴▴██
-          - '  ██  '
+          - ██▲▲██
+          - '  ◇◇  '
           color_mask:
-          - SSSSSS
-          - SSSSSS
-      structure_lengths:
-        drive: 1
-        body: 15
-        prow: 1
+          - SSAASS
+          - SSDDSS

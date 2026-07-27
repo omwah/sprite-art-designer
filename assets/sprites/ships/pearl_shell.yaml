@@ -13,6 +13,12 @@ views:
     tiers:
     - id: full
       name: Full Detail
+      structure_lengths:
+        ciliary_drive: 1
+        rear_carapace: 1
+        weapon_ring: 4
+        troop_lobe: 1
+        beak: 1
       sections:
       - id: ciliary_drive
         name: Ciliary Drive
@@ -26,13 +32,13 @@ views:
         - id: fan
           weight: 1
           cells:
-          - ' ▄▄ '
-          - '▄◢▓ '
-          - ▄██▓
-          - ▄██▓
-          - '▄◥▓ '
+          - ' ▀▀ '
+          - '▀◢▓ '
+          - ▀██▓
+          - ▀██▓
+          - '▀◥▓ '
           - '    '
-          - ' ▄  '
+          - ' ▀  '
           color_mask:
           - SEES
           - ESSS
@@ -44,13 +50,13 @@ views:
         - id: barbs
           weight: 1
           cells:
-          - ' ▄▶ '
-          - '▄▟▓ '
-          - ▄██▓
-          - ▄▒█▓
-          - '▄▜▓ '
+          - ' ▀▶ '
+          - '▀▟▓ '
+          - ▀██▓
+          - ▀▒█▓
+          - '▀▜▓ '
           - '    '
-          - ' ▄▶ '
+          - ' ▀▶ '
           color_mask:
           - SESS
           - ESSS
@@ -70,13 +76,13 @@ views:
         - id: pearl
           weight: 1
           cells:
-          - ' ◢██◣'
-          - ◢████
+          - ' ╭██╮'
+          - ╭████
           - █████
           - █▒◇██
           - █████
-          - ◥████
-          - ' ◥██◤'
+          - ╰████
+          - ' ╰██╯'
           color_mask:
           - SSSSS
           - SSSSS
@@ -88,13 +94,13 @@ views:
         - id: scarred
           weight: 1
           cells:
-          - '  ◢█◣'
-          - ◢██▒█
+          - '  ▗▄▖'
+          - ▗▄█▒█
           - ██◇██
           - █▒▒██
           - █████
-          - ◥██▒█
-          - '  ◥█◤'
+          - ▝▀█▒█
+          - '  ▝▀▘'
           color_mask:
           - SSSSS
           - SSSSS
@@ -117,35 +123,35 @@ views:
           weight: 1
           cells:
           - ' ▀    '
-          - ◢████◣
-          - █◇█◇██
-          - ██☉███
-          - █◇██◇█
-          - ◥████◤
-          - '   ▾  '
+          - ╭████╮
+          - █▀█▀██
+          - ██☼███
+          - █▀██▀█
+          - ╰████╯
+          - '   ▄  '
           color_mask:
           - SBSSSS
           - SSSSSS
+          - SASASS
+          - SSBSSS
+          - SASSAS
           - SSSSSS
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
+          - SSSASS
         - id: sealed
           weight: 1
           cells:
           - '      '
-          - ' ◢██◣ '
-          - ◢████◣
-          - █▒◊▒██
-          - ◥████◤
-          - ' ◥██◤ '
+          - ' ▗▄▄▖ '
+          - ▗▄██▄▖
+          - █▒▀▒██
+          - ▝▀██▀▘
+          - ' ▝▀▀▘ '
           - '      '
           color_mask:
           - SSSSSS
           - SSSSSS
           - SSSSSS
-          - SSSSSS
+          - SSASSS
           - SSSSSS
           - SSSSSS
           - SSSSSS
@@ -161,16 +167,16 @@ views:
         - id: open
           weight: 1
           cells:
-          - ' ◢██◣'
-          - ◢█◇██
+          - ' ╭██╮'
+          - ╭█☼██
           - █████
-          - ██☉██
+          - ██○██
           - █████
-          - ◥██▒█
-          - '  ◥█◤'
+          - ╰██▒█
+          - '  ╰█╯'
           color_mask:
           - SSSSS
-          - SSSSS
+          - SSBSS
           - SSSSS
           - SSSSS
           - SSSSS
@@ -179,18 +185,18 @@ views:
         - id: heavy
           weight: 1
           cells:
-          - '  ◢█◣'
-          - ◢████
+          - '  ▗▄▖'
+          - ▗▄███
           - █▒▒██
-          - ██◇██
+          - ██☼██
           - █████
-          - ◥████
-          - ' ◥██◤'
+          - ▝▀███
+          - ' ▝▀▀▘'
           color_mask:
           - SSSSS
           - SSSSS
           - SSSSS
-          - SSSSS
+          - SSBSS
           - SSSSS
           - SSSSS
           - SSSSS
@@ -207,46 +213,46 @@ views:
           weight: 1
           cells:
           - '     '
-          - ' ◢█◣ '
-          - ◢███▙
-          - ██◇▓▶
-          - ◥███▛
-          - '  ◥█ '
+          - ' ◇█◇ '
+          - ◇███▙
+          - ◇█☼▓►
+          - ◇███▛
+          - '  ◇█ '
           - '     '
           color_mask:
           - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
+          - SDSDS
+          - DSSSS
+          - DSBSS
+          - DSSSS
+          - SSDSS
           - SSSSS
         - id: round
           weight: 1
           cells:
           - '     '
-          - '  ◢█◣'
-          - ◢████
-          - ██☉▓▶
-          - ◥████
-          - '  ◥█◤'
+          - '  ◇█◇'
+          - ◇███◇
+          - ◇█☼▓►
+          - ◇███◇
+          - '  ◇█◇'
           - '     '
           color_mask:
           - SSSSS
+          - SSDSD
+          - DSSSD
+          - DSBSS
+          - DSSSD
+          - SSDSD
           - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
+    - id: medium
+      name: Medium
       structure_lengths:
         ciliary_drive: 1
         rear_carapace: 1
-        weapon_ring: 3
+        weapon_ring: 4
         troop_lobe: 1
         beak: 1
-    - id: medium
-      name: Medium
       sections:
       - id: ciliary_drive
         name: Ciliary Drive
@@ -260,10 +266,10 @@ views:
         - id: fan
           weight: 1
           cells:
-          - '▄◢ '
-          - ▄█▓
-          - ▄█▓
-          - '▄◥ '
+          - '▀◢ '
+          - ▀█▓
+          - ▀█▓
+          - '▀◥ '
           - '   '
           color_mask:
           - ESS
@@ -274,10 +280,10 @@ views:
         - id: barbs
           weight: 1
           cells:
-          - '▄▟ '
-          - ▄█▓
-          - ▄▒▓
-          - '▄▜ '
+          - '▀▟ '
+          - ▀█▓
+          - ▀▒▓
+          - '▀▜ '
           - '   '
           color_mask:
           - ESS
@@ -296,11 +302,11 @@ views:
         - id: pearl
           weight: 1
           cells:
-          - ◢███
+          - ╭███
           - ████
           - █▒◇█
           - ████
-          - ◥███
+          - ╰███
           color_mask:
           - SSSS
           - SSSS
@@ -310,11 +316,11 @@ views:
         - id: scarred
           weight: 1
           cells:
-          - ◢███
+          - ▗▄██
           - ██◇█
           - █▒▒█
           - ████
-          - ◥███
+          - ▝▀██
           color_mask:
           - SSSS
           - SSSS
@@ -334,29 +340,29 @@ views:
         - id: ports
           weight: 1
           cells:
-          - ◢███◣
-          - █◇█◇█
-          - ██☉██
-          - █◇███
-          - ◥███◤
+          - ╭███╮
+          - █▀█▀█
+          - ██☼██
+          - █▀███
+          - ╰███╯
           color_mask:
           - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
+          - SASAS
+          - SSBSS
+          - SASSS
           - SSSSS
         - id: sealed
           weight: 1
           cells:
-          - ' ◢██ '
-          - ◢███◣
-          - █▒◊▒█
-          - ◥███◤
-          - ' ◥██ '
+          - ' ▗▄▄ '
+          - ▗▄██▖
+          - █▒▀▒█
+          - ▝▀██▘
+          - ' ▝▀▀ '
           color_mask:
           - SSSSS
           - SSSSS
-          - SSSSS
+          - SSASS
           - SSSSS
           - SSSSS
       - id: troop_lobe
@@ -371,13 +377,13 @@ views:
         - id: open
           weight: 1
           cells:
-          - ◢█◇█
+          - ╭█☼█
           - ████
-          - ██☉█
+          - ██○█
           - ████
-          - ◥███
+          - ╰███
           color_mask:
-          - SSSS
+          - SSBS
           - SSSS
           - SSSS
           - SSSS
@@ -385,15 +391,15 @@ views:
         - id: heavy
           weight: 1
           cells:
-          - ◢███
+          - ▗▄██
           - █▒▒█
-          - ██◇█
+          - ██☼█
           - ████
-          - ◥███
+          - ▝▀██
           color_mask:
           - SSSS
           - SSSS
-          - SSSS
+          - SSBS
           - SSSS
           - SSSS
       - id: beak
@@ -408,39 +414,37 @@ views:
         - id: hook
           weight: 1
           cells:
-          - ' ◢█ '
-          - ◢██▙
-          - ██◇▶
-          - ◥██▛
-          - '  ◥ '
+          - ' ◇█ '
+          - ◇██▙
+          - ◇█☼►
+          - ◇██▛
+          - '  ◇ '
           color_mask:
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
+          - SDSS
+          - DSSS
+          - DSBS
+          - DSSS
+          - SSDS
         - id: round
           weight: 1
           cells:
-          - '  ◢◣'
-          - ◢███
-          - ██☉▶
-          - ◥███
-          - '  ◥◤'
+          - '  ◇◇'
+          - ◇██◇
+          - ◇█☼►
+          - ◇██◇
+          - '  ◇◇'
           color_mask:
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-      structure_lengths:
-        ciliary_drive: 1
-        rear_carapace: 1
-        weapon_ring: 3
-        troop_lobe: 1
-        beak: 1
+          - SSDD
+          - DSSD
+          - DSBS
+          - DSSD
+          - SSDD
     - id: compact
       name: Compact
+      structure_lengths:
+        drive: 1
+        body: 6
+        prow: 1
       sections:
       - id: drive
         name: Drive
@@ -454,7 +458,7 @@ views:
           weight: 1
           cells:
           - ' █'
-          - ▄█
+          - ▀█
           - ' ▾'
           color_mask:
           - SS
@@ -483,12 +487,12 @@ views:
           weight: 1
           cells:
           - ▀█
-          - █☉
+          - █☼
           - ▄█
           color_mask:
-          - SS
-          - SS
-          - SS
+          - AS
+          - SB
+          - AS
       - id: prow
         name: Prow
         primary_property: weapons
@@ -500,17 +504,13 @@ views:
         - id: beak
           weight: 1
           cells:
-          - ' ◢ '
-          - ██▶
-          - ' ◥ '
+          - ' ◇ '
+          - ◇█►
+          - ' ◇ '
           color_mask:
-          - SSS
-          - SSS
-          - SSS
-      structure_lengths:
-        drive: 1
-        body: 6
-        prow: 1
+          - SDS
+          - DSS
+          - SDS
   vertical:
     name: Vertical
     axis: vertical
@@ -519,6 +519,12 @@ views:
     tiers:
     - id: full
       name: Full Detail
+      structure_lengths:
+        ciliary_drive: 1
+        rear_carapace: 1
+        weapon_ring: 4
+        troop_lobe: 1
+        beak: 1
       sections:
       - id: ciliary_drive
         name: Ciliary Drive
@@ -533,7 +539,7 @@ views:
           weight: 1
           cells:
           - '    ▓▓▓▓      '
-          - ▄▄◥◥████◤◤  ▄▄
+          - ▌▌◥◥████◤◤  ▌▌
           color_mask:
           - SSSSSSSSSSSSSS
           - EESSSSSSSSSSEE
@@ -541,7 +547,7 @@ views:
           weight: 1
           cells:
           - '    ▓▓▓▓      '
-          - ▄▄▜▜██▒▒▛▛  ▄▄
+          - ▌▌▜▜██▒▒▛▛  ▌▌
           color_mask:
           - SSSSSSSSSSSSSS
           - EESSSSSSSSSSEE
@@ -556,9 +562,9 @@ views:
         - id: pearl
           weight: 1
           cells:
-          - ◢◢██████████◣◣
+          - ╭╭██████████╮╮
           - ██████◇◇██████
-          - '  ◥◥██████◤◤  '
+          - '  ╰╰██████╯╯  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -566,9 +572,9 @@ views:
         - id: scarred
           weight: 1
           cells:
-          - ◢◢██████████◣◣
-          - ◥◥██◇◇▒▒████◤◤
-          - '  ◥◥██████◤◤  '
+          - ▗▗██████████▖▖
+          - ▝▝██◇◇▒▒████▘▘
+          - '  ▝▝██████▘▘  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -586,19 +592,19 @@ views:
         - id: ports
           weight: 1
           cells:
-          - '  ◢◢██████◣◣  '
-          - '  ██◇◇██████▶▶'
-          - '▀▀██◇◇██◇◇██  '
+          - '  ╭╭██████╮╮  '
+          - '  ██▌▌██████▐▐'
+          - '▌▌██▌▌██▌▌██  '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
-          - BBSSSSSSSSSSSS
+          - SSSSAASSSSSSAA
+          - BBSSAASSAASSSS
         - id: sealed
           weight: 1
           cells:
-          - '    ◢◢██◣◣    '
-          - '  ████▒▒████  '
-          - '  ◥◥██▒▒██◤◤  '
+          - '    ▗▗██▖▖    '
+          - '  ▐▐██▒▒██▌▌  '
+          - '  ▝▝▐▐▒▒▌▌▘▘  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -615,22 +621,22 @@ views:
         - id: open
           weight: 1
           cells:
-          - ◢◢██████████◣◣
-          - ██◇◇██☉☉████◤◤
-          - '  ◥◥██████◤◤  '
+          - ╭╭██████████╮╮
+          - ██☼☼██○○████╯╯
+          - '  ╰╰██████╯╯  '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSBBSSSSSSSSSS
           - SSSSSSSSSSSSSS
         - id: heavy
           weight: 1
           cells:
-          - ◢◢██████████◣◣
-          - ◥◥██▒▒◇◇██████
-          - '  ◥◥██████◤◤  '
+          - ▗▗██████████▖▖
+          - ▝▝██▒▒☼☼████▌▌
+          - '  ▝▝██████▘▘  '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSSSBBSSSSSS
           - SSSSSSSSSSSSSS
       - id: beak
         name: Carapace Beak
@@ -644,31 +650,31 @@ views:
         - id: hook
           weight: 1
           cells:
-          - '    ▟▟▴▴▙▙    '
-          - '  ████◇◇██◤◤  '
-          - '    ◥◥██◤◤    '
+          - '    ▟▟▲▲▙▙    '
+          - '  ████☼☼██◇◇  '
+          - '    ◇◇◇◇◇◇    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSSSBBSSDDSS
+          - SSSSDDDDDDSSSS
         - id: round
           weight: 1
           cells:
-          - '  ◢◢██▴▴██◣◣  '
-          - '  ◥◥██☉☉██◤◤  '
-          - '    ◥◥██◤◤    '
+          - '  ◇◇◇◇▲▲◇◇◇◇  '
+          - '  ◇◇██☼☼██◇◇  '
+          - '    ◇◇◇◇◇◇    '
           color_mask:
-          - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
-      structure_lengths:
-        ciliary_drive: 1
-        rear_carapace: 1
-        weapon_ring: 5
-        troop_lobe: 1
-        beak: 1
+          - SSDDDDSSDDDDSS
+          - SSDDSSBBSSDDSS
+          - SSSSDDDDDDSSSS
     - id: medium
       name: Medium
+      structure_lengths:
+        ciliary_drive: 1
+        rear_carapace: 1
+        weapon_ring: 4
+        troop_lobe: 1
+        beak: 1
       sections:
       - id: ciliary_drive
         name: Ciliary Drive
@@ -683,7 +689,7 @@ views:
           weight: 1
           cells:
           - '  ▓▓▓▓    '
-          - '▄▄▄▄▄▄▄▄  '
+          - '▌▌▌▌▌▌▌▌  '
           color_mask:
           - SSSSSSSSSS
           - EEEEEEEESS
@@ -691,7 +697,7 @@ views:
           weight: 1
           cells:
           - '  ▓▓▓▓    '
-          - '▄▄▄▄▄▄▄▄  '
+          - '▌▌▌▌▌▌▌▌  '
           color_mask:
           - SSSSSSSSSS
           - EEEEEEEESS
@@ -715,7 +721,7 @@ views:
           weight: 1
           cells:
           - ██████████
-          - ████▒▒████
+          - ▐▐██▒▒██▌▌
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -732,22 +738,22 @@ views:
         - id: ports
           weight: 1
           cells:
-          - ◢◢██████◣◣
-          - ████☉☉████
-          - ◥◥██████◤◤
+          - ╭╭██████╮╮
+          - ████☼☼████
+          - ╰╰██████╯╯
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
+          - SSSSBBSSSS
           - SSSSSSSSSS
         - id: sealed
           weight: 1
           cells:
-          - '  ◢◢██◣◣  '
-          - ████◊◊████
-          - '  ◥◥██◤◤  '
+          - '  ▗▗██▖▖  '
+          - ▐▐██▌▌██▌▌
+          - '  ▝▝██▘▘  '
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
+          - SSSSAASSSS
           - SSSSSSSSSS
       - id: troop_lobe
         name: Troop Lobe
@@ -770,7 +776,7 @@ views:
           weight: 1
           cells:
           - ██████████
-          - ██▒▒██████
+          - ▐▐▒▒████▌▌
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -786,27 +792,25 @@ views:
         - id: hook
           weight: 1
           cells:
-          - '  ▟▟▴▴▙▙  '
-          - '◥◥██████  '
+          - '  ▟▟▲▲▙▙  '
+          - '◇◇██████  '
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
+          - DDSSSSSSSS
         - id: round
           weight: 1
           cells:
-          - ◢◢██▴▴██◣◣
+          - ◇◇◇◇▲▲◇◇◇◇
           - '  ██████  '
           color_mask:
+          - DDDDSSDDDD
           - SSSSSSSSSS
-          - SSSSSSSSSS
-      structure_lengths:
-        ciliary_drive: 1
-        rear_carapace: 1
-        weapon_ring: 5
-        troop_lobe: 1
-        beak: 1
     - id: compact
       name: Compact
+      structure_lengths:
+        drive: 1
+        body: 6
+        prow: 1
       sections:
       - id: drive
         name: Drive
@@ -840,9 +844,9 @@ views:
         - id: ports
           weight: 1
           cells:
-          - ██☉☉██
+          - ██☼☼██
           color_mask:
-          - SSSSSS
+          - SSBBSS
       - id: prow
         name: Prow
         primary_property: weapons
@@ -854,12 +858,8 @@ views:
         - id: beak
           weight: 1
           cells:
-          - '  ▴▴  '
-          - '  ██  '
+          - '  ▲▲  '
+          - '  ◇◇  '
           color_mask:
           - SSSSSS
-          - SSSSSS
-      structure_lengths:
-        drive: 1
-        body: 10
-        prow: 1
+          - SSDDSS

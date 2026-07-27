@@ -54,6 +54,87 @@ NEW_ROLES = {
     "marrow_dart",
     "broadside_citadel",
 }
+ROLE_SECTIONS = {
+    "fighter": ("thrusters", "spindrive", "hull", "screens", "main_gun"),
+    "transport": ("thrusters", "spindrive", "hull", "screens", "main_gun"),
+    "warship": ("thrusters", "spindrive", "hull", "screens", "main_gun"),
+    "capital_warship": (
+        "thrusters",
+        "spindrive",
+        "hull",
+        "screens",
+        "main_gun",
+    ),
+    "needle_picket": (
+        "thrusters",
+        "drive_nodes",
+        "patrol_spine",
+        "sensor_crown",
+        "needle",
+    ),
+    "falsehold_raider": (
+        "merchant_drive",
+        "armored_buttress",
+        "false_holds",
+        "masked_battery",
+        "merchant_prow",
+    ),
+    "junction_pinnace": (
+        "overdrive",
+        "sail_nodes",
+        "cabin",
+        "landing_nose",
+    ),
+    "radiant_lance": (
+        "fusion_bell",
+        "engine_swell",
+        "diamond_radiators",
+        "habitat_petals",
+        "lance",
+    ),
+    "hearth_freighter": (
+        "retrofitted_drive",
+        "machine_shop",
+        "cargo_modules",
+        "hearth_drum",
+        "mining_prow",
+    ),
+    "pearl_shell": (
+        "ciliary_drive",
+        "rear_carapace",
+        "weapon_ring",
+        "troop_lobe",
+        "beak",
+    ),
+    "marrow_dart": (
+        "sinew_drive",
+        "marrow_knot",
+        "bound_spars",
+        "nerve_cluster",
+        "hardened_beak",
+    ),
+    "broadside_citadel": (
+        "capital_drive",
+        "drive_citadel",
+        "broadside_decks",
+        "command_keep",
+        "siege_prow",
+    ),
+}
+ROLE_FUNCTIONAL_MASKS = {
+    "fighter": set("ADEW"),
+    "transport": set("ABDEW"),
+    "warship": set("ADEW"),
+    "capital_warship": set("ABDEW"),
+    "needle_picket": set("ABEW"),
+    "falsehold_raider": set("ABDEW"),
+    "junction_pinnace": set("BDEW"),
+    "radiant_lance": set("ABEW"),
+    "hearth_freighter": set("ABEW"),
+    "pearl_shell": set("ABDE"),
+    "marrow_dart": set("ABE"),
+    "broadside_citadel": set("ABDEW"),
+}
 
 
 @pytest.fixture(scope="module")
@@ -70,6 +151,81 @@ def test_asset_library_has_all_original_and_new_roles(sprites: dict[str, object]
     assert set(sprites) == ORIGINAL_ROLES | NEW_ROLES
 
 
+def test_full_and_medium_tiers_follow_each_roles_section_grammar() -> None:
+    for role, expected_sections in ROLE_SECTIONS.items():
+        sprite = load_sprite(ASSETS / "sprites" / "ships" / f"{role}.yaml")
+        for tier in sprite.views["horizontal"].tiers[:2]:
+            assert tuple(section.id for section in tier.sections) == expected_sections
+
+
+def test_role_art_uses_intentional_functional_color_masks() -> None:
+    for role, expected_masks in ROLE_FUNCTIONAL_MASKS.items():
+        sprite = load_sprite(ASSETS / "sprites" / "ships" / f"{role}.yaml")
+        visible_masks = {
+            code
+            for view in sprite.views.values()
+            for tier in view.tiers
+            for section in tier.sections
+            for variant in section.variants
+            for glyph_row, mask_row in zip(variant.cells, variant.color_mask)
+            for glyph, code in zip(glyph_row, mask_row)
+            if glyph != " "
+        }
+        assert expected_masks <= visible_masks
+
+
+def test_broadside_open_bays_use_weapons_color_only_for_muzzles() -> None:
+    sprite = load_sprite(ASSETS / "sprites" / "ships" / "broadside_citadel.yaml")
+    broadside = next(
+        section
+        for section in sprite.views["horizontal"].tiers[0].sections
+        if section.id == "broadside_decks"
+    )
+    open_bays = next(variant for variant in broadside.variants if variant.id == "open_bays")
+    weapon_glyphs = [
+        glyph
+        for glyph_row, mask_row in zip(open_bays.cells, open_bays.color_mask)
+        for glyph, code in zip(glyph_row, mask_row)
+        if code == "A"
+    ]
+
+    assert len(weapon_glyphs) == 4
+
+
+def test_ship_roster_exercises_extended_structural_and_facet_glyphs() -> None:
+    sprites = load_sprite_directory(ASSETS / "sprites")
+    used = {
+        glyph
+        for sprite in sprites.values()
+        for view in sprite.views.values()
+        for tier in view.tiers
+        for section in tier.sections
+        for variant in section.variants
+        for row in variant.cells
+        for glyph in row
+    }
+    assert {
+        "╭",
+        "╮",
+        "╰",
+        "╯",
+        "╔",
+        "╗",
+        "╚",
+        "╝",
+        "▖",
+        "▗",
+        "▘",
+        "▝",
+        "╺",
+        "╹",
+        "∞",
+        "♦",
+        "○",
+        "☼",
+    } <= used
+
+
 def test_palette_catalog_is_the_exact_controlled_roster(
     palettes: PaletteCatalog,
 ) -> None:
@@ -80,11 +236,27 @@ def test_palette_catalog_is_the_exact_controlled_roster(
         assert all(1 <= len(color_set.colors) <= 4 for color_set in palette.color_sets.values())
 
 
+def test_weapon_and_defensive_accents_follow_the_fleet_palette_direction(
+    palettes: PaletteCatalog,
+) -> None:
+    weapon_colors = {
+        palette.color_sets["weapons"].colors[0] for palette in palettes.archetypes.values()
+    }
+    defensive_colors = [
+        palette.color_sets["defensive"].colors[0] for palette in palettes.archetypes.values()
+    ]
+
+    assert weapon_colors == {"#DF7070"}
+    assert len(set(defensive_colors)) == len(ARCHETYPE_IDS)
+    for color in defensive_colors:
+        red = int(color[1:3], 16)
+        blue = int(color[5:7], 16)
+        assert blue > red
+
+
 def test_palette_catalog_rejects_extra_archetype(palettes: PaletteCatalog) -> None:
     invalid = deepcopy(palettes)
-    invalid.archetypes["new_archetype"] = deepcopy(
-        invalid.archetypes["humanoid_diplomat"]
-    )
+    invalid.archetypes["new_archetype"] = deepcopy(invalid.archetypes["humanoid_diplomat"])
     with pytest.raises(SpriteValidationError, match="controlled"):
         invalid.validate()
 
@@ -119,9 +291,7 @@ def test_rexpaint_export_is_deterministic_and_uses_one_column_major_layer(
     palettes: PaletteCatalog, tmp_path: Path
 ) -> None:
     sprite = load_sprite(ASSETS / "sprites" / "ships" / "fighter.yaml")
-    first = export_rexpaint(
-        sprite, palettes, tmp_path / "fighter.xp", width=40, height=7, seed=7
-    )
+    first = export_rexpaint(sprite, palettes, tmp_path / "fighter.xp", width=40, height=7, seed=7)
     second = export_rexpaint(
         sprite, palettes, tmp_path / "fighter-again.xp", width=40, height=7, seed=7
     )
@@ -142,9 +312,7 @@ def test_rexpaint_export_is_deterministic_and_uses_one_column_major_layer(
     assert first_colors == [0, 0, 0, 0, 0, 0]
 
 
-def test_rexpaint_export_rejects_unmapped_glyph(
-    palettes: PaletteCatalog, tmp_path: Path
-) -> None:
+def test_rexpaint_export_rejects_unmapped_glyph(palettes: PaletteCatalog, tmp_path: Path) -> None:
     sprite = load_sprite(ASSETS / "sprites" / "ships" / "fighter.yaml")
     sprite.views["horizontal"].tiers[0].sections[0].variants[0].cells[0] = "?    "
     with pytest.raises(RexPaintGlyphError, match="no REXPaint font slot"):
@@ -159,9 +327,12 @@ def test_rexpaint_import_round_trips_exported_geometry(
         sprite, palettes, tmp_path / "fighter.xp", width=40, height=7, seed=7
     )
     imported = import_rexpaint_cells(exported.image_path)
-    assert imported.glyphs == render_sprite(
-        sprite, palettes, width=40, height=7, seed=7, primary_colors=True
-    ).plain.splitlines()
+    assert (
+        imported.glyphs
+        == render_sprite(
+            sprite, palettes, width=40, height=7, seed=7, primary_colors=True
+        ).plain.splitlines()
+    )
     assert not set("RGBYrgby") & set("".join(imported.glyphs))
 
 
@@ -180,14 +351,11 @@ def test_active_variant_hit_testing_matches_preview_geometry(
     )
     assert variant is not None
     assert any(
-        variant in section.variants
-        for section in sprite.views["horizontal"].tiers[0].sections
+        variant in section.variants for section in sprite.views["horizontal"].tiers[0].sections
     )
 
 
-def test_rexpaint_import_segments_active_variants(
-    palettes: PaletteCatalog, tmp_path: Path
-) -> None:
+def test_rexpaint_import_segments_active_variants(palettes: PaletteCatalog, tmp_path: Path) -> None:
     sprite = load_sprite(ASSETS / "sprites" / "ships" / "fighter.yaml")
     exported = export_rexpaint(
         sprite, palettes, tmp_path / "fighter.xp", width=40, height=7, seed=7
@@ -264,10 +432,7 @@ def test_generated_heavy_half_beams_remain_authorable_and_exportable(
     assert not warnings
     assert {"╻", "╹"} <= REXPAINT_GLYPH_INDICES.keys()
     assert [REXPAINT_GLYPH_INDICES[glyph] for glyph in "╻╹╺╸"] == [36, 37, 38, 39]
-    assert any(
-        "╹" in row
-        for row in vertical.tiers[0].sections[0].variants[0].cells
-    )
+    assert any("╹" in row for row in vertical.tiers[0].sections[0].variants[0].cells)
     changed.views["vertical"] = vertical
     export_rexpaint(
         changed,
@@ -294,12 +459,8 @@ def test_ship_assets_have_full_medium_and_compact_horizontal_tiers() -> None:
         tiers = sprite.views["horizontal"].tiers
         assert [tier.id for tier in tiers] == ["full", "medium", "compact"]
         assert [tier.cross_axis_size("horizontal") for tier in tiers] == [7, 5, 3]
-        for full_section, medium_section in zip(
-            tiers[0].sections, tiers[1].sections
-        ):
-            for full_variant, medium_variant in zip(
-                full_section.variants, medium_section.variants
-            ):
+        for full_section, medium_section in zip(tiers[0].sections, tiers[1].sections):
+            for full_variant, medium_variant in zip(full_section.variants, medium_section.variants):
                 assert medium_variant.width == (full_variant.width * 3 + 2) // 4
 
 
@@ -403,9 +564,7 @@ def test_horizontal_facing_is_exact_glyph_reflection(palettes: PaletteCatalog) -
         view_id="horizontal",
         facing="left",
     ).plain.splitlines()
-    assert [line.strip() for line in left] == [
-        line.strip() for line in flip_rows_horizontal(right)
-    ]
+    assert [line.strip() for line in left] == [line.strip() for line in flip_rows_horizontal(right)]
 
 
 def test_vertical_facing_is_exact_glyph_reflection(palettes: PaletteCatalog) -> None:

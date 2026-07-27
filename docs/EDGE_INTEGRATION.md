@@ -56,16 +56,17 @@ In `edge/art/generator.py`:
 4. Keep the outer `generate_sprite` cache or rely on the library cache, but not
    both unless the additional layer is useful for non-ship art.
 
-The four converted horizontal roles preserve the original grammar and seeded
-variant choices. Schema-v2 color masks intentionally replace marker glyphs and
-random window placement:
+The four original gameplay role names remain available, but their schema-v2
+assets are now native Edge Art Designer compositions rather than byte-for-byte
+translations of the old in-code grammar. Vendoring these files is therefore an
+intentional visual migration for:
 
 - `fighter`
 - `transport`
 - `warship`
 - `capital_warship`
 
-The asset library adds these gameplay roles:
+The asset library also provides these gameplay roles:
 
 - `needle_picket`
 - `falsehold_raider`
@@ -89,11 +90,13 @@ seed | ship | role | archetype_id
 ```
 
 It consumes the two historical color-selection draws before choosing one
-variant per section, keeping converted geometry stable. Equal variant weights
-use `random.Random.choice`, and repeats consume no additional draws. Palette
-colors no longer consume RNG, and windows appear only where the authored
-color mask selects Window. Rich style spans therefore follow the new six-set
-palette contract rather than Edge's random-window painter.
+variant per section. This preserves the renderer's established draw discipline,
+but the redesigned assets are not expected to reproduce the former Edge glyphs
+or style spans. Equal variant weights use `random.Random.choice`, and repeats
+consume no additional draws. Palette colors do not consume RNG, and windows
+appear only where the authored color mask selects Window. Rich style spans
+therefore follow the six-set palette contract rather than Edge's random-window
+painter.
 
 Vertical art is new. `up` uses the stored canonical vertical view; `down` is its
 glyph-aware reflection.

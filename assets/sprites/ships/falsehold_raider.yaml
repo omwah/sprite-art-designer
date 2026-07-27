@@ -13,6 +13,12 @@ views:
     tiers:
     - id: full
       name: Full Detail
+      structure_lengths:
+        merchant_drive: 1
+        armored_buttress: 1
+        false_holds: 5
+        masked_battery: 1
+        merchant_prow: 1
       sections:
       - id: merchant_drive
         name: Merchant Drive
@@ -27,11 +33,11 @@ views:
           weight: 1
           cells:
           - '    '
-          - ' ▄▶ '
+          - ' ▀▶ '
           - '    '
-          - ▄██▓
+          - ▀██▓
           - '    '
-          - ' ▄▶ '
+          - ' ▀▶ '
           - '    '
           color_mask:
           - SSSS
@@ -45,11 +51,11 @@ views:
           weight: 1
           cells:
           - '    '
-          - ' ▄▄ '
-          - '▄▶▓ '
-          - ▄██▓
+          - ' ▀▀ '
+          - '▀▶▓ '
+          - ▀██▓
           - '    '
-          - ' ▄▶ '
+          - ' ▀▶ '
           - '    '
           color_mask:
           - SSSS
@@ -72,16 +78,16 @@ views:
           cells:
           - '    '
           - ▓██═
-          - ┌──┐
-          - █▒▒█
-          - └──┘
+          - ╭──╮
+          - ◇▒▒◇
+          - ╰──╯
           - ▓██═
           - '    '
           color_mask:
           - SSSS
           - SSSS
           - SSSS
-          - SSSS
+          - DSSD
           - SSSS
           - SSSS
           - SSSS
@@ -90,17 +96,17 @@ views:
           cells:
           - '    '
           - ◢██◣
-          - ████
+          - █◇ ◇
           - █░░█
-          - ████
+          - █◇ ◇
           - ◥██◤
           - '    '
           color_mask:
           - SSSS
           - SSSS
+          - SDSD
           - SSSS
-          - SSSS
-          - SSSS
+          - SDSD
           - SSSS
           - SSSS
       - id: false_holds
@@ -118,16 +124,16 @@ views:
           cells:
           - '      '
           - ' ▀    '
-          - ┌────┐
-          - │▒◇▒▒│
-          - └────┘
+          - ╭────╮
+          - │▒◆▒▀│
+          - ╰────╯
           - ' ▾    '
           - '      '
           color_mask:
           - SSSSSS
           - SBSSSS
           - SSSSSS
-          - SSSSSS
+          - SSWSAS
           - SSSSSS
           - SSSSSS
           - SSSSSS
@@ -136,16 +142,16 @@ views:
           cells:
           - '      '
           - '      '
-          - ◢████◣
-          - █▒┤├▒█
-          - ◥████◤
+          - ╔════╗
+          - ║▒▀░◆║
+          - ╚════╝
           - '      '
           - '      '
           color_mask:
           - SSSSSS
           - SSSSSS
           - SSSSSS
-          - SSSSSS
+          - SSASWS
           - SSSSSS
           - SSSSSS
           - SSSSSS
@@ -164,7 +170,7 @@ views:
           - '    '
           - '    '
           - ◢██◣
-          - █≡██
+          - █▀█▀
           - ◥██◤
           - '    '
           - '    '
@@ -172,7 +178,7 @@ views:
           - SSSS
           - SSSS
           - SSSS
-          - SSSS
+          - SASA
           - SSSS
           - SSSS
           - SSSS
@@ -180,19 +186,19 @@ views:
           weight: 1
           cells:
           - '    '
-          - ' ▴  '
-          - '▓█▶ '
-          - ████
-          - '▓█▶ '
-          - ' ▾  '
+          - ' ▀  '
+          - '▓█► '
+          - █▀█▀
+          - '▓█► '
+          - ' ▄  '
           - '    '
           color_mask:
           - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
+          - SASS
+          - SSAS
+          - SASA
+          - SSAS
+          - SASS
           - SSSS
       - id: merchant_prow
         name: Merchant Prow
@@ -209,7 +215,7 @@ views:
           - '    '
           - '    '
           - '██▙ '
-          - ██▓▶
+          - █◆▓►
           - '██▛ '
           - '    '
           - '    '
@@ -217,7 +223,7 @@ views:
           - SSSS
           - SSSS
           - SSSS
-          - SSSS
+          - SWSS
           - SSSS
           - SSSS
           - SSSS
@@ -227,7 +233,7 @@ views:
           - '    '
           - '    '
           - '▓█▙ '
-          - ███▶
+          - █◆█►
           - '▓█▛ '
           - '    '
           - '    '
@@ -235,18 +241,18 @@ views:
           - SSSS
           - SSSS
           - SSSS
+          - SWSS
           - SSSS
           - SSSS
           - SSSS
-          - SSSS
+    - id: medium
+      name: Medium
       structure_lengths:
         merchant_drive: 1
         armored_buttress: 1
         false_holds: 4
         masked_battery: 1
         merchant_prow: 1
-    - id: medium
-      name: Medium
       sections:
       - id: merchant_drive
         name: Merchant Drive
@@ -260,11 +266,11 @@ views:
         - id: triple
           weight: 1
           cells:
-          - ' ▄ '
+          - ' ▀ '
           - '   '
-          - ▄█▓
+          - ▀█▓
           - '   '
-          - ' ▄ '
+          - ' ▀ '
           color_mask:
           - SES
           - SSS
@@ -274,11 +280,11 @@ views:
         - id: dirty
           weight: 1
           cells:
-          - ' ▄ '
-          - '▄▶ '
-          - ▄█▓
+          - ' ▀ '
+          - '▀▶ '
+          - ▀█▓
           - '   '
-          - ' ▄ '
+          - ' ▀ '
           color_mask:
           - SES
           - ESS
@@ -297,29 +303,29 @@ views:
           weight: 1
           cells:
           - ▓█═
-          - ┌─┐
-          - █▒█
-          - └─┘
+          - ╭─╮
+          - ◇▒◇
+          - ╰─╯
           - ▓█═
           color_mask:
           - SSS
           - SSS
-          - SSS
+          - DSD
           - SSS
           - SSS
         - id: sealed
           weight: 1
           cells:
           - ◢█◣
-          - ███
+          - █◇◇
           - █░█
-          - ███
+          - █◇◇
           - ◥█◤
           color_mask:
           - SSS
+          - SDD
           - SSS
-          - SSS
-          - SSS
+          - SDD
           - SSS
       - id: false_holds
         name: False Cargo Holds
@@ -335,28 +341,28 @@ views:
           weight: 1
           cells:
           - ' ▀   '
-          - ┌───┐
-          - │▒◇▒│
-          - └───┘
+          - ╭───╮
+          - │▒◆▒│
+          - ╰───╯
           - ' ▾   '
           color_mask:
           - SBSSS
           - SSSSS
-          - SSSSS
+          - SSWSS
           - SSSSS
           - SSSSS
         - id: containers
           weight: 1
           cells:
           - '     '
-          - ◢███◣
-          - █▒┤├█
-          - ◥███◤
+          - ╔═══╗
+          - ║▒▀░║
+          - ╚═══╝
           - '     '
           color_mask:
           - SSSSS
           - SSSSS
-          - SSSSS
+          - SSASS
           - SSSSS
           - SSSSS
       - id: masked_battery
@@ -373,29 +379,29 @@ views:
           cells:
           - '   '
           - ◢█◣
-          - █≡█
+          - █▀▀
           - ◥█◤
           - '   '
           color_mask:
           - SSS
           - SSS
-          - SSS
+          - SAA
           - SSS
           - SSS
         - id: open
           weight: 1
           cells:
-          - ' ▴ '
+          - ' ▀ '
           - '▓█ '
-          - ███
+          - █▀▀
           - '▓█ '
-          - ' ▾ '
+          - ' ▄ '
           color_mask:
+          - SAS
           - SSS
+          - SAA
           - SSS
-          - SSS
-          - SSS
-          - SSS
+          - SAS
       - id: merchant_prow
         name: Merchant Prow
         primary_property: hull
@@ -410,13 +416,13 @@ views:
           cells:
           - '   '
           - '██ '
-          - ██▶
+          - █◆►
           - '██ '
           - '   '
           color_mask:
           - SSS
           - SSS
-          - SSS
+          - SWS
           - SSS
           - SSS
         - id: tapered
@@ -424,23 +430,21 @@ views:
           cells:
           - '   '
           - '▓█ '
-          - ██▶
+          - █◆►
           - '▓█ '
           - '   '
           color_mask:
           - SSS
           - SSS
+          - SWS
           - SSS
           - SSS
-          - SSS
-      structure_lengths:
-        merchant_drive: 1
-        armored_buttress: 1
-        false_holds: 3
-        masked_battery: 1
-        merchant_prow: 1
     - id: compact
       name: Compact
+      structure_lengths:
+        drive: 1
+        body: 6
+        prow: 1
       sections:
       - id: drive
         name: Drive
@@ -454,7 +458,7 @@ views:
           weight: 1
           cells:
           - ' █'
-          - ▄█
+          - ▀█
           - ' █'
           color_mask:
           - SS
@@ -482,13 +486,13 @@ views:
         - id: gun_hold
           weight: 1
           cells:
-          - ▀█
-          - █◇
-          - ▄█
+          - ▀▀
+          - █◆
+          - ▄▄
           color_mask:
-          - SS
-          - SS
-          - SS
+          - SA
+          - SW
+          - SA
       - id: prow
         name: Prow
         primary_property: weapons
@@ -501,16 +505,12 @@ views:
           weight: 1
           cells:
           - '   '
-          - ██▶
+          - █▀►
           - '   '
           color_mask:
           - SSS
+          - SAA
           - SSS
-          - SSS
-      structure_lengths:
-        drive: 1
-        body: 6
-        prow: 1
   vertical:
     name: Vertical
     axis: vertical
@@ -519,6 +519,12 @@ views:
     tiers:
     - id: full
       name: Full Detail
+      structure_lengths:
+        merchant_drive: 1
+        armored_buttress: 1
+        false_holds: 5
+        masked_battery: 1
+        merchant_prow: 1
       sections:
       - id: merchant_drive
         name: Merchant Drive
@@ -533,7 +539,7 @@ views:
           weight: 1
           cells:
           - '      ▓▓      '
-          - '  ▄▄  ██  ▄▄  '
+          - '  ▌▌  ██  ▌▌  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSEESSSSSSEESS
@@ -541,7 +547,7 @@ views:
           weight: 1
           cells:
           - '      ▓▓      '
-          - '  ▄▄▴▴██  ▄▄  '
+          - '  ▌▌▴▴██  ▌▌  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSEESSSSSSEESS
@@ -556,19 +562,19 @@ views:
         - id: ribbed
           weight: 1
           cells:
-          - '  ║║┌┌██┐┐║║  '
+          - '  ║║╭╭◇◇╮╮║║  '
           - '  ██││▒▒││██  '
           color_mask:
-          - SSSSSSSSSSSSSS
+          - SSSSSSDDSSSSSS
           - SSSSSSSSSSSSSS
         - id: sealed
           weight: 1
           cells:
-          - '  ◢◢██████◣◣  '
-          - '  ████░░████  '
+          - '  ◢◢◇◇██◇◇◣◣  '
+          - '  ██◇◇░░◇◇██  '
           color_mask:
-          - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSDDSSDDSSSS
+          - SSSSDDSSDDSSSS
       - id: false_holds
         name: False Cargo Holds
         primary_property: cargo
@@ -582,9 +588,9 @@ views:
         - id: doors
           weight: 1
           cells:
-          - '    ┌┌──┐┐    '
+          - '    ╭╭──╮╮    '
           - '    ││▒▒││    '
-          - '  ▀▀││▒▒││▶▶  '
+          - '  ▌▌││▒▒││▶▶  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -592,9 +598,9 @@ views:
         - id: containers
           weight: 1
           cells:
-          - '    ◢◢██◣◣    '
-          - '    ██┴┴██    '
-          - '    ██▒▒██    '
+          - '    ╔╔══╗╗    '
+          - '    ║║░░║║    '
+          - '    ║║▒▒║║    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -611,19 +617,19 @@ views:
         - id: closed
           weight: 1
           cells:
-          - '    ◢◢██◣◣    '
-          - '    ██║║██    '
+          - '    ◢◢▌▌◣◣    '
+          - '    ██▌▌██    '
           color_mask:
-          - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSSSAASSSSSS
+          - SSSSSSAASSSSSS
         - id: open
           weight: 1
           cells:
-          - '      ██      '
-          - '  ◀◀██████▶▶  '
+          - '      ▌▌      '
+          - '  ▌▌██▌▌██▐▐  '
           color_mask:
-          - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSSSAASSSSSS
+          - SSAASSAASSAASS
       - id: merchant_prow
         name: Merchant Prow
         primary_property: hull
@@ -636,27 +642,27 @@ views:
         - id: blunt
           weight: 1
           cells:
-          - '      ▴▴      '
-          - '    ██████    '
+          - '      ▲▲      '
+          - '    ██◆◆██    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSSSWWSSSSSS
         - id: tapered
           weight: 1
           cells:
-          - '      ▴▴      '
-          - '    ██████    '
+          - '      ▲▲      '
+          - '    ██◆◆██    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSSSWWSSSSSS
+    - id: medium
+      name: Medium
       structure_lengths:
         merchant_drive: 1
         armored_buttress: 1
-        false_holds: 8
+        false_holds: 4
         masked_battery: 1
         merchant_prow: 1
-    - id: medium
-      name: Medium
       sections:
       - id: merchant_drive
         name: Merchant Drive
@@ -671,7 +677,7 @@ views:
           weight: 1
           cells:
           - '    ▓▓    '
-          - '    ▄▄    '
+          - '    ▌▌    '
           color_mask:
           - SSSSSSSSSS
           - SSSSEESSSS
@@ -679,7 +685,7 @@ views:
           weight: 1
           cells:
           - '    ▓▓    '
-          - '  ▄▄▄▄    '
+          - '  ▌▌▌▌    '
           color_mask:
           - SSSSSSSSSS
           - SSEEEESSSS
@@ -694,18 +700,18 @@ views:
         - id: ribbed
           weight: 1
           cells:
-          - ║║┌┌██┐┐║║
-          - ▓▓└└██┘┘▓▓
+          - ║║╭╭◇◇╮╮║║
+          - ▓▓╰╰◇◇╯╯▓▓
           color_mask:
-          - SSSSSSSSSS
-          - SSSSSSSSSS
+          - SSSSDDSSSS
+          - SSSSDDSSSS
         - id: sealed
           weight: 1
           cells:
-          - ◢◢██████◣◣
+          - ◢◢◇◇██◇◇◣◣
           - ◥◥██████◤◤
           color_mask:
-          - SSSSSSSSSS
+          - SSDDSSDDSS
           - SSSSSSSSSS
       - id: false_holds
         name: False Cargo Holds
@@ -720,22 +726,22 @@ views:
         - id: doors
           weight: 1
           cells:
-          - '  ┌┌──┐┐  '
-          - '  ││◇◇││  '
-          - '  └└──┘┘  '
+          - '  ╭╭──╮╮  '
+          - '  ││◆◆││  '
+          - '  ╰╰──╯╯  '
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
+          - SSSSWWSSSS
           - SSSSSSSSSS
         - id: containers
           weight: 1
           cells:
-          - '  ◢◢██◣◣  '
-          - '  ██┬┬██  '
-          - '  ◥◥██◤◤  '
+          - '  ╔╔══╗╗  '
+          - '  ║║▌▌║║  '
+          - '  ╚╚══╝╝  '
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
+          - SSSSAASSSS
           - SSSSSSSSSS
       - id: masked_battery
         name: Masked Battery
@@ -749,18 +755,18 @@ views:
         - id: closed
           weight: 1
           cells:
-          - '  ◢◢██◣◣  '
+          - '  ◢◢▌▌◣◣  '
           - '  ◥◥██◤◤  '
           color_mask:
-          - SSSSSSSSSS
+          - SSSSAASSSS
           - SSSSSSSSSS
         - id: open
           weight: 1
           cells:
-          - '    ██    '
+          - '    ▌▌    '
           - '  ▓▓██▓▓  '
           color_mask:
-          - SSSSSSSSSS
+          - SSSSAASSSS
           - SSSSSSSSSS
       - id: merchant_prow
         name: Merchant Prow
@@ -774,7 +780,7 @@ views:
         - id: blunt
           weight: 1
           cells:
-          - '    ▴▴    '
+          - '    ▲▲    '
           - '  ██████  '
           color_mask:
           - SSSSSSSSSS
@@ -782,19 +788,17 @@ views:
         - id: tapered
           weight: 1
           cells:
-          - '    ▴▴    '
+          - '    ▲▲    '
           - '  ▓▓██▓▓  '
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
-      structure_lengths:
-        merchant_drive: 1
-        armored_buttress: 1
-        false_holds: 8
-        masked_battery: 1
-        merchant_prow: 1
     - id: compact
       name: Compact
+      structure_lengths:
+        drive: 1
+        body: 6
+        prow: 1
       sections:
       - id: drive
         name: Drive
@@ -828,9 +832,9 @@ views:
         - id: gun_hold
           weight: 1
           cells:
-          - ██◇◇██
+          - ▌▌◆◆▐▐
           color_mask:
-          - SSSSSS
+          - AAWWAA
       - id: prow
         name: Prow
         primary_property: weapons
@@ -842,12 +846,8 @@ views:
         - id: prow
           weight: 1
           cells:
-          - '  ▴▴  '
+          - '  ▲▲  '
           - '  ██  '
           color_mask:
+          - SSAASS
           - SSSSSS
-          - SSSSSS
-      structure_lengths:
-        drive: 1
-        body: 12
-        prow: 1

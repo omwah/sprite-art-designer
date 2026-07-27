@@ -13,6 +13,12 @@ views:
     tiers:
     - id: full
       name: Full Detail
+      structure_lengths:
+        retrofitted_drive: 1
+        machine_shop: 1
+        cargo_modules: 4
+        hearth_drum: 1
+        mining_prow: 1
       sections:
       - id: retrofitted_drive
         name: Retrofitted Drive
@@ -26,11 +32,11 @@ views:
         - id: fusion
           weight: 1
           cells:
-          - ' ▄▶ '
+          - ' ▀▶ '
           - '    '
-          - '▄▟▓ '
-          - ▄██▓
-          - '▄▜▓ '
+          - '▀▟▓ '
+          - ▀██▓
+          - '▀▜▓ '
           - '    '
           - '    '
           color_mask:
@@ -44,10 +50,10 @@ views:
         - id: patched
           weight: 1
           cells:
-          - ' ▄▄ '
-          - '▄▶▓ '
+          - ' ▀▀ '
+          - '▀▶▓ '
           - ' ▟▓ '
-          - ▄██▓
+          - ▀██▓
           - ' ▜▓ '
           - '    '
           - '    '
@@ -72,16 +78,16 @@ views:
           weight: 1
           cells:
           - ' ▀  '
-          - ┌──┐
-          - │◇▒│
-          - │▒▒│
-          - └──┘
+          - ╭──╮
+          - │◆▒│
+          - ├▒▒┤
+          - ╰──╯
           - ' ▾  '
           - '    '
           color_mask:
           - SBSS
           - SSSS
-          - SSSS
+          - SWSS
           - SSSS
           - SSSS
           - SSSS
@@ -90,16 +96,16 @@ views:
           weight: 1
           cells:
           - '    '
-          - ◢██◣
-          - █▒◇█
+          - ▗▄▄▖
+          - █▒◆█
           - █░▒█
-          - ◥██◤
+          - ▝▀▀▘
           - '    '
           - '    '
           color_mask:
           - SSSS
           - SSSS
-          - SSSS
+          - SSWS
           - SSSS
           - SSSS
           - SSSS
@@ -117,35 +123,35 @@ views:
           weight: 1
           cells:
           - '      '
-          - ┌────┐
+          - ╭────╮
           - │▒▒▒▒│
-          - │▒◇▒▒│
-          - └────┘
+          - ├▒◆▒▒┤
+          - ╰────╯
           - '      '
           - '      '
           color_mask:
           - SSSSSS
           - SSSSSS
           - SSSSSS
-          - SSSSSS
+          - SSWSSS
           - SSSSSS
           - SSSSSS
           - SSSSSS
         - id: pods
           weight: 1
           cells:
-          - ' ◢██◣ '
+          - ' ▗▄▄▖ '
           - ' ╲  ╱ '
           - ██▒▒██
-          - ██◇▒██
+          - ██◆▒██
           - ' ╱  ╲ '
-          - ' ◥██◤ '
+          - ' ▝▀▀▘ '
           - '      '
           color_mask:
           - SSSSSS
           - SSSSSS
           - SSSSSS
-          - SSSSSS
+          - SSWSSS
           - SSSSSS
           - SSSSSS
           - SSSSSS
@@ -161,36 +167,36 @@ views:
         - id: turning
           weight: 1
           cells:
-          - ' ◢██◣ '
-          - ╱    ╲
-          - █◇████
-          - █☉████
-          - ╲    ╱
-          - ' ◥██◤ '
+          - ' ╭██╮ '
+          - ╱ ◆ ◆╲
+          - █◆██◆█
+          - █☼██◆█
+          - ╲ ◆ ◆╱
+          - ' ╰██╯ '
           - '      '
           color_mask:
           - SSSSSS
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
+          - SSWSWS
+          - SWSSWS
+          - SBSSWS
+          - SSWSWS
           - SSSSSS
           - SSSSSS
         - id: locked
           weight: 1
           cells:
           - '      '
-          - ◢████◣
-          - █▒◇▒▒█
-          - █▒☉▒▒█
-          - ◥████◤
+          - ╭████╮
+          - █▒◆▒◆█
+          - █▒☼▒◆█
+          - ╰████╯
           - '      '
           - '      '
           color_mask:
           - SSSSSS
           - SSSSSS
-          - SSSSSS
-          - SSSSSS
+          - SSWSWS
+          - SSBSWS
           - SSSSSS
           - SSSSSS
           - SSSSSS
@@ -208,7 +214,7 @@ views:
           cells:
           - '     '
           - '  ▟  '
-          - ──█▓▶
+          - ──█▀►
           - '  ▜  '
           - '     '
           - '     '
@@ -216,7 +222,7 @@ views:
           color_mask:
           - SSSSS
           - SSSSS
-          - SSSSS
+          - SSSAA
           - SSSSS
           - SSSSS
           - SSSSS
@@ -225,28 +231,28 @@ views:
           weight: 1
           cells:
           - '     '
-          - ' ◢█◣ '
-          - ─█◇█▶
-          - ' ◥█◤ '
+          - ' ╭█╮ '
+          - ─█▀█►
+          - ' ╰█╯ '
           - '     '
           - '     '
           - '     '
           color_mask:
           - SSSSS
           - SSSSS
+          - SSASA
           - SSSSS
           - SSSSS
           - SSSSS
           - SSSSS
-          - SSSSS
+    - id: medium
+      name: Medium
       structure_lengths:
         retrofitted_drive: 1
         machine_shop: 1
-        cargo_modules: 3
+        cargo_modules: 4
         hearth_drum: 1
         mining_prow: 1
-    - id: medium
-      name: Medium
       sections:
       - id: retrofitted_drive
         name: Retrofitted Drive
@@ -261,9 +267,9 @@ views:
           weight: 1
           cells:
           - '   '
-          - '▄▟ '
-          - ▄█▓
-          - '▄▜ '
+          - '▀▟ '
+          - ▀█▓
+          - '▀▜ '
           - '   '
           color_mask:
           - SSS
@@ -274,9 +280,9 @@ views:
         - id: patched
           weight: 1
           cells:
-          - '▄▶ '
+          - '▀▶ '
           - ' ▟ '
-          - ▄█▓
+          - ▀█▓
           - ' ▜ '
           - '   '
           color_mask:
@@ -297,24 +303,24 @@ views:
         - id: shop
           weight: 1
           cells:
-          - ┌─┐
-          - │◇│
-          - │▒│
-          - └─┘
+          - ╭─╮
+          - │◆│
+          - ├▒┤
+          - ╰─╯
           - ' ▾ '
           color_mask:
           - SSS
-          - SSS
+          - SWS
           - SSS
           - SSS
           - SSS
         - id: patched
           weight: 1
           cells:
-          - ◢█◣
+          - ▗▄▖
           - █▒█
           - █░█
-          - ◥█◤
+          - ▝▀▘
           - '   '
           color_mask:
           - SSS
@@ -334,15 +340,15 @@ views:
         - id: stack
           weight: 1
           cells:
-          - ┌───┐
+          - ╭───╮
           - │▒▒▒│
-          - │▒◇▒│
-          - └───┘
+          - ├▒◆▒┤
+          - ╰───╯
           - '     '
           color_mask:
           - SSSSS
           - SSSSS
-          - SSSSS
+          - SSWSS
           - SSSSS
           - SSSSS
         - id: pods
@@ -350,13 +356,13 @@ views:
           cells:
           - ' ╲   '
           - ██▒▒█
-          - ██◇▒█
+          - ██◆▒█
           - ' ╱   '
-          - ' ◥██ '
+          - ' ▝▀▀ '
           color_mask:
           - SSSSS
           - SSSSS
-          - SSSSS
+          - SSWSS
           - SSSSS
           - SSSSS
       - id: hearth_drum
@@ -371,29 +377,29 @@ views:
         - id: turning
           weight: 1
           cells:
-          - ╱   ╲
-          - █◇███
-          - █☉███
-          - ╲   ╱
-          - ' ◥██ '
+          - ╱ ◆ ╲
+          - █◆███
+          - █☼███
+          - ╲ ◆ ╱
+          - ' ╰██ '
           color_mask:
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
+          - SSWSS
+          - SWSSS
+          - SBSSS
+          - SSWSS
           - SSSSS
         - id: locked
           weight: 1
           cells:
-          - ◢███◣
-          - █▒◇▒█
-          - █▒☉▒█
-          - ◥███◤
+          - ╭███╮
+          - █▒◆▒█
+          - █▒☼▒█
+          - ╰███╯
           - '     '
           color_mask:
           - SSSSS
-          - SSSSS
-          - SSSSS
+          - SSWSS
+          - SSBSS
           - SSSSS
           - SSSSS
       - id: mining_prow
@@ -409,38 +415,36 @@ views:
           weight: 1
           cells:
           - '  ▟ '
-          - ──█▶
+          - ──█►
           - '  ▜ '
           - '    '
           - '    '
           color_mask:
           - SSSS
-          - SSSS
+          - SSSA
           - SSSS
           - SSSS
           - SSSS
         - id: tractor
           weight: 1
           cells:
-          - ' ◢█ '
-          - ─█◇▶
-          - ' ◥█ '
+          - ' ╭█ '
+          - ─█▀►
+          - ' ╰█ '
           - '    '
           - '    '
           color_mask:
           - SSSS
+          - SSAA
           - SSSS
           - SSSS
           - SSSS
-          - SSSS
-      structure_lengths:
-        retrofitted_drive: 1
-        machine_shop: 1
-        cargo_modules: 3
-        hearth_drum: 1
-        mining_prow: 1
     - id: compact
       name: Compact
+      structure_lengths:
+        drive: 1
+        body: 6
+        prow: 1
       sections:
       - id: drive
         name: Drive
@@ -454,7 +458,7 @@ views:
           weight: 1
           cells:
           - ' █'
-          - ▄█
+          - ▀█
           - '  '
           color_mask:
           - SS
@@ -482,13 +486,13 @@ views:
         - id: home
           weight: 1
           cells:
-          - ▀█
-          - █☉
-          - ▄█
+          - ▀◆
+          - █☼
+          - ▄◆
           color_mask:
-          - SS
-          - SS
-          - SS
+          - SW
+          - SB
+          - SW
       - id: prow
         name: Prow
         primary_property: weapons
@@ -501,16 +505,12 @@ views:
           weight: 1
           cells:
           - '   '
-          - ─█▶
+          - ─▀►
           - '   '
           color_mask:
           - SSS
+          - SAA
           - SSS
-          - SSS
-      structure_lengths:
-        drive: 1
-        body: 6
-        prow: 1
   vertical:
     name: Vertical
     axis: vertical
@@ -519,6 +519,12 @@ views:
     tiers:
     - id: full
       name: Full Detail
+      structure_lengths:
+        retrofitted_drive: 1
+        machine_shop: 1
+        cargo_modules: 4
+        hearth_drum: 1
+        mining_prow: 1
       sections:
       - id: retrofitted_drive
         name: Retrofitted Drive
@@ -533,7 +539,7 @@ views:
           weight: 1
           cells:
           - '      ▓▓      '
-          - '▄▄  ▜▜██▛▛    '
+          - '▌▌  ▜▜██▛▛    '
           color_mask:
           - SSSSSSSSSSSSSS
           - EESSSSSSSSSSSS
@@ -541,7 +547,7 @@ views:
           weight: 1
           cells:
           - '      ▓▓      '
-          - '▄▄▴▴▜▜██▛▛    '
+          - '▌▌▴▴▜▜██▛▛    '
           color_mask:
           - SSSSSSSSSSSSSS
           - EESSSSSSSSSSSS
@@ -557,16 +563,16 @@ views:
         - id: shop
           weight: 1
           cells:
-          - '  ┌┌────┐┐    '
-          - '▀▀││◇◇▒▒││▶▶  '
+          - '  ╭╭──┬┬╮╮    '
+          - '▌▌││◆◆▒▒││▶▶  '
           color_mask:
           - SSSSSSSSSSSSSS
-          - BBSSSSSSSSSSSS
+          - BBSSWWSSSSSSSS
         - id: patched
           weight: 1
           cells:
-          - '  ◢◢████◣◣    '
-          - '  ██▒▒░░██    '
+          - '  ▗▗████▖▖    '
+          - '  ▐▐▒▒░░▌▌    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -582,7 +588,7 @@ views:
         - id: stack
           weight: 1
           cells:
-          - '  ┌┌────┐┐    '
+          - '  ╭╭──┬┬╮╮    '
           - '  ││▒▒▒▒││    '
           - '  ││▒▒▒▒││    '
           color_mask:
@@ -593,8 +599,8 @@ views:
           weight: 1
           cells:
           - '    ████      '
-          - '██  ▒▒▒▒  ██  '
-          - '◥◥╱╱████╲╲◤◤  '
+          - '▐▐  ▒▒▒▒  ▌▌  '
+          - '▝▝╱╱████╲╲▘▘  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -613,15 +619,15 @@ views:
           cells:
           - '  ╱╱████╲╲    '
           - '██  ████  ██  '
-          - '◥◥  ◇◇☉☉  ◤◤  '
+          - '╰╰  ◆◆☼☼  ╯╯  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSWWBBSSSSSS
         - id: locked
           weight: 1
           cells:
-          - '  ◢◢████◣◣    '
+          - '  ╭╭████╮╮    '
           - '  ██▒▒▒▒██    '
           - '  ██▒▒▒▒██    '
           color_mask:
@@ -640,31 +646,31 @@ views:
         - id: laser
           weight: 1
           cells:
-          - '    ▴▴        '
+          - '    ▲▲        '
           - '  ▜▜██▛▛      '
           - '    ││        '
           color_mask:
-          - SSSSSSSSSSSSSS
+          - SSSSAASSSSSSSS
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
         - id: tractor
           weight: 1
           cells:
-          - '    ▴▴        '
-          - '  ██◇◇██      '
+          - '    ▲▲        '
+          - '  ██▌▌██      '
           - '    ││        '
           color_mask:
+          - SSSSAASSSSSSSS
+          - SSSSAASSSSSSSS
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+    - id: medium
+      name: Medium
       structure_lengths:
         retrofitted_drive: 1
         machine_shop: 1
-        cargo_modules: 9
+        cargo_modules: 4
         hearth_drum: 1
         mining_prow: 1
-    - id: medium
-      name: Medium
       sections:
       - id: retrofitted_drive
         name: Retrofitted Drive
@@ -679,7 +685,7 @@ views:
           weight: 1
           cells:
           - '    ▓▓    '
-          - '  ▄▄▄▄▄▄  '
+          - '  ▌▌▌▌▌▌  '
           color_mask:
           - SSSSSSSSSS
           - SSEEEEEESS
@@ -687,7 +693,7 @@ views:
           weight: 1
           cells:
           - '    ▓▓    '
-          - '▄▄  ▄▄    '
+          - '▌▌  ▌▌    '
           color_mask:
           - SSSSSSSSSS
           - EESSEESSSS
@@ -703,16 +709,16 @@ views:
         - id: shop
           weight: 1
           cells:
-          - '┌┌────┐┐  '
-          - '└└────┘┘  '
+          - '╭╭──┬┬╮╮  '
+          - '╰╰──┴┴╯╯  '
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
         - id: patched
           weight: 1
           cells:
-          - '◢◢████◣◣  '
-          - '◥◥████◤◤  '
+          - '▗▗████▖▖  '
+          - '▝▝████▘▘  '
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -728,22 +734,22 @@ views:
         - id: stack
           weight: 1
           cells:
-          - '┌┌────┐┐  '
-          - '││▒▒◇◇││  '
-          - '└└────┘┘  '
+          - '╭╭──┬┬╮╮  '
+          - '││▒▒◆◆││  '
+          - '╰╰──┴┴╯╯  '
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
+          - SSSSWWSSSS
           - SSSSSSSSSS
         - id: pods
           weight: 1
           cells:
           - '  ████    '
-          - '  ▒▒◇◇  ██'
+          - '  ▒▒◆◆  ▌▌'
           - '  ████    '
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
+          - SSSSWWSSSS
           - SSSSSSSSSS
       - id: hearth_drum
         name: Hearth Drum
@@ -758,21 +764,21 @@ views:
           weight: 1
           cells:
           - '╱╱████╲╲  '
-          - '  ████  ██'
+          - ◆◆████◆◆██
           - '╲╲████╱╱  '
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
+          - WWSSSSWWSS
           - SSSSSSSSSS
         - id: locked
           weight: 1
           cells:
-          - '◢◢████◣◣  '
-          - '██◇◇☉☉██  '
-          - '◥◥████◤◤  '
+          - '╭╭████╮╮  '
+          - '██◆◆☼☼██  '
+          - '╰╰████╯╯  '
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
+          - SSWWBBSSSS
           - SSSSSSSSSS
       - id: mining_prow
         name: Mining Prow
@@ -786,27 +792,25 @@ views:
         - id: laser
           weight: 1
           cells:
-          - '  ▴▴      '
+          - '  ▲▲      '
           - '  ││      '
           color_mask:
-          - SSSSSSSSSS
+          - SSAASSSSSS
           - SSSSSSSSSS
         - id: tractor
           weight: 1
           cells:
-          - '  ▴▴      '
-          - '◥◥██◤◤    '
+          - '  ▲▲      '
+          - '╰╰██╯╯    '
           color_mask:
+          - SSAASSSSSS
           - SSSSSSSSSS
-          - SSSSSSSSSS
-      structure_lengths:
-        retrofitted_drive: 1
-        machine_shop: 1
-        cargo_modules: 9
-        hearth_drum: 1
-        mining_prow: 1
     - id: compact
       name: Compact
+      structure_lengths:
+        drive: 1
+        body: 6
+        prow: 1
       sections:
       - id: drive
         name: Drive
@@ -840,9 +844,9 @@ views:
         - id: home
           weight: 1
           cells:
-          - ██☉☉██
+          - ◆◆☼☼◆◆
           color_mask:
-          - SSSSSS
+          - WWBBWW
       - id: prow
         name: Prow
         primary_property: weapons
@@ -854,12 +858,8 @@ views:
         - id: laser
           weight: 1
           cells:
-          - '  ▴▴  '
+          - '  ▲▲  '
           - '  ││  '
           color_mask:
+          - SSAASS
           - SSSSSS
-          - SSSSSS
-      structure_lengths:
-        drive: 1
-        body: 14
-        prow: 1

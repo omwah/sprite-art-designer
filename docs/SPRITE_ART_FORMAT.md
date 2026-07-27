@@ -180,13 +180,15 @@ archetypes:
       engine: [yellow, bright_yellow]
       beacon: [red, bright_red]
       window: [bright_cyan, bright_yellow, grey100]
-      weapons: ['#22c55e']
-      defensive: ['#3b82f6']
+      weapons: ['#DF7070']
+      defensive: ['#60a5fa']
 ```
 
 Every archetype contains exactly these six sets. A set contains one to four
 colors; the first is required and is the fallback for missing slots. The
-Palette tab can add colors until the four-slot limit is reached.
+Palette tab can add colors until the four-slot limit is reached. The shipped
+catalog uses a common red armament accent and a distinct blue defensive shade
+for each archetype.
 
 Unknown archetypes resolve to `humanoid_diplomat`.
 

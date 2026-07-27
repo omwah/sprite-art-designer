@@ -13,6 +13,12 @@ views:
     tiers:
     - id: full
       name: Full Detail
+      structure_lengths:
+        fusion_bell: 1
+        engine_swell: 1
+        diamond_radiators: 6
+        habitat_petals: 1
+        lance: 1
       sections:
       - id: fusion_bell
         name: Fusion Bell
@@ -26,13 +32,13 @@ views:
         - id: focused
           weight: 1
           cells:
-          - ' ▄▶═'
+          - ' ▀▶═'
           - '    '
-          - ' ▄▓ '
-          - ▄██▓
-          - ' ▄▓ '
+          - ' ▀▓ '
+          - ▀██▓
+          - ' ▀▓ '
           - '    '
-          - ' ▄▶═'
+          - ' ▀▶═'
           color_mask:
           - SESS
           - SSSS
@@ -44,13 +50,13 @@ views:
         - id: hot
           weight: 1
           cells:
-          - ' ▄▄═'
-          - ' ▄  '
-          - '▄▟▓ '
-          - ▄██▓
-          - '▄▜▓ '
-          - ' ▄  '
-          - ' ▄▄═'
+          - ' ▀▀═'
+          - ' ▀  '
+          - '▀▟▓ '
+          - ▀██▓
+          - '▀▜▓ '
+          - ' ▀  '
+          - ' ▀▀═'
           color_mask:
           - SEES
           - SESS
@@ -89,20 +95,20 @@ views:
         - id: veined
           weight: 1
           cells:
-          - ' ▀  '
-          - ◢█◇◣
+          - ' ☼  '
+          - ◢█☼◣
           - ▓██▓
           - █▒▒█
           - ▓██▓
-          - ◥█◇◤
+          - ◥█☼◤
           - ' ▾  '
           color_mask:
           - SBSS
+          - SSBS
           - SSSS
           - SSSS
           - SSSS
-          - SSSS
-          - SSSS
+          - SSBS
           - SSSS
       - id: diamond_radiators
         name: Diamond Radiators
@@ -118,9 +124,9 @@ views:
           cells:
           - '◢█◣ '
           - ' ╲  '
-          - ┌──┐
-          - │▒▒│
-          - └──┘
+          - ╭──╮
+          - │ ∞│
+          - ╰──╯
           - ' ╱  '
           - '◥█◤ '
           color_mask:
@@ -134,13 +140,13 @@ views:
         - id: folded
           weight: 1
           cells:
-          - ' ▴  '
+          - ' ♦  '
           - ' │  '
-          - ┌──┐
-          - │◇▒│
-          - └──┘
+          - ▗▄▄▖
+          - █ ▒█
+          - ▝▀▀▘
           - ' │  '
-          - ' ▾  '
+          - ' ◇  '
           color_mask:
           - SSSS
           - SSSS
@@ -163,34 +169,34 @@ views:
           cells:
           - ◢██◣
           - ' ╲╱ '
-          - ████
-          - █☉██
-          - ████
+          - █◆█◆
+          - █☼██
+          - █◆█◆
           - ' ╱╲ '
           - ◥██◤
           color_mask:
           - SSSS
           - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
+          - SWSW
+          - SBSS
+          - SWSW
           - SSSS
           - SSSS
         - id: folded
           weight: 1
           cells:
           - '    '
-          - ◢██◣
+          - ╭██╮
+          - █◆██
+          - █☼█◆
           - ████
-          - █◇██
-          - ████
-          - ◥██◤
+          - ╰██╯
           - '    '
           color_mask:
           - SSSS
           - SSSS
-          - SSSS
-          - SSSS
+          - SWSS
+          - SBSW
           - SSSS
           - SSSS
           - SSSS
@@ -209,7 +215,7 @@ views:
           - '     '
           - '     '
           - '  ─▙ '
-          - ──█▓▶
+          - ─═█▀►
           - '  ─▛ '
           - '     '
           - '     '
@@ -217,7 +223,7 @@ views:
           - SSSSS
           - SSSSS
           - SSSSS
-          - SSSSS
+          - SASAA
           - SSSSS
           - SSSSS
           - SSSSS
@@ -226,27 +232,27 @@ views:
           cells:
           - '     '
           - '     '
-          - '─▓█▙ '
-          - ─██▓▶
-          - '─▓█▛ '
+          - '─▀█▙ '
+          - ═██▀►
+          - '─▄█▛ '
           - '     '
           - '     '
           color_mask:
           - SSSSS
           - SSSSS
+          - SASSS
+          - ASSAA
+          - SASSS
           - SSSSS
           - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
+    - id: medium
+      name: Medium
       structure_lengths:
         fusion_bell: 1
         engine_swell: 1
-        diamond_radiators: 5
+        diamond_radiators: 6
         habitat_petals: 1
         lance: 1
-    - id: medium
-      name: Medium
       sections:
       - id: fusion_bell
         name: Fusion Bell
@@ -261,9 +267,9 @@ views:
           weight: 1
           cells:
           - '   '
-          - ' ▄ '
-          - ▄█▓
-          - ' ▄ '
+          - ' ▀ '
+          - ▀█▓
+          - ' ▀ '
           - '   '
           color_mask:
           - SSS
@@ -274,11 +280,11 @@ views:
         - id: hot
           weight: 1
           cells:
-          - ' ▄ '
-          - '▄▟ '
-          - ▄█▓
-          - '▄▜ '
-          - ' ▄ '
+          - ' ▀ '
+          - '▀▟ '
+          - ▀█▓
+          - '▀▜ '
+          - ' ▀ '
           color_mask:
           - SES
           - ESS
@@ -335,9 +341,9 @@ views:
           weight: 1
           cells:
           - ' ╲ '
-          - ┌─┐
-          - │▒│
-          - └─┘
+          - ╭─╮
+          - │ │
+          - ╰─╯
           - ' ╱ '
           color_mask:
           - SSS
@@ -349,9 +355,9 @@ views:
           weight: 1
           cells:
           - ' │ '
-          - ┌─┐
-          - │◇│
-          - └─┘
+          - ▗▄▖
+          - █ █
+          - ▝▀▘
           - ' │ '
           color_mask:
           - SSS
@@ -372,28 +378,28 @@ views:
           weight: 1
           cells:
           - ' ╲ '
-          - ███
-          - █☉█
-          - ███
+          - █◆◆
+          - █☼█
+          - █◆◆
           - ' ╱ '
           color_mask:
           - SSS
-          - SSS
-          - SSS
-          - SSS
+          - SWW
+          - SBS
+          - SWW
           - SSS
         - id: folded
           weight: 1
           cells:
-          - ◢█◣
+          - ╭█╮
+          - █◆█
+          - █☼◆
           - ███
-          - █◇█
-          - ███
-          - ◥█◤
+          - ╰█╯
           color_mask:
           - SSS
-          - SSS
-          - SSS
+          - SWS
+          - SBW
           - SSS
           - SSS
       - id: lance
@@ -410,37 +416,35 @@ views:
           cells:
           - '    '
           - '  ─ '
-          - ──█▶
+          - ─═█►
           - '  ─ '
           - '    '
           color_mask:
           - SSSS
           - SSSS
-          - SSSS
+          - SASA
           - SSSS
           - SSSS
         - id: fork
           weight: 1
           cells:
           - '    '
-          - '─▓█ '
-          - ─██▶
-          - '─▓█ '
+          - '─▀█ '
+          - ═██►
+          - '─▄█ '
           - '    '
           color_mask:
           - SSSS
+          - SASS
+          - ASSA
+          - SASS
           - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-      structure_lengths:
-        fusion_bell: 1
-        engine_swell: 1
-        diamond_radiators: 5
-        habitat_petals: 1
-        lance: 1
     - id: compact
       name: Compact
+      structure_lengths:
+        drive: 1
+        body: 6
+        prow: 1
       sections:
       - id: drive
         name: Drive
@@ -454,7 +458,7 @@ views:
           weight: 1
           cells:
           - ' ▴'
-          - ▄█
+          - ▀█
           - ' ▾'
           color_mask:
           - SS
@@ -482,13 +486,13 @@ views:
         - id: petal
           weight: 1
           cells:
-          - ▀█
-          - █◇
-          - ▄█
+          - ▀◆
+          - █☼
+          - ▄◆
           color_mask:
-          - SS
-          - SS
-          - SS
+          - SW
+          - SB
+          - SW
       - id: prow
         name: Prow
         primary_property: weapons
@@ -501,16 +505,12 @@ views:
           weight: 1
           cells:
           - '   '
-          - ─█▶
+          - ═▀►
           - '   '
           color_mask:
           - SSS
+          - AAA
           - SSS
-          - SSS
-      structure_lengths:
-        drive: 1
-        body: 6
-        prow: 1
   vertical:
     name: Vertical
     axis: vertical
@@ -519,6 +519,12 @@ views:
     tiers:
     - id: full
       name: Full Detail
+      structure_lengths:
+        fusion_bell: 1
+        engine_swell: 1
+        diamond_radiators: 6
+        habitat_petals: 1
+        lance: 1
       sections:
       - id: fusion_bell
         name: Fusion Bell
@@ -533,7 +539,7 @@ views:
           weight: 1
           cells:
           - ║║    ▓▓    ║║
-          - ▄▄  ▄▄██▄▄  ▄▄
+          - ▌▌  ▌▌██▌▌  ▌▌
           color_mask:
           - SSSSSSSSSSSSSS
           - EESSEESSEESSEE
@@ -541,7 +547,7 @@ views:
           weight: 1
           cells:
           - ║║    ▓▓    ║║
-          - ▄▄▄▄▜▜██▛▛▄▄▄▄
+          - ▌▌▌▌▜▜██▛▛▌▌▌▌
           color_mask:
           - SSSSSSSSSSSSSS
           - EEEESSSSSSEEEE
@@ -566,7 +572,7 @@ views:
           weight: 1
           cells:
           - '  ◢◢▓▓██▓▓◣◣  '
-          - ▀▀████▒▒████▶▶
+          - ☼☼████▒▒████▶▶
           color_mask:
           - SSSSSSSSSSSSSS
           - BBSSSSSSSSSSSS
@@ -582,16 +588,16 @@ views:
         - id: open
           weight: 1
           cells:
-          - '    ┌┌──┐┐    '
-          - ██╱╱││▒▒││╲╲██
+          - '    ╭╭──╮╮    '
+          - ██╱╱││  ││╲╲██
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
         - id: folded
           weight: 1
           cells:
-          - '    ┌┌──┐┐    '
-          - ◀◀──││◇◇││──▶▶
+          - '    ▗▗██▖▖    '
+          - ♦♦──▐▐  ▌▌──◇◇
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -607,19 +613,19 @@ views:
         - id: spread
           weight: 1
           cells:
-          - ◢◢  ██████  ◣◣
-          - ██╱╱██☉☉██╲╲██
+          - ◢◢  ◆◆██◆◆  ◣◣
+          - ██╱╱◆◆☼☼◆◆╲╲██
           color_mask:
-          - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSWWSSWWSSSS
+          - SSSSWWBBWWSSSS
         - id: folded
           weight: 1
           cells:
-          - '  ◢◢██████◣◣  '
-          - '  ████◇◇████  '
+          - '  ╭╭██◆◆██╮╮  '
+          - '  ██◆◆☼☼████  '
           color_mask:
-          - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSSSWWSSSSSS
+          - SSSSWWBBSSSSSS
       - id: lance
         name: Lance
         primary_property: main_gun
@@ -632,31 +638,31 @@ views:
         - id: needle
           weight: 1
           cells:
-          - '      ▴▴      '
+          - '      ▲▲      '
           - '    ││██││    '
           - '      ││      '
           color_mask:
-          - SSSSSSSSSSSSSS
+          - SSSSSSAASSSSSS
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
         - id: fork
           weight: 1
           cells:
-          - '      ▴▴      '
+          - '      ▲▲      '
           - '    ██████    '
-          - '    ││││││    '
+          - '    ││║║││    '
           color_mask:
+          - SSSSSSAASSSSSS
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSSSAASSSSSS
+    - id: medium
+      name: Medium
       structure_lengths:
         fusion_bell: 1
         engine_swell: 1
         diamond_radiators: 6
         habitat_petals: 1
         lance: 1
-    - id: medium
-      name: Medium
       sections:
       - id: fusion_bell
         name: Fusion Bell
@@ -671,7 +677,7 @@ views:
           weight: 1
           cells:
           - '    ▓▓    '
-          - '    ▄▄    '
+          - '    ▌▌    '
           color_mask:
           - SSSSSSSSSS
           - SSSSEESSSS
@@ -679,7 +685,7 @@ views:
           weight: 1
           cells:
           - '    ▓▓    '
-          - '  ▄▄▄▄▄▄  '
+          - '  ▌▌▌▌▌▌  '
           color_mask:
           - SSSSSSSSSS
           - SSEEEEEESS
@@ -720,16 +726,16 @@ views:
         - id: open
           weight: 1
           cells:
-          - '  ┌┌──┐┐  '
-          - '  └└──┘┘  '
+          - '  ╭╭──╮╮  '
+          - '  ╰╰──╯╯  '
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
         - id: folded
           weight: 1
           cells:
-          - '  ┌┌──┐┐  '
-          - '  └└──┘┘  '
+          - '  ▗▗██▖▖  '
+          - '  ▝▝██▘▘  '
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -745,18 +751,18 @@ views:
         - id: spread
           weight: 1
           cells:
-          - '  ██████  '
+          - '  ◆◆██◆◆  '
           - '  ██████  '
           color_mask:
-          - SSSSSSSSSS
+          - SSWWSSWWSS
           - SSSSSSSSSS
         - id: folded
           weight: 1
           cells:
-          - ◢◢██████◣◣
-          - ◥◥██████◤◤
+          - ╭╭██◆◆██╮╮
+          - ╰╰██████╯╯
           color_mask:
-          - SSSSSSSSSS
+          - SSSSWWSSSS
           - SSSSSSSSSS
       - id: lance
         name: Lance
@@ -770,27 +776,25 @@ views:
         - id: needle
           weight: 1
           cells:
-          - '    ▴▴    '
-          - '    ││    '
+          - '    ▲▲    '
+          - '    ║║    '
           color_mask:
-          - SSSSSSSSSS
-          - SSSSSSSSSS
+          - SSSSAASSSS
+          - SSSSAASSSS
         - id: fork
           weight: 1
           cells:
-          - '    ▴▴    '
-          - '  ▓▓██▓▓  '
+          - '    ▲▲    '
+          - '  ▌▌██▐▐  '
           color_mask:
-          - SSSSSSSSSS
-          - SSSSSSSSSS
-      structure_lengths:
-        fusion_bell: 1
-        engine_swell: 1
-        diamond_radiators: 6
-        habitat_petals: 1
-        lance: 1
+          - SSSSAASSSS
+          - SSAASSAASS
     - id: compact
       name: Compact
+      structure_lengths:
+        drive: 1
+        body: 6
+        prow: 1
       sections:
       - id: drive
         name: Drive
@@ -824,9 +828,9 @@ views:
         - id: petal
           weight: 1
           cells:
-          - ██◇◇██
+          - ◆◆☼☼◆◆
           color_mask:
-          - SSSSSS
+          - WWBBWW
       - id: prow
         name: Prow
         primary_property: weapons
@@ -838,12 +842,8 @@ views:
         - id: lance
           weight: 1
           cells:
-          - '  ▴▴  '
-          - '  ││  '
+          - '  ▲▲  '
+          - '  ║║  '
           color_mask:
-          - SSSSSS
-          - SSSSSS
-      structure_lengths:
-        drive: 1
-        body: 11
-        prow: 1
+          - SSAASS
+          - SSAASS
