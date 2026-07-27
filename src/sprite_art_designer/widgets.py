@@ -565,7 +565,6 @@ class PreviewToolsTab(TabPane):
                             allow_blank=False,
                             id="preview-size",
                         )
-                        yield Input(placeholder="Custom: 40x7", id="preview-custom-size")
                 with Vertical():
                     yield Label("Seed")
                     with Horizontal(id="preview-seed-controls"):

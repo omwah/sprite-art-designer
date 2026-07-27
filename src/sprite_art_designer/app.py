@@ -1200,28 +1200,25 @@ class EdgeArtDesigner(App[None]):
                 return
             if self._updating_preview_tier_control:
                 return
-            custom_size = self.query_one("#preview-custom-size", Input)
-            custom_size.display = value == "custom"
-            if value != "custom":
-                tier = next(
-                    (
-                        tier
-                        for tier in self.editor.current_sprite.views[
-                            self.current_view_id
-                        ].tiers
-                        if tier.id == value
-                    ),
-                    None,
+            tier = next(
+                (
+                    tier
+                    for tier in self.editor.current_sprite.views[
+                        self.current_view_id
+                    ].tiers
+                    if tier.id == value
+                ),
+                None,
+            )
+            if tier is not None:
+                selected = (
+                    self._tier_for_structure(self.selection.item)
+                    if self.selection is not None
+                    else None
                 )
-                if tier is not None:
-                    selected = (
-                        self._tier_for_structure(self.selection.item)
-                        if self.selection is not None
-                        else None
-                    )
-                    if tier is selected:
-                        return
-                    self._select_tree_item(tier, persist_variant=False)
+                if tier is selected:
+                    return
+                self._select_tree_item(tier, persist_variant=False)
 
     def _refresh_preview_controls(self) -> None:
         view_select = self.query_one("#preview-view", Select)
@@ -1234,15 +1231,11 @@ class EdgeArtDesigner(App[None]):
         view_select.value = self.current_view_id
         view = sprite.views[self.current_view_id]
         tier_select = self.query_one("#preview-size", Select)
-        current_value = str(tier_select.value)
         self._updating_preview_tier_control = True
         try:
             tier_select.set_options(self._preview_tier_options(view))
             selected = self._tier_for_structure(self.selection.item) if self.selection else None
-            if current_value == "custom":
-                self._programmatic_preview_tier_value = "custom"
-                tier_select.value = "custom"
-            elif selected is not None and selected in view.tiers:
+            if selected is not None and selected in view.tiers:
                 self._programmatic_preview_tier_value = selected.id
                 tier_select.value = selected.id
             else:
@@ -1254,7 +1247,7 @@ class EdgeArtDesigner(App[None]):
 
     @staticmethod
     def _preview_tier_options(view: View) -> list[tuple[str, str]]:
-        return [(tier.name, tier.id) for tier in view.tiers] + [("Custom…", "custom")]
+        return [(tier.name, tier.id) for tier in view.tiers]
 
     def _set_preview_size_for_tier(self, tier: Tier) -> None:
         view = self.editor.current_sprite.views[self.current_view_id]
@@ -1267,10 +1260,6 @@ class EdgeArtDesigner(App[None]):
             size = (variant.width, variant.height)
         self.preview_size = size
         size_select = self.query_one("#preview-size", Select)
-        size_value = f"{size[0]}x{size[1]}"
-        custom_size = self.query_one("#preview-custom-size", Input)
-        custom_size.value = size_value
-        custom_size.display = False
         self._updating_preview_tier_control = True
         try:
             self._programmatic_preview_tier_value = tier.id
@@ -1503,19 +1492,10 @@ class EdgeArtDesigner(App[None]):
     def _apply_preview_configuration(self) -> None:
         try:
             seed = int(self.query_one("#preview-seed", Input).value)
-            size_value = str(self.query_one("#preview-size", Select).value)
-            size = (
-                self._parse_preview_size(
-                    self.query_one("#preview-custom-size", Input).value
-                )
-                if size_value == "custom"
-                else self.preview_size
-            )
         except ValueError:
-            self.notify("Use a size such as 18x3 or 40x7", severity="error")
+            self.notify("Seed must be an integer", severity="error")
             return
         self.preview_seed = seed
-        self.preview_size = size
         self._refresh_variant_labels()
         self._refresh_preview()
 
@@ -1524,14 +1504,6 @@ class EdgeArtDesigner(App[None]):
         self.query_one("#preview-seed", Input).value = "7"
         self._refresh_variant_labels()
         self._refresh_preview()
-
-    @staticmethod
-    def _parse_preview_size(value: str) -> tuple[int, int]:
-        width_text, height_text = value.strip().lower().split("x", 1)
-        width, height = int(width_text), int(height_text)
-        if width < 1 or height < 1:
-            raise ValueError
-        return width, height
 
     def action_save(self) -> None:
         try:

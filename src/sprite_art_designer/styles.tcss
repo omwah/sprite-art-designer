@@ -323,7 +323,7 @@ Header {
 }
 
 #preview-size {
-    width: 26;
+    width: 1fr;
     margin-right: 1;
 }
 
@@ -331,11 +331,6 @@ Header {
     height: 3;
     margin-right: 1;
     margin-bottom: 1;
-}
-
-#preview-custom-size {
-    display: none;
-    width: 1fr;
 }
 
 #preview-highlight {

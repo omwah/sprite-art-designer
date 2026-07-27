@@ -7,6 +7,7 @@ from shutil import copytree
 
 import pytest
 from textual.color import Color as TextualColor
+from textual.css.query import NoMatches
 from textual.containers import Horizontal, ItemGrid
 from textual.widgets import Label, Select, TabbedContent, TabPane, Tree
 from textual_colorpicker import ColorPicker
@@ -143,19 +144,14 @@ async def test_narrow_layout_uses_switchable_panels() -> None:
 
 
 @pytest.mark.asyncio
-async def test_preview_size_select_supports_custom_size() -> None:
+async def test_preview_size_select_only_offers_tiers() -> None:
     app = EdgeArtDesigner(ROOT / "assets")
     async with app.run_test(size=(140, 50)) as pilot:
         await pilot.pause()
         size_select = app.query_one("#preview-size")
-        size_select.value = "custom"
-        await pilot.pause()
-        custom_size = app.query_one("#preview-custom-size")
-        assert custom_size.display
-        custom_size.value = "24x6"
-        app._apply_preview_configuration()
-        assert app.preview_size == (24, 6)
-        assert app.query_one("#preview-matrix", PreviewMatrix).preview_size == (24, 6)
+        assert all(value != "custom" for _, value in size_select._options)
+        with pytest.raises(NoMatches):
+            app.query_one("#preview-custom-size")
 
 
 @pytest.mark.asyncio
