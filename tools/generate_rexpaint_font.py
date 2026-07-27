@@ -67,6 +67,118 @@ def _fallback_cell(glyph: str, destination: Path) -> None:
     )
 
 
+def _diagonal_cell(glyph: str, destination: Path) -> None:
+    """Rasterize xterm.js's light character-cell diagonal geometry."""
+
+    endpoints = "0,19 9,0" if glyph == "╱" else "0,0 9,19"
+    _run(
+        "convert",
+        "-size",
+        f"{CELL_WIDTH}x{CELL_HEIGHT}",
+        "xc:black",
+        "+antialias",
+        "-stroke",
+        "white",
+        "-strokewidth",
+        "1",
+        "-draw",
+        f"line {endpoints}",
+        str(destination),
+    )
+
+
+def _xterm_block_cell(glyph: str, destination: Path) -> None:
+    """Rasterize xterm.js's solid-octant block definition at 10×20."""
+
+    # Ported from xterm.js's CustomGlyphDefinitions.ts terminal graphics.
+    octants = {
+        "▖": ((0, 4, 4, 4),),
+        "▗": ((4, 4, 4, 4),),
+        "▘": ((0, 0, 4, 4),),
+        "▙": ((0, 0, 4, 8), (0, 4, 8, 4)),
+        "▚": ((0, 0, 4, 4), (4, 4, 4, 4)),
+        "▛": ((0, 0, 4, 8), (4, 0, 4, 4)),
+        "▜": ((0, 0, 8, 4), (4, 0, 4, 8)),
+        "▝": ((4, 0, 4, 4),),
+        "▞": ((4, 0, 4, 4), (0, 4, 4, 4)),
+        "▟": ((4, 0, 4, 8), (0, 4, 8, 4)),
+    }
+    shapes = " ".join(
+        "rectangle "
+        f"{x * CELL_WIDTH // 8},{y * CELL_HEIGHT // 8} "
+        f"{(x + width) * CELL_WIDTH // 8 - 1},{(y + height) * CELL_HEIGHT // 8 - 1}"
+        for x, y, width, height in octants[glyph]
+    )
+    _run(
+        "convert",
+        "-size",
+        f"{CELL_WIDTH}x{CELL_HEIGHT}",
+        "xc:black",
+        "+antialias",
+        "-fill",
+        "white",
+        "-stroke",
+        "none",
+        "-draw",
+        shapes,
+        str(destination),
+    )
+
+
+def _triangle_facet_cell(glyph: str, destination: Path) -> None:
+    """Draw full-cell triangle facets not defined by xterm.js."""
+
+    shapes = {
+        "◢": "polygon 0,19 9,19 9,0",
+        "◣": "polygon 0,0 0,19 9,19",
+        "◥": "polygon 0,0 9,0 9,19",
+        "◤": "polygon 0,0 9,0 0,19",
+    }
+    _run(
+        "convert",
+        "-size",
+        f"{CELL_WIDTH}x{CELL_HEIGHT}",
+        "xc:black",
+        "+antialias",
+        "-fill",
+        "white",
+        "-stroke",
+        "none",
+        "-draw",
+        shapes[glyph],
+        str(destination),
+    )
+
+
+def _rounded_corner_cell(glyph: str, destination: Path) -> None:
+    """Rasterize xterm.js's light character-cell arc geometry at 10×20."""
+
+    # Ported from xterm.js's CustomGlyphDefinitions.ts character-cell arcs.
+    # xterm.js scales these normalized paths to the current terminal cell.
+    paths = {
+        "╭": "path 'M 5,20 L 5,15 C 5,15 5,10 10,10'",
+        "╮": "path 'M 5,20 L 5,15 C 5,15 5,10 0,10'",
+        "╯": "path 'M 5,0 L 5,5 C 5,5 5,10 0,10'",
+        "╰": "path 'M 5,0 L 5,5 C 5,5 5,10 10,10'",
+    }
+    _run(
+        "convert",
+        "-size",
+        f"{CELL_WIDTH}x{CELL_HEIGHT}",
+        "xc:black",
+        "+antialias",
+        "-fill",
+        "none",
+        "-stroke",
+        "white",
+        "-strokewidth",
+        "1",
+        "-draw",
+        paths[glyph],
+        str(destination),
+    )
+
+
 def _composite_cell(canvas: Path, cell: Path, index: int) -> None:
     x = index % COLUMNS * CELL_WIDTH
     y = index // COLUMNS * CELL_HEIGHT
@@ -87,11 +199,20 @@ def build(source_font: Path, output_directory: Path) -> None:
         _run("convert", "-size", f"{COLUMNS * CELL_WIDTH}x{rows * CELL_HEIGHT}", "xc:black", str(canvas))
         for glyph, index in REXPAINT_GLYPH_INDICES.items():
             cell = temporary / f"{index}.png"
-            slot = slots.get(glyph)
-            if slot is None:
-                _fallback_cell(glyph, cell)
+            if glyph in {"▖", "▗", "▘", "▝", "▚", "▞", "▟", "▙", "▜", "▛"}:
+                _xterm_block_cell(glyph, cell)
+            elif glyph in {"◢", "◣", "◥", "◤"}:
+                _triangle_facet_cell(glyph, cell)
+            elif glyph in {"╭", "╮", "╰", "╯"}:
+                _rounded_corner_cell(glyph, cell)
+            elif glyph in {"╱", "╲"}:
+                _diagonal_cell(glyph, cell)
             else:
-                _font_cell(source_font, slot, cell)
+                slot = slots.get(glyph)
+                if slot is None:
+                    _fallback_cell(glyph, cell)
+                else:
+                    _font_cell(source_font, slot, cell)
             _composite_cell(canvas, cell, index)
         shutil.copyfile(canvas, output)
 
