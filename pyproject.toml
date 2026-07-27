@@ -3,6 +3,7 @@ name = "edge-art-designer"
 version = "0.1.0"
 description = "A Textual sprite-art editor for Edge of the Unknown"
 authors = [{ name = "James McDuffie", email = "mcduffie@pitfall.org" }]
+license = "AGPL-3.0-or-later"
 requires-python = ">=3.12"
 dependencies = ["textual-colorpicker>=0.1.0,<0.2"]
 

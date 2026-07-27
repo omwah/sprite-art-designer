@@ -57,3 +57,8 @@ that font map back into the current preview. Import assumes that the image was
 just exported with the same preview size, seed, view, facing, and active
 variants; it segments the image into those active editable variants. All copies
 of a repeated section must match.
+
+## License
+
+Licensed under the GNU Affero General Public License v3.0 or later. See
+`LICENSE` for the full text.
