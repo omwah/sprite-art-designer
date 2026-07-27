@@ -293,8 +293,18 @@ Header {
     margin-bottom: 1;
 }
 
+#view-facing-controls {
+    height: 4;
+    margin-bottom: 1;
+}
+
 #preview-view, #preview-facing {
     margin-right: 1;
+}
+
+#tier-seed-controls {
+    height: 4;
+    margin-bottom: 1;
 }
 
 #preview-seed-controls {
@@ -325,7 +335,7 @@ Header {
 
 #preview-custom-size {
     display: none;
-    width: 16;
+    width: 1fr;
 }
 
 #preview-highlight {

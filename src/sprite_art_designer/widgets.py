@@ -540,28 +540,37 @@ class PreviewToolsTab(TabPane):
 
     def compose(self) -> ComposeResult:
         with VerticalScroll(id="preview-controls"):
-            yield Label("View")
-            yield Select(self.view_options, value=self.initial_view_id, allow_blank=False, id="preview-view")
-            yield Label("Facing")
-            yield Select(
-                self.facing_options,
-                value=self.facing_options[0][1],
-                allow_blank=False,
-                id="preview-facing",
-            )
-            yield Label("Seed")
-            with Horizontal(id="preview-seed-controls"):
-                yield Input(value=str(self.seed), type="integer", id="preview-seed")
-                yield Button("Reset", id="reset-preview-seed")
-            yield Label("Tier")
-            with Horizontal(id="preview-size-controls"):
-                yield Select(
-                    self.tier_options,
-                    value=Select.NULL,
-                    allow_blank=False,
-                    id="preview-size",
-                )
-                yield Input(placeholder="Custom: 40x7", id="preview-custom-size")
+            with Horizontal(id="view-facing-controls"):
+                with Vertical():
+                    yield Label("View")
+                    yield Select(self.view_options,
+                                value=self.initial_view_id,
+                                allow_blank=False,
+                                id="preview-view")
+                with Vertical():
+                    yield Label("Facing")
+                    yield Select(
+                        self.facing_options,
+                        value=self.facing_options[0][1],
+                        allow_blank=False,
+                        id="preview-facing",
+                    )
+            with Horizontal(id="tier-seed-controls"):
+                with Vertical():
+                    yield Label("Tier Size")
+                    with Horizontal(id="preview-size-controls"):
+                        yield Select(
+                            self.tier_options,
+                            value=Select.NULL,
+                            allow_blank=False,
+                            id="preview-size",
+                        )
+                        yield Input(placeholder="Custom: 40x7", id="preview-custom-size")
+                with Vertical():
+                    yield Label("Seed")
+                    with Horizontal(id="preview-seed-controls"):
+                        yield Input(value=str(self.seed), type="integer", id="preview-seed")
+                        yield Button("Reset", id="reset-preview-seed")
             yield Label("Highlight edit")
             yield Switch(value=self.highlight_enabled, id="preview-highlight")
             yield Button("Apply", id="apply-preview", variant="primary")
