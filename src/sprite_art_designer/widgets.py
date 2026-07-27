@@ -14,19 +14,21 @@ from textual.message import Message
 from textual.widget import Widget
 from textual.widgets import Button, Input, Label, Select, Static, Switch, TabbedContent, TabPane, Tree
 
-from sprite_art import PaletteCatalog, Sprite, Variant, render_sprite
-from sprite_art.glyphs import AUTHORING_GLYPHS, SEMANTIC_GLYPHS
+from sprite_art import (
+    COLOR_CODE_TO_SET,
+    COLOR_SET_CODES,
+    COLOR_SET_IDS,
+    SURFACE_MASK_CODE,
+    Palette,
+    PaletteCatalog,
+    Sprite,
+    Variant,
+    render_sprite,
+)
+from sprite_art.glyphs import AUTHORING_GLYPHS
+from sprite_art.render import glyph_colors
 
-SEMANTIC_BUTTON_RENDERING = {
-    "R": ("▀", "#f87171"),
-    "Y": ("▀", "#facc15"),
-    "G": ("▀", "#22c55e"),
-    "B": ("▀", "#3b82f6"),
-    "r": ("▄", "#f87171"),
-    "y": ("▄", "#facc15"),
-    "g": ("▄", "#22c55e"),
-    "b": ("▄", "#3b82f6"),
-}
+PALETTE_SLOT_GLYPHS = ("█", "▓", "▒", "◇")
 
 
 class ArtCanvas(Widget, can_focus=True):
@@ -38,13 +40,18 @@ class ArtCanvas(Widget, can_focus=True):
             super().__init__()
 
     class GlyphPicked(Message):
-        def __init__(self, canvas: ArtCanvas, glyph: str) -> None:
+        def __init__(
+            self, canvas: ArtCanvas, glyph: str, color_set_id: str
+        ) -> None:
             self.canvas = canvas
             self.glyph = glyph
+            self.color_set_id = color_set_id
             super().__init__()
 
     variant: Variant | None = None
     selected_glyph: str = "█"
+    selected_color_set_id: str = "surface"
+    palette: Palette | None = None
     cursor_x: int = 0
     cursor_y: int = 0
     _painting_button: int = 0
@@ -57,6 +64,13 @@ class ArtCanvas(Widget, can_focus=True):
 
     def set_glyph(self, glyph: str) -> None:
         self.selected_glyph = glyph
+
+    def set_color_set(self, color_set_id: str) -> None:
+        self.selected_color_set_id = color_set_id
+
+    def set_palette(self, palette: Palette) -> None:
+        self.palette = palette
+        self.refresh()
 
     def get_content_width(self, container: Size, viewport: Size) -> int:
         return max(1, (self.variant.width if self.variant else 1))
@@ -71,9 +85,23 @@ class ArtCanvas(Widget, can_focus=True):
         for row_index, row in enumerate(self.variant.cells):
             for column, glyph in enumerate(row):
                 shown = "·" if glyph == " " else glyph
-                style = "grey35" if glyph == " " else "white"
+                if glyph == " ":
+                    style = "grey35"
+                elif self.palette is None:
+                    style = "white"
+                else:
+                    color_set_id = COLOR_CODE_TO_SET[
+                        self.variant.color_mask[row_index][column]
+                    ]
+                    foreground, background = glyph_colors(
+                        glyph, self.palette.color_set(color_set_id)
+                    )
+                    style = foreground
+                    if background is not None:
+                        style += f" on {background}"
                 if column == self.cursor_x and row_index == self.cursor_y:
-                    style += " on #315a74"
+                    foreground = style.split(" on ", maxsplit=1)[0]
+                    style = f"{foreground} on #315a74"
                 output.append(shown, style=style)
             if row_index < self.variant.height - 1:
                 output.append("\n")
@@ -92,10 +120,19 @@ class ArtCanvas(Widget, can_focus=True):
         if self.variant is None:
             return
         glyph = " " if button == 3 else self.selected_glyph
+        color_code = (
+            SURFACE_MASK_CODE
+            if glyph == " "
+            else COLOR_SET_CODES[self.selected_color_set_id]
+        )
         row = self.variant.cells[y]
-        if row[x] == glyph:
+        mask_row = self.variant.color_mask[y]
+        if row[x] == glyph and mask_row[x] == color_code:
             return
         self.variant.cells[y] = row[:x] + glyph + row[x + 1 :]
+        self.variant.color_mask[y] = (
+            mask_row[:x] + color_code + mask_row[x + 1 :]
+        )
         self.cursor_x = x
         self.cursor_y = y
         self.refresh()
@@ -108,10 +145,13 @@ class ArtCanvas(Widget, can_focus=True):
         if event.button == 2:
             assert self.variant is not None
             glyph = self.variant.cells[cell[1]][cell[0]]
+            color_set_id = COLOR_CODE_TO_SET[
+                self.variant.color_mask[cell[1]][cell[0]]
+            ]
             self.cursor_x, self.cursor_y = cell
             self.set_glyph(glyph)
             self.refresh()
-            self.post_message(self.GlyphPicked(self, glyph))
+            self.post_message(self.GlyphPicked(self, glyph, color_set_id))
             event.stop()
             return
         if event.button not in (1, 3):
@@ -245,40 +285,44 @@ class GlyphPalette(ItemGrid):
         self.post_message(self.Selected(glyph))
 
 
-class SemanticGlyphRow(Horizontal):
-    """A compact, contiguous row of semantic marker buttons."""
+class ColorSetSelector(ItemGrid):
+    """Named color-mask selectors kept separate from authored glyphs."""
 
     class Selected(Message):
-        def __init__(self, glyph: str) -> None:
-            self.glyph = glyph
+        def __init__(self, color_set_id: str) -> None:
+            self.color_set_id = color_set_id
             super().__init__()
 
-    glyphs = tuple(item for item in AUTHORING_GLYPHS if item[0] in SEMANTIC_GLYPHS)
+    def __init__(self, *children: Widget, id: str | None = None) -> None:
+        super().__init__(
+            *children,
+            id=id,
+            min_column_width=12,
+            stretch_height=False,
+        )
 
     def compose(self) -> ComposeResult:
-        for index, (glyph, description) in enumerate(self.glyphs):
-            rendered_glyph, color = SEMANTIC_BUTTON_RENDERING[glyph]
-            label = Text.assemble((rendered_glyph, color), f" ({glyph})")
-            row = "upper" if index < 4 else "lower"
+        for color_set_id in COLOR_SET_IDS:
             yield Button(
-                label,
-                id=f"semantic-glyph-{index}",
-                tooltip=description,
-                classes=f"glyph-button semantic-{row}",
+                color_set_id.replace("_", " ").title(),
+                id=f"color-set-{color_set_id}",
+                classes="color-set-button",
+                variant="primary" if color_set_id == "surface" else "default",
             )
 
-    def set_selected_glyph(self, glyph: str) -> None:
-        for index, (candidate, _description) in enumerate(self.glyphs):
-            button = self.query_one(f"#semantic-glyph-{index}", Button)
-            button.variant = "primary" if candidate == glyph else "default"
+    def set_selected_color_set(self, selected: str) -> None:
+        for color_set_id in COLOR_SET_IDS:
+            button = self.query_one(f"#color-set-{color_set_id}", Button)
+            button.variant = (
+                "primary" if color_set_id == selected else "default"
+            )
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
-        if not event.button.id or not event.button.id.startswith("semantic-glyph-"):
+        if not event.button.id or not event.button.id.startswith("color-set-"):
             return
-        index = int(event.button.id.removeprefix("semantic-glyph-"))
-        glyph = self.glyphs[index][0]
-        self.set_selected_glyph(glyph)
-        self.post_message(self.Selected(glyph))
+        color_set_id = event.button.id.removeprefix("color-set-")
+        self.set_selected_color_set(color_set_id)
+        self.post_message(self.Selected(color_set_id))
 
 
 class DocumentBar(Horizontal):
@@ -371,12 +415,10 @@ class GlyphToolsTab(TabPane):
         with VerticalScroll():
             yield GlyphPalette(
                 id="glyph-palette",
-                glyphs=tuple(item for item in AUTHORING_GLYPHS if item[0] not in SEMANTIC_GLYPHS),
             )
-            with Vertical(id="semantic-glyph-row"):
-                yield SemanticGlyphRow(id="semantic-glyph-upper")
-                yield SemanticGlyphRow(id="semantic-glyph-lower")
-            yield Label("Selected: █", id="selected-glyph")
+            yield Label("Color set", classes="section-title")
+            yield ColorSetSelector(id="color-set-selector")
+            yield Label("Selected: █ · Surface", id="selected-glyph")
 
 
 class PropertiesToolsTab(TabPane):
@@ -437,34 +479,37 @@ class PaletteToolsTab(TabPane):
                 regular=False,
                 classes="palette-swatch-row",
             ):
-                yield PaletteColorGroup(
-                    "Surface colors",
-                    (("bright", 0), ("mid", 0), ("dark", 0), ("facet", 0)),
-                )
-                for field_name in ("beacon", "engine", "window"):
+                for color_set_id in COLOR_SET_IDS:
                     yield PaletteColorGroup(
-                        field_name.replace("_", " ").title(),
-                        tuple((field_name, index) for index in range(3)),
+                        color_set_id,
                     )
 
 
 class PaletteColorGroup(Vertical):
     """A labeled palette color pool that can wrap as one responsive unit."""
 
-    def __init__(self, label: str, swatches: tuple[tuple[str, int], ...]) -> None:
+    def __init__(self, color_set_id: str) -> None:
         super().__init__(classes="palette-color-group")
-        self.label = label
-        self.swatches = swatches
+        self.color_set_id = color_set_id
 
     def compose(self) -> ComposeResult:
-        yield Label(self.label, classes="palette-group-label")
+        yield Label(
+            self.color_set_id.replace("_", " ").title(),
+            classes="palette-group-label",
+        )
         with Horizontal(classes="palette-color-group-swatches"):
-            for field_name, index in self.swatches:
-                yield PaletteColorSwatch(field_name, index)
+            for index in range(4):
+                yield PaletteColorSwatch(self.color_set_id, index)
+            yield Button(
+                "+",
+                id=f"palette-add-{self.color_set_id}",
+                classes="palette-add-color",
+                tooltip=f"Add a {self.color_set_id} color (up to four)",
+            )
 
     def get_content_height(self, container: Size, viewport: Size, width: int) -> int:
-        """Reserve one label row and two complete swatch rows in an ItemGrid."""
-        return 3
+        """Reserve one label row and a three-row bordered swatch row."""
+        return 4
 
 
 class PaletteColorSwatch(Button):
@@ -475,23 +520,40 @@ class PaletteColorSwatch(Button):
             super().__init__()
             self.swatch = swatch
 
-    def __init__(self, field_name: str, index: int) -> None:
-        super().__init__("", id=f"palette-color-{field_name}-{index}")
-        self.field_name = field_name
+    def __init__(self, color_set_id: str, index: int) -> None:
+        super().__init__(
+            PALETTE_SLOT_GLYPHS[index],
+            id=f"palette-color-{color_set_id}-{index}",
+        )
+        self.color_set_id = color_set_id
         self.color_index = index
         self.color_value = ""
 
-    def set_color(self, color: str | None) -> None:
+    def set_color(self, color: str | None, full_block_color: str) -> None:
         self.display = color is not None
         if color is None:
             return
         parsed = Color.parse(color).get_truecolor()
+        full_block = Color.parse(full_block_color).get_truecolor()
         self.color_value = color
-        self.label = ""
-        self.tooltip = f"Edit {self.field_name.replace('_', ' ')}: {color}"
-        self.styles.background = f"#{parsed.red:02x}{parsed.green:02x}{parsed.blue:02x}"
-        luminance = (parsed.red * 299 + parsed.green * 587 + parsed.blue * 114) / 1000
-        self.styles.color = "black" if luminance >= 140 else "white"
+        self.label = PALETTE_SLOT_GLYPHS[self.color_index]
+        self.tooltip = (
+            f"Edit {self.color_set_id.replace('_', ' ')} color for "
+            f"{PALETTE_SLOT_GLYPHS[self.color_index]}: {color}"
+        )
+        color_hex = f"#{parsed.red:02x}{parsed.green:02x}{parsed.blue:02x}"
+        full_block_hex = (
+            f"#{full_block.red:02x}{full_block.green:02x}{full_block.blue:02x}"
+        )
+        if self.color_index == 3:
+            self.styles.color = color_hex
+            self.styles.background = full_block_hex
+        else:
+            luminance = (
+                parsed.red * 299 + parsed.green * 587 + parsed.blue * 114
+            ) / 1000
+            self.styles.color = "black" if luminance >= 140 else "white"
+            self.styles.background = color_hex
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         event.stop()

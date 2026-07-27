@@ -9,6 +9,8 @@ from typing import Any
 import yaml
 
 from .model import (
+    COLOR_SET_IDS,
+    ColorSet,
     Palette,
     PaletteCatalog,
     Section,
@@ -38,6 +40,9 @@ def _variant_from_data(data: object, context: str) -> Variant:
         id=str(item.get("id", "")),
         weight=int(item.get("weight", 1)),
         cells=_string_list(item.get("cells", []), f"{context}.cells"),
+        color_mask=_string_list(
+            item.get("color_mask", []), f"{context}.color_mask"
+        ),
     )
 
 
@@ -162,22 +167,18 @@ def load_palette_catalog(path: str | Path) -> PaletteCatalog:
         ),
         archetypes={
             archetype_id: Palette(
-                bright=str(_mapping(value, archetype_id).get("bright", "")),
-                mid=str(_mapping(value, archetype_id).get("mid", "")),
-                dark=str(_mapping(value, archetype_id).get("dark", "")),
-                beacon=_string_list(
-                    _mapping(value, archetype_id).get("beacon", []),
-                    f"{archetype_id}.beacon",
-                ),
-                engine=_string_list(
-                    _mapping(value, archetype_id).get("engine", []),
-                    f"{archetype_id}.engine",
-                ),
-                window=_string_list(
-                    _mapping(value, archetype_id).get("window", []),
-                    f"{archetype_id}.window",
-                ),
-                facet=str(_mapping(value, archetype_id).get("facet", "")),
+                color_sets={
+                    color_set_id: ColorSet(
+                        _string_list(
+                            _mapping(
+                                _mapping(value, archetype_id).get("color_sets", {}),
+                                f"{archetype_id}.color_sets",
+                            ).get(color_set_id, []),
+                            f"{archetype_id}.color_sets.{color_set_id}",
+                        )
+                    )
+                    for color_set_id in COLOR_SET_IDS
+                }
             )
             for archetype_id, value in archetypes_data.items()
         },
@@ -191,6 +192,7 @@ def _variant_to_data(variant: Variant) -> dict[str, object]:
         "id": variant.id,
         "weight": variant.weight,
         "cells": list(variant.cells),
+        "color_mask": list(variant.color_mask),
     }
 
 
@@ -245,13 +247,10 @@ def palette_catalog_to_data(catalog: PaletteCatalog) -> dict[str, object]:
         "fallback_archetype": catalog.fallback_archetype,
         "archetypes": {
             archetype_id: {
-                "bright": palette.bright,
-                "mid": palette.mid,
-                "dark": palette.dark,
-                "beacon": list(palette.beacon),
-                "engine": list(palette.engine),
-                "window": list(palette.window),
-                "facet": palette.facet,
+                "color_sets": {
+                    color_set_id: list(palette.color_sets[color_set_id].colors)
+                    for color_set_id in COLOR_SET_IDS
+                }
             }
             for archetype_id, palette in catalog.archetypes.items()
         },

@@ -8,9 +8,29 @@ from sprite_art import Section, Sprite, Tier, Variant, View, dump_sprite
 from sprite_art.model import SCHEMA_VERSION
 from sprite_art.transform import generate_rotated_view
 
+LEGACY_MARKERS = {
+    "R": ("▀", "B"), "r": ("▄", "B"),
+    "Y": ("▀", "E"), "y": ("▄", "E"),
+    "G": ("▀", "A"), "g": ("▄", "A"),
+    "B": ("▀", "D"), "b": ("▄", "D"),
+}
+
 
 def variant(variant_id: str, *cells: str, weight: int = 1) -> Variant:
-    return Variant(id=variant_id, cells=list(cells), weight=weight)
+    migrated = [
+        "".join(LEGACY_MARKERS.get(glyph, (glyph, "S"))[0] for glyph in row)
+        for row in cells
+    ]
+    color_mask = [
+        "".join(LEGACY_MARKERS.get(glyph, (glyph, "S"))[1] for glyph in row)
+        for row in cells
+    ]
+    return Variant(
+        id=variant_id,
+        cells=migrated,
+        color_mask=color_mask,
+        weight=weight,
+    )
 
 
 def section(

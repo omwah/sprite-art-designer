@@ -1,10 +1,9 @@
-schema_version: 1
+schema_version: 2
 id: falsehold_raider
 name: Falsehold Raider
 kind: ship
 role: falsehold_raider
-description: An armed merchant hull whose cargo seams conceal batteries and reinforced
-  magazines.
+description: An armed merchant hull whose cargo seams conceal batteries and reinforced magazines.
 views:
   horizontal:
     name: Horizontal
@@ -28,22 +27,38 @@ views:
           weight: 1
           cells:
           - '    '
-          - ' y▶ '
+          - ' ▄▶ '
           - '    '
-          - y██▓
+          - ▄██▓
           - '    '
-          - ' y▶ '
+          - ' ▄▶ '
           - '    '
+          color_mask:
+          - SSSS
+          - SESS
+          - SSSS
+          - ESSS
+          - SSSS
+          - SESS
+          - SSSS
         - id: dirty
           weight: 1
           cells:
           - '    '
-          - ' yy '
-          - 'y▶▓ '
-          - y██▓
+          - ' ▄▄ '
+          - '▄▶▓ '
+          - ▄██▓
           - '    '
-          - ' y▶ '
+          - ' ▄▶ '
           - '    '
+          color_mask:
+          - SSSS
+          - SEES
+          - ESSS
+          - ESSS
+          - SSSS
+          - SESS
+          - SSSS
       - id: armored_buttress
         name: Armored Buttress
         primary_property: armor
@@ -62,6 +77,14 @@ views:
           - └──┘
           - ▓██═
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
         - id: sealed
           weight: 1
           cells:
@@ -72,6 +95,14 @@ views:
           - ████
           - ◥██◤
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
       - id: false_holds
         name: False Cargo Holds
         primary_property: cargo
@@ -86,12 +117,20 @@ views:
           weight: 1
           cells:
           - '      '
-          - ' R    '
+          - ' ▀    '
           - ┌────┐
           - │▒◇▒▒│
           - └────┘
           - ' ▾    '
           - '      '
+          color_mask:
+          - SSSSSS
+          - SBSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
         - id: containers
           weight: 1
           cells:
@@ -102,6 +141,14 @@ views:
           - ◥████◤
           - '      '
           - '      '
+          color_mask:
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
       - id: masked_battery
         name: Masked Battery
         primary_property: weapons
@@ -121,6 +168,14 @@ views:
           - ◥██◤
           - '    '
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
         - id: open
           weight: 1
           cells:
@@ -131,6 +186,14 @@ views:
           - '▓█▶ '
           - ' ▾  '
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
       - id: merchant_prow
         name: Merchant Prow
         primary_property: hull
@@ -150,6 +213,14 @@ views:
           - '██▛ '
           - '    '
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
         - id: tapered
           weight: 1
           cells:
@@ -160,6 +231,14 @@ views:
           - '▓█▛ '
           - '    '
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
       structure_lengths:
         merchant_drive: 1
         armored_buttress: 1
@@ -181,19 +260,31 @@ views:
         - id: triple
           weight: 1
           cells:
-          - ' y '
+          - ' ▄ '
           - '   '
-          - y█▓
+          - ▄█▓
           - '   '
-          - ' y '
+          - ' ▄ '
+          color_mask:
+          - SES
+          - SSS
+          - ESS
+          - SSS
+          - SES
         - id: dirty
           weight: 1
           cells:
-          - ' y '
-          - 'y▶ '
-          - y█▓
+          - ' ▄ '
+          - '▄▶ '
+          - ▄█▓
           - '   '
-          - ' y '
+          - ' ▄ '
+          color_mask:
+          - SES
+          - ESS
+          - ESS
+          - SSS
+          - SES
       - id: armored_buttress
         name: Armored Buttress
         primary_property: armor
@@ -210,6 +301,12 @@ views:
           - █▒█
           - └─┘
           - ▓█═
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
         - id: sealed
           weight: 1
           cells:
@@ -218,6 +315,12 @@ views:
           - █░█
           - ███
           - ◥█◤
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
       - id: false_holds
         name: False Cargo Holds
         primary_property: cargo
@@ -231,11 +334,17 @@ views:
         - id: doors
           weight: 1
           cells:
-          - ' R   '
+          - ' ▀   '
           - ┌───┐
           - │▒◇▒│
           - └───┘
           - ' ▾   '
+          color_mask:
+          - SBSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
         - id: containers
           weight: 1
           cells:
@@ -244,6 +353,12 @@ views:
           - █▒┤├█
           - ◥███◤
           - '     '
+          color_mask:
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
       - id: masked_battery
         name: Masked Battery
         primary_property: weapons
@@ -261,6 +376,12 @@ views:
           - █≡█
           - ◥█◤
           - '   '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
         - id: open
           weight: 1
           cells:
@@ -269,6 +390,12 @@ views:
           - ███
           - '▓█ '
           - ' ▾ '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
       - id: merchant_prow
         name: Merchant Prow
         primary_property: hull
@@ -286,6 +413,12 @@ views:
           - ██▶
           - '██ '
           - '   '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
         - id: tapered
           weight: 1
           cells:
@@ -294,6 +427,12 @@ views:
           - ██▶
           - '▓█ '
           - '   '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
       structure_lengths:
         merchant_drive: 1
         armored_buttress: 1
@@ -315,8 +454,12 @@ views:
           weight: 1
           cells:
           - ' █'
-          - y█
+          - ▄█
           - ' █'
+          color_mask:
+          - SS
+          - ES
+          - SS
       - id: body
         name: Body
         primary_property: hull
@@ -332,12 +475,20 @@ views:
           - ██
           - █▒
           - ██
+          color_mask:
+          - SS
+          - SS
+          - SS
         - id: gun_hold
           weight: 1
           cells:
           - ▀█
           - █◇
           - ▄█
+          color_mask:
+          - SS
+          - SS
+          - SS
       - id: prow
         name: Prow
         primary_property: weapons
@@ -352,6 +503,10 @@ views:
           - '   '
           - ██▶
           - '   '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
       structure_lengths:
         drive: 1
         body: 6
@@ -378,12 +533,18 @@ views:
           weight: 1
           cells:
           - '      ▓▓      '
-          - '  yy  ██  yy  '
+          - '  ▄▄  ██  ▄▄  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSEESSSSSSEESS
         - id: dirty
           weight: 1
           cells:
           - '      ▓▓      '
-          - '  yy▴▴██  yy  '
+          - '  ▄▄▴▴██  ▄▄  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSEESSSSSSEESS
       - id: armored_buttress
         name: Armored Buttress
         primary_property: armor
@@ -397,11 +558,17 @@ views:
           cells:
           - '  ║║┌┌██┐┐║║  '
           - '  ██││▒▒││██  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
         - id: sealed
           weight: 1
           cells:
           - '  ◢◢██████◣◣  '
           - '  ████░░████  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       - id: false_holds
         name: False Cargo Holds
         primary_property: cargo
@@ -417,13 +584,21 @@ views:
           cells:
           - '    ┌┌──┐┐    '
           - '    ││▒▒││    '
-          - '  RR││▒▒││▶▶  '
+          - '  ▀▀││▒▒││▶▶  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSBBSSSSSSSSSS
         - id: containers
           weight: 1
           cells:
           - '    ◢◢██◣◣    '
           - '    ██┴┴██    '
           - '    ██▒▒██    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       - id: masked_battery
         name: Masked Battery
         primary_property: weapons
@@ -438,11 +613,17 @@ views:
           cells:
           - '    ◢◢██◣◣    '
           - '    ██║║██    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
         - id: open
           weight: 1
           cells:
           - '      ██      '
           - '  ◀◀██████▶▶  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       - id: merchant_prow
         name: Merchant Prow
         primary_property: hull
@@ -457,11 +638,17 @@ views:
           cells:
           - '      ▴▴      '
           - '    ██████    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
         - id: tapered
           weight: 1
           cells:
           - '      ▴▴      '
           - '    ██████    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       structure_lengths:
         merchant_drive: 1
         armored_buttress: 1
@@ -484,12 +671,18 @@ views:
           weight: 1
           cells:
           - '    ▓▓    '
-          - '    yy    '
+          - '    ▄▄    '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSEESSSS
         - id: dirty
           weight: 1
           cells:
           - '    ▓▓    '
-          - '  yyyy    '
+          - '  ▄▄▄▄    '
+          color_mask:
+          - SSSSSSSSSS
+          - SSEEEESSSS
       - id: armored_buttress
         name: Armored Buttress
         primary_property: armor
@@ -503,11 +696,17 @@ views:
           cells:
           - ║║┌┌██┐┐║║
           - ▓▓└└██┘┘▓▓
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: sealed
           weight: 1
           cells:
           - ◢◢██████◣◣
           - ◥◥██████◤◤
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
       - id: false_holds
         name: False Cargo Holds
         primary_property: cargo
@@ -524,12 +723,20 @@ views:
           - '  ┌┌──┐┐  '
           - '  ││◇◇││  '
           - '  └└──┘┘  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: containers
           weight: 1
           cells:
           - '  ◢◢██◣◣  '
           - '  ██┬┬██  '
           - '  ◥◥██◤◤  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
+          - SSSSSSSSSS
       - id: masked_battery
         name: Masked Battery
         primary_property: weapons
@@ -544,11 +751,17 @@ views:
           cells:
           - '  ◢◢██◣◣  '
           - '  ◥◥██◤◤  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: open
           weight: 1
           cells:
           - '    ██    '
           - '  ▓▓██▓▓  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
       - id: merchant_prow
         name: Merchant Prow
         primary_property: hull
@@ -563,11 +776,17 @@ views:
           cells:
           - '    ▴▴    '
           - '  ██████  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: tapered
           weight: 1
           cells:
           - '    ▴▴    '
           - '  ▓▓██▓▓  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
       structure_lengths:
         merchant_drive: 1
         armored_buttress: 1
@@ -589,6 +808,8 @@ views:
           weight: 1
           cells:
           - ██████
+          color_mask:
+          - SSSSSS
       - id: body
         name: Body
         primary_property: hull
@@ -602,10 +823,14 @@ views:
           weight: 1
           cells:
           - ██▒▒██
+          color_mask:
+          - SSSSSS
         - id: gun_hold
           weight: 1
           cells:
           - ██◇◇██
+          color_mask:
+          - SSSSSS
       - id: prow
         name: Prow
         primary_property: weapons
@@ -619,6 +844,9 @@ views:
           cells:
           - '  ▴▴  '
           - '  ██  '
+          color_mask:
+          - SSSSSS
+          - SSSSSS
       structure_lengths:
         drive: 1
         body: 12

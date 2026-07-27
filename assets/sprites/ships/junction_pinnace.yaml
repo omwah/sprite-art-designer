@@ -1,10 +1,9 @@
-schema_version: 1
+schema_version: 2
 id: junction_pinnace
 name: Junction Pinnace
 kind: ship
 role: junction_pinnace
-description: A tiny courier and landing craft wrapped around drive, compensator, and
-  cabin.
+description: A tiny courier and landing craft wrapped around drive, compensator, and cabin.
 views:
   horizontal:
     name: Horizontal
@@ -28,21 +27,37 @@ views:
           cells:
           - '    '
           - '    '
-          - ' yy▓'
-          - ' y█▓'
+          - ' ▄▄▓'
+          - ' ▄█▓'
           - '    '
           - '    '
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SEES
+          - SESS
+          - SSSS
+          - SSSS
+          - SSSS
         - id: fork
           weight: 1
           cells:
           - '    '
-          - ' y  '
-          - ' y▶▓'
-          - ' y▶▓'
+          - ' ▄  '
+          - ' ▄▶▓'
+          - ' ▄▶▓'
           - '    '
           - '    '
           - '    '
+          color_mask:
+          - SSSS
+          - SESS
+          - SESS
+          - SESS
+          - SSSS
+          - SSSS
+          - SSSS
       - id: sail_nodes
         name: Sail Nodes
         primary_property: spindrive
@@ -62,6 +77,14 @@ views:
           - ◥██◤
           - '    '
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
         - id: open
           weight: 1
           cells:
@@ -72,6 +95,14 @@ views:
           - ' ▾  '
           - '    '
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
       - id: cabin
         name: Cabin
         primary_property: habitat
@@ -85,12 +116,20 @@ views:
           weight: 1
           cells:
           - '    '
-          - ' R  '
+          - ' ▀  '
           - ████
           - █◇██
           - '    '
           - '    '
           - '    '
+          color_mask:
+          - SSSS
+          - SBSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
         - id: armored
           weight: 1
           cells:
@@ -101,6 +140,14 @@ views:
           - ◥██◤
           - '    '
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
       - id: landing_nose
         name: Landing Nose
         primary_property: utility
@@ -119,6 +166,14 @@ views:
           - '▓▛ '
           - '   '
           - '   '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
         - id: probe
           weight: 1
           cells:
@@ -129,6 +184,14 @@ views:
           - '─▛ '
           - '   '
           - '   '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
       structure_lengths:
         overdrive: 1
         sail_nodes: 1
@@ -149,18 +212,30 @@ views:
           weight: 1
           cells:
           - '   '
-          - ' y▓'
-          - ' y▓'
+          - ' ▄▓'
+          - ' ▄▓'
           - '   '
           - '   '
+          color_mask:
+          - SSS
+          - SES
+          - SES
+          - SSS
+          - SSS
         - id: fork
           weight: 1
           cells:
-          - ' y '
-          - ' y▓'
-          - ' y▓'
+          - ' ▄ '
+          - ' ▄▓'
+          - ' ▄▓'
           - '   '
           - '   '
+          color_mask:
+          - SES
+          - SES
+          - SES
+          - SSS
+          - SSS
       - id: sail_nodes
         name: Sail Nodes
         primary_property: spindrive
@@ -178,6 +253,12 @@ views:
           - ▓█▓
           - ◥█◤
           - '   '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
         - id: open
           weight: 1
           cells:
@@ -186,6 +267,12 @@ views:
           - ▓█▓
           - ' ▾ '
           - '   '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
       - id: cabin
         name: Cabin
         primary_property: habitat
@@ -198,11 +285,17 @@ views:
         - id: window
           weight: 1
           cells:
-          - ' R '
+          - ' ▀ '
           - ███
           - █◇█
           - '   '
           - '   '
+          color_mask:
+          - SBS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
         - id: armored
           weight: 1
           cells:
@@ -211,6 +304,12 @@ views:
           - █▒█
           - ◥█◤
           - '   '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
       - id: landing_nose
         name: Landing Nose
         primary_property: utility
@@ -227,6 +326,12 @@ views:
           - █▶
           - '▓ '
           - '  '
+          color_mask:
+          - SS
+          - SS
+          - SS
+          - SS
+          - SS
         - id: probe
           weight: 1
           cells:
@@ -235,6 +340,12 @@ views:
           - █▶
           - '─ '
           - '  '
+          color_mask:
+          - SS
+          - SS
+          - SS
+          - SS
+          - SS
       structure_lengths:
         overdrive: 1
         sail_nodes: 1
@@ -255,8 +366,12 @@ views:
           weight: 1
           cells:
           - '  '
-          - y▓
+          - ▄▓
           - '  '
+          color_mask:
+          - SS
+          - ES
+          - SS
       - id: body
         name: Body
         primary_property: hull
@@ -272,6 +387,10 @@ views:
           - ' ▴'
           - ██
           - ' ▾'
+          color_mask:
+          - SS
+          - SS
+          - SS
       - id: prow
         name: Prow
         primary_property: weapons
@@ -286,6 +405,10 @@ views:
           - '  '
           - █▶
           - '  '
+          color_mask:
+          - SS
+          - SS
+          - SS
       structure_lengths:
         drive: 1
         body: 4
@@ -311,12 +434,18 @@ views:
           weight: 1
           cells:
           - '    ▓▓▓▓      '
-          - '    yyyy      '
+          - '    ▄▄▄▄      '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSEEEESSSSSS
         - id: fork
           weight: 1
           cells:
           - '    ▓▓▓▓      '
-          - '  yyyyyy      '
+          - '  ▄▄▄▄▄▄      '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSEEEEEESSSSSS
       - id: sail_nodes
         name: Sail Nodes
         primary_property: spindrive
@@ -331,11 +460,17 @@ views:
           cells:
           - '  ◢◢▓▓▓▓◣◣    '
           - '  ████████    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
         - id: open
           weight: 1
           cells:
           - '    ▓▓▓▓      '
           - '  ◀◀████▶▶    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       - id: cabin
         name: Cabin
         primary_property: habitat
@@ -349,12 +484,18 @@ views:
           weight: 1
           cells:
           - '    ████      '
-          - '  RR██◇◇      '
+          - '  ▀▀██◇◇      '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSBBSSSSSSSSSS
         - id: armored
           weight: 1
           cells:
           - '    ◢◢██◣◣    '
           - '    ██▒▒██    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       - id: landing_nose
         name: Landing Nose
         primary_property: utility
@@ -368,11 +509,17 @@ views:
           cells:
           - '      ▴▴      '
           - '    ▓▓██▓▓    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
         - id: probe
           weight: 1
           cells:
           - '      ▴▴      '
           - '    ││██││    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       structure_lengths:
         overdrive: 1
         sail_nodes: 1
@@ -394,11 +541,17 @@ views:
           cells:
           - '  ▓▓▓▓    '
           - '          '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: fork
           weight: 1
           cells:
           - '  ▓▓▓▓    '
           - '          '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
       - id: sail_nodes
         name: Sail Nodes
         primary_property: spindrive
@@ -413,11 +566,17 @@ views:
           cells:
           - '◢◢▓▓▓▓◣◣  '
           - '◥◥▓▓▓▓◤◤  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: open
           weight: 1
           cells:
           - '  ▓▓▓▓    '
           - '  ▓▓▓▓    '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
       - id: cabin
         name: Cabin
         primary_property: habitat
@@ -432,11 +591,17 @@ views:
           cells:
           - '  ████    '
           - '  ████    '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: armored
           weight: 1
           cells:
           - '  ◢◢██◣◣  '
           - '  ◥◥██◤◤  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
       - id: landing_nose
         name: Landing Nose
         primary_property: utility
@@ -449,10 +614,14 @@ views:
           weight: 1
           cells:
           - '    ▴▴    '
+          color_mask:
+          - SSSSSSSSSS
         - id: probe
           weight: 1
           cells:
           - '    ▴▴    '
+          color_mask:
+          - SSSSSSSSSS
       structure_lengths:
         overdrive: 1
         sail_nodes: 1
@@ -473,6 +642,8 @@ views:
           weight: 1
           cells:
           - '  ▓▓  '
+          color_mask:
+          - SSSSSS
       - id: body
         name: Body
         primary_property: hull
@@ -486,6 +657,8 @@ views:
           weight: 1
           cells:
           - ◀◀██▶▶
+          color_mask:
+          - SSSSSS
       - id: prow
         name: Prow
         primary_property: weapons
@@ -498,6 +671,8 @@ views:
           weight: 1
           cells:
           - '  ▴▴  '
+          color_mask:
+          - SSSSSS
       structure_lengths:
         drive: 1
         body: 4

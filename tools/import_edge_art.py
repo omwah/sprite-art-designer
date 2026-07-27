@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any
 
 from sprite_art import (
+    ColorSet,
     Palette,
     PaletteCatalog,
     Section,
@@ -24,6 +25,25 @@ from sprite_art import (
     generate_rotated_view,
 )
 from sprite_art.model import SCHEMA_VERSION
+
+LEGACY_MARKERS = {
+    "R": ("▀", "B"), "r": ("▄", "B"),
+    "Y": ("▀", "E"), "y": ("▄", "E"),
+    "G": ("▀", "A"), "g": ("▄", "A"),
+    "B": ("▀", "D"), "b": ("▄", "D"),
+}
+
+
+def _migrate_rows(rows: tuple[str, ...]) -> tuple[list[str], list[str]]:
+    cells = [
+        "".join(LEGACY_MARKERS.get(glyph, (glyph, "S"))[0] for glyph in row)
+        for row in rows
+    ]
+    color_mask = [
+        "".join(LEGACY_MARKERS.get(glyph, (glyph, "S"))[1] for glyph in row)
+        for row in rows
+    ]
+    return cells, color_mask
 
 FULL_SECTIONS = (
     ("thrusters", "Thrusters", "thrusters"),
@@ -54,7 +74,8 @@ def _tier(source_slots: tuple[Any, ...], index: int) -> Tier:
                 variants=[
                     Variant(
                         id=f"{section_id}_{variant_index + 1}",
-                        cells=list(part.left),
+                        cells=_migrate_rows(part.left)[0],
+                        color_mask=_migrate_rows(part.left)[1],
                     )
                     for variant_index, part in enumerate(slot.parts)
                 ],
@@ -104,16 +125,19 @@ def main() -> None:
 
     output = args.output
     palettes = PaletteCatalog(
-        schema_version=SCHEMA_VERSION,
+        schema_version=2,
         archetypes={
             archetype_id: Palette(
-                bright=style.bright,
-                mid=style.mid,
-                dark=style.dark,
-                beacon=list(style.top),
-                engine=list(style.bottom),
-                window=list(style.window),
-                facet=style.facet,
+                color_sets={
+                    "surface": ColorSet(
+                        [style.bright, style.mid, style.dark, style.facet]
+                    ),
+                    "engine": ColorSet(list(style.bottom)),
+                    "beacon": ColorSet(list(style.top)),
+                    "window": ColorSet(list(style.window)),
+                    "weapons": ColorSet(["#22c55e"]),
+                    "defensive": ColorSet(["#3b82f6"]),
+                }
             )
             for archetype_id, style in ARCHETYPE_STYLES.items()
             if archetype_id != "default"
@@ -129,4 +153,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

@@ -1,10 +1,9 @@
-schema_version: 1
+schema_version: 2
 id: hearth_freighter
 name: Hearth Freighter
 kind: ship
 role: hearth_freighter
-description: A century-old modular transport made homelike through repairs, cargo,
-  and a rotating drum.
+description: A century-old modular transport made homelike through repairs, cargo, and a rotating drum.
 views:
   horizontal:
     name: Horizontal
@@ -27,23 +26,39 @@ views:
         - id: fusion
           weight: 1
           cells:
-          - ' y▶ '
+          - ' ▄▶ '
           - '    '
-          - 'y▟▓ '
-          - y██▓
-          - 'y▜▓ '
+          - '▄▟▓ '
+          - ▄██▓
+          - '▄▜▓ '
           - '    '
           - '    '
+          color_mask:
+          - SESS
+          - SSSS
+          - ESSS
+          - ESSS
+          - ESSS
+          - SSSS
+          - SSSS
         - id: patched
           weight: 1
           cells:
-          - ' yy '
-          - 'y▶▓ '
+          - ' ▄▄ '
+          - '▄▶▓ '
           - ' ▟▓ '
-          - y██▓
+          - ▄██▓
           - ' ▜▓ '
           - '    '
           - '    '
+          color_mask:
+          - SEES
+          - ESSS
+          - SSSS
+          - ESSS
+          - SSSS
+          - SSSS
+          - SSSS
       - id: machine_shop
         name: Machine Shop
         primary_property: utility
@@ -56,13 +71,21 @@ views:
         - id: shop
           weight: 1
           cells:
-          - ' R  '
+          - ' ▀  '
           - ┌──┐
           - │◇▒│
           - │▒▒│
           - └──┘
           - ' ▾  '
           - '    '
+          color_mask:
+          - SBSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
         - id: patched
           weight: 1
           cells:
@@ -73,6 +96,14 @@ views:
           - ◥██◤
           - '    '
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
       - id: cargo_modules
         name: Cargo Modules
         primary_property: cargo
@@ -92,6 +123,14 @@ views:
           - └────┘
           - '      '
           - '      '
+          color_mask:
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
         - id: pods
           weight: 1
           cells:
@@ -102,6 +141,14 @@ views:
           - ' ╱  ╲ '
           - ' ◥██◤ '
           - '      '
+          color_mask:
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
       - id: hearth_drum
         name: Hearth Drum
         primary_property: habitat
@@ -121,6 +168,14 @@ views:
           - ╲    ╱
           - ' ◥██◤ '
           - '      '
+          color_mask:
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
         - id: locked
           weight: 1
           cells:
@@ -131,6 +186,14 @@ views:
           - ◥████◤
           - '      '
           - '      '
+          color_mask:
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
       - id: mining_prow
         name: Mining Prow
         primary_property: main_gun
@@ -150,6 +213,14 @@ views:
           - '     '
           - '     '
           - '     '
+          color_mask:
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
         - id: tractor
           weight: 1
           cells:
@@ -160,6 +231,14 @@ views:
           - '     '
           - '     '
           - '     '
+          color_mask:
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
       structure_lengths:
         retrofitted_drive: 1
         machine_shop: 1
@@ -182,18 +261,30 @@ views:
           weight: 1
           cells:
           - '   '
-          - 'y▟ '
-          - y█▓
-          - 'y▜ '
+          - '▄▟ '
+          - ▄█▓
+          - '▄▜ '
           - '   '
+          color_mask:
+          - SSS
+          - ESS
+          - ESS
+          - ESS
+          - SSS
         - id: patched
           weight: 1
           cells:
-          - 'y▶ '
+          - '▄▶ '
           - ' ▟ '
-          - y█▓
+          - ▄█▓
           - ' ▜ '
           - '   '
+          color_mask:
+          - ESS
+          - SSS
+          - ESS
+          - SSS
+          - SSS
       - id: machine_shop
         name: Machine Shop
         primary_property: utility
@@ -211,6 +302,12 @@ views:
           - │▒│
           - └─┘
           - ' ▾ '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
         - id: patched
           weight: 1
           cells:
@@ -219,6 +316,12 @@ views:
           - █░█
           - ◥█◤
           - '   '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
       - id: cargo_modules
         name: Cargo Modules
         primary_property: cargo
@@ -236,6 +339,12 @@ views:
           - │▒◇▒│
           - └───┘
           - '     '
+          color_mask:
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
         - id: pods
           weight: 1
           cells:
@@ -244,6 +353,12 @@ views:
           - ██◇▒█
           - ' ╱   '
           - ' ◥██ '
+          color_mask:
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
       - id: hearth_drum
         name: Hearth Drum
         primary_property: habitat
@@ -261,6 +376,12 @@ views:
           - █☉███
           - ╲   ╱
           - ' ◥██ '
+          color_mask:
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
         - id: locked
           weight: 1
           cells:
@@ -269,6 +390,12 @@ views:
           - █▒☉▒█
           - ◥███◤
           - '     '
+          color_mask:
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
       - id: mining_prow
         name: Mining Prow
         primary_property: main_gun
@@ -286,6 +413,12 @@ views:
           - '  ▜ '
           - '    '
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
         - id: tractor
           weight: 1
           cells:
@@ -294,6 +427,12 @@ views:
           - ' ◥█ '
           - '    '
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
       structure_lengths:
         retrofitted_drive: 1
         machine_shop: 1
@@ -315,8 +454,12 @@ views:
           weight: 1
           cells:
           - ' █'
-          - y█
+          - ▄█
           - '  '
+          color_mask:
+          - SS
+          - ES
+          - SS
       - id: body
         name: Body
         primary_property: hull
@@ -332,12 +475,20 @@ views:
           - ██
           - █▒
           - ██
+          color_mask:
+          - SS
+          - SS
+          - SS
         - id: home
           weight: 1
           cells:
           - ▀█
           - █☉
           - ▄█
+          color_mask:
+          - SS
+          - SS
+          - SS
       - id: prow
         name: Prow
         primary_property: weapons
@@ -352,6 +503,10 @@ views:
           - '   '
           - ─█▶
           - '   '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
       structure_lengths:
         drive: 1
         body: 6
@@ -378,12 +533,18 @@ views:
           weight: 1
           cells:
           - '      ▓▓      '
-          - 'yy  ▜▜██▛▛    '
+          - '▄▄  ▜▜██▛▛    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - EESSSSSSSSSSSS
         - id: patched
           weight: 1
           cells:
           - '      ▓▓      '
-          - 'yy▴▴▜▜██▛▛    '
+          - '▄▄▴▴▜▜██▛▛    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - EESSSSSSSSSSSS
       - id: machine_shop
         name: Machine Shop
         primary_property: utility
@@ -397,12 +558,18 @@ views:
           weight: 1
           cells:
           - '  ┌┌────┐┐    '
-          - 'RR││◇◇▒▒││▶▶  '
+          - '▀▀││◇◇▒▒││▶▶  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - BBSSSSSSSSSSSS
         - id: patched
           weight: 1
           cells:
           - '  ◢◢████◣◣    '
           - '  ██▒▒░░██    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       - id: cargo_modules
         name: Cargo Modules
         primary_property: cargo
@@ -418,12 +585,20 @@ views:
           - '  ┌┌────┐┐    '
           - '  ││▒▒▒▒││    '
           - '  ││▒▒▒▒││    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
         - id: pods
           weight: 1
           cells:
           - '    ████      '
           - '██  ▒▒▒▒  ██  '
           - '◥◥╱╱████╲╲◤◤  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       - id: hearth_drum
         name: Hearth Drum
         primary_property: habitat
@@ -439,12 +614,20 @@ views:
           - '  ╱╱████╲╲    '
           - '██  ████  ██  '
           - '◥◥  ◇◇☉☉  ◤◤  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
         - id: locked
           weight: 1
           cells:
           - '  ◢◢████◣◣    '
           - '  ██▒▒▒▒██    '
           - '  ██▒▒▒▒██    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       - id: mining_prow
         name: Mining Prow
         primary_property: main_gun
@@ -460,12 +643,20 @@ views:
           - '    ▴▴        '
           - '  ▜▜██▛▛      '
           - '    ││        '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
         - id: tractor
           weight: 1
           cells:
           - '    ▴▴        '
           - '  ██◇◇██      '
           - '    ││        '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       structure_lengths:
         retrofitted_drive: 1
         machine_shop: 1
@@ -488,12 +679,18 @@ views:
           weight: 1
           cells:
           - '    ▓▓    '
-          - '  yyyyyy  '
+          - '  ▄▄▄▄▄▄  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSEEEEEESS
         - id: patched
           weight: 1
           cells:
           - '    ▓▓    '
-          - 'yy  yy    '
+          - '▄▄  ▄▄    '
+          color_mask:
+          - SSSSSSSSSS
+          - EESSEESSSS
       - id: machine_shop
         name: Machine Shop
         primary_property: utility
@@ -508,11 +705,17 @@ views:
           cells:
           - '┌┌────┐┐  '
           - '└└────┘┘  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: patched
           weight: 1
           cells:
           - '◢◢████◣◣  '
           - '◥◥████◤◤  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
       - id: cargo_modules
         name: Cargo Modules
         primary_property: cargo
@@ -528,12 +731,20 @@ views:
           - '┌┌────┐┐  '
           - '││▒▒◇◇││  '
           - '└└────┘┘  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: pods
           weight: 1
           cells:
           - '  ████    '
           - '  ▒▒◇◇  ██'
           - '  ████    '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
+          - SSSSSSSSSS
       - id: hearth_drum
         name: Hearth Drum
         primary_property: habitat
@@ -549,12 +760,20 @@ views:
           - '╱╱████╲╲  '
           - '  ████  ██'
           - '╲╲████╱╱  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: locked
           weight: 1
           cells:
           - '◢◢████◣◣  '
           - '██◇◇☉☉██  '
           - '◥◥████◤◤  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
+          - SSSSSSSSSS
       - id: mining_prow
         name: Mining Prow
         primary_property: main_gun
@@ -569,11 +788,17 @@ views:
           cells:
           - '  ▴▴      '
           - '  ││      '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: tractor
           weight: 1
           cells:
           - '  ▴▴      '
           - '◥◥██◤◤    '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
       structure_lengths:
         retrofitted_drive: 1
         machine_shop: 1
@@ -595,6 +820,8 @@ views:
           weight: 1
           cells:
           - '████  '
+          color_mask:
+          - SSSSSS
       - id: body
         name: Body
         primary_property: hull
@@ -608,10 +835,14 @@ views:
           weight: 1
           cells:
           - ██▒▒██
+          color_mask:
+          - SSSSSS
         - id: home
           weight: 1
           cells:
           - ██☉☉██
+          color_mask:
+          - SSSSSS
       - id: prow
         name: Prow
         primary_property: weapons
@@ -625,6 +856,9 @@ views:
           cells:
           - '  ▴▴  '
           - '  ││  '
+          color_mask:
+          - SSSSSS
+          - SSSSSS
       structure_lengths:
         drive: 1
         body: 14

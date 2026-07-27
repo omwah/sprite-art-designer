@@ -7,9 +7,34 @@ from typing import Literal
 
 from rich.cells import get_character_cell_size
 
-SCHEMA_VERSION = 1
+SPRITE_SCHEMA_VERSION = 2
+PALETTE_SCHEMA_VERSION = 2
+# Kept as the sprite-document version for editor construction call sites.
+SCHEMA_VERSION = SPRITE_SCHEMA_VERSION
 
 Axis = Literal["horizontal", "vertical", "fixed"]
+
+COLOR_SET_IDS: tuple[str, ...] = (
+    "surface",
+    "engine",
+    "beacon",
+    "window",
+    "weapons",
+    "defensive",
+)
+
+COLOR_SET_CODES: dict[str, str] = {
+    "surface": "S",
+    "engine": "E",
+    "beacon": "B",
+    "window": "W",
+    "weapons": "A",
+    "defensive": "D",
+}
+COLOR_CODE_TO_SET: dict[str, str] = {
+    code: color_set for color_set, code in COLOR_SET_CODES.items()
+}
+SURFACE_MASK_CODE = COLOR_SET_CODES["surface"]
 
 PROPERTY_IDS: tuple[str, ...] = (
     "thrusters",
@@ -55,6 +80,7 @@ class SpriteValidationError(ValueError):
 class Variant:
     id: str
     cells: list[str]
+    color_mask: list[str]
     weight: int = 1
 
     @property
@@ -83,6 +109,30 @@ class Variant:
                     raise SpriteValidationError(
                         f"{context}/{self.id}: glyph {glyph!r} at "
                         f"{column},{row_index} is not one terminal cell wide"
+                    )
+        if len(self.color_mask) != self.height:
+            raise SpriteValidationError(
+                f"{context}/{self.id}: color_mask must have {self.height} rows"
+            )
+        mask_widths = {len(row) for row in self.color_mask}
+        if mask_widths != {self.width}:
+            raise SpriteValidationError(
+                f"{context}/{self.id}: color_mask rows must match the "
+                f"{self.width}-cell canvas width"
+            )
+        for row_index, (glyph_row, mask_row) in enumerate(
+            zip(self.cells, self.color_mask)
+        ):
+            for column, (glyph, code) in enumerate(zip(glyph_row, mask_row)):
+                if code not in COLOR_CODE_TO_SET:
+                    raise SpriteValidationError(
+                        f"{context}/{self.id}: unknown color-mask code {code!r} at "
+                        f"{column},{row_index}"
+                    )
+                if glyph == " " and code != SURFACE_MASK_CODE:
+                    raise SpriteValidationError(
+                        f"{context}/{self.id}: void cell at {column},{row_index} "
+                        "must use the Surface color mask"
                     )
 
 
@@ -253,10 +303,10 @@ class Sprite:
     source: str | None = None
 
     def validate(self) -> None:
-        if self.schema_version != SCHEMA_VERSION:
+        if self.schema_version != SPRITE_SCHEMA_VERSION:
             raise SpriteValidationError(
                 f"{self.id or 'sprite'}: unsupported schema_version "
-                f"{self.schema_version}; expected {SCHEMA_VERSION}"
+                f"{self.schema_version}; expected {SPRITE_SCHEMA_VERSION}"
             )
         if not self.id or not self.role:
             raise SpriteValidationError("sprite id and role cannot be empty")
@@ -271,34 +321,41 @@ class Sprite:
 
 
 @dataclass
-class Palette:
-    bright: str
-    mid: str
-    dark: str
-    beacon: list[str]
-    engine: list[str]
-    window: list[str]
-    facet: str
+class ColorSet:
+    colors: list[str]
 
     def validate(self, context: str) -> None:
-        scalar_colors = {
-            "bright": self.bright,
-            "mid": self.mid,
-            "dark": self.dark,
-            "facet": self.facet,
-        }
-        for field_name, value in scalar_colors.items():
-            if not value:
-                raise SpriteValidationError(f"{context}.{field_name} cannot be empty")
-        for field_name, values in (
-            ("beacon", self.beacon),
-            ("engine", self.engine),
-            ("window", self.window),
-        ):
-            if not values or any(not value for value in values):
-                raise SpriteValidationError(
-                    f"{context}.{field_name} requires one or more colors"
-                )
+        if not 1 <= len(self.colors) <= 4:
+            raise SpriteValidationError(
+                f"{context} requires between one and four colors"
+            )
+        if any(not color for color in self.colors):
+            raise SpriteValidationError(f"{context} colors cannot be empty")
+
+    def color_for_slot(self, slot: int) -> str:
+        """Return one glyph-shading slot, falling back to the full-block color."""
+
+        return self.colors[slot] if slot < len(self.colors) else self.colors[0]
+
+
+@dataclass
+class Palette:
+    color_sets: dict[str, ColorSet]
+
+    def validate(self, context: str) -> None:
+        actual = set(self.color_sets)
+        expected = set(COLOR_SET_IDS)
+        if actual != expected:
+            missing = sorted(expected - actual)
+            extra = sorted(actual - expected)
+            raise SpriteValidationError(
+                f"{context} color sets are controlled; missing={missing}, extra={extra}"
+            )
+        for color_set_id in COLOR_SET_IDS:
+            self.color_sets[color_set_id].validate(f"{context}.{color_set_id}")
+
+    def color_set(self, color_set_id: str) -> ColorSet:
+        return self.color_sets[color_set_id]
 
 
 @dataclass
@@ -308,10 +365,10 @@ class PaletteCatalog:
     fallback_archetype: str = "humanoid_diplomat"
 
     def validate(self) -> None:
-        if self.schema_version != SCHEMA_VERSION:
+        if self.schema_version != PALETTE_SCHEMA_VERSION:
             raise SpriteValidationError(
                 "palette catalog has unsupported schema_version "
-                f"{self.schema_version}; expected {SCHEMA_VERSION}"
+                f"{self.schema_version}; expected {PALETTE_SCHEMA_VERSION}"
             )
         actual = set(self.archetypes)
         expected = set(ARCHETYPE_IDS)

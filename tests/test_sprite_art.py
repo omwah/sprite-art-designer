@@ -10,6 +10,7 @@ import pytest
 
 from sprite_art import (
     ARCHETYPE_IDS,
+    COLOR_SET_IDS,
     PaletteCatalog,
     REXPAINT_GLYPH_INDICES,
     RexPaintImportError,
@@ -74,6 +75,9 @@ def test_palette_catalog_is_the_exact_controlled_roster(
 ) -> None:
     assert tuple(palettes.archetypes) == ARCHETYPE_IDS
     assert palettes.resolve("unknown") is palettes.archetypes["humanoid_diplomat"]
+    for palette in palettes.archetypes.values():
+        assert tuple(palette.color_sets) == COLOR_SET_IDS
+        assert all(1 <= len(color_set.colors) <= 4 for color_set in palette.color_sets.values())
 
 
 def test_palette_catalog_rejects_extra_archetype(palettes: PaletteCatalog) -> None:
@@ -83,6 +87,32 @@ def test_palette_catalog_rejects_extra_archetype(palettes: PaletteCatalog) -> No
     )
     with pytest.raises(SpriteValidationError, match="controlled"):
         invalid.validate()
+
+
+def test_sprite_color_masks_match_geometry_and_reject_unknown_codes() -> None:
+    sprite = load_sprite(ASSETS / "sprites" / "ships" / "fighter.yaml")
+    variant = sprite.views["horizontal"].tiers[0].sections[0].variants[0]
+    assert len(variant.color_mask) == variant.height
+    assert all(len(row) == variant.width for row in variant.color_mask)
+    variant.color_mask[0] = "?" + variant.color_mask[0][1:]
+    with pytest.raises(SpriteValidationError, match="unknown color-mask code"):
+        sprite.validate()
+
+
+def test_migrated_markers_use_real_glyphs_and_expected_color_sets() -> None:
+    sprites = load_sprite_directory(ASSETS / "sprites")
+    pairs = {
+        (glyph, code)
+        for sprite in sprites.values()
+        for view in sprite.views.values()
+        for tier in view.tiers
+        for section in tier.sections
+        for variant in section.variants
+        for glyph_row, mask_row in zip(variant.cells, variant.color_mask)
+        for glyph, code in zip(glyph_row, mask_row)
+    }
+    assert not set("RGBYrgby") & {glyph for glyph, _code in pairs}
+    assert ("▄", "E") in pairs
 
 
 def test_rexpaint_export_is_deterministic_and_uses_one_column_major_layer(
@@ -96,8 +126,10 @@ def test_rexpaint_export_is_deterministic_and_uses_one_column_major_layer(
         sprite, palettes, tmp_path / "fighter-again.xp", width=40, height=7, seed=7
     )
 
-    assert first.read_bytes() == second.read_bytes()
-    data = gzip.decompress(first.read_bytes())
+    assert first.image_path.read_bytes() == second.image_path.read_bytes()
+    assert first.palette_path.read_text() == second.palette_path.read_text()
+    assert len(first.palette_path.read_text().split("}")) == 257
+    data = gzip.decompress(first.image_path.read_bytes())
     version, layers, width, height = struct.unpack_from("<iiii", data)
     assert (version, layers, width, height) == (-1, 1, 40, 7)
     assert len(data) == 16 + 40 * 7 * 10
@@ -123,13 +155,14 @@ def test_rexpaint_import_round_trips_exported_geometry(
     palettes: PaletteCatalog, tmp_path: Path
 ) -> None:
     sprite = load_sprite(ASSETS / "sprites" / "ships" / "fighter.yaml")
-    export_path = export_rexpaint(
+    exported = export_rexpaint(
         sprite, palettes, tmp_path / "fighter.xp", width=40, height=7, seed=7
     )
-    assert import_rexpaint_cells(export_path) == render_sprite(
-        sprite, palettes, width=40, height=7, seed=7, preserve_authoring_markers=True
+    imported = import_rexpaint_cells(exported.image_path)
+    assert imported.glyphs == render_sprite(
+        sprite, palettes, width=40, height=7, seed=7, primary_colors=True
     ).plain.splitlines()
-    assert "y" in "".join(import_rexpaint_cells(export_path))
+    assert not set("RGBYrgby") & set("".join(imported.glyphs))
 
 
 def test_active_variant_hit_testing_matches_preview_geometry(
@@ -156,18 +189,21 @@ def test_rexpaint_import_segments_active_variants(
     palettes: PaletteCatalog, tmp_path: Path
 ) -> None:
     sprite = load_sprite(ASSETS / "sprites" / "ships" / "fighter.yaml")
-    export_path = export_rexpaint(
+    exported = export_rexpaint(
         sprite, palettes, tmp_path / "fighter.xp", width=40, height=7, seed=7
     )
     segments = segment_rexpaint_cells(
-        import_rexpaint_cells(export_path),
+        import_rexpaint_cells(exported.image_path),
         sprite,
         palettes,
         width=40,
         height=7,
         seed=7,
     )
-    assert all(cells == variant.cells for variant, cells in segments)
+    assert all(
+        cells == variant.cells and color_mask == variant.color_mask
+        for variant, cells, color_mask in segments
+    )
 
 
 def test_rexpaint_import_rejects_multiple_layers(tmp_path: Path) -> None:
@@ -192,6 +228,13 @@ def test_rexpaint_font_covers_every_authored_asset_glyph(
         for glyph in row
     }
     assert used <= REXPAINT_GLYPH_INDICES.keys()
+    unicode_map = ASSETS / "rexpaint" / "edge-art-designer-unicode.txt"
+    mapped_indices = {
+        int(line.split()[0])
+        for line in unicode_map.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    }
+    assert mapped_indices == set(REXPAINT_GLYPH_INDICES.values())
 
 
 def test_authoring_glyphs_have_reversible_reflections_and_rotation_support() -> None:
@@ -410,6 +453,13 @@ def test_rotation_compacts_terminal_cell_aspect() -> None:
     assert all(
         row[column : column + 2] == row[column] * 2
         for row in rotated.cells
+        for column in range(0, rotated.width, 2)
+    )
+    assert len(rotated.color_mask) == rotated.height
+    assert all(len(row) == rotated.width for row in rotated.color_mask)
+    assert all(
+        row[column : column + 2] == row[column] * 2
+        for row in rotated.color_mask
         for column in range(0, rotated.width, 2)
     )
 

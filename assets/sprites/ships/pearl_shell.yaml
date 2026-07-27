@@ -1,10 +1,9 @@
-schema_version: 1
+schema_version: 2
 id: pearl_shell
 name: Pearl Shell
 kind: ship
 role: pearl_shell
-description: An alien troop shell with offset carapace plates and a ring of recessed
-  weapon ports.
+description: An alien troop shell with offset carapace plates and a ring of recessed weapon ports.
 views:
   horizontal:
     name: Horizontal
@@ -27,23 +26,39 @@ views:
         - id: fan
           weight: 1
           cells:
-          - ' yy '
-          - 'y◢▓ '
-          - y██▓
-          - y██▓
-          - 'y◥▓ '
+          - ' ▄▄ '
+          - '▄◢▓ '
+          - ▄██▓
+          - ▄██▓
+          - '▄◥▓ '
           - '    '
-          - ' y  '
+          - ' ▄  '
+          color_mask:
+          - SEES
+          - ESSS
+          - ESSS
+          - ESSS
+          - ESSS
+          - SSSS
+          - SESS
         - id: barbs
           weight: 1
           cells:
-          - ' y▶ '
-          - 'y▟▓ '
-          - y██▓
-          - y▒█▓
-          - 'y▜▓ '
+          - ' ▄▶ '
+          - '▄▟▓ '
+          - ▄██▓
+          - ▄▒█▓
+          - '▄▜▓ '
           - '    '
-          - ' y▶ '
+          - ' ▄▶ '
+          color_mask:
+          - SESS
+          - ESSS
+          - ESSS
+          - ESSS
+          - ESSS
+          - SSSS
+          - SESS
       - id: rear_carapace
         name: Rear Carapace
         primary_property: armor
@@ -62,6 +77,14 @@ views:
           - █████
           - ◥████
           - ' ◥██◤'
+          color_mask:
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
         - id: scarred
           weight: 1
           cells:
@@ -72,6 +95,14 @@ views:
           - █████
           - ◥██▒█
           - '  ◥█◤'
+          color_mask:
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
       - id: weapon_ring
         name: Weapon Ring
         primary_property: weapons
@@ -85,13 +116,21 @@ views:
         - id: ports
           weight: 1
           cells:
-          - ' R    '
+          - ' ▀    '
           - ◢████◣
           - █◇█◇██
           - ██☉███
           - █◇██◇█
           - ◥████◤
           - '   ▾  '
+          color_mask:
+          - SBSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
         - id: sealed
           weight: 1
           cells:
@@ -102,6 +141,14 @@ views:
           - ◥████◤
           - ' ◥██◤ '
           - '      '
+          color_mask:
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
       - id: troop_lobe
         name: Troop Lobe
         primary_property: hangar
@@ -121,6 +168,14 @@ views:
           - █████
           - ◥██▒█
           - '  ◥█◤'
+          color_mask:
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
         - id: heavy
           weight: 1
           cells:
@@ -131,6 +186,14 @@ views:
           - █████
           - ◥████
           - ' ◥██◤'
+          color_mask:
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
       - id: beak
         name: Carapace Beak
         primary_property: screens
@@ -150,6 +213,14 @@ views:
           - ◥███▛
           - '  ◥█ '
           - '     '
+          color_mask:
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
         - id: round
           weight: 1
           cells:
@@ -160,6 +231,14 @@ views:
           - ◥████
           - '  ◥█◤'
           - '     '
+          color_mask:
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
       structure_lengths:
         ciliary_drive: 1
         rear_carapace: 1
@@ -181,19 +260,31 @@ views:
         - id: fan
           weight: 1
           cells:
-          - 'y◢ '
-          - y█▓
-          - y█▓
-          - 'y◥ '
+          - '▄◢ '
+          - ▄█▓
+          - ▄█▓
+          - '▄◥ '
           - '   '
+          color_mask:
+          - ESS
+          - ESS
+          - ESS
+          - ESS
+          - SSS
         - id: barbs
           weight: 1
           cells:
-          - 'y▟ '
-          - y█▓
-          - y▒▓
-          - 'y▜ '
+          - '▄▟ '
+          - ▄█▓
+          - ▄▒▓
+          - '▄▜ '
           - '   '
+          color_mask:
+          - ESS
+          - ESS
+          - ESS
+          - ESS
+          - SSS
       - id: rear_carapace
         name: Rear Carapace
         primary_property: armor
@@ -210,6 +301,12 @@ views:
           - █▒◇█
           - ████
           - ◥███
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
         - id: scarred
           weight: 1
           cells:
@@ -218,6 +315,12 @@ views:
           - █▒▒█
           - ████
           - ◥███
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
       - id: weapon_ring
         name: Weapon Ring
         primary_property: weapons
@@ -236,6 +339,12 @@ views:
           - ██☉██
           - █◇███
           - ◥███◤
+          color_mask:
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
         - id: sealed
           weight: 1
           cells:
@@ -244,6 +353,12 @@ views:
           - █▒◊▒█
           - ◥███◤
           - ' ◥██ '
+          color_mask:
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
       - id: troop_lobe
         name: Troop Lobe
         primary_property: hangar
@@ -261,6 +376,12 @@ views:
           - ██☉█
           - ████
           - ◥███
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
         - id: heavy
           weight: 1
           cells:
@@ -269,6 +390,12 @@ views:
           - ██◇█
           - ████
           - ◥███
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
       - id: beak
         name: Carapace Beak
         primary_property: screens
@@ -286,6 +413,12 @@ views:
           - ██◇▶
           - ◥██▛
           - '  ◥ '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
         - id: round
           weight: 1
           cells:
@@ -294,6 +427,12 @@ views:
           - ██☉▶
           - ◥███
           - '  ◥◤'
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
       structure_lengths:
         ciliary_drive: 1
         rear_carapace: 1
@@ -315,8 +454,12 @@ views:
           weight: 1
           cells:
           - ' █'
-          - y█
+          - ▄█
           - ' ▾'
+          color_mask:
+          - SS
+          - ES
+          - SS
       - id: body
         name: Body
         primary_property: hull
@@ -332,12 +475,20 @@ views:
           - ◢█
           - █◇
           - ◥█
+          color_mask:
+          - SS
+          - SS
+          - SS
         - id: ports
           weight: 1
           cells:
           - ▀█
           - █☉
           - ▄█
+          color_mask:
+          - SS
+          - SS
+          - SS
       - id: prow
         name: Prow
         primary_property: weapons
@@ -352,6 +503,10 @@ views:
           - ' ◢ '
           - ██▶
           - ' ◥ '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
       structure_lengths:
         drive: 1
         body: 6
@@ -378,12 +533,18 @@ views:
           weight: 1
           cells:
           - '    ▓▓▓▓      '
-          - yy◥◥████◤◤  yy
+          - ▄▄◥◥████◤◤  ▄▄
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - EESSSSSSSSSSEE
         - id: barbs
           weight: 1
           cells:
           - '    ▓▓▓▓      '
-          - yy▜▜██▒▒▛▛  yy
+          - ▄▄▜▜██▒▒▛▛  ▄▄
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - EESSSSSSSSSSEE
       - id: rear_carapace
         name: Rear Carapace
         primary_property: armor
@@ -398,12 +559,20 @@ views:
           - ◢◢██████████◣◣
           - ██████◇◇██████
           - '  ◥◥██████◤◤  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
         - id: scarred
           weight: 1
           cells:
           - ◢◢██████████◣◣
           - ◥◥██◇◇▒▒████◤◤
           - '  ◥◥██████◤◤  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       - id: weapon_ring
         name: Weapon Ring
         primary_property: weapons
@@ -419,13 +588,21 @@ views:
           cells:
           - '  ◢◢██████◣◣  '
           - '  ██◇◇██████▶▶'
-          - 'RR██◇◇██◇◇██  '
+          - '▀▀██◇◇██◇◇██  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - BBSSSSSSSSSSSS
         - id: sealed
           weight: 1
           cells:
           - '    ◢◢██◣◣    '
           - '  ████▒▒████  '
           - '  ◥◥██▒▒██◤◤  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       - id: troop_lobe
         name: Troop Lobe
         primary_property: hangar
@@ -441,12 +618,20 @@ views:
           - ◢◢██████████◣◣
           - ██◇◇██☉☉████◤◤
           - '  ◥◥██████◤◤  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
         - id: heavy
           weight: 1
           cells:
           - ◢◢██████████◣◣
           - ◥◥██▒▒◇◇██████
           - '  ◥◥██████◤◤  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       - id: beak
         name: Carapace Beak
         primary_property: screens
@@ -462,12 +647,20 @@ views:
           - '    ▟▟▴▴▙▙    '
           - '  ████◇◇██◤◤  '
           - '    ◥◥██◤◤    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
         - id: round
           weight: 1
           cells:
           - '  ◢◢██▴▴██◣◣  '
           - '  ◥◥██☉☉██◤◤  '
           - '    ◥◥██◤◤    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       structure_lengths:
         ciliary_drive: 1
         rear_carapace: 1
@@ -490,12 +683,18 @@ views:
           weight: 1
           cells:
           - '  ▓▓▓▓    '
-          - 'yyyyyyyy  '
+          - '▄▄▄▄▄▄▄▄  '
+          color_mask:
+          - SSSSSSSSSS
+          - EEEEEEEESS
         - id: barbs
           weight: 1
           cells:
           - '  ▓▓▓▓    '
-          - 'yyyyyyyy  '
+          - '▄▄▄▄▄▄▄▄  '
+          color_mask:
+          - SSSSSSSSSS
+          - EEEEEEEESS
       - id: rear_carapace
         name: Rear Carapace
         primary_property: armor
@@ -509,11 +708,17 @@ views:
           cells:
           - ██████████
           - ████▒▒████
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: scarred
           weight: 1
           cells:
           - ██████████
           - ████▒▒████
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
       - id: weapon_ring
         name: Weapon Ring
         primary_property: weapons
@@ -530,12 +735,20 @@ views:
           - ◢◢██████◣◣
           - ████☉☉████
           - ◥◥██████◤◤
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: sealed
           weight: 1
           cells:
           - '  ◢◢██◣◣  '
           - ████◊◊████
           - '  ◥◥██◤◤  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
+          - SSSSSSSSSS
       - id: troop_lobe
         name: Troop Lobe
         primary_property: hangar
@@ -550,11 +763,17 @@ views:
           cells:
           - ██████████
           - ██████████
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: heavy
           weight: 1
           cells:
           - ██████████
           - ██▒▒██████
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
       - id: beak
         name: Carapace Beak
         primary_property: screens
@@ -569,11 +788,17 @@ views:
           cells:
           - '  ▟▟▴▴▙▙  '
           - '◥◥██████  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: round
           weight: 1
           cells:
           - ◢◢██▴▴██◣◣
           - '  ██████  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
       structure_lengths:
         ciliary_drive: 1
         rear_carapace: 1
@@ -595,6 +820,8 @@ views:
           weight: 1
           cells:
           - ████▶▶
+          color_mask:
+          - SSSSSS
       - id: body
         name: Body
         primary_property: hull
@@ -608,10 +835,14 @@ views:
           weight: 1
           cells:
           - ██◇◇██
+          color_mask:
+          - SSSSSS
         - id: ports
           weight: 1
           cells:
           - ██☉☉██
+          color_mask:
+          - SSSSSS
       - id: prow
         name: Prow
         primary_property: weapons
@@ -625,6 +856,9 @@ views:
           cells:
           - '  ▴▴  '
           - '  ██  '
+          color_mask:
+          - SSSSSS
+          - SSSSSS
       structure_lengths:
         drive: 1
         body: 10

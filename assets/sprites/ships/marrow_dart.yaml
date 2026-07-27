@@ -1,10 +1,9 @@
-schema_version: 1
+schema_version: 2
 id: marrow_dart
 name: Marrow Dart
 kind: ship
 role: marrow_dart
-description: A reckless organic assault craft grown as bound spars, muscle bands,
-  and a hardened beak.
+description: A reckless organic assault craft grown as bound spars, muscle bands, and a hardened beak.
 views:
   horizontal:
     name: Horizontal
@@ -28,22 +27,38 @@ views:
           weight: 1
           cells:
           - '     '
-          - ' y   '
-          - 'yy╲▓ '
-          - y▒██▓
-          - 'yy╱▓ '
+          - ' ▄   '
+          - '▄▄╲▓ '
+          - ▄▒██▓
+          - '▄▄╱▓ '
           - '     '
           - '     '
+          color_mask:
+          - SSSSS
+          - SESSS
+          - EESSS
+          - ESSSS
+          - EESSS
+          - SSSSS
+          - SSSSS
         - id: spasm
           weight: 1
           cells:
           - '     '
-          - ' yy  '
-          - 'y╲▒▓ '
-          - y███▓
-          - 'y╱▒▓ '
-          - '  y  '
+          - ' ▄▄  '
+          - '▄╲▒▓ '
+          - ▄███▓
+          - '▄╱▒▓ '
+          - '  ▄  '
           - '     '
+          color_mask:
+          - SSSSS
+          - SEESS
+          - ESSSS
+          - ESSSS
+          - ESSSS
+          - SSESS
+          - SSSSS
       - id: marrow_knot
         name: Marrow Knot
         primary_property: spindrive
@@ -63,6 +78,14 @@ views:
           - ╲███
           - ' ◥▒◤'
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
         - id: scar
           weight: 1
           cells:
@@ -73,6 +96,14 @@ views:
           - ◥█▒◤
           - '  ▾ '
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
       - id: bound_spars
         name: Bound Spars
         primary_property: hull
@@ -92,6 +123,14 @@ views:
           - ▓██▓
           - ╱  ╲
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
         - id: muscle
           weight: 1
           cells:
@@ -102,6 +141,14 @@ views:
           - █▓▓█
           - ◥▒▒◤
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
       - id: nerve_cluster
         name: Nerve Cluster
         primary_property: sensors
@@ -121,16 +168,32 @@ views:
           - █◇▒██
           - ' ◥█◤ '
           - '     '
+          color_mask:
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
         - id: many_eyes
           weight: 1
           cells:
           - '     '
-          - ' R R '
+          - ' ▀ ▀ '
           - ◢◇█◇◣
           - █████
           - ◥█◇█◤
           - '  ▾  '
           - '     '
+          color_mask:
+          - SSSSS
+          - SBSBS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
       - id: hardened_beak
         name: Hardened Beak
         primary_property: main_gun
@@ -149,6 +212,14 @@ views:
           - '◥▒▛ '
           - '    '
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
         - id: barb
           weight: 1
           cells:
@@ -159,6 +230,14 @@ views:
           - '╱█▛ '
           - '    '
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
       structure_lengths:
         sinew_drive: 1
         marrow_knot: 1
@@ -180,19 +259,31 @@ views:
         - id: tendons
           weight: 1
           cells:
-          - ' y  '
-          - 'yy╲ '
-          - y▒█▓
-          - 'yy╱ '
+          - ' ▄  '
+          - '▄▄╲ '
+          - ▄▒█▓
+          - '▄▄╱ '
           - '    '
+          color_mask:
+          - SESS
+          - EESS
+          - ESSS
+          - EESS
+          - SSSS
         - id: spasm
           weight: 1
           cells:
-          - ' yy '
-          - 'y╲▒ '
-          - y██▓
-          - 'y╱▒ '
-          - '  y '
+          - ' ▄▄ '
+          - '▄╲▒ '
+          - ▄██▓
+          - '▄╱▒ '
+          - '  ▄ '
+          color_mask:
+          - SEES
+          - ESSS
+          - ESSS
+          - ESSS
+          - SSES
       - id: marrow_knot
         name: Marrow Knot
         primary_property: spindrive
@@ -210,6 +301,12 @@ views:
           - █☉█
           - ╲██
           - ' ◥◤'
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
         - id: scar
           weight: 1
           cells:
@@ -218,6 +315,12 @@ views:
           - ███
           - ◥█◤
           - '   '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
       - id: bound_spars
         name: Bound Spars
         primary_property: hull
@@ -235,6 +338,12 @@ views:
           - █▒█
           - ▓█▓
           - ╱ ╲
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
         - id: muscle
           weight: 1
           cells:
@@ -243,6 +352,12 @@ views:
           - █◊█
           - █▓█
           - ◥▒◤
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
       - id: nerve_cluster
         name: Nerve Cluster
         primary_property: sensors
@@ -260,14 +375,26 @@ views:
           - ████
           - █◇▒█
           - ' ◥█ '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
         - id: many_eyes
           weight: 1
           cells:
-          - ' R  '
+          - ' ▀  '
           - ◢◇█◣
           - ████
           - ◥█◇◤
           - '  ▾ '
+          color_mask:
+          - SBSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
       - id: hardened_beak
         name: Hardened Beak
         primary_property: main_gun
@@ -284,6 +411,12 @@ views:
           - ██▶
           - '◥▒ '
           - '   '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
         - id: barb
           weight: 1
           cells:
@@ -292,6 +425,12 @@ views:
           - █▒▶
           - '╱█ '
           - '   '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
       structure_lengths:
         sinew_drive: 1
         marrow_knot: 1
@@ -313,8 +452,12 @@ views:
           weight: 1
           cells:
           - ' ▴'
-          - y▒
+          - ▄▒
           - ' ▾'
+          color_mask:
+          - SS
+          - ES
+          - SS
       - id: body
         name: Body
         primary_property: hull
@@ -330,12 +473,20 @@ views:
           - ╲█
           - █▒
           - ╱█
+          color_mask:
+          - SS
+          - SS
+          - SS
         - id: muscle
           weight: 1
           cells:
           - ◢▒
           - █◊
           - ◥▒
+          color_mask:
+          - SS
+          - SS
+          - SS
       - id: prow
         name: Prow
         primary_property: weapons
@@ -350,6 +501,10 @@ views:
           - ' ◢ '
           - █▓▶
           - ' ◥ '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
       structure_lengths:
         drive: 1
         body: 6
@@ -377,13 +532,21 @@ views:
           cells:
           - '      ▓▓      '
           - '    ╱╱██╲╲    '
-          - '    yyyyyy    '
+          - '    ▄▄▄▄▄▄    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSEEEEEESSSS
         - id: spasm
           weight: 1
           cells:
           - '      ▓▓      '
-          - '  yy▒▒██▒▒yy  '
-          - '    yyyyyy    '
+          - '  ▄▄▒▒██▒▒▄▄  '
+          - '    ▄▄▄▄▄▄    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSEESSSSSSEESS
+          - SSSSEEEEEESSSS
       - id: marrow_knot
         name: Marrow Knot
         primary_property: spindrive
@@ -398,11 +561,17 @@ views:
           cells:
           - '  ◢◢██████◣◣  '
           - '  ◥◥██☉☉██◤◤  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
         - id: scar
           weight: 1
           cells:
           - '    ◢◢██◣◣    '
           - '    ██████    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       - id: bound_spars
         name: Bound Spars
         primary_property: hull
@@ -417,11 +586,17 @@ views:
           cells:
           - '  ╲╲▓▓██▓▓╱╱  '
           - '    ██▒▒██    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
         - id: muscle
           weight: 1
           cells:
           - '  ◢◢██████◣◣  '
           - '  ▒▒▓▓◊◊▓▓▒▒  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       - id: nerve_cluster
         name: Nerve Cluster
         primary_property: sensors
@@ -437,12 +612,20 @@ views:
           - '    ██████    '
           - '  ██████▒▒██  '
           - '    ██████    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
         - id: many_eyes
           weight: 1
           cells:
           - '    ◢◢██◣◣    '
           - '    ████◇◇▶▶  '
           - '    ◥◥██◤◤    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       - id: hardened_beak
         name: Hardened Beak
         primary_property: main_gun
@@ -456,11 +639,17 @@ views:
           cells:
           - '      ▴▴      '
           - '    ▒▒██▒▒    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
         - id: barb
           weight: 1
           cells:
           - '      ▴▴      '
           - '    ██▒▒██    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       structure_lengths:
         sinew_drive: 1
         marrow_knot: 1
@@ -483,12 +672,18 @@ views:
           weight: 1
           cells:
           - '    ▓▓    '
-          - 'yyyy▒▒yy  '
+          - '▄▄▄▄▒▒▄▄  '
+          color_mask:
+          - SSSSSSSSSS
+          - EEEESSEESS
         - id: spasm
           weight: 1
           cells:
           - '    ▓▓    '
-          - 'yy╱╱██╲╲  '
+          - '▄▄╱╱██╲╲  '
+          color_mask:
+          - SSSSSSSSSS
+          - EESSSSSSSS
       - id: marrow_knot
         name: Marrow Knot
         primary_property: spindrive
@@ -503,11 +698,17 @@ views:
           cells:
           - ◢◢██████◣◣
           - '  ╲╲██╱╱  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: scar
           weight: 1
           cells:
           - '  ◢◢██◣◣  '
           - '  ◥◥██◤◤  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
       - id: bound_spars
         name: Bound Spars
         primary_property: hull
@@ -522,11 +723,17 @@ views:
           cells:
           - ╲╲▓▓██▓▓╱╱
           - ╱╱▓▓██▓▓╲╲
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: muscle
           weight: 1
           cells:
           - ◢◢██████◣◣
           - ◥◥██████◤◤
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
       - id: nerve_cluster
         name: Nerve Cluster
         primary_property: sensors
@@ -541,11 +748,17 @@ views:
           cells:
           - '  ██████  '
           - ◥◥☉☉██◇◇◤◤
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: many_eyes
           weight: 1
           cells:
           - '  ◢◢██◣◣  '
-          - 'RR◇◇████  '
+          - '▀▀◇◇████  '
+          color_mask:
+          - SSSSSSSSSS
+          - BBSSSSSSSS
       - id: hardened_beak
         name: Hardened Beak
         primary_property: main_gun
@@ -559,11 +772,17 @@ views:
           cells:
           - '    ▴▴    '
           - '  ◥◥██◤◤  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: barb
           weight: 1
           cells:
           - '    ▴▴    '
           - '  ╱╱██╲╲  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
       structure_lengths:
         sinew_drive: 1
         marrow_knot: 1
@@ -585,6 +804,8 @@ views:
           weight: 1
           cells:
           - ◀◀▒▒▶▶
+          color_mask:
+          - SSSSSS
       - id: body
         name: Body
         primary_property: hull
@@ -598,10 +819,14 @@ views:
           weight: 1
           cells:
           - ██▒▒██
+          color_mask:
+          - SSSSSS
         - id: muscle
           weight: 1
           cells:
           - ▒▒◊◊▒▒
+          color_mask:
+          - SSSSSS
       - id: prow
         name: Prow
         primary_property: weapons
@@ -615,6 +840,9 @@ views:
           cells:
           - '  ▴▴  '
           - '  ██  '
+          color_mask:
+          - SSSSSS
+          - SSSSSS
       structure_lengths:
         drive: 1
         body: 12

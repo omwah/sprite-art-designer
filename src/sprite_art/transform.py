@@ -63,6 +63,16 @@ def _compact_rotated_cells_for_terminal_aspect(cells: list[str]) -> list[str]:
     return expanded[::2]
 
 
+def _rotate_mask_ccw(rows: list[str]) -> list[str]:
+    height = len(rows)
+    width = len(rows[0])
+    output = [[" " for _ in range(height)] for _ in range(width)]
+    for row, line in enumerate(rows):
+        for column, code in enumerate(line):
+            output[width - 1 - column][row] = code
+    return ["".join(line) for line in output]
+
+
 def generate_rotated_view(
     sprite: Sprite,
     source_view_id: str = "horizontal",
@@ -91,6 +101,9 @@ def generate_rotated_view(
                 )
                 variant.cells = _compact_rotated_cells_for_terminal_aspect(
                     rotated_cells
+                )
+                variant.color_mask = _compact_rotated_cells_for_terminal_aspect(
+                    _rotate_mask_ccw(variant.color_mask)
                 )
                 warnings.extend(variant_warnings)
     target.validate(sprite.id)

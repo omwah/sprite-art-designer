@@ -9,7 +9,7 @@ from pathlib import Path
 from sprite_art import Tier, dump_sprite, generate_rotated_view, load_sprite
 
 
-def _fit_rows(cells: list[str], height: int) -> list[str]:
+def _fit_rows(cells: list[str], height: int, fill: str = " ") -> list[str]:
     """Center-crop or pad a rectangular horizontal-art variant to ``height``."""
 
     current_height = len(cells)
@@ -20,7 +20,7 @@ def _fit_rows(cells: list[str], height: int) -> list[str]:
     if current_height < height:
         padding = height - current_height
         top = padding // 2
-        return [" " * width] * top + cells + [" " * width] * (padding - top)
+        return [fill * width] * top + cells + [fill * width] * (padding - top)
     return list(cells)
 
 
@@ -28,6 +28,7 @@ def _resize_tier(tier: Tier, height: int) -> None:
     for section in tier.sections:
         for variant in section.variants:
             variant.cells = _fit_rows(variant.cells, height)
+            variant.color_mask = _fit_rows(variant.color_mask, height, "S")
 
 
 def _scale_columns(cells: list[str], numerator: int, denominator: int) -> list[str]:
@@ -55,6 +56,7 @@ def _medium_tier(full: Tier) -> Tier:
     for section in medium.sections:
         for variant in section.variants:
             variant.cells = _scale_columns(variant.cells, 3, 4)
+            variant.color_mask = _scale_columns(variant.color_mask, 3, 4)
     return medium
 
 

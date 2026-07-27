@@ -132,8 +132,7 @@ Examples include:
 ╱ ↔ ╲
 ```
 
-Characters such as full blocks, shade blocks, rules, and light markers pass
-through unchanged.
+Characters such as full blocks, shade blocks, and rules pass through unchanged.
 
 This transform is an **involution**: applying it twice returns the original
 row. It also consumes no random values. The generator deliberately excludes
@@ -192,9 +191,9 @@ style spans.
 
 Composition also preserves RNG stability across widths. It makes one random
 part-selection draw per grammar slot, regardless of how many times the chosen
-hull fragment is repeated. Repetition is calculated arithmetically. Changing
-the available width does not unexpectedly shift the random stream used later
-for palette choices and windows.
+hull fragment is repeated. Repetition is calculated arithmetically. The
+renderer retains the two historical pre-composition draws so converted variant
+choices stay stable, but palette shading and windows consume no random draws.
 
 `generate_sprite` is cached with an LRU cache, currently holding 128 request
 variants. Caching is a performance optimization, not a source of identity:
@@ -202,27 +201,24 @@ uncached generation remains deterministic.
 
 ## 7. Geometry and color are separate systems
 
-The grammar defines structure through a small, closed hull alphabet. The shared
-painter interprets those glyphs semantically:
+The grammar stores a glyph grid and an equally sized color-mask grid. The mask
+chooses Surface, Engine, Beacon, Window, Weapons, or Defensive; the painter
+interprets glyph shape the same way inside every set:
 
 | Authored cell | Rendered meaning |
 |---|---|
-| `█` | Bright, lit plating |
-| `▒`, `░` | Dark recesses |
-| Half blocks, box drawing, rules, wedges | Mid-tone hull, struts, bevels, and panels |
-| `R` | Navigation beacon marker, rendered as `▀` |
-| `Y` | Engine/glow marker, rendered as `▄` |
+| `█`, `■` | First/full-block color |
+| `▒`, `░` | Third/recess color |
+| Half blocks, box drawing, rules, wedges | Second/structural color |
 | space | Transparent-looking terminal void |
-| Any other non-space glyph | Facet or etched surface feature |
+| Any other non-space glyph | Fourth/facet color over the first color |
 
-The grammar therefore carries shading in its character choices rather than
-hard-coded colors. A single shape can be recolored coherently without changing
-its construction.
+The glyph carries shading while the parallel mask carries function. A single
+shape can be recolored or reassigned without substituting marker characters.
 
-Facet glyphs are painted in a dedicated facet color over a bright-hull
-background so their negative space looks etched into plating. Bright hull cells
-have a small fixed chance—five percent—to become lit windows, adding signs of
-life without dissolving the silhouette into noise.
+If a color set contains fewer than four colors, missing glyph slots fall back
+to its first color. Windows are placed only by painting the Window mask; the
+renderer never turns Surface cells into windows randomly.
 
 The output is a Rich `Text` grid. Unicode supplies the geometry; Rich styles
 supply terminal foreground/background colors and ultimately the ANSI
@@ -235,12 +231,8 @@ same generation path.
 Ship role answers **what kind of vessel is this?** Archetype answers **whose
 design language does it use?**
 
-The owner's `archetype_id` selects a shared hull palette containing:
-
-- bright, middle, and dark hull tones;
-- pools of beacon and engine-light colors;
-- window colors;
-- a facet color.
+The owner's `archetype_id` selects six controlled color sets. Each contains one
+to four ordered colors demonstrated in the editor by `█`, `▓`, `▒`, and `◇`.
 
 The key is deliberately an archetype rather than a species name or ID. Species
 can be renamed or reskinned in a roster without destabilizing the underlying
@@ -248,9 +240,8 @@ visual family. Ships and ports owned by the same technological culture can also
 share a coherent palette. Unknown or absent archetypes fall back to the
 Federation-like grey `humanoid_diplomat` style.
 
-The seed chooses steady light hues from the selected palette once per sprite.
-Thus palette establishes cultural continuity while seeded choices keep members
-of that culture from looking completely cloned.
+Palette shading is deterministic and independent of the seed. Seeded variation
+comes from structural variant selection.
 
 ## 9. Scene composition protects the sprite's meaning
 
@@ -304,7 +295,7 @@ extend.
 When adding or revising ship art:
 
 1. **Design the silhouette first.** It must read in monochrome and at the compact
-   tier before color or window variation is considered.
+   tier before color-mask detail is considered.
 2. **Make role visible.** Cargo, speed, armour, screens, and weapon emphasis
    should be apparent in section proportions and glyph density.
 3. **Keep tail and nose distinct.** Canonical rows face right, and every
@@ -315,9 +306,8 @@ When adding or revising ship art:
    backbone; engines and prow remain iconic caps.
 6. **Provide a semantic compact tier.** Never assume the full-detail drawing can
    simply be cropped to three rows.
-7. **Encode light and material with the established glyph vocabulary.** Let
-   palettes recolor the structure instead of embedding cultural identity into
-   one-off geometry without a deliberate reason.
+7. **Encode shading with glyphs and function with masks.** Let palettes recolor
+   the structure instead of embedding color intent into substitute glyphs.
 8. **Preserve RNG draw discipline.** Size changes must not introduce a
    variable number of random part-selection draws.
 9. **Judge art in context.** Preview both facings, multiple widths and heights,

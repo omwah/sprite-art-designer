@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 id: warship
 name: Warship
 kind: ship
@@ -26,22 +26,38 @@ views:
           weight: 1
           cells:
           - '    '
-          - ' y▶═'
+          - ' ▄▶═'
           - ' ▟▓▓'
-          - y███
+          - ▄███
           - ' ▜▓▓'
-          - ' y▶═'
+          - ' ▄▶═'
           - '    '
+          color_mask:
+          - SSSS
+          - SESS
+          - SSSS
+          - ESSS
+          - SSSS
+          - SESS
+          - SSSS
         - id: thrusters_2
           weight: 1
           cells:
           - '    '
-          - ' y▶═'
-          - y▟▓▓
-          - y███
-          - y▜▓▓
-          - ' y▶═'
+          - ' ▄▶═'
+          - ▄▟▓▓
+          - ▄███
+          - ▄▜▓▓
+          - ' ▄▶═'
           - '    '
+          color_mask:
+          - SSSS
+          - SESS
+          - ESSS
+          - ESSS
+          - ESSS
+          - SESS
+          - SSSS
       - id: spindrive
         name: Spindrive
         primary_property: spindrive
@@ -60,6 +76,14 @@ views:
           - ▓██
           - ▓█═
           - '   '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
         - id: spindrive_2
           weight: 1
           cells:
@@ -70,6 +94,14 @@ views:
           - ▓██
           - ' │ '
           - '   '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
       - id: hull
         name: Hull
         primary_property: hull
@@ -88,16 +120,32 @@ views:
           - ◥██◤
           - ▓██═
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
         - id: hull_2
           weight: 1
           cells:
           - '    '
-          - ' R  '
+          - ' ▀  '
           - ◢██◣
           - █▒▒█
           - ◥██◤
           - ' ▾  '
           - '    '
+          color_mask:
+          - SSSS
+          - SBSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
         - id: hull_3
           weight: 1
           cells:
@@ -108,6 +156,14 @@ views:
           - ◥██◤
           - '    '
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
       - id: screens
         name: Screens
         primary_property: screens
@@ -126,6 +182,14 @@ views:
           - ◇▓██
           - '▓█▶ '
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
         - id: screens_2
           weight: 1
           cells:
@@ -136,6 +200,14 @@ views:
           - ◇▓██
           - '    '
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
       - id: main_gun
         name: Main Gun
         primary_property: main_gun
@@ -154,6 +226,14 @@ views:
           - '─▓▛  '
           - '     '
           - '     '
+          color_mask:
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
         - id: main_gun_2
           weight: 1
           cells:
@@ -164,6 +244,14 @@ views:
           - '─██▛ '
           - '     '
           - '     '
+          color_mask:
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
       structure_lengths:
         thrusters: 1
         spindrive: 1
@@ -184,19 +272,31 @@ views:
         - id: thrusters_1
           weight: 1
           cells:
-          - ' y═'
+          - ' ▄═'
           - ' ▟▓'
-          - y██
+          - ▄██
           - ' ▜▓'
-          - ' y═'
+          - ' ▄═'
+          color_mask:
+          - SES
+          - SSS
+          - ESS
+          - SSS
+          - SES
         - id: thrusters_2
           weight: 1
           cells:
-          - ' y═'
-          - y▟▓
-          - y██
-          - y▜▓
-          - ' y═'
+          - ' ▄═'
+          - ▄▟▓
+          - ▄██
+          - ▄▜▓
+          - ' ▄═'
+          color_mask:
+          - SES
+          - ESS
+          - ESS
+          - ESS
+          - SES
       - id: spindrive
         name: Spindrive
         primary_property: spindrive
@@ -213,6 +313,12 @@ views:
           - ██
           - ▓█
           - ▓═
+          color_mask:
+          - SS
+          - SS
+          - SS
+          - SS
+          - SS
         - id: spindrive_2
           weight: 1
           cells:
@@ -221,6 +327,12 @@ views:
           - ██
           - ▓█
           - '  '
+          color_mask:
+          - SS
+          - SS
+          - SS
+          - SS
+          - SS
       - id: hull
         name: Hull
         primary_property: hull
@@ -237,14 +349,26 @@ views:
           - █▒█
           - ◥█◤
           - ▓█═
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
         - id: hull_2
           weight: 1
           cells:
-          - ' R '
+          - ' ▀ '
           - ◢█◣
           - █▒█
           - ◥█◤
           - ' ▾ '
+          color_mask:
+          - SBS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
         - id: hull_3
           weight: 1
           cells:
@@ -253,6 +377,12 @@ views:
           - █◇█
           - ◥█◤
           - '   '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
       - id: screens
         name: Screens
         primary_property: screens
@@ -269,6 +399,12 @@ views:
           - ◇██
           - ◇▓█
           - '▓█ '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
         - id: screens_2
           weight: 1
           cells:
@@ -277,6 +413,12 @@ views:
           - ███
           - ◇▓█
           - '   '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
       - id: main_gun
         name: Main Gun
         primary_property: main_gun
@@ -293,6 +435,12 @@ views:
           - ─██▶
           - '─▓▛ '
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
         - id: main_gun_2
           weight: 1
           cells:
@@ -301,6 +449,12 @@ views:
           - ─██▶
           - '─██ '
           - '    '
+          color_mask:
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
       structure_lengths:
         thrusters: 1
         spindrive: 1
@@ -322,8 +476,12 @@ views:
           weight: 1
           cells:
           - '  '
-          - y█
+          - ▄█
           - '  '
+          color_mask:
+          - SS
+          - ES
+          - SS
       - id: hull
         name: Hull
         primary_property: hull
@@ -338,12 +496,20 @@ views:
           - '  '
           - ██
           - '  '
+          color_mask:
+          - SS
+          - SS
+          - SS
         - id: hull_2
           weight: 1
           cells:
           - ' ▴'
           - ██
           - '  '
+          color_mask:
+          - SS
+          - SS
+          - SS
       - id: main_gun
         name: Main Gun
         primary_property: main_gun
@@ -358,6 +524,10 @@ views:
           - '   '
           - ██▶
           - '   '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
       structure_lengths:
         thrusters: 1
         hull: 6
@@ -383,12 +553,18 @@ views:
           weight: 1
           cells:
           - '  ║║▓▓██▓▓║║  '
-          - '  yy▜▜██▛▛yy  '
+          - '  ▄▄▜▜██▛▛▄▄  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSEESSSSSSEESS
         - id: thrusters_2
           weight: 1
           cells:
           - '  ║║▓▓██▓▓║║  '
-          - '  yy▜▜██▛▛yy  '
+          - '  ▄▄▜▜██▛▛▄▄  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSEESSSSSSEESS
       - id: spindrive
         name: Spindrive
         primary_property: spindrive
@@ -402,11 +578,17 @@ views:
           cells:
           - '  ║║██████║║  '
           - '  ▓▓▓▓██▓▓▓▓  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
         - id: spindrive_2
           weight: 1
           cells:
           - '    ██████    '
           - '    ▓▓██▓▓    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       - id: hull
         name: Hull
         primary_property: hull
@@ -420,16 +602,25 @@ views:
           cells:
           - '  ║║◢◢██◣◣║║  '
           - '  ████▒▒████  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
         - id: hull_2
           weight: 1
           cells:
           - '    ◢◢██◣◣    '
-          - '  RR██▒▒██▶▶  '
+          - '  ▀▀██▒▒██▶▶  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSBBSSSSSSSSSS
         - id: hull_3
           weight: 1
           cells:
           - '    ◢◢██◣◣    '
           - '    ██◇◇██    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       - id: screens
         name: Screens
         primary_property: screens
@@ -443,11 +634,17 @@ views:
           cells:
           - '    ██████    '
           - '  ██▓▓██▓▓██  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
         - id: screens_2
           weight: 1
           cells:
           - '    ██████    '
           - '    ▓▓██▓▓    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       - id: main_gun
         name: Main Gun
         primary_property: main_gun
@@ -462,12 +659,20 @@ views:
           - '      ▴▴      '
           - '    ▟▟██▙▙    '
           - '    ││││││    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
         - id: main_gun_2
           weight: 1
           cells:
           - '      ▴▴      '
           - '    ██████    '
           - '    ││││││    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       structure_lengths:
         thrusters: 1
         spindrive: 1
@@ -489,12 +694,18 @@ views:
           weight: 1
           cells:
           - ║║▓▓██▓▓║║
-          - '    yy    '
+          - '    ▄▄    '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSEESSSS
         - id: thrusters_2
           weight: 1
           cells:
           - ║║▓▓██▓▓║║
-          - '  yyyyyy  '
+          - '  ▄▄▄▄▄▄  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSEEEEEESS
       - id: spindrive
         name: Spindrive
         primary_property: spindrive
@@ -507,10 +718,14 @@ views:
           weight: 1
           cells:
           - ║║██████║║
+          color_mask:
+          - SSSSSSSSSS
         - id: spindrive_2
           weight: 1
           cells:
           - '  ██████  '
+          color_mask:
+          - SSSSSSSSSS
       - id: hull
         name: Hull
         primary_property: hull
@@ -524,16 +739,25 @@ views:
           cells:
           - ║║◢◢██◣◣║║
           - ▓▓◥◥██◤◤▓▓
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: hull_2
           weight: 1
           cells:
           - '  ◢◢██◣◣  '
           - '  ◥◥██◤◤  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: hull_3
           weight: 1
           cells:
           - '  ◢◢██◣◣  '
           - '  ◥◥██◤◤  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
       - id: screens
         name: Screens
         primary_property: screens
@@ -547,11 +771,17 @@ views:
           cells:
           - '  ██████  '
           - ▓▓◇◇◇◇◇◇▓▓
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: screens_2
           weight: 1
           cells:
           - '  ██████  '
           - '  ◇◇██◇◇  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
       - id: main_gun
         name: Main Gun
         primary_property: main_gun
@@ -565,11 +795,17 @@ views:
           cells:
           - '    ▴▴    '
           - '  ▓▓██▓▓  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
         - id: main_gun_2
           weight: 1
           cells:
           - '    ▴▴    '
           - '  ██████  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
       structure_lengths:
         thrusters: 1
         spindrive: 1
@@ -591,6 +827,8 @@ views:
           weight: 1
           cells:
           - '  ██  '
+          color_mask:
+          - SSSSSS
       - id: hull
         name: Hull
         primary_property: hull
@@ -603,10 +841,14 @@ views:
           weight: 1
           cells:
           - '  ██  '
+          color_mask:
+          - SSSSSS
         - id: hull_2
           weight: 1
           cells:
           - '◀◀██  '
+          color_mask:
+          - SSSSSS
       - id: main_gun
         name: Main Gun
         primary_property: main_gun
@@ -620,6 +862,9 @@ views:
           cells:
           - '  ▴▴  '
           - '  ██  '
+          color_mask:
+          - SSSSSS
+          - SSSSSS
       structure_lengths:
         thrusters: 1
         hull: 10

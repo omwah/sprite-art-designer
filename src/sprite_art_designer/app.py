@@ -32,6 +32,7 @@ from textual.widgets.tree import TreeNode
 from textual_colorpicker import ColorPicker
 
 from sprite_art import (
+    COLOR_SET_IDS,
     PROPERTY_IDS,
     active_variant_at_cell,
     PaletteCatalog,
@@ -52,6 +53,7 @@ from .state import EditorState
 from .widgets import (
     ArtCanvas,
     CanvasPane,
+    ColorSetSelector,
     DocumentBar,
     GlyphPalette,
     NarrowTabs,
@@ -59,7 +61,6 @@ from .widgets import (
     PaletteColorSwatch,
     PreviewMatrix,
     PreviewPane,
-    SemanticGlyphRow,
     ToolsPane,
     WorkspaceSplitter,
 )
@@ -126,7 +127,23 @@ class HelpScreen(ModalScreen[None]):
             yield Static("Canvas", classes="help-section")
             yield Static(
                 "Left-drag paints · right-drag erases · arrows move · Space paints\n"
-                "Enter also paints · Delete or Backspace erases"
+                "Enter also paints · Delete or Backspace erases\n"
+                "Middle-click picks both the glyph and its color set"
+            )
+            yield Static("Glyph colors", classes="help-section")
+            yield Static(
+                "Each cell stores a glyph plus Surface, Engine, Beacon, Window, "
+                "Weapons, or Defensive. The palette examples show how glyph shape "
+                "selects color: █ full, ▓ structural, ▒ recessed, and ◇ facet. "
+                "Missing examples fall back to the █ color. Windows are painted "
+                "manually; they are never placed randomly."
+            )
+            yield Static("REXPaint", classes="help-section")
+            yield Static(
+                "Export writes a matching .xp image and native palette .txt file. "
+                "The .xp uses each color set's █ color so import can infer masks. "
+                "Import chooses the nearest configured set color, so changed or "
+                "overlapping colors can produce approximate results."
             )
             yield Static("Shortcuts", classes="help-section")
             yield Static(
@@ -249,7 +266,11 @@ def _unique_id(existing: set[str], base: str) -> str:
 
 
 def _blank_variant(variant_id: str, width: int, height: int) -> Variant:
-    return Variant(id=variant_id, cells=[" " * width for _ in range(height)])
+    return Variant(
+        id=variant_id,
+        cells=[" " * width for _ in range(height)],
+        color_mask=["S" * width for _ in range(height)],
+    )
 
 
 def _default_section(
@@ -388,6 +409,7 @@ class EdgeArtDesigner(App[None]):
         self.editor = EditorState.load(asset_root, data_root)
         self.selection: Selection | None = None
         self.selected_glyph = "█"
+        self.selected_color_set_id = "surface"
         self.preview_size = (40, 7)
         self.highlight_preview = False
         self.preview_seed = 7
@@ -462,6 +484,7 @@ class EdgeArtDesigner(App[None]):
         self._rebuild_tree()
         self.call_after_refresh(self._sync_tree_cursor_to_selection)
         self._select_glyph(self.selected_glyph)
+        self._select_color_set(self.selected_color_set_id)
         self._refresh_palette_fields()
         self._refresh_preview_controls()
         self._refresh_preview()
@@ -920,12 +943,13 @@ class EdgeArtDesigner(App[None]):
 
     def on_art_canvas_glyph_picked(self, event: ArtCanvas.GlyphPicked) -> None:
         self._select_glyph(event.glyph)
+        self._select_color_set(event.color_set_id)
 
     def on_glyph_palette_selected(self, event: GlyphPalette.Selected) -> None:
         self._select_glyph(event.glyph)
 
-    def on_semantic_glyph_row_selected(self, event: SemanticGlyphRow.Selected) -> None:
-        self._select_glyph(event.glyph)
+    def on_color_set_selector_selected(self, event: ColorSetSelector.Selected) -> None:
+        self._select_color_set(event.color_set_id)
 
     def on_palette_color_swatch_selected(self, event: PaletteColorSwatch.Selected) -> None:
         swatch = event.swatch
@@ -933,10 +957,14 @@ class EdgeArtDesigner(App[None]):
 
         def apply_selection(selected: str | None) -> None:
             if selected is not None:
-                self._set_palette_color(swatch.field_name, swatch.color_index, selected)
+                self._set_palette_color(
+                    swatch.color_set_id, swatch.color_index, selected
+                )
 
         self.push_screen(
-            PaletteColorScreen(swatch.field_name.replace("_", " ").title(), color),
+            PaletteColorScreen(
+                swatch.color_set_id.replace("_", " ").title(), color
+            ),
             apply_selection,
         )
 
@@ -966,10 +994,24 @@ class EdgeArtDesigner(App[None]):
         self.query_one("#art-canvas", ArtCanvas).set_glyph(glyph)
         for palette in self.query(GlyphPalette):
             palette.set_selected_glyph(glyph)
-        for row in self.query(SemanticGlyphRow):
-            row.set_selected_glyph(glyph)
         shown = "space" if glyph == " " else glyph
-        self.query_one("#selected-glyph", Label).update(f"Selected: {shown}")
+        color_name = self.selected_color_set_id.replace("_", " ").title()
+        self.query_one("#selected-glyph", Label).update(
+            f"Selected: {shown} · {color_name}"
+        )
+
+    def _select_color_set(self, color_set_id: str) -> None:
+        if color_set_id not in COLOR_SET_IDS:
+            raise ValueError(f"Unknown color set {color_set_id!r}")
+        self.selected_color_set_id = color_set_id
+        self.query_one("#art-canvas", ArtCanvas).set_color_set(color_set_id)
+        self.query_one("#color-set-selector", ColorSetSelector).set_selected_color_set(
+            color_set_id
+        )
+        shown = "space" if self.selected_glyph == " " else self.selected_glyph
+        self.query_one("#selected-glyph", Label).update(
+            f"Selected: {shown} · {color_set_id.replace('_', ' ').title()}"
+        )
 
     def on_switch_changed(self, event: Switch.Changed) -> None:
         if event.switch.id == "preview-highlight":
@@ -1306,25 +1348,19 @@ class EdgeArtDesigner(App[None]):
 
     def _refresh_palette_fields(self) -> None:
         palette = self.editor.palettes.archetypes[self.current_archetype]
-        scalar_colors = {
-            "bright": palette.bright,
-            "mid": palette.mid,
-            "dark": palette.dark,
-            "facet": palette.facet,
-        }
-        for field_name, color in scalar_colors.items():
-            self.query_one(f"#palette-color-{field_name}-0", PaletteColorSwatch).set_color(
-                color
-            )
-        for field_name, colors in (
-            ("beacon", palette.beacon),
-            ("engine", palette.engine),
-            ("window", palette.window),
-        ):
-            for index in range(3):
+        self.query_one("#art-canvas", ArtCanvas).set_palette(palette)
+        for color_set_id in COLOR_SET_IDS:
+            colors = palette.color_set(color_set_id).colors
+            for index in range(4):
                 self.query_one(
-                    f"#palette-color-{field_name}-{index}", PaletteColorSwatch
-                ).set_color(colors[index] if index < len(colors) else None)
+                    f"#palette-color-{color_set_id}-{index}", PaletteColorSwatch
+                ).set_color(
+                    colors[index] if index < len(colors) else None,
+                    colors[0],
+                )
+            self.query_one(f"#palette-add-{color_set_id}", Button).display = (
+                len(colors) < 4
+            )
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         button_id = event.button.id or ""
@@ -1344,6 +1380,8 @@ class EdgeArtDesigner(App[None]):
             self.action_rotate_vertical()
         elif button_id == "apply-properties":
             self._apply_properties()
+        elif button_id.startswith("palette-add-"):
+            self._add_palette_color(button_id.removeprefix("palette-add-"))
         elif button_id == "apply-ship-config":
             self._apply_ship_config()
         elif button_id == "apply-preview":
@@ -1458,35 +1496,40 @@ class EdgeArtDesigner(App[None]):
         if width < 1 or height < 1:
             raise ValueError("Canvas dimensions must be positive")
         old = variant.cells
+        old_mask = variant.color_mask
         rows: list[str] = []
+        mask_rows: list[str] = []
         for y in range(height):
             source = old[y] if y < len(old) else ""
+            mask_source = old_mask[y] if y < len(old_mask) else ""
             rows.append(source[:width].ljust(width))
+            mask_rows.append(mask_source[:width].ljust(width, "S"))
         variant.cells = rows
+        variant.color_mask = mask_rows
 
-    def _set_palette_color(self, field_name: str, index: int, color: str) -> None:
+    def _set_palette_color(
+        self, color_set_id: str, index: int, color: str
+    ) -> None:
         palette = self.editor.palettes.archetypes[self.current_archetype]
-        if field_name == "bright":
-            palette.bright = color
-        elif field_name == "mid":
-            palette.mid = color
-        elif field_name == "dark":
-            palette.dark = color
-        elif field_name == "facet":
-            palette.facet = color
-        elif field_name == "beacon":
-            palette.beacon[index] = color
-        elif field_name == "engine":
-            palette.engine[index] = color
-        elif field_name == "window":
-            palette.window[index] = color
-        else:
-            raise ValueError(f"Unknown palette field {field_name!r}")
+        palette.color_set(color_set_id).colors[index] = color
         self.editor.mark_palettes_dirty()
         self._push_history_snapshot()
         self._update_dirty_indicator()
         self._refresh_palette_fields()
         self._refresh_variant_labels()
+        self._refresh_preview()
+
+    def _add_palette_color(self, color_set_id: str) -> None:
+        palette = self.editor.palettes.archetypes[self.current_archetype]
+        colors = palette.color_set(color_set_id).colors
+        if len(colors) >= 4:
+            self.notify("A color set can contain at most four colors.", severity="warning")
+            return
+        colors.append(colors[0])
+        self.editor.mark_palettes_dirty()
+        self._push_history_snapshot()
+        self._update_dirty_indicator()
+        self._refresh_palette_fields()
         self._refresh_preview()
 
     def _apply_preview_configuration(self) -> None:
@@ -1533,7 +1576,7 @@ class EdgeArtDesigner(App[None]):
         )
         destination = self.editor.export_root / filename
         try:
-            export_rexpaint(
+            exported = export_rexpaint(
                 self.editor.current_sprite,
                 self.editor.palettes,
                 destination,
@@ -1548,7 +1591,10 @@ class EdgeArtDesigner(App[None]):
         except Exception as error:
             self.notify(f"REXPaint export failed: {error}", severity="error")
             return
-        self.notify(f"Exported REXPaint file: {destination}")
+        self.notify(
+            f"Exported REXPaint image {exported.image_path} and palette "
+            f"{exported.palette_path}"
+        )
 
     def _finish_document_action(self, action: str | None) -> None:
         if action is None:
@@ -1572,9 +1618,9 @@ class EdgeArtDesigner(App[None]):
         if source is None:
             return
         try:
-            cells = import_rexpaint_cells(source)
+            image = import_rexpaint_cells(source)
             segments = segment_rexpaint_cells(
-                cells,
+                image,
                 self.editor.current_sprite,
                 self.editor.palettes,
                 width=self.preview_size[0],
@@ -1585,13 +1631,18 @@ class EdgeArtDesigner(App[None]):
                 facing=self.current_facing,
                 variant_overrides=self._preview_variant_overrides(),
             )
-            originals = [(variant, list(variant.cells)) for variant, _cells in segments]
-            for variant, imported_cells in segments:
+            originals = [
+                (variant, list(variant.cells), list(variant.color_mask))
+                for variant, _cells, _mask in segments
+            ]
+            for variant, imported_cells, imported_mask in segments:
                 variant.cells = imported_cells
+                variant.color_mask = imported_mask
             self.editor.current_sprite.validate()
         except Exception as error:
-            for variant, original_cells in locals().get("originals", []):
+            for variant, original_cells, original_mask in locals().get("originals", []):
                 variant.cells = original_cells
+                variant.color_mask = original_mask
             self.notify(f"REXPaint import failed: {error}", severity="error")
             return
         self._rebuild_tree(select_item=self.selection.item if self.selection is not None else None)

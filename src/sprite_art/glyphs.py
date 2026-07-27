@@ -5,9 +5,6 @@ from __future__ import annotations
 from collections.abc import Mapping
 
 ROTATION_FALLBACK = "◇"
-SEMANTIC_GLYPHS = frozenset({"R", "Y", "G", "B", "r", "y", "g", "b"})
-"""Authoring glyphs rendered as colored beacon, engine, or signal effects."""
-
 BRIGHT_CHARS = frozenset("█■")
 DARK_CHARS = frozenset("▒░")
 MID_CHARS = frozenset(
@@ -133,14 +130,6 @@ AUTHORING_GLYPHS: tuple[tuple[str, str], ...] = (
     ("∞", "Facet"),
     ("⌐", "Facet"),
     ("¬", "Facet"),
-    ("R", "Palette beacon marker (upper signal)"),
-    ("G", "Always-green signal marker (upper signal)"),
-    ("B", "Always-blue signal marker (upper signal)"),
-    ("Y", "Palette engine marker (upper signal)"),
-    ("r", "Palette beacon marker (lower signal)"),
-    ("g", "Always-green signal marker (lower signal)"),
-    ("b", "Always-blue signal marker (lower signal)"),
-    ("y", "Palette engine marker (lower signal)"),
 )
 
 
@@ -182,7 +171,7 @@ ROTATE_CCW: dict[str, str] = {
         "╱╲",
     ),
 }
-for _glyph in " █■▓▒░RrYyGBgb◇◆◊☉°◘◙☼•○♥♦♣♠∩∞⌐¬┼▤▦╬":
+for _glyph in " █■▓▒░◇◆◊☉°◘◙☼•○♥♦♣♠∩∞⌐¬┼▤▦╬":
     ROTATE_CCW[_glyph] = _glyph
 ROTATE_CCW["≡"] = "║"
 
@@ -257,10 +246,6 @@ for _top, _bottom in (
     ("▲", "▼"),
     ("↑", "↓"),
     ("▄", "▀"),
-    ("R", "r"),
-    ("Y", "y"),
-    ("G", "g"),
-    ("B", "b"),
     ("╱", "╲"),
 ):
     VERTICAL_FLIP[_top] = _bottom

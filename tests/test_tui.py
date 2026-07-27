@@ -9,13 +9,14 @@ import pytest
 from textual.color import Color as TextualColor
 from textual.css.query import NoMatches
 from textual.containers import Horizontal, ItemGrid
-from textual.widgets import Label, Select, TabbedContent, TabPane, Tree
+from textual.widgets import Button, Label, Select, TabbedContent, TabPane, Tree
 from textual_colorpicker import ColorPicker
 
 from sprite_art.glyphs import AUTHORING_GLYPHS
 from sprite_art_designer.app import EdgeArtDesigner, HelpScreen, PaletteColorScreen, _new_sprite
 from sprite_art_designer.widgets import (
     ArtCanvas,
+    ColorSetSelector,
     PaletteColorGroup,
     PaletteColorSwatch,
     PreviewMatrix,
@@ -68,26 +69,30 @@ async def test_palette_is_second_tool_tab_and_displays_color_swatches() -> None:
         ]
         tabs.active = "palette-tab"
         await pilot.pause()
-        swatch = app.query_one("#palette-color-bright-0", PaletteColorSwatch)
-        assert swatch.label == ""
-        assert swatch.tooltip == "Edit bright: grey85"
+        swatch = app.query_one("#palette-color-surface-0", PaletteColorSwatch)
+        assert str(swatch.label) == "█"
+        assert swatch.tooltip == "Edit surface color for █: grey85"
         assert swatch.styles.background is not None
         assert isinstance(swatch.parent, Horizontal)
         assert isinstance(swatch.parent.parent, PaletteColorGroup)
         assert isinstance(swatch.parent.parent.parent, ItemGrid)
-        assert swatch.parent.parent.region.height == 3
-        assert swatch.region.height == 2
+        assert swatch.parent.parent.region.height == 4
+        assert swatch.region.height == 3
         engine = app.query_one("#palette-color-engine-0", PaletteColorSwatch)
         assert isinstance(engine.parent, Horizontal)
         labels = app.query(".palette-group-label").results(Label)
         assert [label.content for label in labels] == [
-            "Surface colors",
-            "Beacon",
+            "Surface",
             "Engine",
+            "Beacon",
             "Window",
+            "Weapons",
+            "Defensive",
         ]
-        assert len(list(app.query(PaletteColorGroup))) == 4
+        assert len(list(app.query(PaletteColorGroup))) == 6
         assert not app.query_one("#palette-color-beacon-2", PaletteColorSwatch).display
+        assert app.query_one("#palette-add-beacon", Button).display
+        assert not app.query_one("#palette-add-surface", Button).display
 
 
 @pytest.mark.asyncio
@@ -97,17 +102,58 @@ async def test_palette_swatch_opens_color_picker_and_updates_palette() -> None:
         await pilot.pause()
         app.query_one("#tool-tabs", TabbedContent).active = "palette-tab"
         await pilot.pause()
-        assert await pilot.click("#palette-color-bright-0")
+        assert await pilot.click("#palette-color-surface-0")
         await pilot.pause()
         assert isinstance(app.screen, PaletteColorScreen)
         picker = app.screen.query_one("#palette-color-picker", ColorPicker)
         picker.color = TextualColor.parse("#123456")
         assert await pilot.click("#confirm")
         await pilot.pause()
-        assert app.editor.palettes.archetypes[app.current_archetype].bright == "#123456"
+        assert (
+            app.editor.palettes.archetypes[app.current_archetype]
+            .color_set("surface")
+            .colors[0]
+            == "#123456"
+        )
         assert app.editor.palettes_dirty
-        swatch = app.query_one("#palette-color-bright-0", PaletteColorSwatch)
+        swatch = app.query_one("#palette-color-surface-0", PaletteColorSwatch)
         assert swatch.color_value == "#123456"
+
+
+@pytest.mark.asyncio
+async def test_palette_add_button_appends_colors_up_to_four() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        app.query_one("#tool-tabs", TabbedContent).active = "palette-tab"
+        await pilot.pause()
+        def beacon_colors() -> list[str]:
+            return (
+                app.editor.palettes.archetypes[app.current_archetype]
+                .color_set("beacon")
+                .colors
+            )
+
+        assert len(beacon_colors()) == 2
+        assert await pilot.click("#palette-add-beacon")
+        await pilot.pause()
+        assert len(beacon_colors()) == 3
+        app._add_palette_color("beacon")
+        await pilot.pause()
+        assert len(beacon_colors()) == 4
+        assert not app.query_one("#palette-add-beacon", Button).display
+        app._add_palette_color("beacon")
+        assert len(beacon_colors()) == 4
+
+
+@pytest.mark.asyncio
+async def test_color_set_selector_defaults_to_surface() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        selector = app.query_one("#color-set-selector", ColorSetSelector)
+        assert app.selected_color_set_id == "surface"
+        assert selector.query_one("#color-set-surface", Button).variant == "primary"
 
 
 @pytest.mark.asyncio
@@ -405,6 +451,7 @@ async def test_mouse_paint_marks_dirty_and_writes_recovery(
         assert canvas.variant is not None
         original = canvas.variant.cells[0][0]
         canvas.set_glyph("◆" if original != "◆" else "█")
+        app._select_color_set("window")
         content_offset = (
             canvas.content_region.x - canvas.region.x,
             canvas.content_region.y - canvas.region.y,
@@ -413,6 +460,7 @@ async def test_mouse_paint_marks_dirty_and_writes_recovery(
         await pilot.pause(0.6)
         assert app.editor.current_sprite_id in app.editor.dirty_sprites
         assert app.editor.recovery_path(app.editor.current_sprite_id).exists()
+        assert canvas.variant.color_mask[0][0] == "W"
 
 
 @pytest.mark.asyncio
@@ -422,7 +470,10 @@ async def test_middle_click_picks_and_highlights_canvas_glyph() -> None:
         await pilot.pause()
         canvas = app.query_one("#art-canvas", ArtCanvas)
         assert canvas.variant is not None
+        canvas.variant.cells[0] = "█" + canvas.variant.cells[0][1:]
         glyph = canvas.variant.cells[0][0]
+        color_set_id = "engine"
+        canvas.variant.color_mask[0] = "E" + canvas.variant.color_mask[0][1:]
         offset = (
             canvas.content_region.x - canvas.region.x,
             canvas.content_region.y - canvas.region.y,
@@ -430,6 +481,7 @@ async def test_middle_click_picks_and_highlights_canvas_glyph() -> None:
         assert await pilot.click("#art-canvas", offset=offset, button=2)
         await pilot.pause()
         assert app.selected_glyph == glyph
+        assert app.selected_color_set_id == color_set_id
         glyph_index = next(
             index
             for index, (candidate, _description) in enumerate(AUTHORING_GLYPHS)

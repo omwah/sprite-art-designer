@@ -16,14 +16,13 @@ assets/
         └── future_icon.yaml
 ```
 
-Every document currently uses `schema_version: 1`. Sprite and palette versions
-are deliberately independent migration seams even though they begin at the same
-number.
+Every document currently uses `schema_version: 2`. Sprite and palette versions
+remain independent migration seams.
 
 ## Sprite document
 
 ```yaml
-schema_version: 1
+schema_version: 2
 id: fighter
 name: Fighter
 kind: ship
@@ -53,6 +52,11 @@ views:
                   - "████"
                   - "████"
                   - "    "
+                color_mask:
+                  - "SSSS"
+                  - "SSSS"
+                  - "SSSS"
+                  - "SSSS"
 ```
 
 View names are data, not schema keywords. Ships currently store `horizontal`
@@ -85,7 +89,7 @@ and centered cropping provides the requested exact rectangle.
 ### Sections and variants
 
 A section has one controlled `primary_property` and zero or more controlled
-`secondary_properties`. These are metadata in schema v1; they do not alter
+`secondary_properties`. These are metadata in schema v2; they do not alter
 runtime composition.
 
 The closed vocabulary is:
@@ -103,30 +107,46 @@ Repeats start at `min`, grow round-robin without exceeding the requested size,
 and stop at `max`. Variant selection always consumes one random decision per
 section regardless of repeat count.
 
-### Glyph semantics
+### Glyph and color-mask semantics
 
-- `█` and `■`: bright plating.
-- `▒` and `░`: dark recesses.
-- structural fractional-block, line, rounded/square corner, single/double/mixed
-  box, wedge, and bevel
-  glyphs: mid-tone hull.
-- `R` / `r`: palette-colored beacon markers, painted as `▀` / `▄`.
-- `Y` / `y`: palette-colored engine markers, painted as `▀` / `▄`.
-- `G` / `g`: always-green signal markers, painted as `▀` / `▄`.
-- `B` / `b`: always-blue signal markers, painted as `▀` / `▄`.
-- space: transparent-looking terminal void.
-- other one-cell glyphs: facets painted over bright plating.
+Geometry and color are stored as matching rectangular grids. `cells` contains
+the rendered glyph. `color_mask` contains one controlled code per cell:
+
+| Code | Color set |
+|---|---|
+| `S` | Surface |
+| `E` | Engine |
+| `B` | Beacon |
+| `W` | Window |
+| `A` | Weapons (armament) |
+| `D` | Defensive |
+
+Spaces must use `S`; all visible glyphs may use any color set. Masks are
+repeated, fitted, cropped, rotated, and reflected with their glyph grids.
+Reflection changes mask positions but never substitutes mask codes.
+
+Every color set uses the same glyph-driven shading:
+
+- `█` and `■` use slot 1.
+- structural blocks, lines, corners, wedges, and bevels use slot 2.
+- `▒` and `░` use slot 3.
+- other one-cell glyphs use slot 4 over slot 1 as their background.
+- a missing slot falls back to slot 1.
+- space is transparent-looking terminal void.
+
+The editor displays these slots as `█`, `▓`, `▒`, and `◇`, without textual slot
+labels. Windows are manually painted with the Window mask; runtime rendering
+never places them randomly.
 
 All glyphs must occupy exactly one terminal cell.
 
 ## REXPaint export
 
-The reusable library can export a rendered request as a deterministic, one-layer
-REXPaint `.xp` file. Export uses the same width, height, seed, palette,
-view, facing, and variant overrides as the Rich preview. It preserves authored
-semantic marker glyphs instead of substituting their preview-only
-block-glyph effects, while retaining their palette colors.
-The file is not an alternate editable source format: YAML remains authoritative.
+The reusable library exports a deterministic, one-layer REXPaint `.xp` file and
+a matching native REXPaint palette `.txt` file. Export uses the same width,
+height, seed, archetype, view, facing, and variant overrides as the Rich preview.
+It writes the real authored glyph and uses the cell's color-set slot-1 color as
+foreground so import can infer the mask. YAML remains authoritative.
 
 An `.xp` file stores glyph *indices* rather than glyph shapes. The exporter uses
 the index order in `sprite_art.rexpaint.REXPAINT_GLYPH_INDICES`; its matching
@@ -136,14 +156,13 @@ glyph absent from the map rejects export with its cell position rather than
 being silently substituted. The map and font evolve together, so an `.xp` file
 must be opened with the matching version of the art font.
 
-Import accepts only a one-layer `.xp` file using that same glyph map and is a
-round-trip editing operation: it splits a just-exported image into the active
-variants of the current preview's selected tier. The file dimensions, preview
-size, seed, view, facing, and active variant selections must therefore still
-match the export. Repeated copies must match one another; the importer cannot
-infer separate source art from a repeated section. Unchanged semantic authoring
-markers are recovered from their rendered block-glyph forms using
-the current active source variant; edits to those cells become literal glyphs.
+Import accepts only a one-layer `.xp` file using that same glyph map. It splits
+the image into the current preview's active variants and assigns each visible
+cell to the color set containing the nearest configured RGB color. Controlled
+color-set order breaks exact ties. Preserved, distinguishable export colors
+round-trip; edited, duplicate, or similar colors can produce approximate masks.
+Dimensions, seed, view, facing, and active variants must still match. Repeated
+glyph and inferred-mask copies must agree.
 
 ## Palette catalog
 
@@ -152,18 +171,22 @@ not be added, removed, renamed, or duplicated in the editor. Their color values
 and color pools are editable.
 
 ```yaml
-schema_version: 1
+schema_version: 2
 fallback_archetype: humanoid_diplomat
 archetypes:
   humanoid_diplomat:
-    bright: grey85
-    mid: grey58
-    dark: grey35
-    beacon: [red, bright_red]
-    engine: [yellow, bright_yellow]
-    window: [bright_cyan, bright_yellow, grey100]
-    facet: grey15
+    color_sets:
+      surface: [grey85, grey58, grey35, grey15]
+      engine: [yellow, bright_yellow]
+      beacon: [red, bright_red]
+      window: [bright_cyan, bright_yellow, grey100]
+      weapons: ['#22c55e']
+      defensive: ['#3b82f6']
 ```
+
+Every archetype contains exactly these six sets. A set contains one to four
+colors; the first is required and is the fallback for missing slots. The
+Palette tab can add colors until the four-slot limit is reached.
 
 Unknown archetypes resolve to `humanoid_diplomat`.
 

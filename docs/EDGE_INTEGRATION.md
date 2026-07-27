@@ -56,8 +56,9 @@ In `edge/art/generator.py`:
 4. Keep the outer `generate_sprite` cache or rely on the library cache, but not
    both unless the additional layer is useful for non-ship art.
 
-The four converted horizontal roles preserve the original grammar and painter
-behavior:
+The four converted horizontal roles preserve the original grammar and seeded
+variant choices. Schema-v2 color masks intentionally replace marker glyphs and
+random window placement:
 
 - `fighter`
 - `transport`
@@ -87,11 +88,12 @@ For ships, the renderer seeds its local RNG as:
 seed | ship | role | archetype_id
 ```
 
-It chooses beacon and engine colors before choosing one variant per section,
-matching the current Edge draw order. Equal variant weights use
-`random.Random.choice`, and repeats consume no additional draws. Converted
-horizontal sprites therefore reproduce current plain text and Rich spans for
-the same request.
+It consumes the two historical color-selection draws before choosing one
+variant per section, keeping converted geometry stable. Equal variant weights
+use `random.Random.choice`, and repeats consume no additional draws. Palette
+colors no longer consume RNG, and windows appear only where the authored
+color mask selects Window. Rich style spans therefore follow the new six-set
+palette contract rather than Edge's random-window painter.
 
 Vertical art is new. `up` uses the stored canonical vertical view; `down` is its
 glyph-aware reflection.
