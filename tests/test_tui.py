@@ -12,11 +12,16 @@ from textual.containers import Horizontal, ItemGrid
 from textual.widgets import Button, Label, Select, TabbedContent, TabPane, Tree
 from textual_colorpicker import ColorPicker
 
-from sprite_art.glyphs import AUTHORING_GLYPHS
+from sprite_art.glyphs import (
+    AUTHORING_GLYPHS,
+    FACET_AUTHORING_GLYPHS,
+    SHADED_AUTHORING_GLYPHS,
+)
 from sprite_art_designer.app import EdgeArtDesigner, HelpScreen, PaletteColorScreen, _new_sprite
 from sprite_art_designer.widgets import (
     ArtCanvas,
     ColorSetSelector,
+    GlyphPalette,
     PaletteColorGroup,
     PaletteColorSwatch,
     PreviewMatrix,
@@ -55,6 +60,24 @@ async def test_app_mounts_wide_and_populates_editor() -> None:
         app._set_workspace_top_height(top_row.region.height - 4)
         await pilot.pause()
         assert top_row.region.height < bottom_row.region.height
+
+
+@pytest.mark.asyncio
+async def test_glyph_tab_separates_shaded_and_facet_glyphs() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        shaded = app.query_one("#shaded-glyph-palette", GlyphPalette)
+        facet = app.query_one("#facet-glyph-palette", GlyphPalette)
+        assert app.query_one("#shaded-glyph-title", Label).content == "Shaded glyphs"
+        assert app.query_one("#facet-glyph-title", Label).content == "Facet glyphs"
+        assert shaded.glyphs == SHADED_AUTHORING_GLYPHS
+        assert facet.glyphs == FACET_AUTHORING_GLYPHS
+        assert set(shaded.glyphs).isdisjoint(facet.glyphs)
+        assert set(shaded.glyphs) | set(facet.glyphs) == set(AUTHORING_GLYPHS)
+        assert app.query_one("#glyph-1", Button).parent is shaded
+        facet_index = AUTHORING_GLYPHS.index(FACET_AUTHORING_GLYPHS[0])
+        assert app.query_one(f"#glyph-{facet_index}", Button).parent is facet
 
 
 @pytest.mark.asyncio

@@ -132,6 +132,16 @@ AUTHORING_GLYPHS: tuple[tuple[str, str], ...] = (
     ("¬", "Facet"),
 )
 
+# Keep these as derived UI views of the stable REXPaint authoring alphabet.  Space
+# stays with shaded glyphs because it is the canvas eraser even though it has no
+# rendered color; every other non-hull glyph uses the facet palette slot.
+SHADED_AUTHORING_GLYPHS: tuple[tuple[str, str], ...] = tuple(
+    entry for entry in AUTHORING_GLYPHS if entry[0] == " " or entry[0] in HULL_CHARS
+)
+FACET_AUTHORING_GLYPHS: tuple[tuple[str, str], ...] = tuple(
+    entry for entry in AUTHORING_GLYPHS if entry not in SHADED_AUTHORING_GLYPHS
+)
+
 
 def _cycles(*cycles: str) -> dict[str, str]:
     result: dict[str, str] = {}

@@ -172,10 +172,14 @@ Header {
     height: 1fr;
 }
 
-#glyph-palette,
+.glyph-palette,
 #color-set-selector {
     height: auto;
     padding: 1;
+}
+
+.glyph-section-title {
+    margin-top: 1;
 }
 
 .color-set-button {

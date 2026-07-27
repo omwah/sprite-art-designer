@@ -25,7 +25,11 @@ from sprite_art import (
     Variant,
     render_sprite,
 )
-from sprite_art.glyphs import AUTHORING_GLYPHS
+from sprite_art.glyphs import (
+    AUTHORING_GLYPHS,
+    FACET_AUTHORING_GLYPHS,
+    SHADED_AUTHORING_GLYPHS,
+)
 from sprite_art.render import glyph_colors
 
 PALETTE_SLOT_GLYPHS = ("█", "▓", "▒", "◇")
@@ -260,27 +264,38 @@ class GlyphPalette(ItemGrid):
         )
         self.glyphs = glyphs
         self.button_prefix = button_prefix
+        self._button_indices = tuple(
+            AUTHORING_GLYPHS.index(entry) if button_prefix == "glyph" else index
+            for index, entry in enumerate(glyphs)
+        )
 
     def compose(self) -> ComposeResult:
-        for index, (glyph, description) in enumerate(self.glyphs):
+        for button_index, (glyph, description) in zip(
+            self._button_indices, self.glyphs, strict=True
+        ):
             label = "␠" if glyph == " " else glyph
             yield Button(
                 label,
-                id=f"{self.button_prefix}-{index}",
+                id=f"{self.button_prefix}-{button_index}",
                 tooltip=description,
                 classes="glyph-button",
             )
 
     def set_selected_glyph(self, glyph: str) -> None:
-        for index, (candidate, _description) in enumerate(self.glyphs):
-            button = self.query_one(f"#{self.button_prefix}-{index}", Button)
+        for button_index, (candidate, _description) in zip(
+            self._button_indices, self.glyphs, strict=True
+        ):
+            button = self.query_one(f"#{self.button_prefix}-{button_index}", Button)
             button.variant = "primary" if candidate == glyph else "default"
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         if not event.button.id or not event.button.id.startswith(f"{self.button_prefix}-"):
             return
-        index = int(event.button.id.removeprefix(f"{self.button_prefix}-"))
-        glyph = self.glyphs[index][0]
+        button_index = int(
+            event.button.id.removeprefix(f"{self.button_prefix}-")
+        )
+        local_index = self._button_indices.index(button_index)
+        glyph = self.glyphs[local_index][0]
         self.set_selected_glyph(glyph)
         self.post_message(self.Selected(glyph))
 
@@ -413,8 +428,25 @@ class GlyphToolsTab(TabPane):
 
     def compose(self) -> ComposeResult:
         with VerticalScroll():
+            yield Label(
+                "Shaded glyphs",
+                id="shaded-glyph-title",
+                classes="section-title glyph-section-title",
+            )
             yield GlyphPalette(
-                id="glyph-palette",
+                id="shaded-glyph-palette",
+                classes="glyph-palette",
+                glyphs=SHADED_AUTHORING_GLYPHS,
+            )
+            yield Label(
+                "Facet glyphs",
+                id="facet-glyph-title",
+                classes="section-title glyph-section-title",
+            )
+            yield GlyphPalette(
+                id="facet-glyph-palette",
+                classes="glyph-palette",
+                glyphs=FACET_AUTHORING_GLYPHS,
             )
             yield Label("Color set", classes="section-title")
             yield ColorSetSelector(id="color-set-selector")
