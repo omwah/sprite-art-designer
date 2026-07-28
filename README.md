@@ -21,6 +21,26 @@ The project follows the constraints in `SHIP_DESIGN_PRINCIPALS.md`:
 pixi run app
 ```
 
+To render a terminal gallery of every ship type at every authored detail tier:
+
+```bash
+pixi run render-ships
+```
+
+The gallery uses `assets/sprites/` by default, preserves truecolor output when
+piped, and prints its seed so a random run can be reproduced. Point it at
+another sprite directory with a positional path, or filter the output with
+`--archetype`, `--ship-type`, `--tier`, and `--seed`:
+
+```bash
+pixi run render-ships -- \
+  ./assets/sprites/ships \
+  --archetype ribbon_salvager \
+  --ship-type fighter warship \
+  --tier full compact \
+  --seed 17
+```
+
 The reusable package is `sprite_art`. The Textual application lives in
 `sprite_art_designer`; Edge of the Unknown can vendor only `sprite_art` and the
 YAML assets without taking an editor dependency.
