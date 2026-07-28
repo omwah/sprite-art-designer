@@ -121,15 +121,15 @@ views:
           weight: 1
           cells:
           - '    '
-          - ' ▀  '
+          - '    '
           - ╭──╮
-          - │◆◆│
+          - ┤◆◆├
           - ├▒▒┤
           - ╰──╯
           - '    '
           color_mask:
           - SSSS
-          - SBSS
+          - SSSS
           - SSSS
           - SWWS
           - SSSS

@@ -125,7 +125,7 @@ views:
         - id: command_decks
           weight: 1
           cells:
-          - '  ▀   '
+          - '      '
           - ' ╭◆╮  '
           - ▟▤▤▤█▙
           - █▒◆▒▒█
@@ -133,7 +133,7 @@ views:
           - ' ▀▀▀  '
           - '      '
           color_mask:
-          - SSBSSS
+          - SSSSSS
           - SSWSSS
           - SSSSSS
           - SSWSSS
