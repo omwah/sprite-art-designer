@@ -492,7 +492,7 @@ views:
           cells:
           - ▀▓
           - ██
-          - ▓▓
+          - ▀▀
           color_mask:
           - AS
           - SS

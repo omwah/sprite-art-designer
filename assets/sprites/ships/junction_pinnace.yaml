@@ -34,7 +34,7 @@ views:
           - '    '
           - ▄▟▓▖
           - ▄█░▓
-          - ▄▜▓▘
+          - ▄▟▓▘
           - '    '
           - '    '
           color_mask:
@@ -51,9 +51,9 @@ views:
           - '    '
           - ' ▄▖ '
           - '▄▟▓ '
-          - ▄▜▓▖
+          - ▄▟▓▖
           - ▄█░▓
-          - ' ▄▘ '
+          - ' ▄▟ '
           - '    '
           color_mask:
           - SSSS
@@ -95,9 +95,9 @@ views:
           cells:
           - '    '
           - ' ◇  '
-          - ▗▄▄▖
+          - ▗█▄▖
           - ▓░▓▓
-          - ▝▀▀▘
+          - ▝█▀▘
           - ' ◇  '
           - '    '
           color_mask:
@@ -219,7 +219,7 @@ views:
           - '   '
           - ▄▟▖
           - ▄█▓
-          - ▄▜▘
+          - ▄▟▘
           - '   '
           color_mask:
           - SSS
@@ -268,9 +268,9 @@ views:
           weight: 1
           cells:
           - ' ◇ '
-          - ▗▄▖
+          - ▗█▖
           - ▓░▓
-          - ▝▀▘
+          - ▝█▘
           - ' ◇ '
           color_mask:
           - SSS
@@ -290,13 +290,13 @@ views:
         - id: windowed_cabin
           weight: 1
           cells:
-          - ' ▀ '
+          - '   '
           - ╭─╮
-          - │◆│
+          - ┤◆├
           - ├▒┤
           - ╰─╯
           color_mask:
-          - SBS
+          - SSS
           - SSS
           - SWS
           - SSS

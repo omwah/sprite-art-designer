@@ -32,12 +32,12 @@ views:
         - id: fronds
           weight: 1
           cells:
-          - '▄╾   '
+          - '▄╾╮  '
           - '▄╾▓▖ '
           - ▄╾█░▓
           - ▄╾█▓▓
           - '▄╾▓▘ '
-          - '▄╾   '
+          - '▄╾╯  '
           - '     '
           color_mask:
           - ESSSS
@@ -54,8 +54,8 @@ views:
           - '╾▄▟▓ '
           - ▄▟█░▓
           - ▄▜█▓▓
-          - '╾▄▜▓ '
-          - ' ▄▘  '
+          - '╾▄▓▓ '
+          - ' ▄▓  '
           - '     '
           color_mask:
           - SESSS
@@ -122,21 +122,21 @@ views:
         - id: open_pores
           weight: 1
           cells:
-          - '  ▀   '
+          - '      '
           - ╭────╮
           - █▒◆▒▒█
           - █▀▒▀▒█
           - █▒☼▒▒█
           - ╰────╯
-          - '  ▄   '
+          - '      '
           color_mask:
-          - SSBSSS
+          - SSSSSS
           - SSSSSS
           - SSSSSS
           - SASASS
           - SSBSSS
           - SSSSSS
-          - SSASSS
+          - SSSSSS
         - id: sealed_ring
           weight: 1
           cells:
@@ -270,27 +270,27 @@ views:
           - ▄╾█▓
           - ▄╾█▓
           - '▄╾▓ '
-          - '▄╾  '
+          - '    '
           color_mask:
           - ESSS
           - ESSS
           - ESSS
           - ESSS
-          - ESSS
+          - SSSS
         - id: barbed_cilia
           weight: 1
           cells:
           - '╾▄▟ '
           - ▄▟█▓
           - ▄▜█▓
-          - '╾▄▜ '
-          - ' ▄▘ '
+          - '╾▄▓ '
+          - '    '
           color_mask:
           - SESS
           - ESSS
           - ESSS
           - SESS
-          - SESS
+          - SSSS
       - id: rear_carapace
         name: Rear Carapace
         primary_property: armor
@@ -458,8 +458,8 @@ views:
           weight: 1
           cells:
           - ' █'
-          - ▄╾
-          - ' ▾'
+          - ▄╬
+          - ' ╽'
           color_mask:
           - SS
           - ES

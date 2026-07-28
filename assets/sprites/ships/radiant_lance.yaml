@@ -32,12 +32,12 @@ views:
         - id: focused_bell
           weight: 1
           cells:
-          - '  ▀  '
-          - ' ▀▖  '
+          - '  ▄  '
+          - ' ▀▓  '
           - '▄◢█▓ '
           - ▄█░█▓
           - '▄◥█▓ '
-          - ' ▀▘  '
+          - ' ▀▓  '
           - '  ▀  '
           color_mask:
           - SSESS
@@ -125,7 +125,7 @@ views:
           - ' ▗▓▖ '
           - ' ▐▓▌ '
           - ' ▐▓▌ '
-          - ╠═╬═╣
+          - ╬═╬═╬
           - ' ▐▓▌ '
           - ' ▐▓▌ '
           - ' ▝▓▘ '
@@ -140,13 +140,13 @@ views:
         - id: diamond_chain
           weight: 1
           cells:
-          - ' ◤◥  '
+          - ' ◥◤  '
           - ' ◢◣  '
           - '  █  '
           - ╾═█═╼
           - '  █  '
           - ' ◥◤  '
-          - ' ◣◢  '
+          - ' ◢◣  '
           color_mask:
           - SSSSS
           - SSSSS
@@ -266,7 +266,7 @@ views:
         - id: focused_bell
           weight: 1
           cells:
-          - ' ▀▖ '
+          - ' ▀▌ '
           - '▄◢█ '
           - ▄█░▓
           - '▄◥█ '
@@ -342,7 +342,7 @@ views:
           cells:
           - ' ▐▓ '
           - ' ▐▓ '
-          - ╠═╬╣
+          - ╬═╬╬
           - ' ▐▓ '
           - ' ▐▓ '
           color_mask:
@@ -415,9 +415,9 @@ views:
           weight: 1
           cells:
           - '     '
-          - '  ── '
-          - ╾─══►
-          - '  ── '
+          - '  ─╗ '
+          - ╾─═╬►
+          - '  ─╝ '
           - '     '
           color_mask:
           - SSSSS
@@ -428,7 +428,7 @@ views:
         - id: lensed_lance
           weight: 1
           cells:
-          - '  ╾▀ '
+          - '  ╾▄ '
           - '  ═▓ '
           - ╾─█☼►
           - '  ═▓ '

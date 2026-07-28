@@ -130,7 +130,7 @@ views:
           - ▟▤▤▤█▙
           - █▒◆▒▒█
           - ▜▤▤▤█▛
-          - ' ▄▄▄▄ '
+          - ' ▀▀▀  '
           - '      '
           color_mask:
           - SSBSSS
@@ -148,7 +148,7 @@ views:
           - ▟▤▤▤█▙
           - █▒▒▒▒█
           - ▜▤▤▤█▛
-          - ' ▄▄▄▄ '
+          - ' ▀▀▀  '
           - '      '
           color_mask:
           - SSSSSS
@@ -190,11 +190,11 @@ views:
           weight: 1
           cells:
           - '  ◇  '
-          - ' ╭─╮ '
+          - ' ╭┴╮ '
           - ◇▟██▙
           - ◇█◆◆█
           - ◇▜██▛
-          - ' ╰─╯ '
+          - ' ╰┬╯ '
           - '  ◇  '
           color_mask:
           - SSDSS
@@ -370,7 +370,7 @@ views:
           - ▟▤▤▤▙
           - █▒◆▒█
           - ▜▤▤▤▛
-          - ' ▄▄▄ '
+          - ' ▀▀▀ '
           color_mask:
           - SSWSS
           - SSSSS
@@ -384,7 +384,7 @@ views:
           - ▟▤▤▤▙
           - █▒▒▒█
           - ▜▤▤▤▛
-          - ' ▄▄▄ '
+          - ' ▀▀▀ '
           color_mask:
           - SSASS
           - SSSSS
@@ -528,9 +528,9 @@ views:
         - id: tower
           weight: 1
           cells:
-          - ' ▀ '
+          - ' ▄ '
           - █◆█
-          - ███
+          - █▀█
           color_mask:
           - SSS
           - SWS

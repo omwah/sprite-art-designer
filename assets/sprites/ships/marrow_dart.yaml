@@ -32,7 +32,7 @@ views:
         - id: tendons
           weight: 1
           cells:
-          - ' ▀   '
+          - '     '
           - '▄▀╲▓ '
           - ▄▒██▓
           - ▄█░▒▓
@@ -40,7 +40,7 @@ views:
           - ' ▀   '
           - '     '
           color_mask:
-          - SESSS
+          - SSSSS
           - EESSS
           - ESSSS
           - ESESS
@@ -50,7 +50,7 @@ views:
         - id: spasm
           weight: 1
           cells:
-          - ' ▀▀  '
+          - '▄    '
           - '▄╲▒▓ '
           - ▄███▓
           - ▄█░█▓
@@ -58,7 +58,7 @@ views:
           - '  ▀  '
           - '     '
           color_mask:
-          - SEESS
+          - ESSSS
           - ESSSS
           - ESSSS
           - ESESS
@@ -186,7 +186,7 @@ views:
           weight: 1
           cells:
           - '     '
-          - ' ▀ ▀ '
+          - '     '
           - ◢☼█☼◣
           - █████
           - ◥█☼█◤
@@ -194,7 +194,7 @@ views:
           - '     '
           color_mask:
           - SSSSS
-          - SBSBS
+          - SSSSS
           - SBSBS
           - SSSSS
           - SSBSS
@@ -279,7 +279,7 @@ views:
         - id: spasm
           weight: 1
           cells:
-          - '▄╲▒ '
+          - '▄   '
           - ▄██▓
           - ▄█░▓
           - '▄╱▒ '
@@ -390,13 +390,13 @@ views:
         - id: many_eyes
           weight: 1
           cells:
-          - ' ▀  '
+          - '    '
           - ◢☼█◣
           - ████
           - ◥█☼◤
           - '  ▾ '
           color_mask:
-          - SBSS
+          - SSSS
           - SBSS
           - SSSS
           - SSBS

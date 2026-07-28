@@ -33,10 +33,10 @@ views:
           weight: 1
           cells:
           - '     '
-          - ' ▀▄  '
+          - ' ▀▓  '
           - ▄▟░▓╾
           - ▄███▓
-          - ▄▜░▓╾
+          - ▄▟░▓╾
           - ' ▀▀  '
           - '     '
           color_mask:
@@ -51,11 +51,11 @@ views:
           weight: 1
           cells:
           - '     '
-          - '▄▗▓  '
-          - ▄▐█▓╾
+          - '▄▄▓  '
+          - ▄▓█▓╾
           - '▄█░▓ '
-          - ▄▐█▓╾
-          - '▄▝▓  '
+          - ▄▓█▓╾
+          - '▄▟▓  '
           - '     '
           color_mask:
           - SSSSS
@@ -79,9 +79,9 @@ views:
           cells:
           - '     '
           - ╔═╦═╗
-          - ║▓█▓║
-          - ╠═╬═╣
-          - ║▓█▓║
+          - ╢▓█▓║
+          - ╠═╬═╟
+          - ╢▓█▓║
           - ╚═╩═╝
           - '     '
           color_mask:
@@ -97,9 +97,9 @@ views:
           cells:
           - '     '
           - ╭───╮
-          - │▓░▓│
+          - ┤▓░▓│
           - ┤░☼░├
-          - │▓░▓│
+          - ┤▓░▓│
           - ╰───╯
           - '     '
           color_mask:
@@ -162,7 +162,7 @@ views:
           - '      '
           - ╔════╗
           - ║▤▤▤▤║
-          - ╠═╬══╣
+          - ╬═╬══╬
           - ║▦▦▦▦║
           - ╚════╝
           - '      '
@@ -188,7 +188,7 @@ views:
           weight: 1
           cells:
           - '    '
-          - ' ▀  '
+          - '    '
           - ◢██▙
           - ◇◆◆█
           - ◥██▛
@@ -196,7 +196,7 @@ views:
           - '    '
           color_mask:
           - SSSS
-          - SBSS
+          - SSSS
           - SSSS
           - DWWS
           - SSSS
@@ -287,10 +287,10 @@ views:
         - id: twin_bell
           weight: 1
           cells:
-          - ' ▀▄ '
+          - ' ▀▓ '
           - ▄▟░╾
           - ▄██▓
-          - ▄▜░╾
+          - ▄▓░╾
           - ' ▀▀ '
           color_mask:
           - SESS
@@ -325,9 +325,9 @@ views:
           weight: 1
           cells:
           - ╔═╦╗
-          - ║▓█║
-          - ╠═╬╣
-          - ║▓█║
+          - ╢▓█║
+          - ╠═╬╬
+          - ╢▓█║
           - ╚═╩╝
           color_mask:
           - SSSS
@@ -339,9 +339,9 @@ views:
           weight: 1
           cells:
           - ╭──╮
-          - │▓░│
+          - ┤▓░│
           - ┤░☼├
-          - │▓░│
+          - ┤▓░│
           - ╰──╯
           color_mask:
           - SSSS
@@ -392,7 +392,7 @@ views:
           cells:
           - ╔═══╗
           - ║▤▤▤║
-          - ╠═╬═╣
+          - ╬═╬═╬
           - ║▦▦▦║
           - ╚═══╝
           color_mask:
@@ -414,13 +414,13 @@ views:
         - id: bridge_collar
           weight: 1
           cells:
-          - ' ▀ '
+          - '   '
           - ◢█▙
           - ◇◆█
           - ◥█▛
           - '   '
           color_mask:
-          - SBS
+          - SSS
           - SSS
           - DWS
           - SSS
@@ -515,7 +515,7 @@ views:
           weight: 1
           cells:
           - ╭─╮
-          - │▒│
+          - ┤▒├
           - ╰─╯
           color_mask:
           - SSS

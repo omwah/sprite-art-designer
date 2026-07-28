@@ -33,10 +33,10 @@ views:
           weight: 1
           cells:
           - '     '
-          - ' ▀▄  '
+          - ' ▀▜  '
           - ▄▟█▓╾
           - ▄█░▒▓
-          - ▄▜█▓╾
+          - ▄▟█▓╾
           - ' ▀▀  '
           - '     '
           color_mask:
@@ -54,7 +54,7 @@ views:
           - '▄▟▓  '
           - ' ▓░█▓'
           - ▄██▒▓
-          - '▄▜▓▘ '
+          - '▄▟▓▘ '
           - '     '
           - '     '
           color_mask:
@@ -143,7 +143,7 @@ views:
           - '      '
           - ╔═╗╔═╗
           - ║▒║║▒║
-          - ╠═╣╠═╣
+          - ╬═╬╬═╬
           - ║▒║║▒║
           - ╚═╝╚═╝
           - '      '
@@ -203,11 +203,11 @@ views:
         - id: revealed
           weight: 1
           cells:
-          - ' ▀  '
+          - ' ▄  '
           - ▓█▓►
           - █▄█▀
           - ▓█▓►
-          - ' ▄  '
+          - ' ▀  '
           - '    '
           - '    '
           color_mask:
@@ -230,16 +230,16 @@ views:
         - id: blunt
           weight: 1
           cells:
-          - ' ▀  '
           - ' ▄  '
+          - ' ╿  '
           - ▟██▙
           - █◆▓►
           - ▜██▛
           - ' ▀  '
           - '    '
           color_mask:
-          - SBSS
-          - SSSS
+          - SASS
+          - SASS
           - SSSS
           - SWSA
           - SSSS
@@ -284,7 +284,7 @@ views:
         - id: civilian_bells
           weight: 1
           cells:
-          - ' ▀▄ '
+          - ' ▀▜ '
           - ▄▟█╾
           - ▄█░▓
           - ▄▜█╾
@@ -301,7 +301,7 @@ views:
           - '▄▟▓ '
           - ' ▓░▓'
           - ▄██▓
-          - '▄▜▓ '
+          - '▄▟▓ '
           - '    '
           color_mask:
           - ESSS
@@ -374,7 +374,7 @@ views:
           cells:
           - ╔═╗╔╗
           - ║▒║║║
-          - ╠═╣╠╣
+          - ╬═╬╬╬
           - ║▒║║║
           - ╚═╝╚╝
           color_mask:
@@ -426,7 +426,7 @@ views:
           - ▓█►
           - █▄▀
           - ▓█►
-          - ' ▄ '
+          - ' ▀ '
           - '   '
           color_mask:
           - SSA
@@ -508,9 +508,9 @@ views:
         - id: hold
           weight: 1
           cells:
-          - ██
+          - ▄▄
           - █▒
-          - ██
+          - ▀▀
           color_mask:
           - SS
           - SS
@@ -518,9 +518,9 @@ views:
         - id: gun_hold
           weight: 1
           cells:
-          - ▀▀
-          - █◆
           - ▄▄
+          - █◆
+          - ▀▀
           color_mask:
           - SA
           - SW

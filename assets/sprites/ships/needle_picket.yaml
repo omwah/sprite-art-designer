@@ -139,7 +139,7 @@ views:
         - id: sensor_rib
           weight: 1
           cells:
-          - ' ▀  '
+          - '    '
           - ▗▄▄▖
           - █░◇█
           - █▒░█
@@ -147,7 +147,7 @@ views:
           - '    '
           - '    '
           color_mask:
-          - SBSS
+          - SSSS
           - SSSS
           - SSWS
           - SSSS
@@ -184,7 +184,7 @@ views:
           weight: 1
           cells:
           - '     '
-          - '  ▀  '
+          - '     '
           - ' ◢◣  '
           - ◢█◆█◣
           - ☼███☼
@@ -192,7 +192,7 @@ views:
           - '     '
           color_mask:
           - SSSSS
-          - SSBSS
+          - SSSSS
           - SSSSS
           - SSWSS
           - BSSSB
@@ -387,13 +387,13 @@ views:
         - id: dish_array
           weight: 1
           cells:
-          - '  ▀ '
+          - '    '
           - ' ◢◣ '
           - ◢█◆◣
           - ☼██☼
           - '    '
           color_mask:
-          - SSBS
+          - SSSS
           - SSSS
           - SSWS
           - BSSB
@@ -411,9 +411,9 @@ views:
           weight: 1
           cells:
           - '     '
-          - '  ╾─ '
+          - '  ╾─╮'
           - ╾──╼►
-          - '  ╾─ '
+          - '  ╾─╯'
           - '     '
           color_mask:
           - SSSSS
@@ -482,11 +482,11 @@ views:
         - id: sensor
           weight: 1
           cells:
-          - ' ▀'
+          - '  '
           - █☼
           - '  '
           color_mask:
-          - SB
+          - SS
           - SB
           - SS
       - id: prow
