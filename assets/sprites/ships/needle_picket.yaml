@@ -28,41 +28,41 @@ views:
           min: 1
           max: 1
         variants:
-        - id: fork
+        - id: forked_nacelles
           weight: 1
           cells:
           - '     '
-          - ' ▄╺▀ '
-          - '▄▖█▓ '
-          - '▄██▓ '
-          - '▄▘█▓ '
-          - '     '
+          - '▄▟▓  '
+          - ▄╾█▓╾
+          - ' ▓▒▓ '
+          - ▄╾█▓╾
+          - '▄▜▓  '
           - '     '
           color_mask:
           - SSSSS
-          - SESES
-          - ESSSS
           - ESSSS
           - ESSSS
           - SSSSS
+          - ESSSS
+          - ESSSS
           - SSSSS
-        - id: split
+        - id: ring_nacelle
           weight: 1
           cells:
           - '     '
-          - ' ▄   '
-          - '▄▘▀▓ '
-          - ' ▄██▓'
-          - '▄▖▀▓ '
-          - '     '
+          - '▄▗▄▖ '
+          - ▄▐█░▓
+          - ' ▓▒▓╾'
+          - ▄▐█░▓
+          - '▄▝▀▘ '
           - '     '
           color_mask:
           - SSSSS
-          - SESSS
-          - ESESS
-          - SESSS
-          - ESESS
+          - ESSSS
+          - ESSES
           - SSSSS
+          - ESSES
+          - ESSSS
           - SSSSS
       - id: drive_nodes
         name: Drive Nodes
@@ -73,15 +73,15 @@ views:
           min: 1
           max: 1
         variants:
-        - id: open
+        - id: exposed_nodes
           weight: 1
           cells:
           - '    '
           - ' ☼  '
-          - ▓██═
-          - █░██
-          - ▓██═
-          - '    '
+          - ▓██╾
+          - █░▓█
+          - ▓██╾
+          - ' ▀  '
           - '    '
           color_mask:
           - SSSS
@@ -89,23 +89,23 @@ views:
           - SSSS
           - SSSS
           - SSSS
+          - SBSS
           - SSSS
-          - SSSS
-        - id: veiled
+        - id: veiled_nodes
           weight: 1
           cells:
           - '    '
-          - ' ▀  '
+          - '    '
           - ╭██╮
-          - █▒██
+          - █▒☼█
           - ╰██╯
           - '    '
           - '    '
           color_mask:
           - SSSS
-          - SBSS
           - SSSS
           - SSSS
+          - SSBS
           - SSSS
           - SSSS
           - SSSS
@@ -118,30 +118,12 @@ views:
           min: 1
           max: 7
         variants:
-        - id: sensor_rib
+        - id: truss_rib
           weight: 1
           cells:
-          - '    '
-          - ' ▀  '
-          - ╭──╮
-          - █░◇█
-          - ╰──╯
-          - '    '
-          - '    '
-          color_mask:
-          - SSSS
-          - SBSS
-          - SSSS
-          - SSWS
-          - SSSS
-          - SSSS
-          - SSSS
-        - id: plain_rib
-          weight: 1
-          cells:
-          - '    '
           - '    '
           - ▗▄▄▖
+          - █░▒█
           - █▒░█
           - ▝▀▀▘
           - '    '
@@ -150,6 +132,24 @@ views:
           - SSSS
           - SSSS
           - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+        - id: sensor_rib
+          weight: 1
+          cells:
+          - ' ▀  '
+          - ▗▄▄▖
+          - █░◇█
+          - █▒░█
+          - ▝▀▀▘
+          - '    '
+          - '    '
+          color_mask:
+          - SBSS
+          - SSSS
+          - SSWS
           - SSSS
           - SSSS
           - SSSS
@@ -165,39 +165,39 @@ views:
         - id: crown
           weight: 1
           cells:
-          - '    '
-          - ' ☼█☼'
-          - ◇█◆█
-          - ☼██☼
-          - ' ◥█◤'
-          - '    '
-          - '    '
+          - '     '
+          - ' ☼█☼ '
+          - ◇███◇
+          - ☼█◆◆█
+          - ' ◥██◤'
+          - '     '
+          - '     '
           color_mask:
-          - SSSS
-          - SBSB
-          - SSWS
-          - BSSB
-          - SSSS
-          - SSSS
-          - SSSS
-        - id: dish
+          - SSSSS
+          - SBSBS
+          - SSSSS
+          - BSWWS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+        - id: dish_array
           weight: 1
           cells:
-          - '    '
-          - '  ▀ '
-          - ╭██╮
-          - ☼█◆█
-          - ╰██╯
-          - '    '
-          - '    '
+          - '     '
+          - '  ▀  '
+          - ' ◢◣  '
+          - ◢█◆█◣
+          - ☼███☼
+          - '     '
+          - '     '
           color_mask:
-          - SSSS
-          - SSBS
-          - SSSS
-          - BSWS
-          - SSSS
-          - SSSS
-          - SSSS
+          - SSSSS
+          - SSBSS
+          - SSSSS
+          - SSWSS
+          - BSSSB
+          - SSSSS
+          - SSSSS
       - id: needle
         name: Needle Prow
         primary_property: main_gun
@@ -207,48 +207,48 @@ views:
           min: 1
           max: 1
         variants:
-        - id: long
+        - id: long_needle
           weight: 1
           cells:
-          - '     '
-          - '     '
-          - '  ╾▙ '
-          - ╺═▓▀►
-          - '  ╾▛ '
-          - '     '
-          - '     '
+          - '      '
+          - '      '
+          - '  ╾─▙ '
+          - ╾──╼▓►
+          - '  ╾─▛ '
+          - '      '
+          - '      '
           color_mask:
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSAA
-          - SSSSS
-          - SSSSS
-          - SSSSS
-        - id: probe
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSA
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+        - id: probe_spike
           weight: 1
           cells:
-          - '     '
-          - '     '
-          - '  ─▙ '
-          - ╺██▀►
-          - '  ─▛ '
-          - '     '
-          - '     '
+          - '      '
+          - '      '
+          - '  ╾▓▙ '
+          - ╾─╼▓▓►
+          - '  ╾▓▛ '
+          - '      '
+          - '      '
           color_mask:
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSAA
-          - SSSSS
-          - SSSSS
-          - SSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSA
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
     - id: medium
       name: Medium
       structure_lengths:
         thrusters: 1
         drive_nodes: 1
-        patrol_spine: 7
+        patrol_spine: 6
         sensor_crown: 1
         needle: 1
       sections:
@@ -260,34 +260,34 @@ views:
           min: 1
           max: 1
         variants:
-        - id: fork
+        - id: forked_nacelles
           weight: 1
           cells:
-          - ' ▄╺ '
-          - '▄▖█ '
-          - '▄██ '
-          - '▄▘█ '
-          - '    '
+          - '▄▟▓ '
+          - ▄╾█╾
+          - ' ▓▒ '
+          - ▄╾█╾
+          - '▄▜▓ '
           color_mask:
-          - SESS
-          - ESSS
           - ESSS
           - ESSS
           - SSSS
-        - id: split
+          - ESSS
+          - ESSS
+        - id: ring_nacelle
           weight: 1
           cells:
-          - ' ▄  '
-          - '▄▘▀ '
-          - ' ▄█▓'
-          - '▄▖▀ '
-          - '    '
+          - '▄▗▄ '
+          - ▄▐█▓
+          - ' ▓▒╾'
+          - ▄▐█▓
+          - '▄▝▀ '
           color_mask:
-          - SESS
-          - ESES
-          - SESS
-          - ESES
+          - ESSS
+          - ESSS
           - SSSS
+          - ESSS
+          - ESSS
       - id: drive_nodes
         name: Drive Nodes
         primary_property: spindrive
@@ -297,30 +297,30 @@ views:
           min: 1
           max: 1
         variants:
-        - id: open
+        - id: exposed_nodes
           weight: 1
           cells:
           - ' ☼ '
-          - ▓█═
+          - ▓█╾
           - █░█
-          - ▓█═
-          - '   '
+          - ▓█╾
+          - ' ▀ '
           color_mask:
           - SBS
           - SSS
           - SSS
           - SSS
-          - SSS
-        - id: veiled
+          - SBS
+        - id: veiled_nodes
           weight: 1
           cells:
-          - ' ▀ '
+          - '   '
           - ╭█╮
           - █▒█
           - ╰█╯
           - '   '
           color_mask:
-          - SBS
+          - SSS
           - SSS
           - SSS
           - SSS
@@ -334,25 +334,25 @@ views:
           min: 1
           max: 7
         variants:
+        - id: truss_rib
+          weight: 1
+          cells:
+          - ▗▄▖
+          - █░█
+          - █▒█
+          - ▝▀▘
+          - '   '
+          color_mask:
+          - SSS
+          - SSS
+          - SSS
+          - SSS
+          - SSS
         - id: sensor_rib
           weight: 1
           cells:
-          - ' ▀ '
-          - ╭─╮
-          - █░█
-          - ╰─╯
-          - '   '
-          color_mask:
-          - SBS
-          - SSS
-          - SSS
-          - SSS
-          - SSS
-        - id: plain_rib
-          weight: 1
-          cells:
-          - '   '
           - ▗▄▖
+          - █░█
           - █▒█
           - ▝▀▘
           - '   '
@@ -373,31 +373,31 @@ views:
         - id: crown
           weight: 1
           cells:
-          - ' ☼☼'
-          - ◇██
-          - ☼█☼
-          - ' ◥◤'
-          - '   '
+          - ' ☼█ '
+          - ◇██◇
+          - ☼█◆█
+          - ' ◥█◤'
+          - '    '
           color_mask:
-          - SBB
-          - SSS
-          - BSB
-          - SSS
-          - SSS
-        - id: dish
+          - SBSS
+          - SSSS
+          - BSWS
+          - SSSS
+          - SSSS
+        - id: dish_array
           weight: 1
           cells:
-          - '   '
-          - ╭█╮
-          - ☼██
-          - ╰█╯
-          - '   '
+          - '  ▀ '
+          - ' ◢◣ '
+          - ◢█◆◣
+          - ☼██☼
+          - '    '
           color_mask:
-          - SSS
-          - SSS
-          - BSS
-          - SSS
-          - SSS
+          - SSBS
+          - SSSS
+          - SSWS
+          - BSSB
+          - SSSS
       - id: needle
         name: Needle Prow
         primary_property: main_gun
@@ -407,34 +407,34 @@ views:
           min: 1
           max: 1
         variants:
-        - id: long
+        - id: long_needle
           weight: 1
           cells:
-          - '    '
-          - '  ╾ '
-          - ╺═▓►
-          - '  ╾ '
-          - '    '
+          - '     '
+          - '  ╾─ '
+          - ╾──╼►
+          - '  ╾─ '
+          - '     '
           color_mask:
-          - SSSS
-          - SSSS
-          - SSSA
-          - SSSS
-          - SSSS
-        - id: probe
+          - SSSSS
+          - SSSSS
+          - SSSSA
+          - SSSSS
+          - SSSSS
+        - id: probe_spike
           weight: 1
           cells:
-          - '    '
-          - '  ─ '
-          - ╺██►
-          - '  ─ '
-          - '    '
+          - '     '
+          - '  ╾▓ '
+          - ╾─╼▓►
+          - '  ╾▓ '
+          - '     '
           color_mask:
-          - SSSS
-          - SSSS
-          - SSSA
-          - SSSS
-          - SSSS
+          - SSSSS
+          - SSSSS
+          - SSSSA
+          - SSSSS
+          - SSSSS
     - id: compact
       name: Compact
       structure_lengths:
@@ -454,7 +454,7 @@ views:
           weight: 1
           cells:
           - '  '
-          - ▀█
+          - ▄▓
           - '  '
           color_mask:
           - SS
@@ -469,12 +469,12 @@ views:
           min: 1
           max: 12
         variants:
-        - id: spine
+        - id: truss
           weight: 1
           cells:
-          - ' ▴'
-          - ██
-          - '  '
+          - ▗▖
+          - █░
+          - ▝▘
           color_mask:
           - SS
           - SS
@@ -501,11 +501,11 @@ views:
           weight: 1
           cells:
           - '   '
-          - ─▀►
+          - ╾╼►
           - '   '
           color_mask:
           - SSS
-          - SAA
+          - SSA
           - SSS
   vertical:
     name: Vertical
@@ -530,26 +530,26 @@ views:
           min: 1
           max: 1
         variants:
-        - id: fork
+        - id: forked_nacelles
           weight: 1
           cells:
-          - '              '
-          - '  ╹╹██████    '
-          - '    ▐▐▐▐▐▐    '
+          - '    ╽╽  ╽╽    '
+          - '  ▓▓██▒▒██▓▓  '
+          - '  ▐▐▐▐  ▐▐▐▐  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-          - SSSSEEEEEESSSS
-        - id: split
+          - SSEEEESSEEEESS
+        - id: ring_nacelle
           weight: 1
           cells:
-          - '      ▓▓      '
-          - '    ▌▌██▌▌    '
-          - '    ▐▐  ▐▐    '
+          - '    ▓▓╽╽▓▓    '
+          - '  ▐▐██▒▒██▌▌  '
+          - '  ▐▐▐▐  ▐▐▐▐  '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSEESSEESSSS
-          - SSSSEESSEESSSS
+          - SSSSSSSSSSSSSS
+          - SSEEEESSEEEESS
       - id: drive_nodes
         name: Drive Nodes
         primary_property: spindrive
@@ -559,22 +559,22 @@ views:
           min: 1
           max: 1
         variants:
-        - id: open
+        - id: exposed_nodes
           weight: 1
           cells:
-          - '    ║║██║║    '
-          - '  ☼☼██░░██    '
+          - '    ╽╽██╽╽    '
+          - '  ☼☼██░░██▌▌  '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSBBSSSSSSSSSS
-        - id: veiled
+          - SSBBSSSSSSBBSS
+        - id: veiled_nodes
           weight: 1
           cells:
           - '    ╭╭██╮╮    '
-          - '  ▌▌██▒▒██    '
+          - '    ██▒▒██    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSBBSSSSSSSSSS
+          - SSSSSSSSSSSSSS
       - id: patrol_spine
         name: Patrol Spine
         primary_property: hull
@@ -584,22 +584,22 @@ views:
           min: 1
           max: 7
         variants:
+        - id: truss_rib
+          weight: 1
+          cells:
+          - '  ▗▗████▖▖    '
+          - '  ▐▐░░▒▒▌▌    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
         - id: sensor_rib
           weight: 1
           cells:
-          - '    ╭╭██╮╮    '
-          - '  ▌▌││░░││    '
+          - '  ▗▗████▖▖    '
+          - '▌▌▐▐░░▒▒▌▌    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSBBSSSSSSSSSS
-        - id: plain_rib
-          weight: 1
-          cells:
-          - '    ▗▗██▖▖    '
-          - '    ▐▐▒▒▌▌    '
-          color_mask:
-          - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - BBSSSSSSSSSSSS
       - id: sensor_crown
         name: Sensor Crown
         primary_property: sensors
@@ -611,19 +611,23 @@ views:
         - id: crown
           weight: 1
           cells:
-          - '  ☼☼██☼☼◣◣    '
-          - '  ☼☼████◤◤    '
+          - '    ◇◇██◣◣    '
+          - '  ████◆◆██    '
+          - '    ◇◇☼☼      '
           color_mask:
-          - SSBBSSBBSSSSSS
-          - SSBBSSSSSSSSSS
-        - id: dish
+          - SSSSSSSSSSSSSS
+          - SSSSSSWWSSSSSS
+          - SSSSSSBBSSSSSS
+        - id: dish_array
           weight: 1
           cells:
-          - '    ╭╭██╮╮    '
-          - '    ██████    '
+          - '      ◢◢☼☼    '
+          - '  ▌▌◢◢◆◆██    '
+          - '      ◥◥☼☼    '
           color_mask:
-          - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSSSSSBBSSSS
+          - SSBBSSWWSSSSSS
+          - SSSSSSSSBBSSSS
       - id: needle
         name: Needle Prow
         primary_property: main_gun
@@ -633,22 +637,22 @@ views:
           min: 1
           max: 1
         variants:
-        - id: long
+        - id: long_needle
           weight: 1
           cells:
           - '      ▲▲      '
-          - '    ╽╽▓▓╽╽    '
-          - '      ╹╹      '
+          - '    ││╿╿││    '
+          - '      ││      '
           color_mask:
           - SSSSSSAASSSSSS
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-        - id: probe
+        - id: probe_spike
           weight: 1
           cells:
           - '      ▲▲      '
-          - '    ││██││    '
-          - '      ╹╹      '
+          - '    ▓▓▓▓▓▓    '
+          - '      ││      '
           color_mask:
           - SSSSSSAASSSSSS
           - SSSSSSSSSSSSSS
@@ -658,7 +662,7 @@ views:
       structure_lengths:
         thrusters: 1
         drive_nodes: 1
-        patrol_spine: 7
+        patrol_spine: 6
         sensor_crown: 1
         needle: 1
       sections:
@@ -670,22 +674,22 @@ views:
           min: 1
           max: 1
         variants:
-        - id: fork
+        - id: forked_nacelles
           weight: 1
           cells:
-          - '          '
-          - '▐▐▗▗██▖▖  '
+          - '  ╽╽  ╽╽  '
+          - ▜▜╽╽▓▓╽╽▛▛
           color_mask:
           - SSSSSSSSSS
-          - EESSSSSSSS
-        - id: split
+          - SSSSSSSSSS
+        - id: ring_nacelle
           weight: 1
           cells:
-          - '    ▓▓    '
-          - '▐▐▖▖▐▐▗▗  '
+          - '  ▓▓╽╽▓▓  '
+          - ▝▝▀▀▓▓▀▀▘▘
           color_mask:
           - SSSSSSSSSS
-          - EESSEESSSS
+          - SSSSSSSSSS
       - id: drive_nodes
         name: Drive Nodes
         primary_property: spindrive
@@ -695,15 +699,15 @@ views:
           min: 1
           max: 1
         variants:
-        - id: open
+        - id: exposed_nodes
           weight: 1
           cells:
-          - '  ║║██║║  '
+          - '  ╽╽██╽╽  '
           - '  ▓▓██▓▓  '
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
-        - id: veiled
+        - id: veiled_nodes
           weight: 1
           cells:
           - '  ╭╭██╮╮  '
@@ -720,19 +724,19 @@ views:
           min: 1
           max: 7
         variants:
-        - id: sensor_rib
+        - id: truss_rib
           weight: 1
           cells:
-          - '  ╭╭██╮╮  '
-          - '  ╰╰██╯╯  '
+          - '▗▗████▖▖  '
+          - '▝▝████▘▘  '
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
-        - id: plain_rib
+        - id: sensor_rib
           weight: 1
           cells:
-          - '  ▗▗██▖▖  '
-          - '  ▝▝██▘▘  '
+          - '▗▗████▖▖  '
+          - '▝▝████▘▘  '
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -747,19 +751,19 @@ views:
         - id: crown
           weight: 1
           cells:
-          - '☼☼██☼☼◣◣  '
-          - '  ◇◇☼☼    '
-          color_mask:
-          - BBSSBBSSSS
-          - SSSSBBSSSS
-        - id: dish
-          weight: 1
-          cells:
-          - '  ╭╭██╮╮  '
-          - '  ╰╰☼☼╯╯  '
+          - '  ◇◇██◣◣  '
+          - '☼☼████◤◤  '
           color_mask:
           - SSSSSSSSSS
-          - SSSSBBSSSS
+          - BBSSSSSSSS
+        - id: dish_array
+          weight: 1
+          cells:
+          - '    ◢◢☼☼  '
+          - '  ◥◥████  '
+          color_mask:
+          - SSSSSSBBSS
+          - SSSSSSSSSS
       - id: needle
         name: Needle Prow
         primary_property: main_gun
@@ -769,21 +773,25 @@ views:
           min: 1
           max: 1
         variants:
-        - id: long
+        - id: long_needle
           weight: 1
           cells:
           - '    ▲▲    '
-          - '    ║║    '
+          - '  ╽╽││╽╽  '
+          - '    ╽╽    '
           color_mask:
           - SSSSAASSSS
           - SSSSSSSSSS
-        - id: probe
+          - SSSSSSSSSS
+        - id: probe_spike
           weight: 1
           cells:
           - '    ▲▲    '
-          - '    ██    '
+          - '  ╽╽╿╿╽╽  '
+          - '    ╽╽    '
           color_mask:
           - SSSSAASSSS
+          - SSSSSSSSSS
           - SSSSSSSSSS
     - id: compact
       name: Compact
@@ -803,7 +811,7 @@ views:
         - id: drive
           weight: 1
           cells:
-          - '  ██  '
+          - '  ▓▓  '
           color_mask:
           - SSSSSS
       - id: body
@@ -815,10 +823,10 @@ views:
           min: 1
           max: 12
         variants:
-        - id: spine
+        - id: truss
           weight: 1
           cells:
-          - '◀◀██  '
+          - ▗▗░░▖▖
           color_mask:
           - SSSSSS
         - id: sensor
@@ -839,7 +847,7 @@ views:
           weight: 1
           cells:
           - '  ▲▲  '
-          - '  ││  '
+          - '  ╽╽  '
           color_mask:
           - SSAASS
           - SSSSSS

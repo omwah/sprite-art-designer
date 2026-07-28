@@ -29,42 +29,42 @@ views:
           min: 1
           max: 1
         variants:
-        - id: triple
+        - id: civilian_bells
           weight: 1
           cells:
-          - '    '
-          - ' ▀▶ '
-          - '    '
-          - ▀██▓
-          - '    '
-          - ' ▀▶ '
-          - '    '
+          - '     '
+          - ' ▀▄  '
+          - ▄▟█▓╾
+          - ▄█░▒▓
+          - ▄▜█▓╾
+          - ' ▀▀  '
+          - '     '
           color_mask:
-          - SSSS
-          - SESS
-          - SSSS
-          - ESSS
-          - SSSS
-          - SESS
-          - SSSS
-        - id: dirty
+          - SSSSS
+          - SESSS
+          - ESSSS
+          - ESESS
+          - ESSSS
+          - SESSS
+          - SSSSS
+        - id: shoddy_bells
           weight: 1
           cells:
-          - '    '
-          - ' ▀▀ '
-          - '▀▶▓ '
-          - ▀██▓
-          - '    '
-          - ' ▀▶ '
-          - '    '
+          - ' ▄▖  '
+          - '▄▟▓  '
+          - ' ▓░█▓'
+          - ▄██▒▓
+          - '▄▜▓▘ '
+          - '     '
+          - '     '
           color_mask:
-          - SSSS
-          - SEES
-          - ESSS
-          - ESSS
-          - SSSS
-          - SESS
-          - SSSS
+          - SESSS
+          - ESSSS
+          - SSESS
+          - ESSSS
+          - ESSSS
+          - SSSSS
+          - SSSSS
       - id: armored_buttress
         name: Armored Buttress
         primary_property: armor
@@ -73,31 +73,31 @@ views:
           min: 1
           max: 1
         variants:
-        - id: ribbed
+        - id: ribbed_collar
           weight: 1
           cells:
           - '    '
-          - ▓██═
-          - ╭──╮
-          - ◇▒▒◇
-          - ╰──╯
-          - ▓██═
+          - ▓▀▀▓
+          - █▤▤█
+          - █░░█
+          - █▤▤█
+          - ▓▄▄▓
           - '    '
           color_mask:
           - SSSS
           - SSSS
           - SSSS
-          - DSSD
           - SSSS
           - SSSS
           - SSSS
-        - id: sealed
+          - SSSS
+        - id: sealed_collar
           weight: 1
           cells:
           - '    '
           - ◢██◣
           - █◇ ◇
-          - █░░█
+          - █▒▒█
           - █◇ ◇
           - ◥██◤
           - '    '
@@ -117,41 +117,59 @@ views:
         - hull
         repeat:
           min: 1
-          max: 8
+          max: 5
         variants:
-        - id: doors
+        - id: container_seam
           weight: 1
           cells:
           - '      '
-          - ' ▀    '
           - ╭────╮
-          - │▒◆▒▀│
+          - │▒▒▀▒│
+          - ┤░▒░▒├
+          - │▒▒▒▒│
           - ╰────╯
-          - ' ▾    '
           - '      '
           color_mask:
           - SSSSSS
-          - SBSSSS
           - SSSSSS
-          - SSWSAS
-          - SSSSSS
+          - SSSASS
           - SSSSSS
           - SSSSSS
-        - id: containers
+          - SSSSSS
+          - SSSSSS
+        - id: twin_boxes
           weight: 1
           cells:
           - '      '
-          - '      '
-          - ╔════╗
-          - ║▒▀░◆║
-          - ╚════╝
-          - '      '
+          - ╔═╗╔═╗
+          - ║▒║║▒║
+          - ╠═╣╠═╣
+          - ║▒║║▒║
+          - ╚═╝╚═╝
           - '      '
           color_mask:
           - SSSSSS
           - SSSSSS
           - SSSSSS
-          - SSASWS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+        - id: tank_with_vent
+          weight: 1
+          cells:
+          - '      '
+          - ▗▄▄▄▄▖
+          - ▟█▒▒█▙
+          - █▒▒▄█╺
+          - ▜█▒▒█▛
+          - ▝▀▀▀▀▘
+          - '      '
+          color_mask:
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSASS
           - SSSSSS
           - SSSSSS
           - SSSSSS
@@ -168,9 +186,9 @@ views:
           weight: 1
           cells:
           - '    '
-          - '    '
           - ◢██◣
-          - █▀█▀
+          - █▒▒█
+          - █▄██
           - ◥██◤
           - '    '
           - '    '
@@ -178,27 +196,27 @@ views:
           - SSSS
           - SSSS
           - SSSS
-          - SASA
+          - SASS
           - SSSS
           - SSSS
           - SSSS
-        - id: open
+        - id: revealed
           weight: 1
           cells:
-          - '    '
           - ' ▀  '
-          - '▓█► '
-          - █▀█▀
-          - '▓█► '
+          - ▓█▓►
+          - █▄█▀
+          - ▓█▓►
           - ' ▄  '
           - '    '
+          - '    '
           color_mask:
-          - SSSS
           - SASS
-          - SSAS
+          - SSSA
           - SASA
-          - SSAS
+          - SSSA
           - SASS
+          - SSSS
           - SSSS
       - id: merchant_prow
         name: Merchant Prow
@@ -212,18 +230,18 @@ views:
         - id: blunt
           weight: 1
           cells:
-          - '    '
-          - '    '
-          - '██▙ '
+          - ' ▀  '
+          - ' ▄  '
+          - ▟██▙
           - █◆▓►
-          - '██▛ '
-          - '    '
+          - ▜██▛
+          - ' ▀  '
           - '    '
           color_mask:
+          - SBSS
           - SSSS
           - SSSS
-          - SSSS
-          - SWSS
+          - SWSA
           - SSSS
           - SSSS
           - SSSS
@@ -232,16 +250,16 @@ views:
           cells:
           - '    '
           - '    '
-          - '▓█▙ '
-          - █◆█►
-          - '▓█▛ '
+          - ◢▓█▙
+          - █◆◆╸
+          - ◥▓█▛
           - '    '
           - '    '
           color_mask:
           - SSSS
           - SSSS
           - SSSS
-          - SWSS
+          - SWWS
           - SSSS
           - SSSS
           - SSSS
@@ -263,34 +281,34 @@ views:
           min: 1
           max: 1
         variants:
-        - id: triple
+        - id: civilian_bells
           weight: 1
           cells:
-          - ' ▀ '
-          - '   '
-          - ▀█▓
-          - '   '
-          - ' ▀ '
+          - ' ▀▄ '
+          - ▄▟█╾
+          - ▄█░▓
+          - ▄▜█╾
+          - ' ▀▀ '
           color_mask:
-          - SES
-          - SSS
-          - ESS
-          - SSS
-          - SES
-        - id: dirty
+          - SESS
+          - ESSS
+          - ESES
+          - ESSS
+          - SESS
+        - id: shoddy_bells
           weight: 1
           cells:
-          - ' ▀ '
-          - '▀▶ '
-          - ▀█▓
-          - '   '
-          - ' ▀ '
+          - '▄▟▓ '
+          - ' ▓░▓'
+          - ▄██▓
+          - '▄▜▓ '
+          - '    '
           color_mask:
-          - SES
-          - ESS
-          - ESS
-          - SSS
-          - SES
+          - ESSS
+          - SSES
+          - ESSS
+          - ESSS
+          - SSSS
       - id: armored_buttress
         name: Armored Buttress
         primary_property: armor
@@ -299,26 +317,26 @@ views:
           min: 1
           max: 1
         variants:
-        - id: ribbed
+        - id: ribbed_collar
           weight: 1
           cells:
-          - ▓█═
-          - ╭─╮
-          - ◇▒◇
-          - ╰─╯
-          - ▓█═
+          - ▓▀▓
+          - █▤█
+          - █░█
+          - █▤█
+          - ▓▄▓
           color_mask:
           - SSS
           - SSS
-          - DSD
           - SSS
           - SSS
-        - id: sealed
+          - SSS
+        - id: sealed_collar
           weight: 1
           cells:
           - ◢█◣
           - █◇◇
-          - █░█
+          - █▒█
           - █◇◇
           - ◥█◤
           color_mask:
@@ -335,34 +353,48 @@ views:
         - hull
         repeat:
           min: 1
-          max: 8
+          max: 5
         variants:
-        - id: doors
+        - id: container_seam
           weight: 1
           cells:
-          - ' ▀   '
           - ╭───╮
-          - │▒◆▒│
+          - │▒▒▀│
+          - ┤░▒░├
+          - │▒▒▒│
           - ╰───╯
-          - ' ▾   '
           color_mask:
-          - SBSSS
           - SSSSS
-          - SSWSS
+          - SSSAS
           - SSSSS
           - SSSSS
-        - id: containers
+          - SSSSS
+        - id: twin_boxes
           weight: 1
           cells:
-          - '     '
-          - ╔═══╗
-          - ║▒▀░║
-          - ╚═══╝
-          - '     '
+          - ╔═╗╔╗
+          - ║▒║║║
+          - ╠═╣╠╣
+          - ║▒║║║
+          - ╚═╝╚╝
           color_mask:
           - SSSSS
           - SSSSS
-          - SSASS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+        - id: tank_with_vent
+          weight: 1
+          cells:
+          - ▗▄▄▄▖
+          - ▟█▒▒▙
+          - █▒▒▄╺
+          - ▜█▒▒▛
+          - ▝▀▀▀▘
+          color_mask:
+          - SSSSS
+          - SSSSS
+          - SSSAS
           - SSSSS
           - SSSSS
       - id: masked_battery
@@ -377,31 +409,31 @@ views:
         - id: closed
           weight: 1
           cells:
-          - '   '
           - ◢█◣
-          - █▀▀
+          - █▒█
+          - █▄█
           - ◥█◤
           - '   '
           color_mask:
           - SSS
           - SSS
-          - SAA
+          - SAS
           - SSS
           - SSS
-        - id: open
+        - id: revealed
           weight: 1
           cells:
-          - ' ▀ '
-          - '▓█ '
-          - █▀▀
-          - '▓█ '
+          - ▓█►
+          - █▄▀
+          - ▓█►
           - ' ▄ '
+          - '   '
           color_mask:
-          - SAS
-          - SSS
+          - SSA
           - SAA
-          - SSS
+          - SSA
           - SAS
+          - SSS
       - id: merchant_prow
         name: Merchant Prow
         primary_property: hull
@@ -414,24 +446,24 @@ views:
         - id: blunt
           weight: 1
           cells:
-          - '   '
-          - '██ '
+          - ' ▄ '
+          - ▟█▙
           - █◆►
-          - '██ '
-          - '   '
+          - ▜█▛
+          - ' ▀ '
           color_mask:
           - SSS
           - SSS
-          - SWS
+          - SWA
           - SSS
           - SSS
         - id: tapered
           weight: 1
           cells:
           - '   '
-          - '▓█ '
-          - █◆►
-          - '▓█ '
+          - ◢▓▙
+          - █◆╸
+          - ◥▓▛
           - '   '
           color_mask:
           - SSS
@@ -458,7 +490,7 @@ views:
           weight: 1
           cells:
           - ' █'
-          - ▀█
+          - ▄▓
           - ' █'
           color_mask:
           - SS
@@ -535,22 +567,26 @@ views:
           min: 1
           max: 1
         variants:
-        - id: triple
+        - id: civilian_bells
           weight: 1
           cells:
-          - '      ▓▓      '
-          - '  ▌▌  ██  ▌▌  '
+          - '    ╽╽▓▓╽╽    '
+          - '  ▐▐██░░██▌▌  '
+          - '    ▐▐▐▐▐▐    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSEESSSSSSEESS
-        - id: dirty
+          - SSSSSSEESSSSSS
+          - SSSSEEEEEESSSS
+        - id: shoddy_bells
           weight: 1
           cells:
-          - '      ▓▓      '
-          - '  ▌▌▴▴██  ▌▌  '
+          - '    ▓▓▓▓      '
+          - '▗▗▓▓░░██▓▓    '
+          - '  ▐▐  ▐▐▐▐    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSEESSSSSSEESS
+          - SSSSEESSSSSSSS
+          - SSEESSEEEESSSS
       - id: armored_buttress
         name: Armored Buttress
         primary_property: armor
@@ -559,19 +595,19 @@ views:
           min: 1
           max: 1
         variants:
-        - id: ribbed
+        - id: ribbed_collar
           weight: 1
           cells:
-          - '  ║║╭╭◇◇╮╮║║  '
-          - '  ██││▒▒││██  '
+          - '  ▓▓██████▓▓  '
+          - '  ▌▌▤▤░░▤▤▐▐  '
           color_mask:
-          - SSSSSSDDSSSSSS
           - SSSSSSSSSSSSSS
-        - id: sealed
+          - SSSSSSSSSSSSSS
+        - id: sealed_collar
           weight: 1
           cells:
           - '  ◢◢◇◇██◇◇◣◣  '
-          - '  ██◇◇░░◇◇██  '
+          - '  ██◇◇▒▒◇◇██  '
           color_mask:
           - SSSSDDSSDDSSSS
           - SSSSDDSSDDSSSS
@@ -583,27 +619,37 @@ views:
         - hull
         repeat:
           min: 1
-          max: 8
+          max: 5
         variants:
-        - id: doors
+        - id: container_seam
           weight: 1
           cells:
-          - '    ╭╭──╮╮    '
-          - '    ││▒▒││    '
-          - '  ▌▌││▒▒││▶▶  '
+          - '  ╭╭──┴┴──╮╮  '
+          - '  ││▌▌░░▒▒││  '
+          - '  ││▒▒░░▒▒││  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSAASSSSSSSS
+          - SSSSSSSSSSSSSS
+        - id: twin_boxes
+          weight: 1
+          cells:
+          - '  ╔╔══╦╦══╗╗  '
+          - '  ╚╚══╩╩══╝╝  '
+          - '  ║║▒▒║║▒▒║║  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-          - SSBBSSSSSSSSSS
-        - id: containers
+          - SSSSSSSSSSSSSS
+        - id: tank_with_vent
           weight: 1
           cells:
-          - '    ╔╔══╗╗    '
-          - '    ║║░░║║    '
-          - '    ║║▒▒║║    '
+          - '  ▗▗▟▟╹╹▙▙▖▖  '
+          - '  ▐▐▒▒▐▐▒▒▌▌  '
+          - '  ▐▐██▒▒██▌▌  '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSSSAASSSSSS
           - SSSSSSSSSSSSSS
       - id: masked_battery
         name: Masked Battery
@@ -617,19 +663,19 @@ views:
         - id: closed
           weight: 1
           cells:
-          - '    ◢◢▌▌◣◣    '
-          - '    ██▌▌██    '
+          - '  ◢◢████◣◣    '
+          - '  ██▒▒▐▐██    '
           color_mask:
+          - SSSSSSSSSSSSSS
           - SSSSSSAASSSSSS
-          - SSSSSSAASSSSSS
-        - id: open
+        - id: revealed
           weight: 1
           cells:
-          - '      ▌▌      '
-          - '  ▌▌██▌▌██▐▐  '
+          - '  ▲▲▌▌▲▲      '
+          - '▌▌██▐▐██▐▐    '
           color_mask:
-          - SSSSSSAASSSSSS
-          - SSAASSAASSAASS
+          - SSAAAAAASSSSSS
+          - AASSAASSAASSSS
       - id: merchant_prow
         name: Merchant Prow
         primary_property: hull
@@ -642,16 +688,16 @@ views:
         - id: blunt
           weight: 1
           cells:
-          - '      ▲▲      '
-          - '    ██◆◆██    '
+          - '    ▟▟▲▲▙▙    '
+          - '▌▌▐▐██◆◆██▌▌  '
           color_mask:
-          - SSSSSSSSSSSSSS
-          - SSSSSSWWSSSSSS
+          - SSSSSSAASSSSSS
+          - BBSSSSWWSSSSSS
         - id: tapered
           weight: 1
           cells:
-          - '      ▲▲      '
-          - '    ██◆◆██    '
+          - '    ▟▟╻╻▙▙    '
+          - '    ▓▓◆◆▓▓    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSWWSSSSSS
@@ -673,22 +719,22 @@ views:
           min: 1
           max: 1
         variants:
-        - id: triple
+        - id: civilian_bells
           weight: 1
           cells:
-          - '    ▓▓    '
-          - '    ▌▌    '
+          - '  ╽╽▓▓╽╽  '
+          - ▌▌▜▜██▛▛▌▌
           color_mask:
           - SSSSSSSSSS
-          - SSSSEESSSS
-        - id: dirty
+          - EESSSSSSEE
+        - id: shoddy_bells
           weight: 1
           cells:
-          - '    ▓▓    '
-          - '  ▌▌▌▌    '
+          - '  ▓▓▓▓    '
+          - '▜▜▓▓██▛▛  '
           color_mask:
           - SSSSSSSSSS
-          - SSEEEESSSS
+          - SSSSSSSSSS
       - id: armored_buttress
         name: Armored Buttress
         primary_property: armor
@@ -697,15 +743,15 @@ views:
           min: 1
           max: 1
         variants:
-        - id: ribbed
+        - id: ribbed_collar
           weight: 1
           cells:
-          - ║║╭╭◇◇╮╮║║
-          - ▓▓╰╰◇◇╯╯▓▓
+          - ▓▓██████▓▓
+          - ▓▓██████▓▓
           color_mask:
-          - SSSSDDSSSS
-          - SSSSDDSSSS
-        - id: sealed
+          - SSSSSSSSSS
+          - SSSSSSSSSS
+        - id: sealed_collar
           weight: 1
           cells:
           - ◢◢◇◇██◇◇◣◣
@@ -721,27 +767,37 @@ views:
         - hull
         repeat:
           min: 1
-          max: 8
+          max: 5
         variants:
-        - id: doors
+        - id: container_seam
           weight: 1
           cells:
-          - '  ╭╭──╮╮  '
-          - '  ││◆◆││  '
-          - '  ╰╰──╯╯  '
+          - ╭╭──┴┴──╮╮
+          - ││▒▒▒▒▒▒││
+          - ╰╰──┬┬──╯╯
           color_mask:
           - SSSSSSSSSS
-          - SSSSWWSSSS
           - SSSSSSSSSS
-        - id: containers
+          - SSSSSSSSSS
+        - id: twin_boxes
           weight: 1
           cells:
-          - '  ╔╔══╗╗  '
-          - '  ║║▌▌║║  '
-          - '  ╚╚══╝╝  '
+          - ╔╔══╦╦══╗╗
+          - ╔╔══╦╦══╗╗
+          - ╚╚══╩╩══╝╝
           color_mask:
           - SSSSSSSSSS
-          - SSSSAASSSS
+          - SSSSSSSSSS
+          - SSSSSSSSSS
+        - id: tank_with_vent
+          weight: 1
+          cells:
+          - ▗▗▟▟╹╹▙▙▖▖
+          - ▐▐▒▒▒▒▒▒▌▌
+          - ▝▝▜▜██▛▛▘▘
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
           - SSSSSSSSSS
       - id: masked_battery
         name: Masked Battery
@@ -755,18 +811,18 @@ views:
         - id: closed
           weight: 1
           cells:
-          - '  ◢◢▌▌◣◣  '
-          - '  ◥◥██◤◤  '
+          - '◢◢████◣◣  '
+          - '◥◥████◤◤  '
           color_mask:
-          - SSSSAASSSS
           - SSSSSSSSSS
-        - id: open
+          - SSSSSSSSSS
+        - id: revealed
           weight: 1
           cells:
-          - '    ▌▌    '
-          - '  ▓▓██▓▓  '
+          - '▲▲▌▌▲▲    '
+          - '▓▓██▓▓    '
           color_mask:
-          - SSSSAASSSS
+          - AAAAAASSSS
           - SSSSSSSSSS
       - id: merchant_prow
         name: Merchant Prow
@@ -780,16 +836,16 @@ views:
         - id: blunt
           weight: 1
           cells:
-          - '    ▲▲    '
-          - '  ██████  '
+          - '  ▟▟▲▲▙▙  '
+          - '  ▜▜██▛▛  '
           color_mask:
-          - SSSSSSSSSS
+          - SSSSAASSSS
           - SSSSSSSSSS
         - id: tapered
           weight: 1
           cells:
-          - '    ▲▲    '
-          - '  ▓▓██▓▓  '
+          - '  ▟▟╻╻▙▙  '
+          - '  ◥◥██◤◤  '
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -811,7 +867,7 @@ views:
         - id: drive
           weight: 1
           cells:
-          - ██████
+          - ██▓▓██
           color_mask:
           - SSSSSS
       - id: body

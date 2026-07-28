@@ -16,7 +16,7 @@ views:
       structure_lengths:
         thrusters: 1
         spindrive: 1
-        hull: 6
+        hull: 5
         screens: 1
         main_gun: 1
       sections:
@@ -30,42 +30,42 @@ views:
           min: 1
           max: 1
         variants:
-        - id: boxed
+        - id: armored_bells
           weight: 1
           cells:
-          - '    '
-          - '▄▀═ '
-          - '▄▟▓ '
-          - ▄██▓
-          - '▄▜▓ '
-          - '▄▀═ '
-          - '    '
+          - '     '
+          - '▓▄▓▖ '
+          - ▓▄█▓╾
+          - ▓▄█░█
+          - ▓▄█▓╾
+          - '▓▄▓▘ '
+          - '     '
           color_mask:
-          - SSSS
-          - EESS
-          - ESSS
-          - ESSS
-          - ESSS
-          - EESS
-          - SSSS
-        - id: split
+          - SSSSS
+          - SESSS
+          - SESSS
+          - SESES
+          - SESSS
+          - SESSS
+          - SSSSS
+        - id: open_bells
           weight: 1
           cells:
-          - '    '
-          - '▄▘▀ '
-          - '▄▙▓ '
-          - ▄██▓
-          - '▄▛▓ '
-          - '▄▖▀ '
-          - '    '
+          - '     '
+          - '▄▄▓▖ '
+          - ▄█░▓╾
+          - ▄███▓
+          - ▄█░▓╾
+          - '▄▀▓▘ '
+          - '     '
           color_mask:
-          - SSSS
-          - ESES
-          - ESSS
-          - ESSS
-          - ESSS
-          - ESES
-          - SSSS
+          - SSSSS
+          - ESSSS
+          - ESESS
+          - ESSSS
+          - ESESS
+          - ESSSS
+          - SSSSS
       - id: spindrive
         name: Armored Drive
         primary_property: spindrive
@@ -75,42 +75,42 @@ views:
           min: 1
           max: 1
         variants:
-        - id: collared
+        - id: armored_core
           weight: 1
           cells:
-          - '    '
-          - '▓█═ '
-          - ◢██◣
-          - █░░█
-          - ◥██◤
-          - '▓█═ '
-          - '    '
+          - '     '
+          - ▗▄█▄▖
+          - ▟█▤█▙
+          - █▤░▤█
+          - ▜█▤█▛
+          - ▝▀█▀▘
+          - '     '
           color_mask:
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-        - id: slab
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSESS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+        - id: reactor_bulge
           weight: 1
           cells:
-          - '    '
-          - '▗▄▖ '
-          - ▟██▙
-          - █▒▒█
-          - ▜██▛
-          - '▝▀▘ '
-          - '    '
+          - '     '
+          - ' ▄▓▄ '
+          - ◢█☼█◣
+          - █▒░▒█
+          - ◥█▓█◤
+          - ' ▀▓▀ '
+          - '     '
           color_mask:
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
+          - SSSSS
+          - SSSSS
+          - SSBSS
+          - SSESS
+          - SSSSS
+          - SSSSS
+          - SSSSS
       - id: hull
         name: Armored Spine
         primary_property: armor
@@ -119,17 +119,17 @@ views:
         - weapons
         repeat:
           min: 1
-          max: 6
+          max: 5
         variants:
-        - id: magazine
+        - id: plate_band
           weight: 1
           cells:
           - '     '
-          - '▓██═ '
-          - ◢███◣
-          - █░░░█
-          - ◥███◤
-          - '▓██═ '
+          - ▓▀▓▓╾
+          - █▤██▓
+          - ██▒██
+          - █▤██▓
+          - ▓▄▓▓╾
           - '     '
           color_mask:
           - SSSSS
@@ -139,19 +139,19 @@ views:
           - SSSSS
           - SSSSS
           - SSSSS
-        - id: faceted
+        - id: turret_band
           weight: 1
           cells:
           - '     '
-          - ' ▀▀  '
-          - ▟█▒█▙
-          - █◇░◇█
-          - ▜█▒█▛
-          - ' ▄▄  '
+          - '▟▀▙  '
+          - █▓▓▓╾
+          - ██▒██
+          - █▤██▓
+          - ▓▄▓▓╾
           - '     '
           color_mask:
           - SSSSS
-          - SSSSS
+          - SASSS
           - SSSSS
           - SSSSS
           - SSSSS
@@ -166,39 +166,39 @@ views:
           min: 1
           max: 1
         variants:
-        - id: projectors
+        - id: deflector_collar
           weight: 1
           cells:
           - '    '
           - ' ◇  '
-          - ◇▟█▙
-          - ◇█◆█
-          - ◇▜█▛
+          - ◢▓█▙
+          - ◇█▓╾
+          - ◥▓█▛
           - ' ◇  '
           - '    '
           color_mask:
           - SSSS
           - SDSS
+          - SSSS
+          - DSSS
+          - SSSS
+          - SDSS
+          - SSSS
+        - id: cic_collar
+          weight: 1
+          cells:
+          - '    '
+          - '    '
+          - ◇▟▓▙
+          - ◇█◆█
+          - ◇▜▓▛
+          - '    '
+          - '    '
+          color_mask:
+          - SSSS
+          - SSSS
           - DSSS
           - DSWS
-          - DSSS
-          - SDSS
-          - SSSS
-        - id: armored
-          weight: 1
-          cells:
-          - '    '
-          - '    '
-          - ◇◢█◣
-          - ◇███
-          - ◇◥█◤
-          - '    '
-          - '    '
-          color_mask:
-          - SSSS
-          - SSSS
-          - DSSS
-          - DSSS
           - DSSS
           - SSSS
           - SSSS
@@ -211,42 +211,42 @@ views:
           min: 1
           max: 1
         variants:
-        - id: barrel
+        - id: heavy_spinal
           weight: 1
           cells:
-          - '      '
-          - '      '
-          - '╺═██▙ '
-          - ╺══█▀►
-          - '╺═██▛ '
-          - '      '
-          - '      '
+          - '       '
+          - '  ▄▄   '
+          - ' ╾═▓▓▙ '
+          - ╾══█▓▓►
+          - ' ╾═▓▓▛ '
+          - '  ▀▀   '
+          - '       '
           color_mask:
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
-          - SAASAA
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
-        - id: heavy
+          - SSSSSSS
+          - SSSSSSS
+          - SSSSSSS
+          - SSASSSA
+          - SSSSSSS
+          - SSSSSSS
+          - SSSSSSS
+        - id: siege_barrel
           weight: 1
           cells:
-          - '      '
-          - '      '
-          - '═███▙ '
-          - ═███▀►
-          - '═███▛ '
-          - '      '
-          - '      '
+          - '       '
+          - ' ╾▀▙   '
+          - '╾═█▓▙  '
+          - ╾═█▓▓▀►
+          - '╾═█▓▛  '
+          - ' ╾▄▛   '
+          - '       '
           color_mask:
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
-          - ASSSAA
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
+          - SSSSSSS
+          - SSASSSS
+          - SSSSSSS
+          - SASSSAA
+          - SSSSSSS
+          - SSASSSS
+          - SSSSSSS
     - id: medium
       name: Medium
       structure_lengths:
@@ -266,34 +266,34 @@ views:
           min: 1
           max: 1
         variants:
-        - id: boxed
+        - id: armored_bells
           weight: 1
           cells:
-          - '▄▀ '
-          - '▄▟ '
-          - ▄█▓
-          - '▄▜ '
-          - '▄▀ '
+          - '▓▄▓ '
+          - ▓▄█╾
+          - ▓▄██
+          - ▓▄█╾
+          - '▓▄▓ '
           color_mask:
-          - EES
-          - ESS
-          - ESS
-          - ESS
-          - EES
-        - id: split
+          - SESS
+          - SESS
+          - SESS
+          - SESS
+          - SESS
+        - id: open_bells
           weight: 1
           cells:
-          - '▄▘ '
-          - '▄▙ '
-          - ▄█▓
-          - '▄▛ '
-          - '▄▖ '
+          - '▄▄▓ '
+          - ▄█░╾
+          - ▄██▓
+          - ▄█░╾
+          - '▄▀▓ '
           color_mask:
-          - ESS
-          - ESS
-          - ESS
-          - ESS
-          - ESS
+          - ESSS
+          - ESES
+          - ESSS
+          - ESES
+          - ESSS
       - id: spindrive
         name: Armored Drive
         primary_property: spindrive
@@ -303,34 +303,34 @@ views:
           min: 1
           max: 1
         variants:
-        - id: collared
+        - id: armored_core
           weight: 1
           cells:
-          - '▓█ '
-          - ◢█◣
-          - █░█
-          - ◥█◤
-          - '▓█ '
+          - ▗▄█▖
+          - ▟█▤▙
+          - █▤░█
+          - ▜█▤▛
+          - ▝▀█▘
           color_mask:
-          - SSS
-          - SSS
-          - SSS
-          - SSS
-          - SSS
-        - id: slab
+          - SSSS
+          - SSSS
+          - SSES
+          - SSSS
+          - SSSS
+        - id: reactor_bulge
           weight: 1
           cells:
-          - '▗▄ '
-          - ▟█▙
-          - █▒█
-          - ▜█▛
-          - '▝▀ '
+          - ' ▄▓ '
+          - ◢█☼◣
+          - █▒░█
+          - ◥█▓◤
+          - ' ▀▓ '
           color_mask:
-          - SSS
-          - SSS
-          - SSS
-          - SSS
-          - SSS
+          - SSSS
+          - SSBS
+          - SSES
+          - SSSS
+          - SSSS
       - id: hull
         name: Armored Spine
         primary_property: armor
@@ -339,32 +339,32 @@ views:
         - weapons
         repeat:
           min: 1
-          max: 6
+          max: 5
         variants:
-        - id: magazine
+        - id: plate_band
           weight: 1
           cells:
-          - '▓██ '
-          - ◢██◣
-          - █░░█
-          - ◥██◤
-          - '▓██ '
+          - ▓▀▓╾
+          - █▤█▓
+          - ██▒█
+          - █▤█▓
+          - ▓▄▓╾
           color_mask:
           - SSSS
           - SSSS
           - SSSS
           - SSSS
           - SSSS
-        - id: faceted
+        - id: turret_band
           weight: 1
           cells:
-          - ' ▀▀ '
-          - ▟█▒▙
-          - █◇░█
-          - ▜█▒▛
-          - ' ▄▄ '
+          - '▟▀▙ '
+          - █▓▓╾
+          - ██▒█
+          - █▤█▓
+          - ▓▄▓╾
           color_mask:
-          - SSSS
+          - SASS
           - SSSS
           - SSSS
           - SSSS
@@ -378,27 +378,27 @@ views:
           min: 1
           max: 1
         variants:
-        - id: projectors
+        - id: deflector_collar
           weight: 1
           cells:
           - ' ◇ '
-          - ◇▟▙
-          - ◇██
-          - ◇▜▛
+          - ◢▓▙
+          - ◇█╾
+          - ◥▓▛
           - ' ◇ '
           color_mask:
           - SDS
+          - SSS
           - DSS
-          - DSS
-          - DSS
+          - SSS
           - SDS
-        - id: armored
+        - id: cic_collar
           weight: 1
           cells:
           - '   '
-          - ◇◢◣
+          - ◇▟▙
           - ◇██
-          - ◇◥◤
+          - ◇▜▛
           - '   '
           color_mask:
           - SSS
@@ -415,32 +415,32 @@ views:
           min: 1
           max: 1
         variants:
-        - id: barrel
+        - id: heavy_spinal
           weight: 1
           cells:
-          - '     '
-          - '╺═██ '
-          - ╺══█►
-          - '╺═██ '
-          - '     '
+          - '  ▄  '
+          - ' ╾▓▓ '
+          - ╾═█▓►
+          - ' ╾▓▓ '
+          - '  ▀  '
           color_mask:
           - SSSSS
           - SSSSS
-          - SAASA
+          - SSSSA
           - SSSSS
           - SSSSS
-        - id: heavy
+        - id: siege_barrel
           weight: 1
           cells:
-          - '     '
-          - '═███ '
-          - ═███►
-          - '═███ '
-          - '     '
+          - ' ╾▙  '
+          - '╾═▓▙ '
+          - ╾═▓▓►
+          - '╾═▓▛ '
+          - ' ╾▛  '
           color_mask:
           - SSSSS
           - SSSSS
-          - ASSSA
+          - SASSA
           - SSSSS
           - SSSSS
     - id: compact
@@ -461,9 +461,9 @@ views:
         - id: drive
           weight: 1
           cells:
-          - '  '
+          - '▓ '
           - ▄█
-          - '  '
+          - '▓ '
           color_mask:
           - SS
           - ES
@@ -480,23 +480,23 @@ views:
         - id: armor
           weight: 1
           cells:
-          - ▗▖
-          - █▒
-          - ▝▘
+          - ▗▄
+          - █▤
+          - ▝▀
           color_mask:
           - SS
           - SS
           - SS
-        - id: gun_rib
+        - id: turret
           weight: 1
           cells:
-          - ▀▀
+          - ▀▓
           - ██
-          - ▄▄
+          - ▓▓
           color_mask:
-          - SA
+          - AS
           - SS
-          - SA
+          - SS
       - id: prow
         name: Prow
         primary_property: weapons
@@ -509,7 +509,7 @@ views:
           weight: 1
           cells:
           - '   '
-          - ═▀►
+          - ══►
           - '   '
           color_mask:
           - SSS
@@ -526,7 +526,7 @@ views:
       structure_lengths:
         thrusters: 1
         spindrive: 1
-        hull: 6
+        hull: 5
         screens: 1
         main_gun: 1
       sections:
@@ -540,22 +540,26 @@ views:
           min: 1
           max: 1
         variants:
-        - id: boxed
+        - id: armored_bells
           weight: 1
           cells:
-          - '      ▓▓      '
-          - '  ▌▌▜▜██▛▛▌▌  '
-          color_mask:
-          - SSSSSSSSSSSSSS
-          - SSEESSSSSSEESS
-        - id: split
-          weight: 1
-          cells:
-          - '      ▓▓      '
-          - '  ▖▖▟▟██▙▙▗▗  '
+          - '    ╽╽██╽╽    '
+          - '  ▓▓██████▓▓  '
+          - '  ▓▓▓▓▓▓▓▓▓▓  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+        - id: open_bells
+          weight: 1
+          cells:
+          - '    ╽╽▓▓╽╽    '
+          - '  ▓▓░░██░░▓▓  '
+          - '  ▐▐▐▐▐▐▐▐▐▐  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSEESSEESSSS
+          - SSEEEEEEEEEESS
       - id: spindrive
         name: Armored Drive
         primary_property: spindrive
@@ -565,21 +569,25 @@ views:
           min: 1
           max: 1
         variants:
-        - id: collared
+        - id: armored_core
+          weight: 1
+          cells:
+          - '  ▗▗▟▟██▙▙▖▖  '
+          - '  ██▤▤░░▤▤██  '
+          - '  ▝▝▜▜██▛▛▘▘  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSSSEESSSSSS
+          - SSSSSSSSSSSSSS
+        - id: reactor_bulge
           weight: 1
           cells:
           - '    ◢◢██◣◣    '
-          - '  ████░░████  '
+          - '  ▓▓☼☼░░▓▓▓▓  '
+          - '    ◥◥██◤◤    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
-        - id: slab
-          weight: 1
-          cells:
-          - '    ▟▟██▙▙    '
-          - '  ▐▐██▒▒██▌▌  '
-          color_mask:
-          - SSSSSSSSSSSSSS
+          - SSSSBBEESSSSSS
           - SSSSSSSSSSSSSS
       - id: hull
         name: Armored Spine
@@ -589,24 +597,24 @@ views:
         - weapons
         repeat:
           min: 1
-          max: 6
+          max: 5
         variants:
-        - id: magazine
+        - id: plate_band
           weight: 1
           cells:
-          - '    ◢◢██◣◣    '
-          - '  ████░░████  '
-          - '  ▓▓◥◥██◤◤▓▓  '
+          - '  ╽╽▓▓██▓▓╽╽  '
+          - '  ▓▓██▒▒██▓▓  '
+          - '  ▓▓██████▓▓  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-        - id: faceted
+        - id: turret_band
           weight: 1
           cells:
-          - '    ▟▟██▙▙    '
-          - '  ▌▌▒▒░░▒▒▐▐  '
-          - '    ▜▜██▛▛    '
+          - '    ╽╽██▓▓╽╽  '
+          - '  ▟▟▓▓▒▒██▓▓  '
+          - '  ▜▜██████▓▓  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -620,19 +628,19 @@ views:
           min: 1
           max: 1
         variants:
-        - id: projectors
+        - id: deflector_collar
           weight: 1
           cells:
-          - '    ▟▟██▙▙    '
-          - '  ◇◇▜▜██▛▛◇◇  '
+          - '    ▟▟╽╽▙▙    '
+          - '  ◇◇▓▓██▓▓◇◇  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSDDSSSSSSDDSS
-        - id: armored
+        - id: cic_collar
           weight: 1
           cells:
-          - '    ◢◢██◣◣    '
-          - '    ◥◥██◤◤    '
+          - '    ▟▟██▙▙    '
+          - '    ▜▜██▛▛    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -645,25 +653,29 @@ views:
           min: 1
           max: 1
         variants:
-        - id: barrel
+        - id: heavy_spinal
           weight: 1
           cells:
           - '      ▲▲      '
-          - '    ██████    '
-          - '    ║║║║║║    '
+          - '    ▓▓▓▓▓▓    '
+          - '  ▐▐║║║║║║▌▌  '
+          - '      ╽╽      '
           color_mask:
           - SSSSSSAASSSSSS
           - SSSSSSSSSSSSSS
           - SSSSSSAASSSSSS
-        - id: heavy
+          - SSSSSSSSSSSSSS
+        - id: siege_barrel
           weight: 1
           cells:
           - '      ▲▲      '
-          - '    ██████    '
-          - '    ██████    '
+          - '    ▟▟▓▓▙▙    '
+          - '  ▌▌██████▐▐  '
+          - '    ╽╽╽╽╽╽    '
           color_mask:
           - SSSSSSAASSSSSS
           - SSSSSSSSSSSSSS
+          - SSAASSSSSSAASS
           - SSSSSSSSSSSSSS
     - id: medium
       name: Medium
@@ -684,22 +696,22 @@ views:
           min: 1
           max: 1
         variants:
-        - id: boxed
+        - id: armored_bells
           weight: 1
           cells:
-          - '    ▓▓    '
+          - '  ╽╽██╽╽  '
           - ▐▐▐▐▐▐▐▐▐▐
           color_mask:
           - SSSSSSSSSS
           - EEEEEEEEEE
-        - id: split
+        - id: open_bells
           weight: 1
           cells:
-          - '    ▓▓    '
-          - ▐▐▐▐▐▐▐▐▐▐
+          - '  ╽╽▓▓╽╽  '
+          - ▐▐██████▌▌
           color_mask:
           - SSSSSSSSSS
-          - EEEEEEEEEE
+          - SSSSSSSSSS
       - id: spindrive
         name: Armored Drive
         primary_property: spindrive
@@ -709,19 +721,19 @@ views:
           min: 1
           max: 1
         variants:
-        - id: collared
+        - id: armored_core
           weight: 1
           cells:
-          - '  ◢◢██◣◣  '
-          - ▓▓◥◥██◤◤▓▓
+          - ▗▗▟▟██▙▙▖▖
+          - ▐▐██▤▤██▌▌
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
-        - id: slab
+        - id: reactor_bulge
           weight: 1
           cells:
-          - '  ▟▟██▙▙  '
-          - ▝▝▜▜██▛▛▘▘
+          - '  ◢◢██◣◣  '
+          - ▐▐██▒▒██▌▌
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -733,24 +745,24 @@ views:
         - weapons
         repeat:
           min: 1
-          max: 6
+          max: 5
         variants:
-        - id: magazine
+        - id: plate_band
           weight: 1
           cells:
-          - '  ◢◢██◣◣  '
-          - ████░░████
+          - ╽╽▓▓██▓▓╽╽
+          - ▌▌▤▤██▤▤▐▐
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
-        - id: faceted
+        - id: turret_band
           weight: 1
           cells:
-          - '  ▟▟██▙▙  '
-          - ▌▌██◇◇██▐▐
+          - '  ╽╽██▓▓╽╽'
+          - ▌▌▓▓██▤▤▐▐
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
+          - AASSSSSSSS
       - id: screens
         name: Screen Collar
         primary_property: screens
@@ -760,18 +772,18 @@ views:
           min: 1
           max: 1
         variants:
-        - id: projectors
+        - id: deflector_collar
+          weight: 1
+          cells:
+          - '  ▟▟╽╽▙▙  '
+          - '  ◥◥◇◇◤◤  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSDDSSSS
+        - id: cic_collar
           weight: 1
           cells:
           - '  ▟▟██▙▙  '
-          - '  ◇◇◇◇◇◇  '
-          color_mask:
-          - SSSSSSSSSS
-          - SSDDDDDDSS
-        - id: armored
-          weight: 1
-          cells:
-          - '  ◢◢██◣◣  '
           - '  ◇◇◇◇◇◇  '
           color_mask:
           - SSSSSSSSSS
@@ -785,26 +797,26 @@ views:
           min: 1
           max: 1
         variants:
-        - id: barrel
+        - id: heavy_spinal
           weight: 1
           cells:
           - '    ▲▲    '
-          - '  ██║║██  '
-          - '  ╹╹╹╹╹╹  '
+          - ▐▐▓▓██▓▓▌▌
+          - '    ╽╽    '
           color_mask:
           - SSSSAASSSS
-          - SSSSAASSSS
           - SSSSSSSSSS
-        - id: heavy
+          - SSSSSSSSSS
+        - id: siege_barrel
           weight: 1
           cells:
           - '    ▲▲    '
-          - '  ██████  '
-          - '  ║║║║║║  '
+          - ▟▟▓▓▓▓▓▓▙▙
+          - '  ╽╽╽╽╽╽  '
           color_mask:
           - SSSSAASSSS
           - SSSSSSSSSS
-          - SSSSAASSSS
+          - SSSSSSSSSS
     - id: compact
       name: Compact
       structure_lengths:
@@ -838,15 +850,15 @@ views:
         - id: armor
           weight: 1
           cells:
-          - ▗▗▒▒▖▖
+          - ▐▐▤▤▌▌
           color_mask:
           - SSSSSS
-        - id: gun_rib
+        - id: turret
           weight: 1
           cells:
-          - ▌▌██▐▐
+          - ▓▓██▓▓
           color_mask:
-          - AASSAA
+          - SSSSSS
       - id: prow
         name: Prow
         primary_property: weapons

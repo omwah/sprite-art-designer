@@ -30,42 +30,42 @@ views:
           min: 1
           max: 1
         variants:
-        - id: cluster
+        - id: triple_bell
           weight: 1
           cells:
-          - ' ▄▀  '
-          - '▄╺▀═ '
-          - '▄▟▓▓ '
-          - ▄███▓
-          - '▄▜▓▓ '
-          - '▄╺▀═ '
-          - ' ▄▀  '
+          - ' ▄▗▓  '
+          - '▄▟░▓▖ '
+          - '▄▟██▓ '
+          - ▄█░██▓
+          - '▄▜██▓ '
+          - '▄▜░▓▘ '
+          - ' ▄▝▓  '
           color_mask:
-          - SEESS
-          - ESESS
-          - ESSSS
-          - ESSSS
-          - ESSSS
-          - ESESS
-          - SEESS
-        - id: fortified
+          - SESSSS
+          - ESESSS
+          - ESSSSS
+          - ESESSS
+          - ESSSSS
+          - ESESSS
+          - SESSSS
+        - id: fortified_cluster
           weight: 1
           cells:
-          - '▄▘▀  '
-          - '▄▙▓═ '
-          - '▄██▓ '
-          - ▄█░█▓
-          - '▄██▓ '
-          - '▄▛▓═ '
-          - '▄▖▀  '
+          - ' ▓▄▓▖ '
+          - '▓▄▟░▓ '
+          - ▓▄██▓╾
+          - ▓▄█░██
+          - ▓▄██▓╾
+          - '▓▄▜░▓ '
+          - ' ▓▄▓▘ '
           color_mask:
-          - ESESS
-          - ESSSS
-          - ESSSS
-          - ESSSS
-          - ESSSS
-          - ESSSS
-          - ESESS
+          - SSESSS
+          - SESESS
+          - SESSSS
+          - SESESS
+          - SESSSS
+          - SESESS
+          - SSESSS
       - id: spindrive
         name: Drive Bastion
         primary_property: spindrive
@@ -76,42 +76,42 @@ views:
           min: 1
           max: 1
         variants:
-        - id: bastion
+        - id: bastion_cage
           weight: 1
           cells:
-          - '▓█═  '
-          - ╔═╦═╗
-          - ╠███╣
-          - ║░▒░║
-          - ╠███╣
-          - ╚═╩═╝
-          - '▓█═  '
+          - '      '
+          - ╔══╦═╗
+          - ║▓▓█▓║
+          - ╠▤▤░▤╣
+          - ║▓▓█▓║
+          - ╚══╩═╝
+          - '      '
           color_mask:
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
-        - id: reactor
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSESS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+        - id: reactor_drum
           weight: 1
           cells:
-          - ' ▀▀  '
-          - ▟███▙
-          - █▒◆▒█
-          - █◆░◆█
-          - █▒◆▒█
-          - ▜███▛
-          - ' ▄▄  '
+          - '  ▄▄  '
+          - ' ▟██▙ '
+          - ▟█▒▒█▙
+          - █▒░☼▒█
+          - ▜█▒▒█▛
+          - ' ▜██▛ '
+          - '  ▀▀  '
           color_mask:
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+          - SSEBSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
       - id: hull
         name: Layered Heavy Hull
         primary_property: armor
@@ -120,54 +120,54 @@ views:
         - bridge
         repeat:
           min: 1
-          max: 6
+          max: 4
         variants:
-        - id: decks
+        - id: command_decks
           weight: 1
           cells:
           - '  ▀   '
-          - ╔═╦══╗
-          - ╠█◆██╣
-          - ║░▒▒░║
-          - ╠████╣
-          - ╚═╩══╝
-          - '  ▄   '
+          - ' ╭◆╮  '
+          - ▟▤▤▤█▙
+          - █▒◆▒▒█
+          - ▜▤▤▤█▛
+          - ' ▄▄▄▄ '
+          - '      '
           color_mask:
           - SSBSSS
+          - SSWSSS
           - SSSSSS
           - SSWSSS
           - SSSSSS
           - SSSSSS
           - SSSSSS
-          - SSSSSS
-        - id: terrace
+        - id: battery_deck
           weight: 1
           cells:
-          - ' ╭─╮  '
-          - '╭╯◆╰╮ '
-          - '▟███▙ '
-          - █░▒░█╺
-          - '▜███▛ '
-          - '╰╮ ╭╯ '
-          - ' ╰─╯  '
+          - '      '
+          - ' ▟▀▙  '
+          - ▟▤▤▤█▙
+          - █▒▒▒▒█
+          - ▜▤▤▤█▛
+          - ' ▄▄▄▄ '
+          - '      '
           color_mask:
           - SSSSSS
-          - SSWSSS
+          - SSASSS
           - SSSSSS
           - SSSSSS
           - SSSSSS
           - SSSSSS
           - SSSSSS
-        - id: keel
+        - id: terrace_deck
           weight: 1
           cells:
-          - ' ▀▀▀  '
-          - '◢███◣ '
-          - █▒█▒█╺
-          - █░◇░█╺
-          - █▒█▒█╺
-          - '◥███◤ '
-          - ' ▄▄▄  '
+          - '      '
+          - ▗▄▓▓▄▖
+          - ▟█▤▤█▙
+          - █▒◆▒◆█
+          - ▜█▤▤█▛
+          - ▝▀▓▓▀▘
+          - '      '
           color_mask:
           - SSSSSS
           - SSSSSS
@@ -186,41 +186,41 @@ views:
           min: 1
           max: 1
         variants:
-        - id: citadel
+        - id: flag_bridge
           weight: 1
           cells:
-          - ' ◇   '
-          - '╭─╮  '
+          - '  ◇  '
+          - ' ╭─╮ '
           - ◇▟██▙
-          - ◇█◆██
+          - ◇█◆◆█
           - ◇▜██▛
-          - '╰─╯  '
-          - ' ◇   '
+          - ' ╰─╯ '
+          - '  ◇  '
           color_mask:
-          - SDSSS
+          - SSDSS
           - SSSSS
           - DSSSS
-          - DSWSS
+          - DSWWS
           - DSSSS
           - SSSSS
-          - SDSSS
-        - id: shoulders
+          - SSDSS
+        - id: armored_shoulder
           weight: 1
           cells:
           - '     '
-          - '◇▀ ◇ '
-          - '◇◢█◣ '
-          - ◇█◆█═
-          - '◇◥█◤ '
-          - '◇▄ ◇ '
+          - ' ◇ ◇ '
+          - ◇◢██◣
+          - ◇█◆▓█
+          - ◇◥██◤
+          - ' ◇ ◇ '
           - '     '
           color_mask:
           - SSSSS
-          - DSSDS
+          - SDSDS
           - DSSSS
           - DSWSS
           - DSSSS
-          - DSSDS
+          - SDSDS
           - SSSSS
       - id: main_gun
         name: Heavy Battery
@@ -232,39 +232,39 @@ views:
           min: 1
           max: 1
         variants:
-        - id: embedded
+        - id: embedded_battery
           weight: 1
           cells:
           - '       '
-          - '  ▗▄▖  '
-          - '═████▙ '
-          - ═████▀►
-          - '═████▛ '
-          - '  ▝▀▘  '
+          - ' ▗▄▄▄▖ '
+          - '═▟███▙ '
+          - ╾═█▓█▓►
+          - '═▜███▛ '
+          - ' ▝▀▀▀▘ '
           - '       '
           color_mask:
           - SSSSSSS
           - SSSSSSS
           - SSSSSSS
-          - ASSSSAA
+          - SASSSSA
           - SSSSSSS
           - SSSSSSS
           - SSSSSSS
-        - id: fortress
+        - id: twin_spinal
           weight: 1
           cells:
           - '       '
-          - ' ╭──╮  '
-          - '═████▙ '
-          - ═█▀█▀█►
-          - '═████▛ '
-          - ' ╰──╯  '
+          - ' ╾═█▙  '
+          - '╾═█▓▓▙ '
+          - ╾═█▀█▀►
+          - '╾═█▓▓▛ '
+          - ' ╾═█▛  '
           - '       '
           color_mask:
           - SSSSSSS
           - SSSSSSS
           - SSSSSSS
-          - ASASASA
+          - SASASAA
           - SSSSSSS
           - SSSSSSS
           - SSSSSSS
@@ -287,34 +287,34 @@ views:
           min: 1
           max: 1
         variants:
-        - id: cluster
+        - id: triple_bell
           weight: 1
           cells:
-          - '▄╺▀ '
-          - '▄▟▓ '
-          - ▄██▓
-          - '▄▜▓ '
-          - '▄╺▀ '
+          - '▄▟░▓ '
+          - '▄▟██ '
+          - ▄█░█▓
+          - '▄▜██ '
+          - '▄▜░▓ '
           color_mask:
-          - ESES
-          - ESSS
-          - ESSS
-          - ESSS
-          - ESES
-        - id: fortified
+          - ESESS
+          - ESSSS
+          - ESESS
+          - ESSSS
+          - ESESS
+        - id: fortified_cluster
           weight: 1
           cells:
-          - '▄▙▓ '
-          - '▄██ '
-          - ▄█░▓
-          - '▄██ '
-          - '▄▛▓ '
+          - '▓▄▟░ '
+          - ▓▄██╾
+          - ▓▄█░█
+          - ▓▄██╾
+          - '▓▄▜░ '
           color_mask:
-          - ESSS
-          - ESSS
-          - ESSS
-          - ESSS
-          - ESSS
+          - SESES
+          - SESSS
+          - SESES
+          - SESSS
+          - SESES
       - id: spindrive
         name: Drive Bastion
         primary_property: spindrive
@@ -325,34 +325,34 @@ views:
           min: 1
           max: 1
         variants:
-        - id: bastion
+        - id: bastion_cage
           weight: 1
           cells:
-          - ╔═╦╗
-          - ╠██╣
-          - ║░▒║
-          - ╠██╣
-          - ╚═╩╝
+          - ╔══╦╗
+          - ║▓▓█║
+          - ╠▤▤░╣
+          - ║▓▓█║
+          - ╚══╩╝
           color_mask:
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-        - id: reactor
+          - SSSSS
+          - SSSSS
+          - SSSES
+          - SSSSS
+          - SSSSS
+        - id: reactor_drum
           weight: 1
           cells:
-          - ▟██▙
-          - █▒◆█
-          - █◆░█
-          - █▒◆█
-          - ▜██▛
+          - ' ▟██ '
+          - ▟█▒▒▙
+          - █▒░☼█
+          - ▜█▒▒▛
+          - ' ▜██ '
           color_mask:
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
+          - SSSSS
+          - SSSSS
+          - SSEBS
+          - SSSSS
+          - SSSSS
       - id: hull
         name: Layered Heavy Hull
         primary_property: armor
@@ -361,44 +361,44 @@ views:
         - bridge
         repeat:
           min: 1
-          max: 6
+          max: 4
         variants:
-        - id: decks
+        - id: command_decks
           weight: 1
           cells:
-          - ╔═╦═╗
-          - ╠█◆█╣
-          - ║░▒▒║
-          - ╠███╣
-          - ╚═╩═╝
+          - ' ╭◆╮ '
+          - ▟▤▤▤▙
+          - █▒◆▒█
+          - ▜▤▤▤▛
+          - ' ▄▄▄ '
           color_mask:
+          - SSWSS
           - SSSSS
           - SSWSS
           - SSSSS
           - SSSSS
-          - SSSSS
-        - id: terrace
+        - id: battery_deck
           weight: 1
           cells:
-          - '╭╯◆╰ '
-          - '▟███ '
-          - █░▒░╺
-          - '▜███ '
-          - '╰╮ ╭ '
+          - ' ▟▀▙ '
+          - ▟▤▤▤▙
+          - █▒▒▒█
+          - ▜▤▤▤▛
+          - ' ▄▄▄ '
           color_mask:
-          - SSWSS
+          - SSASS
           - SSSSS
           - SSSSS
           - SSSSS
           - SSSSS
-        - id: keel
+        - id: terrace_deck
           weight: 1
           cells:
-          - '◢███ '
-          - █▒█▒╺
-          - █░◇░╺
-          - █▒█▒╺
-          - '◥███ '
+          - ▗▄▓▓▖
+          - ▟█▤▤▙
+          - █▒◆▒█
+          - ▜█▤▤▛
+          - ▝▀▓▓▘
           color_mask:
           - SSSSS
           - SSSSS
@@ -415,34 +415,34 @@ views:
           min: 1
           max: 1
         variants:
-        - id: citadel
+        - id: flag_bridge
           weight: 1
           cells:
-          - '╭─╮ '
+          - ' ╭─ '
           - ◇▟█▙
           - ◇█◆█
           - ◇▜█▛
-          - '╰─╯ '
+          - ' ╰─ '
           color_mask:
           - SSSS
           - DSSS
           - DSWS
           - DSSS
           - SSSS
-        - id: shoulders
+        - id: armored_shoulder
           weight: 1
           cells:
-          - '◇▀  '
-          - '◇◢█ '
-          - ◇█◆═
-          - '◇◥█ '
-          - '◇▄  '
+          - ' ◇  '
+          - ◇◢█◣
+          - ◇█◆█
+          - ◇◥█◤
+          - ' ◇  '
           color_mask:
-          - DSSS
+          - SDSS
           - DSSS
           - DSWS
           - DSSS
-          - DSSS
+          - SDSS
       - id: main_gun
         name: Heavy Battery
         primary_property: main_gun
@@ -453,32 +453,32 @@ views:
           min: 1
           max: 1
         variants:
-        - id: embedded
+        - id: embedded_battery
           weight: 1
           cells:
-          - '  ▄▖ '
-          - '═███ '
-          - ═███►
-          - '═███ '
-          - '  ▀▘ '
+          - ' ▗▄▄ '
+          - '═▟██ '
+          - ╾═▓█►
+          - '═▜██ '
+          - ' ▝▀▀ '
           color_mask:
           - SSSSS
           - SSSSS
-          - ASSSA
+          - SASSA
           - SSSSS
           - SSSSS
-        - id: fortress
+        - id: twin_spinal
           weight: 1
           cells:
-          - ' ╭─╮ '
-          - '═███ '
-          - ═██▀►
-          - '═███ '
-          - ' ╰─╯ '
+          - ' ╾█▙ '
+          - '╾═▓▓ '
+          - ╾═▀█►
+          - '╾═▓▓ '
+          - ' ╾█▛ '
           color_mask:
           - SSSSS
           - SSSSS
-          - ASSAA
+          - SAASA
           - SSSSS
           - SSSSS
     - id: compact
@@ -499,9 +499,9 @@ views:
         - id: drive
           weight: 1
           cells:
+          - ▄▓
           - ▄█
-          - ▄█
-          - ▄█
+          - ▄▓
           color_mask:
           - ES
           - ES
@@ -546,13 +546,13 @@ views:
         - id: battery
           weight: 1
           cells:
-          - ' ▀▀ '
-          - █▀█►
-          - ' ▄▄ '
+          - ' ◇  '
+          - '◇▀► '
+          - ' ◇  '
           color_mask:
-          - SSSS
-          - SASA
-          - SSSS
+          - SDSS
+          - DAAS
+          - SDSS
   vertical:
     name: Vertical
     axis: vertical
@@ -578,26 +578,26 @@ views:
           min: 1
           max: 1
         variants:
-        - id: cluster
+        - id: triple_bell
           weight: 1
           cells:
           - '      ▓▓      '
-          - ▌▌▌▌▓▓██▓▓▌▌▌▌
-          - '  ▐▐▐▐▐▐▐▐▐▐  '
+          - ▓▓▓▓██████▓▓▓▓
+          - ▐▐▜▜▜▜██▛▛▛▛▐▐
           color_mask:
           - SSSSSSSSSSSSSS
-          - EEEESSSSSSEEEE
-          - SSEEEEEEEEEESS
-        - id: fortified
-          weight: 1
-          cells:
-          - '      ▓▓      '
-          - ▌▌▓▓██░░██▓▓▌▌
-          - ▐▐▐▐▐▐▐▐▐▐▐▐▐▐
-          color_mask:
           - SSSSSSSSSSSSSS
           - EESSSSSSSSSSEE
-          - EEEEEEEEEEEEEE
+        - id: fortified_cluster
+          weight: 1
+          cells:
+          - '    ╽╽██╽╽    '
+          - ▓▓░░██░░██░░▓▓
+          - ▓▓▐▐▐▐▐▐▐▐▐▐▓▓
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSEESSEESSEESS
+          - SSEEEEEEEEEESS
       - id: spindrive
         name: Drive Bastion
         primary_property: spindrive
@@ -608,25 +608,25 @@ views:
           min: 1
           max: 1
         variants:
-        - id: bastion
+        - id: bastion_cage
           weight: 1
           cells:
-          - '  ╔╔╦╦══╦╦╗╗  '
-          - ║║╠╠██▒▒██╣╣║║
-          - ▓▓╚╚╩╩══╩╩╝╝▓▓
+          - '  ╔╔══╦╦══╗╗  '
+          - '  ╠╠██░░██╣╣  '
+          - '  ║║▓▓▤▤▓▓║║  '
           color_mask:
           - SSSSSSSSSSSSSS
+          - SSSSSSEESSSSSS
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
-        - id: reactor
+        - id: reactor_drum
           weight: 1
           cells:
-          - '  ▟▟██████▙▙  '
-          - ▌▌██◆◆░░◆◆██▐▐
-          - '  ▜▜██████▛▛  '
+          - '    ▟▟██▙▙    '
+          - ▐▐██▒▒☼☼▒▒██▌▌
+          - '  ▜▜██▒▒██▛▛  '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSSSBBSSSSSS
           - SSSSSSSSSSSSSS
       - id: hull
         name: Layered Heavy Hull
@@ -636,34 +636,34 @@ views:
         - bridge
         repeat:
           min: 1
-          max: 6
+          max: 4
         variants:
-        - id: decks
+        - id: command_decks
           weight: 1
           cells:
-          - '  ╔╔╦╦══╦╦╗╗  '
-          - '  ║║██▒▒██║║  '
-          - '  ║║██░░██║║  '
+          - '    ▟▟██▙▙    '
+          - '  ╭╭▤▤▒▒▤▤▐▐  '
+          - '  ╰╰▤▤▒▒▤▤▐▐  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-        - id: terrace
+        - id: battery_deck
           weight: 1
           cells:
-          - '      ╹╹      '
-          - ╭╭╯╯██░░██╰╰╮╮
-          - ╰╰╮╮██░░██╭╭╯╯
+          - '    ▟▟██▙▙    '
+          - '  ▟▟▤▤▒▒▤▤▐▐  '
+          - '  ▜▜▤▤▒▒▤▤▐▐  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-        - id: keel
+        - id: terrace_deck
           weight: 1
           cells:
-          - '    ╹╹╹╹╹╹    '
-          - ▌▌██▒▒░░▒▒██▐▐
-          - ▌▌██▒▒░░▒▒██▐▐
+          - '  ▗▗▟▟██▙▙▖▖  '
+          - '  ▓▓▤▤▒▒▤▤▓▓  '
+          - '  ▐▐██▒▒██▌▌  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -678,26 +678,26 @@ views:
           min: 1
           max: 1
         variants:
-        - id: citadel
+        - id: flag_bridge
           weight: 1
           cells:
           - '    ▟▟██▙▙    '
-          - '  ╭╭██◆◆██╮╮  '
-          - '  ╰╰◇◇◇◇◇◇╯╯  '
+          - ◇◇││██◆◆██││◇◇
+          - '    ◇◇◇◇◇◇    '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - DDSSSSWWSSSSDD
+          - SSSSDDDDDDSSSS
+        - id: armored_shoulder
+          weight: 1
+          cells:
+          - '    ◢◢██◣◣    '
+          - '    ██◆◆██    '
+          - '    ◇◇◇◇◇◇    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSWWSSSSSS
           - SSSSDDDDDDSSSS
-        - id: shoulders
-          weight: 1
-          cells:
-          - '      ║║      '
-          - '    ██◆◆██    '
-          - '  ◇◇◇◇◇◇◇◇◇◇  '
-          color_mask:
-          - SSSSSSSSSSSSSS
-          - SSSSSSWWSSSSSS
-          - SSDDDDDDDDDDSS
       - id: main_gun
         name: Heavy Battery
         primary_property: main_gun
@@ -708,30 +708,30 @@ views:
           min: 1
           max: 1
         variants:
-        - id: embedded
+        - id: embedded_battery
           weight: 1
           cells:
           - '      ▲▲      '
-          - '  ▗▗██████▖▖  '
-          - '  ▝▝██████▘▘  '
-          - '    ║║║║║║    '
+          - '  ▐▐██████▌▌  '
+          - '  ▐▐██████▌▌  '
+          - '    ║║╽╽║║    '
           color_mask:
           - SSSSSSAASSSSSS
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-          - SSSSSSAASSSSSS
-        - id: fortress
+          - SSSSSSSSSSSSSS
+        - id: twin_spinal
           weight: 1
           cells:
           - '      ▲▲      '
-          - '  ╭╭██▌▌██╮╮  '
-          - '  ││██▌▌██││  '
-          - '    ║║║║║║    '
+          - '  ▟▟▓▓██▓▓▙▙  '
+          - '  ║║██████║║  '
+          - '    ╽╽╽╽╽╽    '
           color_mask:
           - SSSSSSAASSSSSS
-          - SSSSSSAASSSSSS
-          - SSSSSSAASSSSSS
-          - SSSSSSAASSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
     - id: medium
       name: Medium
       structure_lengths:
@@ -751,20 +751,24 @@ views:
           min: 1
           max: 1
         variants:
-        - id: cluster
+        - id: triple_bell
           weight: 1
           cells:
           - '    ▓▓    '
-          - ╹╹▜▜██▛▛╹╹
+          - ░░██░░██░░
+          - ▐▐▐▐▐▐▐▐▐▐
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
-        - id: fortified
+          - EESSEESSEE
+          - EEEEEEEEEE
+        - id: fortified_cluster
           weight: 1
           cells:
-          - '    ▓▓    '
-          - ▟▟██████▙▙
+          - '  ╽╽██╽╽  '
+          - ▜▜██████▛▛
+          - ▓▓▓▓▓▓▓▓▓▓
           color_mask:
+          - SSSSSSSSSS
           - SSSSSSSSSS
           - SSSSSSSSSS
       - id: spindrive
@@ -777,21 +781,25 @@ views:
           min: 1
           max: 1
         variants:
-        - id: bastion
+        - id: bastion_cage
           weight: 1
           cells:
-          - ╔╔╦╦══╦╦╗╗
-          - ║║██░░██║║
+          - ╔╔══╦╦══╗╗
+          - ║║▓▓▤▤▓▓║║
+          - ╚╚══╩╩══╝╝
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
-        - id: reactor
+          - SSSSSSSSSS
+        - id: reactor_drum
           weight: 1
           cells:
-          - ▟▟██████▙▙
-          - ██▒▒◆◆▒▒██
+          - '  ▟▟██▙▙  '
+          - ██▒▒░░▒▒██
+          - '  ▜▜██▛▛  '
           color_mask:
           - SSSSSSSSSS
+          - SSSSEESSSS
           - SSSSSSSSSS
       - id: hull
         name: Layered Heavy Hull
@@ -801,34 +809,34 @@ views:
         - bridge
         repeat:
           min: 1
-          max: 6
+          max: 4
         variants:
-        - id: decks
+        - id: command_decks
           weight: 1
           cells:
-          - ╔╔╦╦══╦╦╗╗
-          - ╠╠◆◆▒▒██╣╣
-          - ╚╚╩╩══╩╩╝╝
+          - '  ▟▟██▙▙  '
+          - ◆◆▤▤◆◆▤▤▐▐
+          - '  ▜▜██▛▛  '
           color_mask:
           - SSSSSSSSSS
-          - SSWWSSSSSS
+          - WWSSWWSSSS
           - SSSSSSSSSS
-        - id: terrace
+        - id: battery_deck
           weight: 1
           cells:
-          - '    ╹╹    '
-          - '◆◆██▒▒██  '
-          - ╰╰▜▜██▛▛╯╯
+          - '  ▟▟██▙▙  '
+          - ▌▌▤▤▒▒▤▤▐▐
+          - '  ▜▜██▛▛  '
           color_mask:
           - SSSSSSSSSS
-          - WWSSSSSSSS
+          - AASSSSSSSS
           - SSSSSSSSSS
-        - id: keel
+        - id: terrace_deck
           weight: 1
           cells:
-          - '  ╹╹╹╹╹╹  '
-          - ████◇◇████
-          - ◥◥██████◤◤
+          - ▗▗▟▟██▙▙▖▖
+          - ▓▓▤▤◆◆▤▤▓▓
+          - ▝▝▜▜██▛▛▘▘
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -843,22 +851,22 @@ views:
           min: 1
           max: 1
         variants:
-        - id: citadel
+        - id: flag_bridge
           weight: 1
           cells:
           - '  ▟▟██▙▙  '
-          - ││▜▜██▛▛││
+          - ╰╰▜▜██▛▛╯╯
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
-        - id: shoulders
+        - id: armored_shoulder
           weight: 1
           cells:
-          - '    ║║    '
-          - ▌▌◥◥██◤◤▐▐
+          - '  ◢◢██◣◣  '
+          - ◇◇◥◥██◤◤◇◇
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
+          - DDSSSSSSDD
       - id: main_gun
         name: Heavy Battery
         primary_property: main_gun
@@ -869,26 +877,26 @@ views:
           min: 1
           max: 1
         variants:
-        - id: embedded
+        - id: embedded_battery
           weight: 1
           cells:
           - '    ▲▲    '
-          - ▐▐██████▌▌
-          - '  ║║║║║║  '
+          - ▐▐██▓▓██▌▌
+          - '  ║║╽╽║║  '
           color_mask:
           - SSSSAASSSS
           - SSSSSSSSSS
-          - SSSSAASSSS
-        - id: fortress
+          - SSSSSSSSSS
+        - id: twin_spinal
           weight: 1
           cells:
           - '    ▲▲    '
-          - ││██████││
-          - '  ║║║║║║  '
+          - ██▓▓▌▌▓▓██
+          - '  ╽╽╽╽╽╽  '
           color_mask:
           - SSSSAASSSS
-          - SSSSSSSSSS
           - SSSSAASSSS
+          - SSSSSSSSSS
     - id: compact
       name: Compact
       structure_lengths:
@@ -907,7 +915,7 @@ views:
         - id: drive
           weight: 1
           cells:
-          - ██████
+          - ▓▓██▓▓
           color_mask:
           - SSSSSS
       - id: body
@@ -946,8 +954,8 @@ views:
         - id: battery
           weight: 1
           cells:
-          - '  ▲▲  '
-          - ▌▌▌▌▐▐
+          - '      '
+          - ◇◇▌▌◇◇
           color_mask:
-          - SSAASS
-          - SSAASS
+          - SSSSSS
+          - DDAADD

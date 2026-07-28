@@ -27,41 +27,41 @@ views:
           min: 1
           max: 1
         variants:
-        - id: single
+        - id: big_bell
           weight: 1
           cells:
           - '    '
           - '    '
-          - ' ▀▀▓'
-          - ' ▀█▓'
-          - '    '
+          - ▄▟▓▖
+          - ▄█░▓
+          - ▄▜▓▘
           - '    '
           - '    '
           color_mask:
           - SSSS
           - SSSS
-          - SEES
-          - SESS
+          - ESSS
+          - ESES
+          - ESSS
           - SSSS
           - SSSS
-          - SSSS
-        - id: fork
+        - id: twin_nozzle
           weight: 1
           cells:
           - '    '
-          - ' ▀  '
-          - ' ▀▶▓'
-          - ' ▀▶▓'
-          - '    '
-          - '    '
+          - ' ▄▖ '
+          - '▄▟▓ '
+          - ▄▜▓▖
+          - ▄█░▓
+          - ' ▄▘ '
           - '    '
           color_mask:
           - SSSS
           - SESS
+          - ESSS
+          - ESSS
+          - ESES
           - SESS
-          - SESS
-          - SSSS
-          - SSSS
           - SSSS
       - id: sail_nodes
         name: Sail Nodes
@@ -72,13 +72,13 @@ views:
           min: 1
           max: 1
         variants:
-        - id: diamond
+        - id: diamond_sails
           weight: 1
           cells:
           - '    '
+          - '    '
           - ▗▄▄▖
-          - ▓██▓
-          - ▓██▓
+          - ▓░▓▓
           - ▝▀▀▘
           - '    '
           - '    '
@@ -86,25 +86,25 @@ views:
           - SSSS
           - SSSS
           - SSSS
+          - SESS
           - SSSS
           - SSSS
           - SSSS
-          - SSSS
-        - id: open
+        - id: radiator_sails
           weight: 1
           cells:
           - '    '
-          - ' ◆  '
-          - ▓██▓
-          - ▓██▓
           - ' ◇  '
-          - '    '
+          - ▗▄▄▖
+          - ▓░▓▓
+          - ▝▀▀▘
+          - ' ◇  '
           - '    '
           color_mask:
           - SSSS
           - SSSS
           - SSSS
-          - SSSS
+          - SESS
           - SSSS
           - SSSS
           - SSSS
@@ -117,15 +117,15 @@ views:
           min: 1
           max: 3
         variants:
-        - id: window
+        - id: windowed_cabin
           weight: 1
           cells:
           - '    '
           - ' ▀  '
           - ╭──╮
-          - █◆◆█
+          - │◆◆│
+          - ├▒▒┤
           - ╰──╯
-          - '    '
           - '    '
           color_mask:
           - SSSS
@@ -135,15 +135,15 @@ views:
           - SSSS
           - SSSS
           - SSSS
-        - id: armored
+        - id: armored_cabin
           weight: 1
           cells:
           - '    '
           - '    '
           - ▗▄▄▖
           - █◆▒█
+          - █▒▒█
           - ▝▀▀▘
-          - '    '
           - '    '
           color_mask:
           - SSSS
@@ -161,7 +161,7 @@ views:
           min: 1
           max: 1
         variants:
-        - id: round
+        - id: docking_nose
           weight: 1
           cells:
           - '   '
@@ -179,22 +179,22 @@ views:
           - DSS
           - SSS
           - SSS
-        - id: probe
+        - id: ramp_nose
           weight: 1
           cells:
           - '   '
           - '   '
-          - '◇▙ '
-          - █◆►
-          - '◇▛ '
+          - '▟█ '
+          - ◇◆►
+          - '▜█ '
           - '   '
           - '   '
           color_mask:
           - SSS
           - SSS
-          - DSS
-          - SWS
-          - DSS
+          - SSS
+          - DWS
+          - SSS
           - SSS
           - SSS
     - id: medium
@@ -213,34 +213,34 @@ views:
           min: 1
           max: 1
         variants:
-        - id: single
+        - id: big_bell
           weight: 1
           cells:
           - '   '
-          - ' ▀▓'
-          - ' ▀▓'
-          - '   '
+          - ▄▟▖
+          - ▄█▓
+          - ▄▜▘
           - '   '
           color_mask:
           - SSS
-          - SES
-          - SES
+          - ESS
+          - ESS
+          - ESS
           - SSS
-          - SSS
-        - id: fork
+        - id: twin_nozzle
           weight: 1
           cells:
-          - ' ▀ '
-          - ' ▀▓'
-          - ' ▀▓'
-          - '   '
-          - '   '
+          - ' ▄ '
+          - '▄▟ '
+          - ▄▜▖
+          - ▄█▓
+          - ' ▄ '
           color_mask:
           - SES
+          - ESS
+          - ESS
+          - ESS
           - SES
-          - SES
-          - SSS
-          - SSS
       - id: sail_nodes
         name: Sail Nodes
         primary_property: spindrive
@@ -250,32 +250,32 @@ views:
           min: 1
           max: 1
         variants:
-        - id: diamond
+        - id: diamond_sails
           weight: 1
           cells:
+          - '   '
           - ▗▄▖
-          - ▓█▓
-          - ▓█▓
+          - ▓░▓
           - ▝▀▘
           - '   '
           color_mask:
           - SSS
           - SSS
+          - SES
           - SSS
           - SSS
-          - SSS
-        - id: open
+        - id: radiator_sails
           weight: 1
           cells:
-          - ' ◆ '
-          - ▓█▓
-          - ▓█▓
           - ' ◇ '
-          - '   '
+          - ▗▄▖
+          - ▓░▓
+          - ▝▀▘
+          - ' ◇ '
           color_mask:
           - SSS
           - SSS
-          - SSS
+          - SES
           - SSS
           - SSS
       - id: cabin
@@ -287,28 +287,28 @@ views:
           min: 1
           max: 3
         variants:
-        - id: window
+        - id: windowed_cabin
           weight: 1
           cells:
           - ' ▀ '
           - ╭─╮
-          - █◆█
+          - │◆│
+          - ├▒┤
           - ╰─╯
-          - '   '
           color_mask:
           - SBS
           - SSS
           - SWS
           - SSS
           - SSS
-        - id: armored
+        - id: armored_cabin
           weight: 1
           cells:
           - '   '
           - ▗▄▖
           - █◆█
+          - █▒█
           - ▝▀▘
-          - '   '
           color_mask:
           - SSS
           - SSS
@@ -323,7 +323,7 @@ views:
           min: 1
           max: 1
         variants:
-        - id: round
+        - id: docking_nose
           weight: 1
           cells:
           - '  '
@@ -337,19 +337,19 @@ views:
           - DS
           - DS
           - SS
-        - id: probe
+        - id: ramp_nose
           weight: 1
           cells:
           - '  '
-          - '◇ '
-          - █►
-          - '◇ '
+          - '▟ '
+          - ◇►
+          - '▜ '
           - '  '
           color_mask:
           - SS
-          - DS
           - SS
           - DS
+          - SS
           - SS
     - id: compact
       name: Compact
@@ -370,7 +370,7 @@ views:
           weight: 1
           cells:
           - '  '
-          - ▀▓
+          - ▄▓
           - '  '
           color_mask:
           - SS
@@ -388,12 +388,12 @@ views:
         - id: cabin
           weight: 1
           cells:
-          - ' ▀◆'
-          - █◆█
-          - ' ▄ '
+          - ' ╭╮'
+          - █◆◆
+          - ' ╰╯'
           color_mask:
-          - SBW
-          - SWS
+          - SSS
+          - SWW
           - SSS
       - id: prow
         name: Prow
@@ -406,13 +406,13 @@ views:
         - id: nose
           weight: 1
           cells:
-          - ' ◇'
-          - ◇►
-          - ' ◇'
+          - ' ◇ '
+          - ◇█►
+          - ' ◇ '
           color_mask:
-          - SD
-          - DS
-          - SD
+          - SDS
+          - DSS
+          - SDS
   vertical:
     name: Vertical
     axis: vertical
@@ -435,22 +435,22 @@ views:
           min: 1
           max: 1
         variants:
-        - id: single
+        - id: big_bell
           weight: 1
           cells:
-          - '    ▓▓▓▓      '
-          - '    ▌▌▌▌      '
+          - '    ▗▗▓▓▖▖    '
+          - '    ▜▜██▛▛    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSEEEESSSSSS
-        - id: fork
+          - SSSSSSSSSSSSSS
+        - id: twin_nozzle
           weight: 1
           cells:
-          - '    ▓▓▓▓      '
-          - '  ▌▌▌▌▌▌      '
+          - '      ▗▗▓▓    '
+          - '  ▐▐▜▜▛▛██▐▐  '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSEEEEEESSSSSS
+          - SSEESSSSSSEESS
       - id: sail_nodes
         name: Sail Nodes
         primary_property: spindrive
@@ -460,22 +460,22 @@ views:
           min: 1
           max: 1
         variants:
-        - id: diamond
+        - id: diamond_sails
           weight: 1
           cells:
-          - '  ▗▗▓▓▓▓▖▖    '
-          - '  ▐▐████▌▌    '
+          - '    ▗▗▓▓▖▖    '
+          - '    ▐▐░░▌▌    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
-        - id: open
+          - SSSSSSEESSSSSS
+        - id: radiator_sails
           weight: 1
           cells:
-          - '    ▓▓▓▓      '
-          - '  ◆◆████◇◇    '
+          - '    ▗▗▓▓▖▖    '
+          - '  ◇◇▐▐░░▌▌◇◇  '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSSSEESSSSSS
       - id: cabin
         name: Cabin
         primary_property: habitat
@@ -485,19 +485,19 @@ views:
           min: 1
           max: 3
         variants:
-        - id: window
+        - id: windowed_cabin
           weight: 1
           cells:
-          - '    ╭╭██╮╮    '
-          - '  ▌▌││◆◆││    '
+          - '    ╭╭──┬┬╮╮  '
+          - '  ▌▌││◆◆▒▒││  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSBBSSWWSSSSSS
-        - id: armored
+        - id: armored_cabin
           weight: 1
           cells:
-          - '    ▗▗██▖▖    '
-          - '    ▐▐◆◆▌▌    '
+          - '    ▗▗████▖▖  '
+          - '    ▐▐◆◆▒▒▌▌  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSWWSSSSSS
@@ -509,7 +509,7 @@ views:
           min: 1
           max: 1
         variants:
-        - id: round
+        - id: docking_nose
           weight: 1
           cells:
           - '      ▲▲      '
@@ -517,14 +517,14 @@ views:
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSDDDDDDSSSS
-        - id: probe
+        - id: ramp_nose
           weight: 1
           cells:
           - '      ▲▲      '
-          - '    ◇◇██◇◇    '
+          - '    ▜▜◇◇▛▛    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSDDSSDDSSSS
+          - SSSSSSDDSSSSSS
     - id: medium
       name: Medium
       structure_lengths:
@@ -541,22 +541,22 @@ views:
           min: 1
           max: 1
         variants:
-        - id: single
+        - id: big_bell
           weight: 1
           cells:
-          - '  ▓▓▓▓    '
-          - '          '
+          - '  ▗▗▓▓▖▖  '
+          - '  ▐▐▐▐▐▐  '
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
-        - id: fork
+          - SSEEEEEESS
+        - id: twin_nozzle
           weight: 1
           cells:
-          - '  ▓▓▓▓    '
-          - '          '
+          - '    ▗▗▓▓  '
+          - '  ▐▐▐▐▐▐  '
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
+          - SSEEEEEESS
       - id: sail_nodes
         name: Sail Nodes
         primary_property: spindrive
@@ -566,19 +566,19 @@ views:
           min: 1
           max: 1
         variants:
-        - id: diamond
+        - id: diamond_sails
           weight: 1
           cells:
-          - '▗▗▓▓▓▓▖▖  '
-          - '▝▝▓▓▓▓▘▘  '
+          - '  ▗▗▓▓▖▖  '
+          - '  ▝▝▓▓▘▘  '
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
-        - id: open
+        - id: radiator_sails
           weight: 1
           cells:
-          - '  ▓▓▓▓    '
-          - '  ▓▓▓▓    '
+          - '  ▗▗▓▓▖▖  '
+          - '  ▝▝▓▓▘▘  '
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -591,19 +591,19 @@ views:
           min: 1
           max: 3
         variants:
-        - id: window
+        - id: windowed_cabin
           weight: 1
           cells:
-          - '  ╭╭██╮╮  '
-          - '  ╰╰██╯╯  '
+          - '  ╭╭──┬┬╮╮'
+          - '  ╰╰──┴┴╯╯'
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
-        - id: armored
+        - id: armored_cabin
           weight: 1
           cells:
-          - '  ▗▗██▖▖  '
-          - '  ▝▝██▘▘  '
+          - '  ▗▗████▖▖'
+          - '  ▝▝████▘▘'
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -615,13 +615,13 @@ views:
           min: 1
           max: 1
         variants:
-        - id: round
+        - id: docking_nose
           weight: 1
           cells:
           - '    ▲▲    '
           color_mask:
           - SSSSSSSSSS
-        - id: probe
+        - id: ramp_nose
           weight: 1
           cells:
           - '    ▲▲    '
@@ -660,10 +660,10 @@ views:
         - id: cabin
           weight: 1
           cells:
-          - '◆◆██  '
+          - ╭╭◆◆╮╮
           - '  ██  '
           color_mask:
-          - WWSSSS
+          - SSWWSS
           - SSSSSS
       - id: prow
         name: Prow
@@ -676,6 +676,8 @@ views:
         - id: nose
           weight: 1
           cells:
-          - ◇◇▲▲◇◇
+          - '  ▲▲  '
+          - '  ◇◇  '
           color_mask:
-          - DDSSDD
+          - SSSSSS
+          - SSDDSS

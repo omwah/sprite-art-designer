@@ -29,42 +29,42 @@ views:
           min: 1
           max: 1
         variants:
-        - id: fusion
+        - id: patched_bells
           weight: 1
           cells:
-          - ' ▀▶ '
-          - '    '
-          - '▀▟▓ '
-          - ▀██▓
-          - '▀▜▓ '
-          - '    '
-          - '    '
+          - '     '
+          - '▄▟▓▖ '
+          - ▄█░▓╾
+          - ▄█▒▒▓
+          - '▄▜▒▓ '
+          - ' ▓▝▘ '
+          - '     '
           color_mask:
-          - SESS
-          - SSSS
-          - ESSS
-          - ESSS
-          - ESSS
-          - SSSS
-          - SSSS
-        - id: patched
+          - SSSSS
+          - ESSSS
+          - ESESS
+          - ESSSS
+          - ESESS
+          - SSSSS
+          - SSSSS
+        - id: mismatched_nozzles
           weight: 1
           cells:
-          - ' ▀▀ '
-          - '▀▶▓ '
-          - ' ▟▓ '
-          - ▀██▓
-          - ' ▜▓ '
-          - '    '
-          - '    '
+          - ' ▄▖  '
+          - '▄▟█▓ '
+          - ' ▓░▓╾'
+          - ▄███▓
+          - '▄▜░▓ '
+          - ' ▄▘  '
+          - '     '
           color_mask:
-          - SEES
-          - ESSS
-          - SSSS
-          - ESSS
-          - SSSS
-          - SSSS
-          - SSSS
+          - SESSS
+          - ESSSS
+          - SSESS
+          - ESSSS
+          - ESESS
+          - SESSS
+          - SSSSS
       - id: machine_shop
         name: Machine Shop
         primary_property: utility
@@ -74,42 +74,42 @@ views:
           min: 1
           max: 1
         variants:
-        - id: shop
+        - id: workshop
           weight: 1
           cells:
-          - ' ▀  '
-          - ╭──╮
-          - │◆▒│
-          - ├▒▒┤
-          - ╰──╯
-          - ' ▾  '
-          - '    '
+          - ' ▀   '
+          - ╭─┬─╮
+          - │◆▒│▓
+          - ├▒☼▒┤
+          - │░▒░│
+          - ╰─┴─╯
+          - '     '
           color_mask:
-          - SBSS
-          - SSSS
-          - SWSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-        - id: patched
+          - SBSSS
+          - SSSSS
+          - SWSSS
+          - SSBSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+        - id: external_rig
           weight: 1
           cells:
-          - '    '
-          - ▗▄▄▖
-          - █▒◆█
-          - █░▒█
-          - ▝▀▀▘
-          - '    '
-          - '    '
+          - '     '
+          - ▗▄╥▄▖
+          - █▒◆▒█
+          - █░☼░█
+          - ▝▀╨▀▘
+          - '     '
+          - '     '
           color_mask:
-          - SSSS
-          - SSSS
-          - SSWS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
+          - SSSSS
+          - SSSSS
+          - SSWSS
+          - SSBSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
       - id: cargo_modules
         name: Cargo Modules
         primary_property: cargo
@@ -117,41 +117,59 @@ views:
         - hull
         repeat:
           min: 1
-          max: 9
+          max: 6
         variants:
-        - id: stack
+        - id: patched_container
           weight: 1
           cells:
           - '      '
-          - ╭────╮
-          - │▒▒▒▒│
-          - ├▒◆▒▒┤
-          - ╰────╯
-          - '      '
+          - ╭───┬╮
+          - │▒▒│▒│
+          - ┤░▒◆▒├
+          - │▒▒│▒│
+          - ╰───┴╯
           - '      '
           color_mask:
           - SSSSSS
           - SSSSSS
           - SSSSSS
-          - SSWSSS
+          - SSSWSS
           - SSSSSS
           - SSSSSS
           - SSSSSS
-        - id: pods
+        - id: habitat_pod
           weight: 1
           cells:
-          - ' ▗▄▄▖ '
-          - ' ╲  ╱ '
-          - ██▒▒██
-          - ██◆▒██
-          - ' ╱  ╲ '
-          - ' ▝▀▀▘ '
+          - ' ▄▄   '
+          - '▗▟██▙ '
+          - '▟◆▒◆▙ '
+          - █▒☼▒▒█
+          - '▜█▒▒▛ '
+          - '▝▀▀▀▘ '
+          - '      '
+          color_mask:
+          - SSSSSS
+          - SSSSSS
+          - SWSWSS
+          - SSBSSS
+          - SSSSSS
+          - SSSSSS
+          - SSSSSS
+        - id: salvage_rack
+          weight: 1
+          cells:
+          - '      '
+          - ╔═╦══╗
+          - ║░║▒▒║
+          - ╠═╬═╬╣
+          - ║▒║░▒║
+          - ╚═╩══╝
           - '      '
           color_mask:
           - SSSSSS
           - SSSSSS
           - SSSSSS
-          - SSWSSS
+          - SSSSSS
           - SSSSSS
           - SSSSSS
           - SSSSSS
@@ -164,40 +182,40 @@ views:
           min: 1
           max: 1
         variants:
-        - id: turning
+        - id: turning_drum
           weight: 1
           cells:
-          - ' ╭██╮ '
-          - ╱ ◆ ◆╲
-          - █◆██◆█
-          - █☼██◆█
-          - ╲ ◆ ◆╱
-          - ' ╰██╯ '
-          - '      '
+          - ' ╭──╮ '
+          - ╱░◆◆░╲
+          - █░╭╮░█
+          - █☼││☼█
+          - █░╰╯░█
+          - ╲░◆◆░╱
+          - ' ╰──╯ '
           color_mask:
           - SSSSSS
-          - SSWSWS
-          - SWSSWS
-          - SBSSWS
-          - SSWSWS
+          - SSWWSS
           - SSSSSS
+          - SBSSBS
           - SSSSSS
-        - id: locked
+          - SSWWSS
+          - SSSSSS
+        - id: locked_drum
           weight: 1
           cells:
           - '      '
           - ╭████╮
           - █▒◆▒◆█
           - █▒☼▒◆█
+          - █▒◆▒▒█
           - ╰████╯
-          - '      '
           - '      '
           color_mask:
           - SSSSSS
           - SSSSSS
           - SSWSWS
           - SSBSWS
-          - SSSSSS
+          - SSWSSS
           - SSSSSS
           - SSSSSS
       - id: mining_prow
@@ -209,30 +227,30 @@ views:
           min: 1
           max: 1
         variants:
-        - id: laser
+        - id: cutter
           weight: 1
           cells:
           - '     '
-          - '  ▟  '
-          - ──█▀►
-          - '  ▜  '
+          - '  ▟▙ '
+          - ──█▓►
+          - '  ▜▛ '
           - '     '
           - '     '
           - '     '
           color_mask:
           - SSSSS
           - SSSSS
-          - SSSAA
+          - SSSSA
           - SSSSS
           - SSSSS
           - SSSSS
           - SSSSS
-        - id: tractor
+        - id: drill
           weight: 1
           cells:
           - '     '
           - ' ╭█╮ '
-          - ─█▀█►
+          - ─█▀▓►
           - ' ╰█╯ '
           - '     '
           - '     '
@@ -250,7 +268,7 @@ views:
       structure_lengths:
         retrofitted_drive: 1
         machine_shop: 1
-        cargo_modules: 4
+        cargo_modules: 3
         hearth_drum: 1
         mining_prow: 1
       sections:
@@ -263,34 +281,34 @@ views:
           min: 1
           max: 1
         variants:
-        - id: fusion
+        - id: patched_bells
           weight: 1
           cells:
-          - '   '
-          - '▀▟ '
-          - ▀█▓
-          - '▀▜ '
-          - '   '
+          - '▄▟▓ '
+          - ▄█░╾
+          - ▄█▒▓
+          - '▄▜▒ '
+          - ' ▓▝ '
           color_mask:
-          - SSS
-          - ESS
-          - ESS
-          - ESS
-          - SSS
-        - id: patched
+          - ESSS
+          - ESES
+          - ESSS
+          - ESES
+          - SSSS
+        - id: mismatched_nozzles
           weight: 1
           cells:
-          - '▀▶ '
-          - ' ▟ '
-          - ▀█▓
-          - ' ▜ '
-          - '   '
+          - '▄▟█ '
+          - ' ▓░╾'
+          - ▄██▓
+          - '▄▜░ '
+          - ' ▄▘ '
           color_mask:
-          - ESS
-          - SSS
-          - ESS
-          - SSS
-          - SSS
+          - ESSS
+          - SSES
+          - ESSS
+          - ESES
+          - SESS
       - id: machine_shop
         name: Machine Shop
         primary_property: utility
@@ -300,34 +318,34 @@ views:
           min: 1
           max: 1
         variants:
-        - id: shop
+        - id: workshop
           weight: 1
           cells:
-          - ╭─╮
-          - │◆│
-          - ├▒┤
-          - ╰─╯
-          - ' ▾ '
+          - ╭─┬╮
+          - │◆▒▓
+          - ├▒☼┤
+          - │░▒│
+          - ╰─┴╯
           color_mask:
-          - SSS
-          - SWS
-          - SSS
-          - SSS
-          - SSS
-        - id: patched
+          - SSSS
+          - SWSS
+          - SSBS
+          - SSSS
+          - SSSS
+        - id: external_rig
           weight: 1
           cells:
-          - ▗▄▖
-          - █▒█
-          - █░█
-          - ▝▀▘
-          - '   '
+          - ▗▄╥▖
+          - █▒◆█
+          - █░☼█
+          - ▝▀╨▘
+          - '    '
           color_mask:
-          - SSS
-          - SSS
-          - SSS
-          - SSS
-          - SSS
+          - SSSS
+          - SSWS
+          - SSBS
+          - SSSS
+          - SSSS
       - id: cargo_modules
         name: Cargo Modules
         primary_property: cargo
@@ -335,34 +353,48 @@ views:
         - hull
         repeat:
           min: 1
-          max: 9
+          max: 6
         variants:
-        - id: stack
+        - id: patched_container
           weight: 1
           cells:
           - ╭───╮
-          - │▒▒▒│
-          - ├▒◆▒┤
+          - │▒▒││
+          - ┤░▒◆├
+          - │▒▒││
           - ╰───╯
-          - '     '
           color_mask:
           - SSSSS
           - SSSSS
-          - SSWSS
+          - SSSWS
           - SSSSS
           - SSSSS
-        - id: pods
+        - id: habitat_pod
           weight: 1
           cells:
-          - ' ╲   '
-          - ██▒▒█
-          - ██◆▒█
-          - ' ╱   '
-          - ' ▝▀▀ '
+          - '▗▟██ '
+          - '▟◆▒◆ '
+          - █▒☼▒█
+          - '▜█▒▒ '
+          - '▝▀▀▀ '
+          color_mask:
+          - SSSSS
+          - SWSWS
+          - SSBSS
+          - SSSSS
+          - SSSSS
+        - id: salvage_rack
+          weight: 1
+          cells:
+          - ╔═╦═╗
+          - ║░║▒║
+          - ╠═╬═╣
+          - ║▒║░║
+          - ╚═╩═╝
           color_mask:
           - SSSSS
           - SSSSS
-          - SSWSS
+          - SSSSS
           - SSSSS
           - SSSSS
       - id: hearth_drum
@@ -374,33 +406,33 @@ views:
           min: 1
           max: 1
         variants:
-        - id: turning
+        - id: turning_drum
           weight: 1
           cells:
-          - ╱ ◆ ╲
-          - █◆███
-          - █☼███
-          - ╲ ◆ ╱
-          - ' ╰██ '
+          - ╱░◆◆╲
+          - █░╭╮█
+          - █☼││█
+          - █░╰╯█
+          - ╲░◆◆╱
           color_mask:
-          - SSWSS
-          - SWSSS
-          - SBSSS
-          - SSWSS
+          - SSWWS
           - SSSSS
-        - id: locked
+          - SBSSS
+          - SSSSS
+          - SSWWS
+        - id: locked_drum
           weight: 1
           cells:
           - ╭███╮
           - █▒◆▒█
           - █▒☼▒█
+          - █▒◆▒█
           - ╰███╯
-          - '     '
           color_mask:
           - SSSSS
           - SSWSS
           - SSBSS
-          - SSSSS
+          - SSWSS
           - SSSSS
       - id: mining_prow
         name: Mining Prow
@@ -411,7 +443,7 @@ views:
           min: 1
           max: 1
         variants:
-        - id: laser
+        - id: cutter
           weight: 1
           cells:
           - '  ▟ '
@@ -425,7 +457,7 @@ views:
           - SSSS
           - SSSS
           - SSSS
-        - id: tractor
+        - id: drill
           weight: 1
           cells:
           - ' ╭█ '
@@ -457,9 +489,9 @@ views:
         - id: drive
           weight: 1
           cells:
-          - ' █'
-          - ▀█
-          - '  '
+          - ' ▓'
+          - ▄█
+          - ' ▓'
           color_mask:
           - SS
           - ES
@@ -483,16 +515,16 @@ views:
           - SS
           - SS
           - SS
-        - id: home
+        - id: drum
           weight: 1
           cells:
-          - ▀◆
-          - █☼
-          - ▄◆
+          - ╭╮
+          - ◆☼
+          - ╰╯
           color_mask:
-          - SW
-          - SB
-          - SW
+          - SS
+          - WB
+          - SS
       - id: prow
         name: Prow
         primary_property: weapons
@@ -501,7 +533,7 @@ views:
           min: 1
           max: 1
         variants:
-        - id: laser
+        - id: cutter
           weight: 1
           cells:
           - '   '
@@ -535,22 +567,26 @@ views:
           min: 1
           max: 1
         variants:
-        - id: fusion
+        - id: patched_bells
           weight: 1
           cells:
-          - '      ▓▓      '
-          - '▌▌  ▜▜██▛▛    '
+          - '    ╽╽▓▓      '
+          - '  ▓▓░░▒▒▒▒▘▘  '
+          - '  ▐▐▐▐▐▐▐▐    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - EESSSSSSSSSSSS
-        - id: patched
+          - SSSSEESSEESSSS
+          - SSEEEEEEEESSSS
+        - id: mismatched_nozzles
           weight: 1
           cells:
-          - '      ▓▓      '
-          - '▌▌▴▴▜▜██▛▛    '
+          - '    ╽╽▓▓      '
+          - '▗▗██░░██░░▖▖  '
+          - '  ▐▐  ▐▐▐▐    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - EESSSSSSSSSSSS
+          - SSSSEESSEESSSS
+          - SSEESSEEEESSSS
       - id: machine_shop
         name: Machine Shop
         primary_property: utility
@@ -560,21 +596,25 @@ views:
           min: 1
           max: 1
         variants:
-        - id: shop
+        - id: workshop
           weight: 1
           cells:
-          - '  ╭╭──┬┬╮╮    '
-          - '▌▌││◆◆▒▒││▶▶  '
+          - '  ╭╭▓▓┬┬──╮╮  '
+          - '  ├├▒▒☼☼▒▒┤┤  '
+          - '  ╰╰──┴┴──╯╯  '
           color_mask:
           - SSSSSSSSSSSSSS
-          - BBSSWWSSSSSSSS
-        - id: patched
+          - SSSSSSBBSSSSSS
+          - SSSSSSSSSSSSSS
+        - id: external_rig
           weight: 1
           cells:
           - '  ▗▗████▖▖    '
-          - '  ▐▐▒▒░░▌▌    '
+          - '  ╞╞◆◆☼☼╢╢    '
+          - '  ▝▝████▘▘    '
           color_mask:
           - SSSSSSSSSSSSSS
+          - SSSSWWBBSSSSSS
           - SSSSSSSSSSSSSS
       - id: cargo_modules
         name: Cargo Modules
@@ -583,24 +623,34 @@ views:
         - hull
         repeat:
           min: 1
-          max: 9
+          max: 6
         variants:
-        - id: stack
+        - id: patched_container
           weight: 1
           cells:
-          - '  ╭╭──┬┬╮╮    '
-          - '  ││▒▒▒▒││    '
-          - '  ││▒▒▒▒││    '
+          - '  ╭╭──┴┴──╮╮  '
+          - '  ││──◆◆──││  '
+          - '  ││▒▒░░▒▒││  '
           color_mask:
           - SSSSSSSSSSSSSS
+          - SSSSSSWWSSSSSS
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
-        - id: pods
+        - id: habitat_pod
           weight: 1
           cells:
-          - '    ████      '
-          - '▐▐  ▒▒▒▒  ▌▌  '
-          - '▝▝╱╱████╲╲▘▘  '
+          - '      ██      '
+          - '  ██◆◆▒▒▒▒▌▌  '
+          - '▐▐▜▜◆◆▒▒██▌▌  '
+          color_mask:
+          - SSSSSSSSSSSSSS
+          - SSSSWWSSSSSSSS
+          - SSSSWWSSSSSSSS
+        - id: salvage_rack
+          weight: 1
+          cells:
+          - '  ╔╔══╦╦══╗╗  '
+          - '  ║║▒▒║║░░║║  '
+          - '  ║║░░║║▒▒║║  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -614,22 +664,22 @@ views:
           min: 1
           max: 1
         variants:
-        - id: turning
+        - id: turning_drum
           weight: 1
           cells:
-          - '  ╱╱████╲╲    '
-          - '██  ████  ██  '
-          - '╰╰  ◆◆☼☼  ╯╯  '
+          - '  ╱╱██████╲╲  '
+          - ││◆◆╭╭──╮╮◆◆││
+          - ╰╰░░░░☼☼░░░░╯╯
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
-          - SSSSWWBBSSSSSS
-        - id: locked
+          - SSWWSSSSSSWWSS
+          - SSSSSSBBSSSSSS
+        - id: locked_drum
           weight: 1
           cells:
-          - '  ╭╭████╮╮    '
-          - '  ██▒▒▒▒██    '
-          - '  ██▒▒▒▒██    '
+          - '  ╭╭██████╮╮  '
+          - '  ██▒▒▒▒▒▒██  '
+          - '  ██▒▒▒▒▒▒██  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -643,7 +693,7 @@ views:
           min: 1
           max: 1
         variants:
-        - id: laser
+        - id: cutter
           weight: 1
           cells:
           - '    ▲▲        '
@@ -653,7 +703,7 @@ views:
           - SSSSAASSSSSSSS
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-        - id: tractor
+        - id: drill
           weight: 1
           cells:
           - '    ▲▲        '
@@ -668,7 +718,7 @@ views:
       structure_lengths:
         retrofitted_drive: 1
         machine_shop: 1
-        cargo_modules: 4
+        cargo_modules: 3
         hearth_drum: 1
         mining_prow: 1
       sections:
@@ -681,22 +731,22 @@ views:
           min: 1
           max: 1
         variants:
-        - id: fusion
+        - id: patched_bells
           weight: 1
           cells:
-          - '    ▓▓    '
-          - '  ▌▌▌▌▌▌  '
+          - '  ╽╽▓▓    '
+          - ▜▜████▛▛▓▓
           color_mask:
           - SSSSSSSSSS
-          - SSEEEEEESS
-        - id: patched
+          - SSSSSSSSSS
+        - id: mismatched_nozzles
           weight: 1
           cells:
-          - '    ▓▓    '
-          - '▌▌  ▌▌    '
+          - '  ╽╽▓▓    '
+          - ▜▜▓▓██▛▛▐▐
           color_mask:
           - SSSSSSSSSS
-          - EESSEESSSS
+          - SSSSSSSSEE
       - id: machine_shop
         name: Machine Shop
         primary_property: utility
@@ -706,19 +756,19 @@ views:
           min: 1
           max: 1
         variants:
-        - id: shop
+        - id: workshop
           weight: 1
           cells:
-          - '╭╭──┬┬╮╮  '
-          - '╰╰──┴┴╯╯  '
+          - ╭╭▓▓┬┬──╮╮
+          - ││◆◆▒▒░░││
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
-        - id: patched
+          - SSWWSSSSSS
+        - id: external_rig
           weight: 1
           cells:
           - '▗▗████▖▖  '
-          - '▝▝████▘▘  '
+          - '▐▐▒▒░░▌▌  '
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -729,27 +779,37 @@ views:
         - hull
         repeat:
           min: 1
-          max: 9
+          max: 6
         variants:
-        - id: stack
+        - id: patched_container
           weight: 1
           cells:
-          - '╭╭──┬┬╮╮  '
-          - '││▒▒◆◆││  '
-          - '╰╰──┴┴╯╯  '
+          - ╭╭──┴┴──╮╮
+          - ││▒▒▒▒▒▒││
+          - ╰╰──┬┬──╯╯
           color_mask:
           - SSSSSSSSSS
-          - SSSSWWSSSS
           - SSSSSSSSSS
-        - id: pods
+          - SSSSSSSSSS
+        - id: habitat_pod
           weight: 1
           cells:
-          - '  ████    '
-          - '  ▒▒◆◆  ▌▌'
-          - '  ████    '
+          - '    ██    '
+          - ██▒▒☼☼▒▒▌▌
+          - ▝▝▜▜██▛▛▘▘
           color_mask:
           - SSSSSSSSSS
-          - SSSSWWSSSS
+          - SSSSBBSSSS
+          - SSSSSSSSSS
+        - id: salvage_rack
+          weight: 1
+          cells:
+          - ╔╔══╦╦══╗╗
+          - ╠╠══╬╬══╣╣
+          - ╚╚══╩╩══╝╝
+          color_mask:
+          - SSSSSSSSSS
+          - SSSSSSSSSS
           - SSSSSSSSSS
       - id: hearth_drum
         name: Hearth Drum
@@ -760,25 +820,25 @@ views:
           min: 1
           max: 1
         variants:
-        - id: turning
+        - id: turning_drum
           weight: 1
           cells:
-          - '╱╱████╲╲  '
-          - ◆◆████◆◆██
-          - '╲╲████╱╱  '
+          - ╱╱██████╲╲
+          - ◆◆╰╰──╯╯◆◆
+          - ╲╲██████╱╱
           color_mask:
           - SSSSSSSSSS
-          - WWSSSSWWSS
+          - WWSSSSSSWW
           - SSSSSSSSSS
-        - id: locked
+        - id: locked_drum
           weight: 1
           cells:
-          - '╭╭████╮╮  '
-          - '██◆◆☼☼██  '
-          - '╰╰████╯╯  '
+          - ╭╭██████╮╮
+          - ██◆◆☼☼◆◆██
+          - ╰╰██████╯╯
           color_mask:
           - SSSSSSSSSS
-          - SSWWBBSSSS
+          - SSWWBBWWSS
           - SSSSSSSSSS
       - id: mining_prow
         name: Mining Prow
@@ -789,7 +849,7 @@ views:
           min: 1
           max: 1
         variants:
-        - id: laser
+        - id: cutter
           weight: 1
           cells:
           - '  ▲▲      '
@@ -797,7 +857,7 @@ views:
           color_mask:
           - SSAASSSSSS
           - SSSSSSSSSS
-        - id: tractor
+        - id: drill
           weight: 1
           cells:
           - '  ▲▲      '
@@ -823,7 +883,7 @@ views:
         - id: drive
           weight: 1
           cells:
-          - '████  '
+          - ▓▓██▓▓
           color_mask:
           - SSSSSS
       - id: body
@@ -841,12 +901,12 @@ views:
           - ██▒▒██
           color_mask:
           - SSSSSS
-        - id: home
+        - id: drum
           weight: 1
           cells:
-          - ◆◆☼☼◆◆
+          - ╭╭☼☼╮╮
           color_mask:
-          - WWBBWW
+          - SSBBSS
       - id: prow
         name: Prow
         primary_property: weapons
@@ -855,7 +915,7 @@ views:
           min: 1
           max: 1
         variants:
-        - id: laser
+        - id: cutter
           weight: 1
           cells:
           - '  ▲▲  '

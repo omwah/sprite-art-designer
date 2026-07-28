@@ -29,41 +29,41 @@ views:
           min: 1
           max: 1
         variants:
-        - id: split_flare
+        - id: twin_bell
           weight: 1
           cells:
           - '     '
-          - ' ▄╺▀ '
-          - '▄▖▓▘ '
-          - '▄█▓═ '
-          - '▄▘▓▖ '
-          - ' ▄╺▀ '
+          - ' ▄▓▖ '
+          - ▄▟█▓╾
+          - ▄█░█▓
+          - ▄▜█▓╾
+          - ' ▀▓▘ '
           - '     '
           color_mask:
           - SSSSS
-          - SESES
-          - ESSSS
-          - ESSSS
-          - ESSSS
-          - SESES
           - SSSSS
-        - id: hot_fork
+          - ESSSS
+          - ESESS
+          - ESSSS
+          - SSSSS
+          - SSSSS
+        - id: vector_nozzle
           weight: 1
           cells:
           - '     '
-          - '▄▘ ▀ '
-          - ' ▄▙▓ '
-          - '▄█▓═ '
-          - ' ▄▛▓ '
-          - '▄▖ ▀ '
+          - ' ▄▗▄ '
+          - ▄▟█▓╾
+          - ▄█░██
+          - ' ▜█▓╾'
+          - '  ▀▘ '
           - '     '
           color_mask:
           - SSSSS
-          - ESSES
           - SESSS
           - ESSSS
-          - SESSS
-          - ESSES
+          - ESESS
+          - SSSSS
+          - SSSSS
           - SSSSS
       - id: spindrive
         name: Drive Swell
@@ -74,42 +74,42 @@ views:
           min: 1
           max: 1
         variants:
-        - id: faceted
+        - id: faceted_core
           weight: 1
           cells:
-          - '      '
-          - ' ▗▓▖  '
-          - '◢███◣ '
-          - █░██░█
-          - '◥███◤ '
-          - ' ▝▓▘  '
-          - '      '
+          - '     '
+          - ' ▄▖  '
+          - '◢██◣ '
+          - █░██╾
+          - '◥██◤ '
+          - ' ▀▘  '
+          - '     '
           color_mask:
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
-        - id: open
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SESSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+        - id: annular_ring
           weight: 1
           cells:
-          - '      '
-          - ' ╲  ╱ '
-          - '▟███▙ '
-          - █▒██▒█
-          - '▜███▛ '
-          - ' ╱  ╲ '
-          - '      '
+          - '     '
+          - ' ▗▓▖ '
+          - ▟█░█▙
+          - █░▒░█
+          - ▜█░█▛
+          - ' ▝▓▘ '
+          - '     '
           color_mask:
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
-          - SSSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
       - id: hull
         name: Narrow Fuselage
         primary_property: hull
@@ -120,32 +120,32 @@ views:
           min: 1
           max: 5
         variants:
-        - id: cockpit_rib
+        - id: panel_rib
           weight: 1
           cells:
           - '   '
-          - ' ╱ '
-          - ▟█═
-          - █◆█
-          - ▜█═
-          - ' ╲ '
+          - '   '
+          - ▓▓╾
+          - █▒█
+          - ▓═╾
+          - '   '
           - '   '
           color_mask:
           - SSS
           - SSS
           - SSS
-          - SWS
           - SSS
           - SSS
           - SSS
-        - id: gun_rib
+          - SSS
+        - id: fastener_rib
           weight: 1
           cells:
           - '   '
           - '   '
-          - ▖◆╺
-          - █▒█
-          - ▘◆╺
+          - ▓═╾
+          - █▒◆
+          - ▓═╾
           - '   '
           - '   '
           color_mask:
@@ -165,13 +165,13 @@ views:
           min: 1
           max: 1
         variants:
-        - id: cockpit
+        - id: canopy
           weight: 1
           cells:
           - '    '
           - ' ◇  '
           - '◢█▙ '
-          - ◇◆█═
+          - ◇◆█╾
           - '◥█▛ '
           - '    '
           - '    '
@@ -183,14 +183,14 @@ views:
           - SSSS
           - SSSS
           - SSSS
-        - id: low_screen
+        - id: armored_canopy
           weight: 1
           cells:
           - '    '
           - '    '
-          - '◇▟█ '
-          - ◇◆█═
-          - '◇▜█ '
+          - ◇▟█▙
+          - ◇◆▓╾
+          - ◇▜█▛
           - '    '
           - '    '
           color_mask:
@@ -210,41 +210,41 @@ views:
           min: 1
           max: 1
         variants:
-        - id: needle
+        - id: long_barrel
           weight: 1
           cells:
           - '      '
           - '      '
-          - '╺═▓▙  '
-          - ╺══█▀►
-          - '╺═▓▛  '
+          - ' ╾═▙  '
+          - ╾═══▓►
+          - ' ╾═▛  '
           - '      '
           - '      '
           color_mask:
           - SSSSSS
           - SSSSSS
           - SSSSSS
-          - SAASAA
+          - SSAASA
           - SSSSSS
           - SSSSSS
           - SSSSSS
-        - id: forked
+        - id: muzzle_brake
           weight: 1
           cells:
           - '      '
-          - '      '
-          - ' ╺═█▙ '
-          - ╺═██▀►
-          - ' ╺═█▛ '
-          - '      '
+          - ' ╾▀▙  '
+          - '╾═█▙  '
+          - ╾══█▀►
+          - '╾═█▛  '
+          - ' ╾▀▛  '
           - '      '
           color_mask:
           - SSSSSS
-          - SSSSSS
+          - SSASSS
           - SSSSSS
           - SASSAA
           - SSSSSS
-          - SSSSSS
+          - SSASSS
           - SSSSSS
     - id: medium
       name: Medium
@@ -264,34 +264,34 @@ views:
           min: 1
           max: 1
         variants:
-        - id: split_flare
+        - id: twin_bell
           weight: 1
           cells:
-          - ' ▄╺ '
-          - '▄▖▓ '
-          - '▄█▓ '
-          - '▄▘▓ '
-          - ' ▄╺ '
+          - ' ▄▓ '
+          - ▄▟█╾
+          - ▄█░▓
+          - ▄▜█╾
+          - ' ▀▓ '
+          color_mask:
+          - SSSS
+          - ESSS
+          - ESES
+          - ESSS
+          - SSSS
+        - id: vector_nozzle
+          weight: 1
+          cells:
+          - ' ▄▗ '
+          - ▄▟█╾
+          - ▄█░█
+          - ' ▜█╾'
+          - '  ▀ '
           color_mask:
           - SESS
           - ESSS
-          - ESSS
-          - ESSS
-          - SESS
-        - id: hot_fork
-          weight: 1
-          cells:
-          - '▄▘  '
-          - ' ▄▙ '
-          - '▄█▓ '
-          - ' ▄▛ '
-          - '▄▖  '
-          color_mask:
-          - ESSS
-          - SESS
-          - ESSS
-          - SESS
-          - ESSS
+          - ESES
+          - SSSS
+          - SSSS
       - id: spindrive
         name: Drive Swell
         primary_property: spindrive
@@ -301,34 +301,34 @@ views:
           min: 1
           max: 1
         variants:
-        - id: faceted
+        - id: faceted_core
           weight: 1
           cells:
-          - ' ▗▓▖ '
-          - '◢███ '
-          - █░███
-          - '◥███ '
-          - ' ▝▓▘ '
+          - ' ▄▖ '
+          - '◢██ '
+          - █░█╾
+          - '◥██ '
+          - ' ▀▘ '
           color_mask:
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
-        - id: open
+          - SSSS
+          - SSSS
+          - SESS
+          - SSSS
+          - SSSS
+        - id: annular_ring
           weight: 1
           cells:
-          - ' ╲   '
-          - '▟███ '
-          - █▒███
-          - '▜███ '
-          - ' ╱   '
+          - ' ▗▓ '
+          - ▟█░▙
+          - █░▒█
+          - ▜█░▛
+          - ' ▝▓ '
           color_mask:
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SSSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
       - id: hull
         name: Narrow Fuselage
         primary_property: hull
@@ -339,13 +339,13 @@ views:
           min: 1
           max: 5
         variants:
-        - id: cockpit_rib
+        - id: panel_rib
           weight: 1
           cells:
           - '  '
-          - ▟═
+          - ▓╾
           - ██
-          - ▜═
+          - ▓╾
           - '  '
           color_mask:
           - SS
@@ -353,13 +353,13 @@ views:
           - SS
           - SS
           - SS
-        - id: gun_rib
+        - id: fastener_rib
           weight: 1
           cells:
           - '  '
-          - ▖╺
-          - ██
-          - ▘╺
+          - ▓╾
+          - █◆
+          - ▓╾
           - '  '
           color_mask:
           - SS
@@ -376,12 +376,12 @@ views:
           min: 1
           max: 1
         variants:
-        - id: cockpit
+        - id: canopy
           weight: 1
           cells:
           - ' ◇ '
           - '◢█ '
-          - ◇◆═
+          - ◇◆╾
           - '◥█ '
           - '   '
           color_mask:
@@ -390,13 +390,13 @@ views:
           - DWS
           - SSS
           - SSS
-        - id: low_screen
+        - id: armored_canopy
           weight: 1
           cells:
           - '   '
-          - '◇▟ '
-          - ◇◆═
-          - '◇▜ '
+          - ◇▟▙
+          - ◇◆╾
+          - ◇▜▛
           - '   '
           color_mask:
           - SSS
@@ -413,39 +413,39 @@ views:
           min: 1
           max: 1
         variants:
-        - id: needle
+        - id: long_barrel
           weight: 1
           cells:
           - '     '
-          - '╺═▓▙ '
-          - ╺══█►
-          - '╺═▓▛ '
+          - ' ╾═▙ '
+          - ╾═══►
+          - ' ╾═▛ '
           - '     '
           color_mask:
           - SSSSS
           - SSSSS
-          - SAASA
+          - SSAAA
           - SSSSS
           - SSSSS
-        - id: forked
+        - id: muzzle_brake
           weight: 1
           cells:
-          - '     '
-          - ' ╺═█ '
-          - ╺═██►
-          - ' ╺═█ '
-          - '     '
+          - ' ╾▀▙ '
+          - '╾═█▙ '
+          - ╾══█►
+          - '╾═█▛ '
+          - ' ╾▀▛ '
           color_mask:
-          - SSSSS
+          - SSASS
           - SSSSS
           - SASSA
           - SSSSS
-          - SSSSS
+          - SSASS
     - id: compact
       name: Compact
       structure_lengths:
         drive: 1
-        body: 5
+        body: 6
         prow: 1
       sections:
       - id: drive
@@ -460,7 +460,7 @@ views:
           weight: 1
           cells:
           - '  '
-          - ▄═
+          - ▄█
           - '  '
           color_mask:
           - SS
@@ -473,23 +473,23 @@ views:
         - armor
         repeat:
           min: 1
-          max: 5
+          max: 6
         variants:
         - id: dart
           weight: 1
           cells:
           - ' ▘'
-          - █◆
+          - █▒
           - ' ▖'
           color_mask:
           - SS
-          - SW
+          - SS
           - SS
         - id: thin
           weight: 1
           cells:
           - '  '
-          - █═
+          - █╾
           - '  '
           color_mask:
           - SS
@@ -537,26 +537,26 @@ views:
           min: 1
           max: 1
         variants:
-        - id: split_flare
+        - id: twin_bell
           weight: 1
           cells:
-          - '              '
-          - '  ╹╹▓▓▓▓▓▓╹╹  '
+          - '    ╽╽▓▓╽╽    '
+          - '  ▓▓██░░██▓▓  '
           - '    ▐▐▐▐▐▐    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSSSEESSSSSS
           - SSSSEEEEEESSSS
-        - id: hot_fork
+        - id: vector_nozzle
           weight: 1
           cells:
-          - '              '
-          - '    ▟▟▓▓▙▙    '
-          - '  ▐▐  ▐▐  ▐▐  '
+          - '    ╽╽██╽╽    '
+          - '  ▝▝██░░██▌▌  '
+          - '    ▐▐▐▐      '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
-          - SSEESSEESSEESS
+          - SSSSSSEESSSSSS
+          - SSSSEEEESSSSSS
       - id: spindrive
         name: Drive Swell
         primary_property: spindrive
@@ -566,22 +566,22 @@ views:
           min: 1
           max: 1
         variants:
-        - id: faceted
+        - id: faceted_core
           weight: 1
           cells:
-          - '      ██      '
+          - '      ╽╽      '
           - '  ▗▗██████▖▖  '
-          - '  ▝▝██░░██▘▘  '
+          - '    ◥◥██◤◤    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-        - id: open
+        - id: annular_ring
           weight: 1
           cells:
-          - '      ██      '
-          - '    ██████    '
-          - '  ╱╱██▒▒██╲╲  '
+          - '    ▟▟██▙▙    '
+          - '  ▓▓░░▒▒░░▓▓  '
+          - '    ▜▜██▛▛    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -596,19 +596,19 @@ views:
           min: 1
           max: 5
         variants:
-        - id: cockpit_rib
+        - id: panel_rib
           weight: 1
           cells:
-          - '    ║║██║║    '
-          - '    ▜▜██▛▛    '
+          - '    ╽╽██╽╽    '
+          - '    ▓▓██▓▓    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-        - id: gun_rib
+        - id: fastener_rib
           weight: 1
           cells:
-          - '    ╹╹██╹╹    '
-          - '    ▗▗██▖▖    '
+          - '    ╽╽◆◆╽╽    '
+          - '    ▓▓██▓▓    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -621,18 +621,18 @@ views:
           min: 1
           max: 1
         variants:
-        - id: cockpit
+        - id: canopy
           weight: 1
           cells:
-          - '      ║║      '
+          - '      ╽╽      '
           - '  ◇◇██◆◆██    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSDDSSWWSSSSSS
-        - id: low_screen
+        - id: armored_canopy
           weight: 1
           cells:
-          - '      ║║      '
+          - '    ▟▟╽╽▙▙    '
           - '    ▜▜◆◆▛▛    '
           color_mask:
           - SSSSSSSSSSSSSS
@@ -646,22 +646,22 @@ views:
           min: 1
           max: 1
         variants:
-        - id: needle
+        - id: long_barrel
           weight: 1
           cells:
           - '      ▲▲      '
-          - '    ▟▟██▙▙    '
-          - '    ║║║║║║    '
+          - '    ▟▟║║▙▙    '
+          - '    ╽╽║║╽╽    '
           color_mask:
           - SSSSSSAASSSSSS
-          - SSSSSSSSSSSSSS
           - SSSSSSAASSSSSS
-        - id: forked
+          - SSSSSSSSSSSSSS
+        - id: muzzle_brake
           weight: 1
           cells:
           - '      ▲▲      '
-          - '    ██████    '
-          - '    ╹╹║║╹╹    '
+          - '  ▟▟▟▟██▙▙▙▙  '
+          - '  ╽╽║║║║║║╽╽  '
           color_mask:
           - SSSSSSAASSSSSS
           - SSSSSSSSSSSSSS
@@ -684,22 +684,22 @@ views:
           min: 1
           max: 1
         variants:
-        - id: split_flare
+        - id: twin_bell
           weight: 1
           cells:
-          - '          '
-          - ▐▐▗▗██▖▖▐▐
+          - '  ╽╽▓▓╽╽  '
+          - ▐▐▜▜██▛▛▌▌
           color_mask:
           - SSSSSSSSSS
-          - EESSSSSSEE
-        - id: hot_fork
+          - SSSSSSSSSS
+        - id: vector_nozzle
           weight: 1
           cells:
-          - '          '
-          - ▖▖▐▐██▐▐▗▗
+          - '  ╽╽██╽╽  '
+          - '▐▐▜▜██▛▛  '
           color_mask:
           - SSSSSSSSSS
-          - SSEESSEESS
+          - EESSSSSSSS
       - id: spindrive
         name: Drive Swell
         primary_property: spindrive
@@ -709,24 +709,20 @@ views:
           min: 1
           max: 1
         variants:
-        - id: faceted
+        - id: faceted_core
           weight: 1
           cells:
-          - '    ██    '
-          - ▓▓██████▓▓
-          - '  ◥◥██◤◤  '
+          - '    ╽╽    '
+          - ▐▐██░░██▌▌
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
-          - SSSSSSSSSS
-        - id: open
+          - SSSSEESSSS
+        - id: annular_ring
           weight: 1
           cells:
-          - '    ██    '
-          - '  ██████  '
-          - '  ▜▜██▛▛  '
+          - '  ▟▟██▙▙  '
+          - ▝▝██░░██▘▘
           color_mask:
-          - SSSSSSSSSS
           - SSSSSSSSSS
           - SSSSSSSSSS
       - id: hull
@@ -739,16 +735,16 @@ views:
           min: 1
           max: 5
         variants:
-        - id: cockpit_rib
+        - id: panel_rib
           weight: 1
           cells:
-          - '  ║║██║║  '
+          - '  ╽╽██╽╽  '
           color_mask:
           - SSSSSSSSSS
-        - id: gun_rib
+        - id: fastener_rib
           weight: 1
           cells:
-          - '  ╹╹██╹╹  '
+          - '  ╽╽◆◆╽╽  '
           color_mask:
           - SSSSSSSSSS
       - id: screens
@@ -760,18 +756,18 @@ views:
           min: 1
           max: 1
         variants:
-        - id: cockpit
+        - id: canopy
           weight: 1
           cells:
-          - '    ║║    '
+          - '    ╽╽    '
           - '  ◥◥◇◇◤◤  '
           color_mask:
           - SSSSSSSSSS
           - SSSSDDSSSS
-        - id: low_screen
+        - id: armored_canopy
           weight: 1
           cells:
-          - '    ║║    '
+          - '  ▟▟╽╽▙▙  '
           - '  ◇◇◇◇◇◇  '
           color_mask:
           - SSSSSSSSSS
@@ -785,31 +781,31 @@ views:
           min: 1
           max: 1
         variants:
-        - id: needle
+        - id: long_barrel
           weight: 1
           cells:
           - '    ▲▲    '
-          - '  ▓▓║║▓▓  '
-          - '  ╹╹╹╹╹╹  '
+          - '  ║║║║║║  '
+          - '    ╽╽    '
           color_mask:
           - SSSSAASSSS
           - SSSSAASSSS
           - SSSSSSSSSS
-        - id: forked
+        - id: muzzle_brake
           weight: 1
           cells:
           - '    ▲▲    '
-          - '  ║║██║║  '
-          - '    ╹╹    '
+          - ▌▌██║║██▌▌
+          - '  ╽╽╽╽╽╽  '
           color_mask:
           - SSSSAASSSS
-          - SSSSSSSSSS
+          - AASSSSSSAA
           - SSSSSSSSSS
     - id: compact
       name: Compact
       structure_lengths:
         drive: 1
-        body: 5
+        body: 6
         prow: 1
       sections:
       - id: drive
@@ -823,7 +819,7 @@ views:
         - id: flare
           weight: 1
           cells:
-          - '  ║║  '
+          - '  ██  '
           color_mask:
           - SSSSSS
       - id: body
@@ -833,18 +829,18 @@ views:
         - armor
         repeat:
           min: 1
-          max: 5
+          max: 6
         variants:
         - id: dart
           weight: 1
           cells:
-          - ▖▖◆◆▗▗
+          - ▖▖▒▒▗▗
           color_mask:
-          - SSWWSS
+          - SSSSSS
         - id: thin
           weight: 1
           cells:
-          - '  ║║  '
+          - '  ╽╽  '
           color_mask:
           - SSSSSS
       - id: prow

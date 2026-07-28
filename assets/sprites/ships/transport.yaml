@@ -29,41 +29,41 @@ views:
           min: 1
           max: 1
         variants:
-        - id: cluster
+        - id: twin_bell
           weight: 1
           cells:
           - '     '
-          - ' ▄▀  '
-          - '▄▟▓═ '
-          - '▄██▓ '
-          - '▄▜▓═ '
-          - ' ▄▀  '
+          - ' ▀▄  '
+          - ▄▟░▓╾
+          - ▄███▓
+          - ▄▜░▓╾
+          - ' ▀▀  '
           - '     '
           color_mask:
           - SSSSS
-          - SEESS
+          - SESSS
+          - ESESS
           - ESSSS
-          - ESSSS
-          - ESSSS
-          - SEESS
+          - ESESS
+          - SESSS
           - SSSSS
-        - id: tug
+        - id: cluster_tug
           weight: 1
           cells:
           - '     '
-          - '▄▘▀  '
-          - '▄▙▓  '
-          - '▄██▓ '
-          - '▄▛▓  '
-          - '▄▖▀  '
+          - '▄▗▓  '
+          - ▄▐█▓╾
+          - '▄█░▓ '
+          - ▄▐█▓╾
+          - '▄▝▓  '
           - '     '
           color_mask:
           - SSSSS
+          - ESSSS
+          - ESSSS
           - ESESS
           - ESSSS
           - ESSSS
-          - ESSSS
-          - ESESS
           - SSSSS
       - id: spindrive
         name: Drive Frame
@@ -74,42 +74,42 @@ views:
           min: 1
           max: 1
         variants:
-        - id: braced
+        - id: drive_cradle
           weight: 1
           cells:
-          - '    '
-          - ╔══╗
-          - ╠██╣
-          - ║▒▒║
-          - ╠██╣
-          - ╚══╝
-          - '    '
+          - '     '
+          - ╔═╦═╗
+          - ║▓█▓║
+          - ╠═╬═╣
+          - ║▓█▓║
+          - ╚═╩═╝
+          - '     '
           color_mask:
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-        - id: serviceable
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+        - id: service_module
           weight: 1
           cells:
-          - '    '
-          - ╭──╮
-          - │██│
-          - ├░░┤
-          - │██│
-          - ╰──╯
-          - '    '
+          - '     '
+          - ╭───╮
+          - │▓░▓│
+          - ┤░☼░├
+          - │▓░▓│
+          - ╰───╯
+          - '     '
           color_mask:
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSBSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
       - id: hull
         name: Container Bays
         primary_property: cargo
@@ -118,17 +118,17 @@ views:
         - utility
         repeat:
           min: 1
-          max: 7
+          max: 5
         variants:
-        - id: double_doors
+        - id: boxcar
           weight: 1
           cells:
           - '      '
-          - '╭─┬─╮ '
-          - '│▒│▒│ '
-          - ┤░┼░├╺
-          - '│▒│▒│ '
-          - '╰─┴─╯ '
+          - ╭─┬──╮
+          - │▒│▒▒│
+          - ┤░┼░▒├
+          - │▒│▒▒│
+          - ╰─┴──╯
           - '      '
           color_mask:
           - SSSSSS
@@ -138,15 +138,15 @@ views:
           - SSSSSS
           - SSSSSS
           - SSSSSS
-        - id: pod
+        - id: tank_farm
           weight: 1
           cells:
           - '      '
-          - '▗▄▄▄▖ '
-          - '▟█▒▒▙ '
+          - ▗▄▄▄▄▖
+          - ▟█▒▒█▙
           - █▒◆▒█╺
-          - '▜█▒▒▛ '
-          - '▝▀▀▀▘ '
+          - ▜█▒▒█▛
+          - ▝▀▀▀▀▘
           - '      '
           color_mask:
           - SSSSSS
@@ -156,15 +156,15 @@ views:
           - SSSSSS
           - SSSSSS
           - SSSSSS
-        - id: rail_bay
+        - id: open_rack
           weight: 1
           cells:
           - '      '
-          - '╔═══╗ '
-          - '║░▒░║ '
-          - ╠═╬═╣╺
-          - '║░▒░║ '
-          - '╚═══╝ '
+          - ╔════╗
+          - ║▤▤▤▤║
+          - ╠═╬══╣
+          - ║▦▦▦▦║
+          - ╚════╝
           - '      '
           color_mask:
           - SSSSSS
@@ -184,40 +184,40 @@ views:
           min: 1
           max: 1
         variants:
-        - id: bridge
+        - id: bridge_collar
           weight: 1
           cells:
           - '    '
           - ' ▀  '
-          - ▟██▙
-          - ◇◆ ◆
-          - ▜██▛
+          - ◢██▙
+          - ◇◆◆█
+          - ◥██▛
           - '    '
           - '    '
           color_mask:
           - SSSS
           - SBSS
           - SSSS
-          - DWSW
+          - DWWS
           - SSSS
           - SSSS
           - SSSS
-        - id: utility
+        - id: sensor_collar
           weight: 1
           cells:
           - '    '
           - '    '
-          - ◢██◣
+          - ◇◢█▙
           - ◇◆◆█
-          - ◥██◤
+          - ◇◥█▛
           - '    '
           - '    '
           color_mask:
           - SSSS
           - SSSS
-          - SSSS
-          - DWWS
-          - SSSS
+          - DSSS
+          - DWSS
+          - DSSS
           - SSSS
           - SSSS
       - id: main_gun
@@ -230,14 +230,14 @@ views:
           min: 1
           max: 1
         variants:
-        - id: stub
+        - id: docking_prow
           weight: 1
           cells:
           - '    '
           - '    '
-          - '██▙ '
+          - ◢██▙
           - █▓▀►
-          - '██▛ '
+          - ◥██▛
           - '    '
           - '    '
           color_mask:
@@ -248,21 +248,21 @@ views:
           - SSSS
           - SSSS
           - SSSS
-        - id: clamp
+        - id: clamp_prow
           weight: 1
           cells:
           - '    '
-          - '    '
-          - '▟█▙ '
-          - █╬█►
-          - '▜█▛ '
-          - '    '
+          - ' ▄  '
+          - ▟██▙
+          - █╬═►
+          - ▜██▛
+          - ' ▀  '
           - '    '
           color_mask:
           - SSSS
           - SSSS
           - SSSS
-          - SSSS
+          - SSSA
           - SSSS
           - SSSS
           - SSSS
@@ -284,34 +284,34 @@ views:
           min: 1
           max: 1
         variants:
-        - id: cluster
+        - id: twin_bell
           weight: 1
           cells:
-          - ' ▄▀ '
-          - '▄▟▓ '
-          - '▄██ '
-          - '▄▜▓ '
-          - ' ▄▀ '
+          - ' ▀▄ '
+          - ▄▟░╾
+          - ▄██▓
+          - ▄▜░╾
+          - ' ▀▀ '
           color_mask:
-          - SEES
+          - SESS
+          - ESES
           - ESSS
-          - ESSS
-          - ESSS
-          - SEES
-        - id: tug
+          - ESES
+          - SESS
+        - id: cluster_tug
           weight: 1
           cells:
-          - '▄▘▀ '
-          - '▄▙▓ '
-          - '▄██ '
-          - '▄▛▓ '
-          - '▄▖▀ '
+          - '▄▗▓ '
+          - ▄▐█╾
+          - '▄█░ '
+          - ▄▐█╾
+          - '▄▝▓ '
           color_mask:
+          - ESSS
+          - ESSS
           - ESES
           - ESSS
           - ESSS
-          - ESSS
-          - ESES
       - id: spindrive
         name: Drive Frame
         primary_property: spindrive
@@ -321,34 +321,34 @@ views:
           min: 1
           max: 1
         variants:
-        - id: braced
+        - id: drive_cradle
           weight: 1
           cells:
-          - ╔═╗
-          - ╠█╣
-          - ║▒║
-          - ╠█╣
-          - ╚═╝
+          - ╔═╦╗
+          - ║▓█║
+          - ╠═╬╣
+          - ║▓█║
+          - ╚═╩╝
           color_mask:
-          - SSS
-          - SSS
-          - SSS
-          - SSS
-          - SSS
-        - id: serviceable
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+        - id: service_module
           weight: 1
           cells:
-          - ╭─╮
-          - │█│
-          - ├░┤
-          - │█│
-          - ╰─╯
+          - ╭──╮
+          - │▓░│
+          - ┤░☼├
+          - │▓░│
+          - ╰──╯
           color_mask:
-          - SSS
-          - SSS
-          - SSS
-          - SSS
-          - SSS
+          - SSSS
+          - SSSS
+          - SSBS
+          - SSSS
+          - SSSS
       - id: hull
         name: Container Bays
         primary_property: cargo
@@ -357,44 +357,44 @@ views:
         - utility
         repeat:
           min: 1
-          max: 7
+          max: 5
         variants:
-        - id: double_doors
+        - id: boxcar
           weight: 1
           cells:
-          - '╭─┬─ '
-          - '│▒│▒ '
-          - ┤░┼░╺
-          - '│▒│▒ '
-          - '╰─┴─ '
+          - ╭─┬─╮
+          - │▒│▒│
+          - ┤░┼░├
+          - │▒│▒│
+          - ╰─┴─╯
           color_mask:
           - SSSSS
           - SSSSS
           - SSSSS
           - SSSSS
           - SSSSS
-        - id: pod
+        - id: tank_farm
           weight: 1
           cells:
-          - '▗▄▄▄ '
-          - '▟█▒▒ '
+          - ▗▄▄▄▖
+          - ▟█▒▒▙
           - █▒◆▒╺
-          - '▜█▒▒ '
-          - '▝▀▀▀ '
+          - ▜█▒▒▛
+          - ▝▀▀▀▘
           color_mask:
           - SSSSS
           - SSSSS
           - SSSSS
           - SSSSS
           - SSSSS
-        - id: rail_bay
+        - id: open_rack
           weight: 1
           cells:
-          - '╔═══ '
-          - '║░▒░ '
-          - ╠═╬═╺
-          - '║░▒░ '
-          - '╚═══ '
+          - ╔═══╗
+          - ║▤▤▤║
+          - ╠═╬═╣
+          - ║▦▦▦║
+          - ╚═══╝
           color_mask:
           - SSSSS
           - SSSSS
@@ -411,33 +411,33 @@ views:
           min: 1
           max: 1
         variants:
-        - id: bridge
+        - id: bridge_collar
           weight: 1
           cells:
           - ' ▀ '
-          - ▟█▙
-          - ◇◆◆
-          - ▜█▛
+          - ◢█▙
+          - ◇◆█
+          - ◥█▛
           - '   '
           color_mask:
           - SBS
           - SSS
-          - DWW
+          - DWS
           - SSS
           - SSS
-        - id: utility
+        - id: sensor_collar
           weight: 1
           cells:
           - '   '
-          - ◢█◣
+          - ◇◢▙
           - ◇◆█
-          - ◥█◤
+          - ◇◥▛
           - '   '
           color_mask:
           - SSS
-          - SSS
+          - DSS
           - DWS
-          - SSS
+          - DSS
           - SSS
       - id: main_gun
         name: Utility Prow
@@ -449,13 +449,13 @@ views:
           min: 1
           max: 1
         variants:
-        - id: stub
+        - id: docking_prow
           weight: 1
           cells:
           - '   '
-          - '██ '
+          - ◢█▙
           - █▓►
-          - '██ '
+          - ◥█▛
           - '   '
           color_mask:
           - SSS
@@ -463,18 +463,18 @@ views:
           - SSA
           - SSS
           - SSS
-        - id: clamp
+        - id: clamp_prow
           weight: 1
           cells:
-          - '   '
-          - '▟█ '
+          - ' ▄ '
+          - ▟█▙
           - █╬►
-          - '▜█ '
-          - '   '
+          - ▜█▛
+          - ' ▀ '
           color_mask:
           - SSS
           - SSS
-          - SSS
+          - SSA
           - SSS
           - SSS
     - id: compact
@@ -511,22 +511,22 @@ views:
           min: 1
           max: 5
         variants:
-        - id: bay
+        - id: box
           weight: 1
           cells:
-          - ▀▀▀
-          - █▒█
-          - ▄▄▄
+          - ╭─╮
+          - │▒│
+          - ╰─╯
           color_mask:
           - SSS
           - SSS
           - SSS
-        - id: door
+        - id: tank
           weight: 1
           cells:
-          - ╭─╮
-          - │░│
-          - ╰─╯
+          - ▗▄▖
+          - █▒█
+          - ▝▀▘
           color_mask:
           - SSS
           - SSS
@@ -542,13 +542,13 @@ views:
         - id: cab
           weight: 1
           cells:
-          - ' ▀'
-          - ◇◆
-          - ' ▄'
+          - ' ▀ '
+          - ◇◆◆
+          - ' ▄ '
           color_mask:
-          - SS
-          - DW
-          - SS
+          - SBS
+          - DWW
+          - SSS
   vertical:
     name: Vertical
     axis: vertical
@@ -573,25 +573,25 @@ views:
           min: 1
           max: 1
         variants:
-        - id: cluster
+        - id: twin_bell
           weight: 1
           cells:
-          - '              '
-          - '  ▌▌▓▓██▓▓▌▌  '
+          - '    ╽╽▓▓╽╽    '
+          - '  ▐▐░░██░░▌▌  '
           - '    ▐▐▐▐▐▐    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSEESSSSSSEESS
+          - SSSSEESSEESSSS
           - SSSSEEEEEESSSS
-        - id: tug
+        - id: cluster_tug
           weight: 1
           cells:
-          - '              '
-          - '  ▌▌▓▓██▓▓▌▌  '
+          - '    ╽╽  ╽╽    '
+          - '  ▓▓██░░██▓▓  '
           - '  ▐▐▐▐▐▐▐▐▐▐  '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSEESSSSSSEESS
+          - SSSSSSEESSSSSS
           - SSEEEEEEEEEESS
       - id: spindrive
         name: Drive Frame
@@ -602,21 +602,25 @@ views:
           min: 1
           max: 1
         variants:
-        - id: braced
+        - id: drive_cradle
           weight: 1
           cells:
-          - '  ╔╔╦╦══╦╦╗╗  '
-          - '  ║║██▒▒██║║  '
+          - '  ╔╔══╦╦══╗╗  '
+          - '  ╠╠██╬╬██╣╣  '
+          - '  ╚╚══╩╩══╝╝  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-        - id: serviceable
+          - SSSSSSSSSSSSSS
+        - id: service_module
           weight: 1
           cells:
-          - '  ╭╭──┬┬──╮╮  '
-          - '  ││██░░██││  '
+          - '  ╭╭──┴┴──╮╮  '
+          - '  ││░░☼☼░░││  '
+          - '  ╰╰──┬┬──╯╯  '
           color_mask:
           - SSSSSSSSSSSSSS
+          - SSSSSSBBSSSSSS
           - SSSSSSSSSSSSSS
       - id: hull
         name: Container Bays
@@ -626,34 +630,34 @@ views:
         - utility
         repeat:
           min: 1
-          max: 7
+          max: 5
         variants:
-        - id: double_doors
+        - id: boxcar
           weight: 1
           cells:
-          - '      ╹╹      '
+          - '  ╭╭──┴┴──╮╮  '
           - '  ││▒▒░░▒▒││  '
           - '  ││▒▒░░▒▒││  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-        - id: pod
+        - id: tank_farm
           weight: 1
           cells:
-          - '      ╹╹      '
+          - '  ▗▗▟▟╹╹▙▙▖▖  '
           - '  ▐▐▒▒▒▒▒▒▌▌  '
           - '  ▐▐██▒▒██▌▌  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-        - id: rail_bay
+        - id: open_rack
           weight: 1
           cells:
-          - '      ╹╹      '
-          - '  ║║░░║║░░║║  '
-          - '  ║║░░║║░░║║  '
+          - '  ╔╔══╦╦══╗╗  '
+          - '  ║║▤▤║║▦▦║║  '
+          - '  ║║▤▤║║▦▦║║  '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -668,19 +672,19 @@ views:
           min: 1
           max: 1
         variants:
-        - id: bridge
+        - id: bridge_collar
           weight: 1
           cells:
-          - '    ▟▟◆◆▙▙    '
+          - '    ▟▟██▙▙    '
           - '  ▌▌██◆◆██    '
           color_mask:
-          - SSSSSSWWSSSSSS
+          - SSSSSSSSSSSSSS
           - SSBBSSWWSSSSSS
-        - id: utility
+        - id: sensor_collar
           weight: 1
           cells:
-          - '    ◢◢██◣◣    '
-          - '    ██◆◆██    '
+          - '    ▟▟██▙▙    '
+          - '    ◥◥◆◆◤◤    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSWWSSSSSS
@@ -694,21 +698,21 @@ views:
           min: 1
           max: 1
         variants:
-        - id: stub
+        - id: docking_prow
           weight: 1
           cells:
-          - '      ▲▲      '
+          - '    ▟▟▲▲▙▙    '
           - '    ██▓▓██    '
           color_mask:
           - SSSSSSAASSSSSS
           - SSSSSSSSSSSSSS
-        - id: clamp
+        - id: clamp_prow
           weight: 1
           cells:
-          - '      ▲▲      '
-          - '    ██╬╬██    '
+          - '    ▟▟▲▲▙▙    '
+          - '  ▐▐██╬╬██▌▌  '
           color_mask:
-          - SSSSSSSSSSSSSS
+          - SSSSSSAASSSSSS
           - SSSSSSSSSSSSSS
     - id: medium
       name: Medium
@@ -728,19 +732,19 @@ views:
           min: 1
           max: 1
         variants:
-        - id: cluster
+        - id: twin_bell
           weight: 1
           cells:
-          - '          '
-          - ▐▐▜▜██▛▛▐▐
+          - '  ╽╽▓▓╽╽  '
+          - ▌▌▜▜██▛▛▌▌
           color_mask:
           - SSSSSSSSSS
           - EESSSSSSEE
-        - id: tug
+        - id: cluster_tug
           weight: 1
           cells:
-          - '          '
-          - ▖▖▟▟██▙▙▗▗
+          - '  ╽╽  ╽╽  '
+          - ▝▝▀▀██▀▀▘▘
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -753,19 +757,19 @@ views:
           min: 1
           max: 1
         variants:
-        - id: braced
+        - id: drive_cradle
           weight: 1
           cells:
-          - ╔╔╦╦══╦╦╗╗
-          - ╚╚╩╩══╩╩╝╝
+          - ╔╔══╦╦══╗╗
+          - ║║▓▓║║▓▓║║
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
-        - id: serviceable
+        - id: service_module
           weight: 1
           cells:
-          - ╭╭──┬┬──╮╮
-          - ╰╰──┴┴──╯╯
+          - ╭╭──┴┴──╮╮
+          - ││▓▓░░▓▓││
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -777,33 +781,33 @@ views:
         - utility
         repeat:
           min: 1
-          max: 7
+          max: 5
         variants:
-        - id: double_doors
+        - id: boxcar
           weight: 1
           cells:
-          - '    ╹╹    '
+          - ╭╭──┴┴──╮╮
           - ├├──┼┼──┤┤
           - ╰╰──┬┬──╯╯
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
           - SSSSSSSSSS
-        - id: pod
+        - id: tank_farm
           weight: 1
           cells:
-          - '    ╹╹    '
+          - ▗▗▟▟╹╹▙▙▖▖
           - ▐▐▒▒◆◆▒▒▌▌
           - ▝▝▜▜██▛▛▘▘
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
           - SSSSSSSSSS
-        - id: rail_bay
+        - id: open_rack
           weight: 1
           cells:
-          - '    ╹╹    '
-          - ║║▒▒╬╬▒▒║║
+          - ╔╔══╦╦══╗╗
+          - ║║▤▤╬╬▦▦║║
           - ╚╚══╩╩══╝╝
           color_mask:
           - SSSSSSSSSS
@@ -819,22 +823,22 @@ views:
           min: 1
           max: 1
         variants:
-        - id: bridge
+        - id: bridge_collar
           weight: 1
           cells:
-          - '  ▟▟◆◆▙▙  '
-          - '  ▜▜◇◇▛▛  '
-          color_mask:
-          - SSSSWWSSSS
-          - SSSSDDSSSS
-        - id: utility
-          weight: 1
-          cells:
-          - '  ◢◢██◣◣  '
+          - '  ▟▟██▙▙  '
           - '  ◥◥◇◇◤◤  '
           color_mask:
           - SSSSSSSSSS
           - SSSSDDSSSS
+        - id: sensor_collar
+          weight: 1
+          cells:
+          - '  ▟▟██▙▙  '
+          - '  ◇◇◇◇◇◇  '
+          color_mask:
+          - SSSSSSSSSS
+          - SSDDDDDDSS
       - id: main_gun
         name: Utility Prow
         primary_property: main_gun
@@ -845,21 +849,21 @@ views:
           min: 1
           max: 1
         variants:
-        - id: stub
+        - id: docking_prow
           weight: 1
           cells:
-          - '    ▲▲    '
-          - '  ██████  '
+          - '  ▟▟▲▲▙▙  '
+          - '  ◥◥██◤◤  '
           color_mask:
           - SSSSAASSSS
           - SSSSSSSSSS
-        - id: clamp
+        - id: clamp_prow
           weight: 1
           cells:
-          - '    ▲▲    '
+          - '  ▟▟▲▲▙▙  '
           - '  ▜▜██▛▛  '
           color_mask:
-          - SSSSSSSSSS
+          - SSSSAASSSS
           - SSSSSSSSSS
     - id: compact
       name: Compact
@@ -891,19 +895,19 @@ views:
           min: 1
           max: 5
         variants:
-        - id: bay
-          weight: 1
-          cells:
-          - ▌▌██▐▐
-          - ▌▌██▐▐
-          color_mask:
-          - SSSSSS
-          - SSSSSS
-        - id: door
+        - id: box
           weight: 1
           cells:
           - ╭╭──╮╮
           - ╰╰──╯╯
+          color_mask:
+          - SSSSSS
+          - SSSSSS
+        - id: tank
+          weight: 1
+          cells:
+          - ▗▗██▖▖
+          - ▝▝██▘▘
           color_mask:
           - SSSSSS
           - SSSSSS
@@ -918,6 +922,8 @@ views:
         - id: cab
           weight: 1
           cells:
-          - ▌▌◆◆▐▐
+          - '  ◆◆  '
+          - '  ◇◇  '
           color_mask:
           - SSWWSS
+          - SSDDSS

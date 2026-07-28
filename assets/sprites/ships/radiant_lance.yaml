@@ -16,7 +16,7 @@ views:
       structure_lengths:
         fusion_bell: 1
         engine_swell: 1
-        diamond_radiators: 6
+        diamond_radiators: 5
         habitat_petals: 1
         lance: 1
       sections:
@@ -29,42 +29,42 @@ views:
           min: 1
           max: 1
         variants:
-        - id: focused
+        - id: focused_bell
           weight: 1
           cells:
-          - ' ▀▶═'
-          - '    '
-          - ' ▀▓ '
-          - ▀██▓
-          - ' ▀▓ '
-          - '    '
-          - ' ▀▶═'
+          - '  ▀  '
+          - ' ▀▖  '
+          - '▄◢█▓ '
+          - ▄█░█▓
+          - '▄◥█▓ '
+          - ' ▀▘  '
+          - '  ▀  '
           color_mask:
-          - SESS
-          - SSSS
-          - SESS
-          - ESSS
-          - SESS
-          - SSSS
-          - SESS
-        - id: hot
+          - SSESS
+          - SESSS
+          - ESSSS
+          - ESESS
+          - ESSSS
+          - SESSS
+          - SSESS
+        - id: luminous_plume
           weight: 1
           cells:
-          - ' ▀▀═'
-          - ' ▀  '
-          - '▀▟▓ '
-          - ▀██▓
-          - '▀▜▓ '
-          - ' ▀  '
-          - ' ▀▀═'
+          - '     '
+          - ' ◀▄▖ '
+          - ◀▄▟▓╾
+          - ◀▄█░█
+          - ◀▄▜▓╾
+          - ' ◀▄▘ '
+          - '     '
           color_mask:
-          - SEES
-          - SESS
-          - ESSS
-          - ESSS
-          - ESSS
-          - SESS
-          - SEES
+          - SSSSS
+          - SSESS
+          - SESSS
+          - SESES
+          - SESSS
+          - SSESS
+          - SSSSS
       - id: engine_swell
         name: Engine Swell
         primary_property: spindrive
@@ -77,39 +77,39 @@ views:
         - id: swell
           weight: 1
           cells:
-          - ' ▴  '
-          - ◢██◣
-          - ▓██▓
-          - █▒▒█
-          - ▓██▓
-          - ◥██◤
-          - ' ▾  '
+          - '  ▴  '
+          - '◢██◣ '
+          - ▓█☼█▓
+          - █▒░▒█
+          - ▓███▓
+          - '◥██◤ '
+          - '  ▾  '
           color_mask:
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-        - id: veined
+          - SSSSS
+          - SSSSS
+          - SSBSS
+          - SSESS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+        - id: veined_swell
           weight: 1
           cells:
-          - ' ☼  '
-          - ◢█☼◣
-          - ▓██▓
-          - █▒▒█
-          - ▓██▓
-          - ◥█☼◤
-          - ' ▾  '
+          - '  ☼  '
+          - '◢█▓◣ '
+          - ▓░█░▓
+          - █▓☼▓█
+          - ▓░█░▓
+          - '◥█▓◤ '
+          - '  ☼  '
           color_mask:
-          - SBSS
-          - SSBS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSBS
-          - SSSS
+          - SSBSS
+          - SSSSS
+          - SESES
+          - SSBSS
+          - SESES
+          - SSSSS
+          - SSBSS
       - id: diamond_radiators
         name: Diamond Radiators
         primary_property: radiator
@@ -117,44 +117,44 @@ views:
         - hull
         repeat:
           min: 1
-          max: 6
+          max: 5
         variants:
-        - id: open
+        - id: panel_vanes
           weight: 1
           cells:
-          - '◢█◣ '
-          - ' ╲  '
-          - ╭──╮
-          - │ ∞│
-          - ╰──╯
-          - ' ╱  '
-          - '◥█◤ '
+          - ' ▗▓▖ '
+          - ' ▐▓▌ '
+          - ' ▐▓▌ '
+          - ╠═╬═╣
+          - ' ▐▓▌ '
+          - ' ▐▓▌ '
+          - ' ▝▓▘ '
           color_mask:
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-        - id: folded
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+        - id: diamond_chain
           weight: 1
           cells:
-          - ' ♦  '
-          - ' │  '
-          - ▗▄▄▖
-          - █ ▒█
-          - ▝▀▀▘
-          - ' │  '
-          - ' ◇  '
+          - ' ◤◥  '
+          - ' ◢◣  '
+          - '  █  '
+          - ╾═█═╼
+          - '  █  '
+          - ' ◥◤  '
+          - ' ◣◢  '
           color_mask:
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
-          - SSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
+          - SSSSS
       - id: habitat_petals
         name: Habitat Petals
         primary_property: habitat
@@ -164,42 +164,42 @@ views:
           min: 1
           max: 1
         variants:
-        - id: spread
+        - id: spread_petals
           weight: 1
           cells:
-          - ◢██◣
-          - ' ╲╱ '
-          - █◆█◆
-          - █☼██
-          - █◆█◆
-          - ' ╱╲ '
-          - ◥██◤
+          - '◢██◣ '
+          - ' ╲╱  '
+          - █◆░◆█
+          - █☼███
+          - █◆░◆█
+          - ' ╱╲  '
+          - '◥██◤ '
           color_mask:
-          - SSSS
-          - SSSS
-          - SWSW
-          - SBSS
-          - SWSW
-          - SSSS
-          - SSSS
-        - id: folded
+          - SSSSS
+          - SSSSS
+          - SWSWS
+          - SBSSS
+          - SWSWS
+          - SSSSS
+          - SSSSS
+        - id: folded_petals
           weight: 1
           cells:
-          - '    '
-          - ╭██╮
-          - █◆██
-          - █☼█◆
-          - ████
-          - ╰██╯
-          - '    '
+          - ' ▄▄  '
+          - '╭██╮ '
+          - █◆◆▓╾
+          - █☼▓██
+          - █◆▓▓╾
+          - '╰██╯ '
+          - ' ▀▀  '
           color_mask:
-          - SSSS
-          - SSSS
-          - SWSS
-          - SBSW
-          - SSSS
-          - SSSS
-          - SSSS
+          - SSSSS
+          - SSSSS
+          - SWWSS
+          - SBSSS
+          - SWSSS
+          - SSSSS
+          - SSSSS
       - id: lance
         name: Lance
         primary_property: main_gun
@@ -209,48 +209,48 @@ views:
           min: 1
           max: 1
         variants:
-        - id: needle
+        - id: long_lance
           weight: 1
           cells:
-          - '     '
-          - '     '
-          - '  ─▙ '
-          - ─═█▀►
-          - '  ─▛ '
-          - '     '
-          - '     '
+          - '       '
+          - '       '
+          - '  ╾──▙ '
+          - ╾──══▓►
+          - '  ╾──▛ '
+          - '       '
+          - '       '
           color_mask:
-          - SSSSS
-          - SSSSS
-          - SSSSS
-          - SASAA
-          - SSSSS
-          - SSSSS
-          - SSSSS
-        - id: fork
+          - SSSSSSS
+          - SSSSSSS
+          - SSSSSSS
+          - SSSASSA
+          - SSSSSSS
+          - SSSSSSS
+          - SSSSSSS
+        - id: lensed_lance
           weight: 1
           cells:
-          - '     '
-          - '     '
-          - '─▀█▙ '
-          - ═██▀►
-          - '─▄█▛ '
-          - '     '
-          - '     '
+          - '       '
+          - '   ╾▀▙ '
+          - '  ╾═▓▙ '
+          - ╾─═█☼▓►
+          - '  ╾═▓▛ '
+          - '   ╾▀▛ '
+          - '       '
           color_mask:
-          - SSSSS
-          - SSSSS
-          - SASSS
-          - ASSAA
-          - SASSS
-          - SSSSS
-          - SSSSS
+          - SSSSSSS
+          - SSSSASS
+          - SSSSSSS
+          - SSSSBSA
+          - SSSSSSS
+          - SSSSASS
+          - SSSSSSS
     - id: medium
       name: Medium
       structure_lengths:
         fusion_bell: 1
         engine_swell: 1
-        diamond_radiators: 6
+        diamond_radiators: 4
         habitat_petals: 1
         lance: 1
       sections:
@@ -263,34 +263,34 @@ views:
           min: 1
           max: 1
         variants:
-        - id: focused
+        - id: focused_bell
           weight: 1
           cells:
-          - '   '
-          - ' ▀ '
-          - ▀█▓
-          - ' ▀ '
-          - '   '
+          - ' ▀▖ '
+          - '▄◢█ '
+          - ▄█░▓
+          - '▄◥█ '
+          - ' ▀▘ '
           color_mask:
-          - SSS
-          - SES
-          - ESS
-          - SES
-          - SSS
-        - id: hot
+          - SESS
+          - ESSS
+          - ESES
+          - ESSS
+          - SESS
+        - id: luminous_plume
           weight: 1
           cells:
-          - ' ▀ '
-          - '▀▟ '
-          - ▀█▓
-          - '▀▜ '
-          - ' ▀ '
+          - ' ◀▄ '
+          - ◀▄▟╾
+          - ◀▄██
+          - ◀▄▜╾
+          - ' ◀▄ '
           color_mask:
-          - SES
-          - ESS
-          - ESS
-          - ESS
-          - SES
+          - SSES
+          - SESS
+          - SESS
+          - SESS
+          - SSES
       - id: engine_swell
         name: Engine Swell
         primary_property: spindrive
@@ -303,31 +303,31 @@ views:
         - id: swell
           weight: 1
           cells:
-          - ◢█◣
-          - ▓█▓
-          - █▒█
-          - ▓█▓
-          - ◥█◤
+          - '◢██ '
+          - ▓█☼▓
+          - █▒░█
+          - ▓██▓
+          - '◥██ '
           color_mask:
-          - SSS
-          - SSS
-          - SSS
-          - SSS
-          - SSS
-        - id: veined
+          - SSSS
+          - SSBS
+          - SSES
+          - SSSS
+          - SSSS
+        - id: veined_swell
           weight: 1
           cells:
-          - ◢█◣
-          - ▓█▓
-          - █▒█
-          - ▓█▓
-          - ◥█◤
+          - '◢█▓ '
+          - ▓░█▓
+          - █▓☼█
+          - ▓░█▓
+          - '◥█▓ '
           color_mask:
-          - SSS
-          - SSS
-          - SSS
-          - SSS
-          - SSS
+          - SSSS
+          - SESS
+          - SSBS
+          - SESS
+          - SSSS
       - id: diamond_radiators
         name: Diamond Radiators
         primary_property: radiator
@@ -335,36 +335,36 @@ views:
         - hull
         repeat:
           min: 1
-          max: 6
+          max: 5
         variants:
-        - id: open
+        - id: panel_vanes
           weight: 1
           cells:
-          - ' ╲ '
-          - ╭─╮
-          - │ │
-          - ╰─╯
-          - ' ╱ '
+          - ' ▐▓ '
+          - ' ▐▓ '
+          - ╠═╬╣
+          - ' ▐▓ '
+          - ' ▐▓ '
           color_mask:
-          - SSS
-          - SSS
-          - SSS
-          - SSS
-          - SSS
-        - id: folded
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+        - id: diamond_chain
           weight: 1
           cells:
-          - ' │ '
-          - ▗▄▖
-          - █ █
-          - ▝▀▘
-          - ' │ '
+          - ' ◢◣ '
+          - '  █ '
+          - ╾═█╼
+          - '  █ '
+          - ' ◥◤ '
           color_mask:
-          - SSS
-          - SSS
-          - SSS
-          - SSS
-          - SSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
+          - SSSS
       - id: habitat_petals
         name: Habitat Petals
         primary_property: habitat
@@ -374,34 +374,34 @@ views:
           min: 1
           max: 1
         variants:
-        - id: spread
+        - id: spread_petals
           weight: 1
           cells:
-          - ' ╲ '
-          - █◆◆
-          - █☼█
-          - █◆◆
-          - ' ╱ '
+          - ' ╲╱ '
+          - █◆░█
+          - █☼██
+          - █◆░█
+          - ' ╱╲ '
           color_mask:
-          - SSS
-          - SWW
-          - SBS
-          - SWW
-          - SSS
-        - id: folded
+          - SSSS
+          - SWSS
+          - SBSS
+          - SWSS
+          - SSSS
+        - id: folded_petals
           weight: 1
           cells:
-          - ╭█╮
-          - █◆█
-          - █☼◆
-          - ███
-          - ╰█╯
+          - '╭██ '
+          - █◆◆╾
+          - █☼▓█
+          - █◆▓╾
+          - '╰██ '
           color_mask:
-          - SSS
-          - SWS
-          - SBW
-          - SSS
-          - SSS
+          - SSSS
+          - SWWS
+          - SBSS
+          - SWSS
+          - SSSS
       - id: lance
         name: Lance
         primary_property: main_gun
@@ -411,34 +411,34 @@ views:
           min: 1
           max: 1
         variants:
-        - id: needle
+        - id: long_lance
           weight: 1
           cells:
-          - '    '
-          - '  ─ '
-          - ─═█►
-          - '  ─ '
-          - '    '
+          - '     '
+          - '  ── '
+          - ╾─══►
+          - '  ── '
+          - '     '
           color_mask:
-          - SSSS
-          - SSSS
-          - SASA
-          - SSSS
-          - SSSS
-        - id: fork
+          - SSSSS
+          - SSSSS
+          - SSASA
+          - SSSSS
+          - SSSSS
+        - id: lensed_lance
           weight: 1
           cells:
-          - '    '
-          - '─▀█ '
-          - ═██►
-          - '─▄█ '
-          - '    '
+          - '  ╾▀ '
+          - '  ═▓ '
+          - ╾─█☼►
+          - '  ═▓ '
+          - '  ╾▀ '
           color_mask:
-          - SSSS
-          - SASS
-          - ASSA
-          - SASS
-          - SSSS
+          - SSSAS
+          - SSSSS
+          - SSSBA
+          - SSSSS
+          - SSSAS
     - id: compact
       name: Compact
       structure_lengths:
@@ -458,7 +458,7 @@ views:
           weight: 1
           cells:
           - ' ▴'
-          - ▀█
+          - ▄█
           - ' ▾'
           color_mask:
           - SS
@@ -473,12 +473,12 @@ views:
           min: 1
           max: 11
         variants:
-        - id: fins
+        - id: diamond
           weight: 1
           cells:
-          - ◢█
-          - ██
-          - ◥█
+          - ◤◥
+          - █♦
+          - ◣◢
           color_mask:
           - SS
           - SS
@@ -505,11 +505,11 @@ views:
           weight: 1
           cells:
           - '   '
-          - ═▀►
+          - ╾═►
           - '   '
           color_mask:
           - SSS
-          - AAA
+          - SAA
           - SSS
   vertical:
     name: Vertical
@@ -522,7 +522,7 @@ views:
       structure_lengths:
         fusion_bell: 1
         engine_swell: 1
-        diamond_radiators: 6
+        diamond_radiators: 5
         habitat_petals: 1
         lance: 1
       sections:
@@ -535,22 +535,26 @@ views:
           min: 1
           max: 1
         variants:
-        - id: focused
+        - id: focused_bell
           weight: 1
           cells:
-          - ║║    ▓▓    ║║
-          - ▌▌  ▌▌██▌▌  ▌▌
+          - '      ▓▓      '
+          - ▌▌▗▗██░░██▖▖▌▌
+          - '    ▐▐▐▐▐▐    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - EESSEESSEESSEE
-        - id: hot
+          - EESSSSEESSSSEE
+          - SSSSEEEEEESSSS
+        - id: luminous_plume
           weight: 1
           cells:
-          - ║║    ▓▓    ║║
-          - ▌▌▌▌▜▜██▛▛▌▌▌▌
+          - '    ╽╽██╽╽    '
+          - '  ▐▐▜▜██▛▛▐▐  '
+          - '    ▾▾▾▾▾▾    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - EEEESSSSSSEEEE
+          - SSEESSSSSSEESS
+          - SSSSSSSSSSSSSS
       - id: engine_swell
         name: Engine Swell
         primary_property: spindrive
@@ -563,19 +567,23 @@ views:
         - id: swell
           weight: 1
           cells:
-          - '  ◢◢▓▓██▓▓◣◣  '
-          - ◀◀████▒▒████▶▶
+          - '    ▓▓██▓▓    '
+          - ◀◀██☼☼░░████▶▶
+          - '  ◥◥▓▓██▓▓◤◤  '
           color_mask:
           - SSSSSSSSSSSSSS
+          - SSSSBBEESSSSSS
           - SSSSSSSSSSSSSS
-        - id: veined
+        - id: veined_swell
           weight: 1
           cells:
-          - '  ◢◢▓▓██▓▓◣◣  '
-          - ☼☼████▒▒████▶▶
+          - '    ▓▓██▓▓    '
+          - ☼☼▓▓██☼☼██▓▓☼☼
+          - '  ◥◥▓▓██▓▓◤◤  '
           color_mask:
           - SSSSSSSSSSSSSS
-          - BBSSSSSSSSSSSS
+          - BBSSSSBBSSSSBB
+          - SSSSSSSSSSSSSS
       - id: diamond_radiators
         name: Diamond Radiators
         primary_property: radiator
@@ -583,22 +591,26 @@ views:
         - hull
         repeat:
           min: 1
-          max: 6
+          max: 5
         variants:
-        - id: open
+        - id: panel_vanes
           weight: 1
           cells:
-          - '    ╭╭──╮╮    '
-          - ██╱╱││  ││╲╲██
+          - '      ╦╦      '
+          - ▓▓▓▓▓▓╬╬▓▓▓▓▓▓
+          - '      ╩╩      '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-        - id: folded
+          - SSSSSSSSSSSSSS
+        - id: diamond_chain
           weight: 1
           cells:
-          - '    ▗▗██▖▖    '
-          - ♦♦──▐▐  ▌▌──◇◇
+          - '      ╿╿      '
+          - ◤◤◢◢██████◣◣◥◥
+          - '      ╽╽      '
           color_mask:
+          - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
       - id: habitat_petals
@@ -610,22 +622,26 @@ views:
           min: 1
           max: 1
         variants:
-        - id: spread
+        - id: spread_petals
           weight: 1
           cells:
-          - ◢◢  ◆◆██◆◆  ◣◣
-          - ██╱╱◆◆☼☼◆◆╲╲██
+          - '    ██████    '
+          - ██╲╲░░██░░╱╱██
+          - ◥◥  ██████  ◤◤
           color_mask:
-          - SSSSWWSSWWSSSS
-          - SSSSWWBBWWSSSS
-        - id: folded
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+        - id: folded_petals
           weight: 1
           cells:
-          - '  ╭╭██◆◆██╮╮  '
-          - '  ██◆◆☼☼████  '
+          - '    ╽╽██╽╽    '
+          - ▐▐██◆◆▓▓▓▓██▌▌
+          - '  ╰╰██████╯╯  '
           color_mask:
-          - SSSSSSWWSSSSSS
-          - SSSSWWBBSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSWWSSSSSSSS
+          - SSSSSSSSSSSSSS
       - id: lance
         name: Lance
         primary_property: main_gun
@@ -635,32 +651,36 @@ views:
           min: 1
           max: 1
         variants:
-        - id: needle
+        - id: long_lance
           weight: 1
           cells:
           - '      ▲▲      '
-          - '    ││██││    '
-          - '      ││      '
-          color_mask:
-          - SSSSSSAASSSSSS
-          - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
-        - id: fork
-          weight: 1
-          cells:
-          - '      ▲▲      '
-          - '    ██████    '
           - '    ││║║││    '
+          - '    ╽╽││╽╽    '
+          - '      ╽╽      '
           color_mask:
           - SSSSSSAASSSSSS
           - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
+        - id: lensed_lance
+          weight: 1
+          cells:
+          - '      ▲▲      '
+          - '  ▌▌▓▓☼☼▓▓▌▌  '
+          - '    ╽╽║║╽╽    '
+          - '      ╽╽      '
+          color_mask:
           - SSSSSSAASSSSSS
+          - SSAASSBBSSAASS
+          - SSSSSSSSSSSSSS
+          - SSSSSSSSSSSSSS
     - id: medium
       name: Medium
       structure_lengths:
         fusion_bell: 1
         engine_swell: 1
-        diamond_radiators: 6
+        diamond_radiators: 4
         habitat_petals: 1
         lance: 1
       sections:
@@ -673,19 +693,19 @@ views:
           min: 1
           max: 1
         variants:
-        - id: focused
+        - id: focused_bell
           weight: 1
           cells:
           - '    ▓▓    '
-          - '    ▌▌    '
+          - ▌▌◥◥██◤◤▌▌
           color_mask:
           - SSSSSSSSSS
-          - SSSSEESSSS
-        - id: hot
+          - EESSSSSSEE
+        - id: luminous_plume
           weight: 1
           cells:
-          - '    ▓▓    '
-          - '  ▌▌▌▌▌▌  '
+          - '  ╽╽██╽╽  '
+          - ▾▾▐▐▐▐▐▐▾▾
           color_mask:
           - SSSSSSSSSS
           - SSEEEEEESS
@@ -701,19 +721,19 @@ views:
         - id: swell
           weight: 1
           cells:
-          - ◢◢▓▓██▓▓◣◣
-          - ◥◥▓▓██▓▓◤◤
+          - '  ▓▓██▓▓  '
+          - ████▒▒████
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
-        - id: veined
+        - id: veined_swell
           weight: 1
           cells:
-          - ◢◢▓▓██▓▓◣◣
-          - ◥◥▓▓██▓▓◤◤
+          - '  ▓▓██▓▓  '
+          - ██░░▓▓░░██
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
+          - SSEESSEESS
       - id: diamond_radiators
         name: Diamond Radiators
         primary_property: radiator
@@ -721,21 +741,21 @@ views:
         - hull
         repeat:
           min: 1
-          max: 6
+          max: 5
         variants:
-        - id: open
+        - id: panel_vanes
           weight: 1
           cells:
-          - '  ╭╭──╮╮  '
-          - '  ╰╰──╯╯  '
+          - '    ╦╦    '
+          - ▀▀▀▀║║▀▀▀▀
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
-        - id: folded
+        - id: diamond_chain
           weight: 1
           cells:
-          - '  ▗▗██▖▖  '
-          - '  ▝▝██▘▘  '
+          - '    ╿╿    '
+          - ◥◥  ║║  ◤◤
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -748,22 +768,22 @@ views:
           min: 1
           max: 1
         variants:
-        - id: spread
+        - id: spread_petals
           weight: 1
           cells:
-          - '  ◆◆██◆◆  '
           - '  ██████  '
+          - ╱╱◆◆☼☼◆◆╲╲
           color_mask:
-          - SSWWSSWWSS
           - SSSSSSSSSS
-        - id: folded
+          - SSWWBBWWSS
+        - id: folded_petals
           weight: 1
           cells:
-          - ╭╭██◆◆██╮╮
-          - ╰╰██████╯╯
+          - '  ╽╽██╽╽  '
+          - ██◆◆☼☼◆◆██
           color_mask:
-          - SSSSWWSSSS
           - SSSSSSSSSS
+          - SSWWBBWWSS
       - id: lance
         name: Lance
         primary_property: main_gun
@@ -773,22 +793,26 @@ views:
           min: 1
           max: 1
         variants:
-        - id: needle
+        - id: long_lance
           weight: 1
           cells:
           - '    ▲▲    '
-          - '    ║║    '
+          - '  ││║║││  '
+          - '    ╽╽    '
           color_mask:
           - SSSSAASSSS
           - SSSSAASSSS
-        - id: fork
+          - SSSSSSSSSS
+        - id: lensed_lance
           weight: 1
           cells:
           - '    ▲▲    '
-          - '  ▌▌██▐▐  '
+          - ╽╽║║██║║╽╽
+          - '    ╽╽    '
           color_mask:
           - SSSSAASSSS
-          - SSAASSAASS
+          - SSSSSSSSSS
+          - SSSSSSSSSS
     - id: compact
       name: Compact
       structure_lengths:
@@ -819,10 +843,10 @@ views:
           min: 1
           max: 11
         variants:
-        - id: fins
+        - id: diamond
           weight: 1
           cells:
-          - ██████
+          - ◤◤♦♦◥◥
           color_mask:
           - SSSSSS
         - id: petal
@@ -843,7 +867,7 @@ views:
           weight: 1
           cells:
           - '  ▲▲  '
-          - '  ║║  '
+          - '  ╽╽  '
           color_mask:
           - SSAASS
-          - SSAASS
+          - SSSSSS

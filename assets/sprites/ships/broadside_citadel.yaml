@@ -30,42 +30,42 @@ views:
           min: 1
           max: 1
         variants:
-        - id: seven_bell
+        - id: triple_bell
           weight: 1
           cells:
-          - ' ▀▶═ '
-          - '     '
-          - '▀▟▓▓ '
-          - ▀███▓
-          - ▀███▓
-          - '▀▜▓▓ '
-          - ' ▀▶═ '
+          - ' ▀▖  '
+          - '▄▟▓▖ '
+          - ▄█░▓╾
+          - ▄███▓
+          - ▄█░▓╾
+          - '▄▜▓▘ '
+          - ' ▀▘  '
           color_mask:
           - SESSS
-          - SSSSS
           - ESSSS
+          - ESESS
           - ESSSS
-          - ESSSS
+          - ESESS
           - ESSSS
           - SESSS
-        - id: armored
+        - id: armored_cluster
           weight: 1
           cells:
-          - ' ▀▀═ '
-          - '▀▶▓  '
-          - ' ▟██▓'
-          - ▀████
-          - ▀███▓
-          - ' ▜██▓'
-          - ' ▀▀═ '
+          - ' ▓▄▓ '
+          - ▓▄▟░▓
+          - ▓▄██▓
+          - ▓▄█░█
+          - ▓▄██▓
+          - ▓▄▜░▓
+          - ' ▓▄▓ '
           color_mask:
-          - SEESS
-          - ESSSS
-          - SSSSS
-          - ESSSS
-          - ESSSS
-          - SSSSS
-          - SEESS
+          - SSESS
+          - SESES
+          - SESSS
+          - SESES
+          - SESSS
+          - SESES
+          - SSESS
       - id: drive_citadel
         name: Drive Citadel
         primary_property: armor
@@ -93,21 +93,21 @@ views:
           - SDSDS
           - SSSSS
           - SSSSS
-        - id: layered
+        - id: layered_citadel
           weight: 1
           cells:
           - ◢███◣
-          - ▓███▓
-          - █████
-          - █▒▒▒█
-          - █████
-          - ▓███▓
+          - ▓█▤█▓
+          - █▤▒▤█
+          - █▒◇▒█
+          - █▤▒▤█
+          - ▓█▤█▓
           - ◥███◤
           color_mask:
           - SSSSS
           - SSSSS
           - SSSSS
-          - SSSSS
+          - SSDSS
           - SSSSS
           - SSSSS
           - SSSSS
@@ -119,44 +119,44 @@ views:
         - armor
         repeat:
           min: 1
-          max: 10
+          max: 4
         variants:
         - id: open_bays
           weight: 1
           cells:
-          - '      '
-          - ▓▀↑▓▀↑
+          - ' ▄▓▄▓ '
+          - ▓▲▓▲▓▓
           - ╔════╗
           - ║▒◇▒▒║
           - ╚════╝
-          - ▓▀↓▓▀↓
-          - '      '
+          - ▓▼▓▼▓▓
+          - ' ▀▓▀▓ '
           color_mask:
           - SSSSSS
-          - SSASSA
+          - SASASS
           - SSSSSS
           - SSSSSS
           - SSSSSS
-          - SSASSA
+          - SASASS
           - SSSSSS
         - id: gunwalls
           weight: 1
           cells:
-          - '▓███═ '
-          - '─▀▙   '
+          - ▓▀▓▀▓▓
+          - ▟█▙▟█▙
           - ██████
-          - █▀▒▀██
+          - █▀▒▒▀█
           - ██████
-          - '─▄▛   '
-          - '▓███═ '
+          - ▜█▛▜█▛
+          - ▓▄▓▄▓▓
           color_mask:
-          - SSSSAS
-          - SASSSS
-          - SSSSSS
           - SASASS
           - SSSSSS
-          - SASSSS
-          - SSSSAS
+          - SSSSSS
+          - SASSAS
+          - SSSSSS
+          - SSSSSS
+          - SASASS
       - id: command_keep
         name: Command Keep
         primary_property: bridge
@@ -212,7 +212,7 @@ views:
           min: 1
           max: 1
         variants:
-        - id: triple
+        - id: triple_battery
           weight: 1
           cells:
           - '      '
@@ -230,7 +230,7 @@ views:
           - SSASSS
           - SSSSSS
           - SSSSSS
-        - id: ram
+        - id: armored_ram
           weight: 1
           cells:
           - '      '
@@ -267,34 +267,34 @@ views:
           min: 1
           max: 1
         variants:
-        - id: seven_bell
+        - id: triple_bell
           weight: 1
           cells:
-          - '    '
-          - '▀▟▓ '
-          - ▀██▓
-          - ▀██▓
-          - '▀▜▓ '
+          - '▄▟▓ '
+          - ▄█░╾
+          - ▄██▓
+          - ▄█░╾
+          - '▄▜▓ '
           color_mask:
-          - SSSS
           - ESSS
+          - ESES
           - ESSS
+          - ESES
           - ESSS
-          - ESSS
-        - id: armored
+        - id: armored_cluster
           weight: 1
           cells:
-          - '▀▶▓ '
-          - ' ▟█▓'
-          - ▀███
-          - ▀██▓
-          - ' ▜█▓'
+          - ▓▄▟▓
+          - ▓▄█▓
+          - ▓▄██
+          - ▓▄█▓
+          - ▓▄▜▓
           color_mask:
-          - ESSS
-          - SSSS
-          - ESSS
-          - ESSS
-          - SSSS
+          - SESS
+          - SESS
+          - SESS
+          - SESS
+          - SESS
       - id: drive_citadel
         name: Drive Citadel
         primary_property: armor
@@ -318,18 +318,18 @@ views:
           - SSSS
           - SDSS
           - SSSS
-        - id: layered
+        - id: layered_citadel
           weight: 1
           cells:
-          - ▓██▓
-          - ████
-          - █▒▒█
-          - ████
-          - ▓██▓
+          - ▓█▤▓
+          - █▤▒█
+          - █▒◇█
+          - █▤▒█
+          - ▓█▤▓
           color_mask:
           - SSSS
           - SSSS
-          - SSSS
+          - SSDS
           - SSSS
           - SSSS
       - id: broadside_decks
@@ -340,36 +340,36 @@ views:
         - armor
         repeat:
           min: 1
-          max: 10
+          max: 4
         variants:
         - id: open_bays
           weight: 1
           cells:
-          - ▓▀►▓►
+          - ▓▲▓▲▓
           - ╔═══╗
           - ║▒◇▒║
           - ╚═══╝
-          - ▓▀►▓►
+          - ▓▼▓▼▓
           color_mask:
-          - SSASA
+          - SASAS
           - SSSSS
           - SSSSS
           - SSSSS
-          - SSASA
+          - SASAS
         - id: gunwalls
           weight: 1
           cells:
-          - '─▀▙  '
+          - ▟█▙▟▙
           - █████
-          - █▀▒▀█
+          - █▀▒▒█
           - █████
-          - '─▄▛  '
+          - ▜█▛▜▛
           color_mask:
-          - SASSS
           - SSSSS
-          - SASAS
           - SSSSS
           - SASSS
+          - SSSSS
+          - SSSSS
       - id: command_keep
         name: Command Keep
         primary_property: bridge
@@ -417,7 +417,7 @@ views:
           min: 1
           max: 1
         variants:
-        - id: triple
+        - id: triple_battery
           weight: 1
           cells:
           - '     '
@@ -431,7 +431,7 @@ views:
           - ASASA
           - SSASS
           - SSSSS
-        - id: ram
+        - id: armored_ram
           weight: 1
           cells:
           - '  ◇█ '
@@ -463,9 +463,9 @@ views:
         - id: drive
           weight: 1
           cells:
-          - ██
-          - ▀█
-          - ██
+          - ▓█
+          - ▄█
+          - ▓█
           color_mask:
           - SS
           - ES
@@ -479,7 +479,7 @@ views:
           min: 1
           max: 15
         variants:
-        - id: gunwall
+        - id: battery
           weight: 1
           cells:
           - ▀►
@@ -489,7 +489,7 @@ views:
           - AA
           - SS
           - AA
-        - id: armor
+        - id: keep
           weight: 1
           cells:
           - ◇█
@@ -542,26 +542,26 @@ views:
           min: 1
           max: 1
         variants:
-        - id: seven_bell
+        - id: triple_bell
           weight: 1
           cells:
-          - '      ▓▓▓▓    '
-          - ▴▴  ▓▓████▓▓▴▴
-          - '    ▌▌▌▌▌▌▌▌  '
+          - '    ╽╽▓▓╽╽    '
+          - ▗▗▓▓░░██░░▓▓▖▖
+          - '  ▐▐▐▐▐▐▐▐▐▐  '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
-          - SSSSEEEEEEEESS
-        - id: armored
+          - SSSSEESSEESSSS
+          - SSEEEEEEEEEESS
+        - id: armored_cluster
           weight: 1
           cells:
-          - '    ▓▓██▓▓▓▓  '
-          - ▌▌▓▓████████▌▌
-          - '  ▌▌  ▌▌▌▌    '
+          - '  ▓▓▓▓██▓▓▓▓  '
+          - ▐▐▜▜██████▛▛▐▐
+          - '  ▓▓▓▓▓▓▓▓▓▓  '
           color_mask:
           - SSSSSSSSSSSSSS
           - EESSSSSSSSSSEE
-          - SSEESSEEEESSSS
+          - SSSSSSSSSSSSSS
       - id: drive_citadel
         name: Drive Citadel
         primary_property: armor
@@ -581,15 +581,15 @@ views:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-        - id: layered
+        - id: layered_citadel
           weight: 1
           cells:
           - ◢◢▓▓██████▓▓◣◣
-          - ██████▒▒██████
+          - ██▤▤▒▒◇◇▒▒▤▤██
           - ◥◥▓▓██████▓▓◤◤
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
+          - SSSSSSDDSSSSSS
           - SSSSSSSSSSSSSS
       - id: broadside_decks
         name: Broadside Decks
@@ -599,28 +599,28 @@ views:
         - armor
         repeat:
           min: 1
-          max: 10
+          max: 4
         variants:
         - id: open_bays
           weight: 1
           cells:
-          - '  ▲▲╔╔══╗╗▲▲  '
-          - '  ▓▓║║▒▒║║▓▓  '
-          - ▌▌▌▌║║▒▒║║▌▌▐▐
+          - '  ▓▓╔╔══╗╗▓▓  '
+          - ▐▐◄◄║║▒▒║║►►▌▌
+          - ▐▐◄◄║║▒▒║║►►▌▌
           color_mask:
-          - SSAASSSSSSAASS
           - SSSSSSSSSSSSSS
-          - BBSSSSSSSSSSBB
+          - SSAASSSSSSAASS
+          - SSAASSSSSSAASS
         - id: gunwalls
           weight: 1
           cells:
-          - '    ██████    '
-          - ██  ██▌▌██  ██
-          - ██▌▌██▌▌██▐▐██
+          - ▓▓▟▟██████▙▙▓▓
+          - ▌▌▜▜██▒▒██▛▛▐▐
+          - ▌▌████▌▌████▐▐
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSAASSSSSS
-          - SSAASSAASSAASS
+          - AASSSSSSSSSSAA
+          - AASSSSAASSSSAA
       - id: command_keep
         name: Command Keep
         primary_property: bridge
@@ -660,7 +660,7 @@ views:
           min: 1
           max: 1
         variants:
-        - id: triple
+        - id: triple_battery
           weight: 1
           cells:
           - '      ▲▲      '
@@ -670,7 +670,7 @@ views:
           - SSSSSSAASSSSSS
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-        - id: ram
+        - id: armored_ram
           weight: 1
           cells:
           - '    ▟▟▲▲▙▙    '
@@ -699,22 +699,22 @@ views:
           min: 1
           max: 1
         variants:
-        - id: seven_bell
+        - id: triple_bell
           weight: 1
           cells:
-          - '    ▓▓▓▓  '
-          - '  ▜▜████▛▛'
+          - '  ╽╽▓▓╽╽  '
+          - ▜▜██████▛▛
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
-        - id: armored
+        - id: armored_cluster
           weight: 1
           cells:
-          - '  ▓▓██▓▓▓▓'
-          - ▴▴▜▜████▛▛
+          - ▓▓▓▓██▓▓▓▓
+          - ▐▐▐▐▐▐▐▐▐▐
           color_mask:
           - SSSSSSSSSS
-          - SSSSSSSSSS
+          - EEEEEEEEEE
       - id: drive_citadel
         name: Drive Citadel
         primary_property: armor
@@ -732,11 +732,11 @@ views:
           color_mask:
           - SSSSSSSSSS
           - SSSSSSDDSS
-        - id: layered
+        - id: layered_citadel
           weight: 1
           cells:
           - ▓▓██████▓▓
-          - ████▒▒████
+          - ██▤▤▒▒▤▤██
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -748,24 +748,24 @@ views:
         - armor
         repeat:
           min: 1
-          max: 10
+          max: 4
         variants:
         - id: open_bays
           weight: 1
           cells:
-          - ▲▲╔╔══╗╗▲▲
-          - ▲▲║║◇◇║║▲▲
+          - ▓▓╔╔══╗╗▓▓
+          - ▓▓║║◇◇║║▓▓
           - ▓▓╚╚══╝╝▓▓
           color_mask:
-          - AASSSSSSAA
-          - AASSSSSSAA
+          - SSSSSSSSSS
+          - SSSSSSSSSS
           - SSSSSSSSSS
         - id: gunwalls
           weight: 1
           cells:
-          - '  ██████  '
+          - ▟▟██████▙▙
           - ▟▟██▒▒██▙▙
-          - ││██████││
+          - ▜▜██████▛▛
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -805,7 +805,7 @@ views:
           min: 1
           max: 1
         variants:
-        - id: triple
+        - id: triple_battery
           weight: 1
           cells:
           - '    ▲▲    '
@@ -815,7 +815,7 @@ views:
           - SSSSAASSSS
           - SSAAAAAASS
           - SSSSAASSSS
-        - id: ram
+        - id: armored_ram
           weight: 1
           cells:
           - '  ▟▟▲▲▙▙  '
@@ -855,13 +855,13 @@ views:
           min: 1
           max: 15
         variants:
-        - id: gunwall
+        - id: battery
           weight: 1
           cells:
           - ▲▲██▲▲
           color_mask:
           - AASSAA
-        - id: armor
+        - id: keep
           weight: 1
           cells:
           - ██◆◆██

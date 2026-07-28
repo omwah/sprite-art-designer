@@ -29,42 +29,42 @@ views:
           min: 1
           max: 1
         variants:
-        - id: fan
+        - id: fronds
           weight: 1
           cells:
-          - ' ▀▀ '
-          - '▀◢▓ '
-          - ▀██▓
-          - ▀██▓
-          - '▀◥▓ '
-          - '    '
-          - ' ▀  '
+          - '▄╾   '
+          - '▄╾▓▖ '
+          - ▄╾█░▓
+          - ▄╾█▓▓
+          - '▄╾▓▘ '
+          - '▄╾   '
+          - '     '
           color_mask:
-          - SEES
-          - ESSS
-          - ESSS
-          - ESSS
-          - ESSS
-          - SSSS
-          - SESS
-        - id: barbs
+          - ESSSS
+          - ESSSS
+          - ESSES
+          - ESSSS
+          - ESSSS
+          - ESSSS
+          - SSSSS
+        - id: barbed_cilia
           weight: 1
           cells:
-          - ' ▀▶ '
-          - '▀▟▓ '
-          - ▀██▓
-          - ▀▒█▓
-          - '▀▜▓ '
-          - '    '
-          - ' ▀▶ '
+          - ' ▄▖  '
+          - '╾▄▟▓ '
+          - ▄▟█░▓
+          - ▄▜█▓▓
+          - '╾▄▜▓ '
+          - ' ▄▘  '
+          - '     '
           color_mask:
-          - SESS
-          - ESSS
-          - ESSS
-          - ESSS
-          - ESSS
-          - SSSS
-          - SESS
+          - SESSS
+          - SESSS
+          - ESSES
+          - ESSSS
+          - SESSS
+          - SESSS
+          - SSSSS
       - id: rear_carapace
         name: Rear Carapace
         primary_property: armor
@@ -73,16 +73,16 @@ views:
           min: 1
           max: 1
         variants:
-        - id: pearl
+        - id: pearl_plates
           weight: 1
           cells:
-          - ' ╭██╮'
-          - ╭████
-          - █████
-          - █▒◇██
-          - █████
-          - ╰████
-          - ' ╰██╯'
+          - '  ╭─╮'
+          - ' ╭██╯'
+          - ╭█▒██
+          - █▒◇▒█
+          - ╰█▒██
+          - ' ╰██╮'
+          - '  ╰─╯'
           color_mask:
           - SSSSS
           - SSSSS
@@ -91,15 +91,15 @@ views:
           - SSSSS
           - SSSSS
           - SSSSS
-        - id: scarred
+        - id: scarred_carapace
           weight: 1
           cells:
           - '  ▗▄▖'
-          - ▗▄█▒█
-          - ██◇██
-          - █▒▒██
-          - █████
+          - ' ▗█▒▙'
+          - ▗▄█◇█
+          - █▒▒◆█
           - ▝▀█▒█
+          - ' ▝█▒▛'
           - '  ▝▀▘'
           color_mask:
           - SSSSS
@@ -117,33 +117,33 @@ views:
         - hull
         repeat:
           min: 1
-          max: 5
+          max: 4
         variants:
-        - id: ports
+        - id: open_pores
           weight: 1
           cells:
-          - ' ▀    '
-          - ╭████╮
-          - █▀█▀██
-          - ██☼███
-          - █▀██▀█
-          - ╰████╯
-          - '   ▄  '
+          - '  ▀   '
+          - ╭────╮
+          - █▒◆▒▒█
+          - █▀▒▀▒█
+          - █▒☼▒▒█
+          - ╰────╯
+          - '  ▄   '
           color_mask:
-          - SBSSSS
+          - SSBSSS
+          - SSSSSS
           - SSSSSS
           - SASASS
           - SSBSSS
-          - SASSAS
           - SSSSSS
-          - SSSASS
-        - id: sealed
+          - SSASSS
+        - id: sealed_ring
           weight: 1
           cells:
           - '      '
           - ' ▗▄▄▖ '
           - ▗▄██▄▖
-          - █▒▀▒██
+          - █▒▀▒▒█
           - ▝▀██▀▘
           - ' ▝▀▀▘ '
           - '      '
@@ -164,34 +164,34 @@ views:
           min: 1
           max: 1
         variants:
-        - id: open
+        - id: open_lobe
           weight: 1
           cells:
-          - ' ╭██╮'
-          - ╭█☼██
-          - █████
-          - ██○██
-          - █████
-          - ╰██▒█
-          - '  ╰█╯'
+          - ' ╭█╮ '
+          - ╭█○█╮
+          - █○▒○█
+          - █▒☼▒█
+          - █○▒○█
+          - ╰█○█╯
+          - ' ╰█╯ '
           color_mask:
+          - SSSSS
+          - SSSSS
           - SSSSS
           - SSBSS
           - SSSSS
           - SSSSS
           - SSSSS
-          - SSSSS
-          - SSSSS
-        - id: heavy
+        - id: armored_lobe
           weight: 1
           cells:
           - '  ▗▄▖'
-          - ▗▄███
-          - █▒▒██
-          - ██☼██
-          - █████
-          - ▝▀███
-          - ' ▝▀▀▘'
+          - ' ▗███'
+          - ▗█▒▒█
+          - █▒☼▒█
+          - ▝█▒▒█
+          - ' ▝███'
+          - '  ▝▀▘'
           color_mask:
           - SSSSS
           - SSSSS
@@ -209,7 +209,7 @@ views:
           min: 1
           max: 1
         variants:
-        - id: hook
+        - id: hooked_beak
           weight: 1
           cells:
           - '     '
@@ -227,13 +227,13 @@ views:
           - DSSSS
           - SSDSS
           - SSSSS
-        - id: round
+        - id: armored_beak
           weight: 1
           cells:
           - '     '
           - '  ◇█◇'
           - ◇███◇
-          - ◇█☼▓►
+          - ◇█▒▓►
           - ◇███◇
           - '  ◇█◇'
           - '     '
@@ -241,7 +241,7 @@ views:
           - SSSSS
           - SSDSD
           - DSSSD
-          - DSBSS
+          - DSSSS
           - DSSSD
           - SSDSD
           - SSSSS
@@ -263,34 +263,34 @@ views:
           min: 1
           max: 1
         variants:
-        - id: fan
+        - id: fronds
           weight: 1
           cells:
-          - '▀◢ '
-          - ▀█▓
-          - ▀█▓
-          - '▀◥ '
-          - '   '
+          - '▄╾▓ '
+          - ▄╾█▓
+          - ▄╾█▓
+          - '▄╾▓ '
+          - '▄╾  '
           color_mask:
-          - ESS
-          - ESS
-          - ESS
-          - ESS
-          - SSS
-        - id: barbs
+          - ESSS
+          - ESSS
+          - ESSS
+          - ESSS
+          - ESSS
+        - id: barbed_cilia
           weight: 1
           cells:
-          - '▀▟ '
-          - ▀█▓
-          - ▀▒▓
-          - '▀▜ '
-          - '   '
+          - '╾▄▟ '
+          - ▄▟█▓
+          - ▄▜█▓
+          - '╾▄▜ '
+          - ' ▄▘ '
           color_mask:
-          - ESS
-          - ESS
-          - ESS
-          - ESS
-          - SSS
+          - SESS
+          - ESSS
+          - ESSS
+          - SESS
+          - SESS
       - id: rear_carapace
         name: Rear Carapace
         primary_property: armor
@@ -299,28 +299,28 @@ views:
           min: 1
           max: 1
         variants:
-        - id: pearl
+        - id: pearl_plates
           weight: 1
           cells:
-          - ╭███
-          - ████
+          - ' ╭█╯'
+          - ╭█▒█
           - █▒◇█
-          - ████
-          - ╰███
+          - ╰█▒█
+          - ' ╰█╮'
           color_mask:
           - SSSS
           - SSSS
           - SSSS
           - SSSS
           - SSSS
-        - id: scarred
+        - id: scarred_carapace
           weight: 1
           cells:
+          - ' ▗█▙'
           - ▗▄██
-          - ██◇█
           - █▒▒█
-          - ████
           - ▝▀██
+          - ' ▝█▛'
           color_mask:
           - SSSS
           - SSSS
@@ -335,23 +335,23 @@ views:
         - hull
         repeat:
           min: 1
-          max: 5
+          max: 4
         variants:
-        - id: ports
+        - id: open_pores
           weight: 1
           cells:
-          - ╭███╮
-          - █▀█▀█
-          - ██☼██
-          - █▀███
-          - ╰███╯
+          - ╭───╮
+          - █▒◆▒█
+          - █▀▒▀█
+          - █▒☼▒█
+          - ╰───╯
           color_mask:
+          - SSSSS
           - SSSSS
           - SASAS
           - SSBSS
-          - SASSS
           - SSSSS
-        - id: sealed
+        - id: sealed_ring
           weight: 1
           cells:
           - ' ▗▄▄ '
@@ -374,28 +374,28 @@ views:
           min: 1
           max: 1
         variants:
-        - id: open
+        - id: open_lobe
           weight: 1
           cells:
-          - ╭█☼█
-          - ████
-          - ██○█
-          - ████
-          - ╰███
+          - ╭█○╮
+          - █○▒█
+          - █▒☼█
+          - █○▒█
+          - ╰█○╯
           color_mask:
+          - SSSS
+          - SSSS
           - SSBS
           - SSSS
           - SSSS
-          - SSSS
-          - SSSS
-        - id: heavy
+        - id: armored_lobe
           weight: 1
           cells:
-          - ▗▄██
-          - █▒▒█
-          - ██☼█
-          - ████
-          - ▝▀██
+          - ' ▗██'
+          - ▗█▒█
+          - █▒☼█
+          - ▝█▒█
+          - ' ▝██'
           color_mask:
           - SSSS
           - SSSS
@@ -411,7 +411,7 @@ views:
           min: 1
           max: 1
         variants:
-        - id: hook
+        - id: hooked_beak
           weight: 1
           cells:
           - ' ◇█ '
@@ -425,18 +425,18 @@ views:
           - DSBS
           - DSSS
           - SSDS
-        - id: round
+        - id: armored_beak
           weight: 1
           cells:
           - '  ◇◇'
           - ◇██◇
-          - ◇█☼►
+          - ◇█▒►
           - ◇██◇
           - '  ◇◇'
           color_mask:
           - SSDD
           - DSSD
-          - DSBS
+          - DSSS
           - DSSD
           - SSDD
     - id: compact
@@ -458,7 +458,7 @@ views:
           weight: 1
           cells:
           - ' █'
-          - ▀█
+          - ▄╾
           - ' ▾'
           color_mask:
           - SS
@@ -483,7 +483,7 @@ views:
           - SS
           - SS
           - SS
-        - id: ports
+        - id: pores
           weight: 1
           cells:
           - ▀█
@@ -535,22 +535,26 @@ views:
           min: 1
           max: 1
         variants:
-        - id: fan
+        - id: fronds
           weight: 1
           cells:
           - '    ▓▓▓▓      '
-          - ▌▌◥◥████◤◤  ▌▌
+          - '  ▓▓████▓▓    '
+          - '▐▐▐▐▐▐▐▐▐▐▐▐  '
           color_mask:
           - SSSSSSSSSSSSSS
-          - EESSSSSSSSSSEE
-        - id: barbs
+          - SSSSSSSSSSSSSS
+          - EEEEEEEEEEEESS
+        - id: barbed_cilia
           weight: 1
           cells:
           - '    ▓▓▓▓      '
-          - ▌▌▜▜██▒▒▛▛  ▌▌
+          - '▗▗▜▜████▛▛▖▖  '
+          - '  ╽╽▐▐▐▐╽╽    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - EESSSSSSSSSSEE
+          - SSSSSSSSSSSSSS
+          - SSSSEEEESSSSSS
       - id: rear_carapace
         name: Rear Carapace
         primary_property: armor
@@ -559,22 +563,22 @@ views:
           min: 1
           max: 1
         variants:
-        - id: pearl
+        - id: pearl_plates
           weight: 1
           cells:
-          - ╭╭██████████╮╮
-          - ██████◇◇██████
-          - '  ╰╰██████╯╯  '
+          - ╭╭╮╮██████╭╭╮╮
+          - ╰╰██▒▒◇◇▒▒██╯╯
+          - '    ╰╰██╯╯    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-        - id: scarred
+        - id: scarred_carapace
           weight: 1
           cells:
-          - ▗▗██████████▖▖
-          - ▝▝██◇◇▒▒████▘▘
-          - '  ▝▝██████▘▘  '
+          - ▗▗▟▟██████▙▙▖▖
+          - ▝▝████▒▒████▘▘
+          - '    ▝▝██▘▘    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
@@ -587,19 +591,19 @@ views:
         - hull
         repeat:
           min: 1
-          max: 5
+          max: 4
         variants:
-        - id: ports
+        - id: open_pores
           weight: 1
           cells:
           - '  ╭╭██████╮╮  '
-          - '  ██▌▌██████▐▐'
-          - '▌▌██▌▌██▌▌██  '
+          - '  ││▒▒▌▌▒▒││  '
+          - '  ││▒▒▌▌▒▒││  '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSAASSSSSSAA
-          - BBSSAASSAASSSS
-        - id: sealed
+          - SSSSSSAASSSSSS
+          - SSSSSSAASSSSSS
+        - id: sealed_ring
           weight: 1
           cells:
           - '    ▗▗██▖▖    '
@@ -618,22 +622,22 @@ views:
           min: 1
           max: 1
         variants:
-        - id: open
+        - id: open_lobe
           weight: 1
           cells:
-          - ╭╭██████████╮╮
-          - ██☼☼██○○████╯╯
+          - '  ╭╭██████╮╮  '
+          - ██○○▒▒☼☼▒▒○○██
           - '  ╰╰██████╯╯  '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSBBSSSSSSSSSS
+          - SSSSSSBBSSSSSS
           - SSSSSSSSSSSSSS
-        - id: heavy
+        - id: armored_lobe
           weight: 1
           cells:
           - ▗▗██████████▖▖
-          - ▝▝██▒▒☼☼████▌▌
-          - '  ▝▝██████▘▘  '
+          - ▝▝██▒▒☼☼▒▒██▘▘
+          - '    ▝▝██▘▘    '
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSBBSSSSSS
@@ -647,7 +651,7 @@ views:
           min: 1
           max: 1
         variants:
-        - id: hook
+        - id: hooked_beak
           weight: 1
           cells:
           - '    ▟▟▲▲▙▙    '
@@ -657,15 +661,15 @@ views:
           - SSSSSSSSSSSSSS
           - SSSSSSBBSSDDSS
           - SSSSDDDDDDSSSS
-        - id: round
+        - id: armored_beak
           weight: 1
           cells:
           - '  ◇◇◇◇▲▲◇◇◇◇  '
-          - '  ◇◇██☼☼██◇◇  '
+          - '  ◇◇██▒▒██◇◇  '
           - '    ◇◇◇◇◇◇    '
           color_mask:
           - SSDDDDSSDDDDSS
-          - SSDDSSBBSSDDSS
+          - SSDDSSSSSSDDSS
           - SSSSDDDDDDSSSS
     - id: medium
       name: Medium
@@ -685,22 +689,22 @@ views:
           min: 1
           max: 1
         variants:
-        - id: fan
+        - id: fronds
           weight: 1
           cells:
           - '  ▓▓▓▓    '
-          - '▌▌▌▌▌▌▌▌  '
+          - ╽╽╽╽╽╽╽╽╽╽
           color_mask:
           - SSSSSSSSSS
-          - EEEEEEEESS
-        - id: barbs
+          - SSSSSSSSSS
+        - id: barbed_cilia
           weight: 1
           cells:
           - '  ▓▓▓▓    '
-          - '▌▌▌▌▌▌▌▌  '
+          - ▐▐▜▜▛▛▐▐▐▐
           color_mask:
           - SSSSSSSSSS
-          - EEEEEEEESS
+          - EESSSSEEEE
       - id: rear_carapace
         name: Rear Carapace
         primary_property: armor
@@ -709,19 +713,19 @@ views:
           min: 1
           max: 1
         variants:
-        - id: pearl
+        - id: pearl_plates
           weight: 1
           cells:
-          - ██████████
-          - ████▒▒████
+          - ╮╮██████╭╭
+          - ╰╰██▒▒██╯╯
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
-        - id: scarred
+        - id: scarred_carapace
           weight: 1
           cells:
-          - ██████████
-          - ▐▐██▒▒██▌▌
+          - ▟▟██████▙▙
+          - ▝▝▐▐▒▒▌▌▘▘
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -733,19 +737,19 @@ views:
         - hull
         repeat:
           min: 1
-          max: 5
+          max: 4
         variants:
-        - id: ports
+        - id: open_pores
           weight: 1
           cells:
           - ╭╭██████╮╮
-          - ████☼☼████
+          - ││◆◆▒▒☼☼││
           - ╰╰██████╯╯
           color_mask:
           - SSSSSSSSSS
-          - SSSSBBSSSS
+          - SSSSSSBBSS
           - SSSSSSSSSS
-        - id: sealed
+        - id: sealed_ring
           weight: 1
           cells:
           - '  ▗▗██▖▖  '
@@ -764,19 +768,19 @@ views:
           min: 1
           max: 1
         variants:
-        - id: open
+        - id: open_lobe
           weight: 1
           cells:
-          - ██████████
-          - ██████████
+          - ╭╭██████╮╮
+          - ██○○▒▒○○██
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
-        - id: heavy
+        - id: armored_lobe
           weight: 1
           cells:
           - ██████████
-          - ▐▐▒▒████▌▌
+          - ▝▝██▒▒██▘▘
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
@@ -789,7 +793,7 @@ views:
           min: 1
           max: 1
         variants:
-        - id: hook
+        - id: hooked_beak
           weight: 1
           cells:
           - '  ▟▟▲▲▙▙  '
@@ -797,7 +801,7 @@ views:
           color_mask:
           - SSSSSSSSSS
           - DDSSSSSSSS
-        - id: round
+        - id: armored_beak
           weight: 1
           cells:
           - ◇◇◇◇▲▲◇◇◇◇
@@ -823,7 +827,7 @@ views:
         - id: drive
           weight: 1
           cells:
-          - ████▶▶
+          - ██╽╽▶▶
           color_mask:
           - SSSSSS
       - id: body
@@ -841,7 +845,7 @@ views:
           - ██◇◇██
           color_mask:
           - SSSSSS
-        - id: ports
+        - id: pores
           weight: 1
           cells:
           - ██☼☼██

@@ -32,36 +32,36 @@ views:
         - id: tendons
           weight: 1
           cells:
-          - '     '
           - ' ▀   '
-          - '▀▀╲▓ '
-          - ▀▒██▓
-          - '▀▀╱▓ '
-          - '     '
+          - '▄▀╲▓ '
+          - ▄▒██▓
+          - ▄█░▒▓
+          - '▄▀╱▓ '
+          - ' ▀   '
           - '     '
           color_mask:
-          - SSSSS
           - SESSS
           - EESSS
           - ESSSS
+          - ESESS
           - EESSS
-          - SSSSS
+          - SESSS
           - SSSSS
         - id: spasm
           weight: 1
           cells:
-          - '     '
           - ' ▀▀  '
-          - '▀╲▒▓ '
-          - ▀███▓
-          - '▀╱▒▓ '
+          - '▄╲▒▓ '
+          - ▄███▓
+          - ▄█░█▓
+          - '▄╱▒▓ '
           - '  ▀  '
           - '     '
           color_mask:
-          - SSSSS
           - SEESS
           - ESSSS
           - ESSSS
+          - ESESS
           - ESSSS
           - SSESS
           - SSSSS
@@ -80,7 +80,7 @@ views:
           - '    '
           - ' ▗▒▖'
           - ╱███
-          - █☼██
+          - █☼▒█
           - ╲███
           - ' ▝▒▘'
           - '    '
@@ -92,7 +92,7 @@ views:
           - SSSS
           - SSSS
           - SSSS
-        - id: scar
+        - id: scar_knot
           weight: 1
           cells:
           - '    '
@@ -117,9 +117,9 @@ views:
         - armor
         repeat:
           min: 1
-          max: 8
+          max: 7
         variants:
-        - id: bones
+        - id: spar
           weight: 1
           cells:
           - '    '
@@ -137,7 +137,7 @@ views:
           - SSSS
           - SSSS
           - SSSS
-        - id: muscle
+        - id: muscle_band
           weight: 1
           cells:
           - '    '
@@ -164,13 +164,13 @@ views:
           min: 1
           max: 1
         variants:
-        - id: eye
+        - id: eye_cluster
           weight: 1
           cells:
           - '     '
           - ' ☼█☼ '
           - █☼███
-          - █████
+          - █▒█▒█
           - █☼▒██
           - ' ◥█◤ '
           - '     '
@@ -226,7 +226,7 @@ views:
           - SSSS
           - SSSS
           - SSSS
-        - id: barb
+        - id: barbed_beak
           weight: 1
           cells:
           - '    '
@@ -265,29 +265,29 @@ views:
         - id: tendons
           weight: 1
           cells:
+          - '▄▀╲ '
+          - ▄▒█▓
+          - ▄█░▓
+          - '▄▀╱ '
           - ' ▀  '
-          - '▀▀╲ '
-          - ▀▒█▓
-          - '▀▀╱ '
-          - '    '
           color_mask:
-          - SESS
           - EESS
           - ESSS
+          - ESES
           - EESS
-          - SSSS
+          - SESS
         - id: spasm
           weight: 1
           cells:
-          - ' ▀▀ '
-          - '▀╲▒ '
-          - ▀██▓
-          - '▀╱▒ '
+          - '▄╲▒ '
+          - ▄██▓
+          - ▄█░▓
+          - '▄╱▒ '
           - '  ▀ '
           color_mask:
-          - SEES
           - ESSS
           - ESSS
+          - ESES
           - ESSS
           - SSES
       - id: marrow_knot
@@ -313,7 +313,7 @@ views:
           - SBS
           - SSS
           - SSS
-        - id: scar
+        - id: scar_knot
           weight: 1
           cells:
           - '   '
@@ -334,9 +334,9 @@ views:
         - armor
         repeat:
           min: 1
-          max: 8
+          max: 7
         variants:
-        - id: bones
+        - id: spar
           weight: 1
           cells:
           - ╲ ╱
@@ -350,7 +350,7 @@ views:
           - SSS
           - SSS
           - SSS
-        - id: muscle
+        - id: muscle_band
           weight: 1
           cells:
           - ▗▒▖
@@ -373,12 +373,12 @@ views:
           min: 1
           max: 1
         variants:
-        - id: eye
+        - id: eye_cluster
           weight: 1
           cells:
           - ' ☼█ '
           - █☼██
-          - ████
+          - █▒██
           - █☼▒█
           - ' ◥█ '
           color_mask:
@@ -423,7 +423,7 @@ views:
           - SSA
           - SSS
           - SSS
-        - id: barb
+        - id: barbed_beak
           weight: 1
           cells:
           - '   '
@@ -456,7 +456,7 @@ views:
           weight: 1
           cells:
           - ' ▴'
-          - ▀▒
+          - ▄▒
           - ' ▾'
           color_mask:
           - SS
@@ -471,7 +471,7 @@ views:
           min: 1
           max: 12
         variants:
-        - id: bone
+        - id: spar
           weight: 1
           cells:
           - ╲█
@@ -536,23 +536,23 @@ views:
         - id: tendons
           weight: 1
           cells:
-          - '      ▓▓      '
-          - '    ╱╱██╲╲    '
-          - '    ▌▌▌▌▌▌    '
+          - '    ▓▓▓▓      '
+          - '  ╱╱██░░╲╲    '
+          - '  ▐▐▐▐▐▐▐▐    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSSSSSSSSSSSSS
-          - SSSSEEEEEESSSS
+          - SSSSSSEESSSSSS
+          - SSEEEEEEEESSSS
         - id: spasm
           weight: 1
           cells:
-          - '      ▓▓      '
-          - '  ▌▌▒▒██▒▒▌▌  '
-          - '    ▌▌▌▌▌▌    '
+          - '    ▓▓▓▓      '
+          - '▌▌▒▒██░░▒▒▌▌  '
+          - '  ▐▐▐▐▐▐▐▐    '
           color_mask:
           - SSSSSSSSSSSSSS
-          - SSEESSSSSSEESS
-          - SSSSEEEEEESSSS
+          - EESSSSEESSEESS
+          - SSEEEEEEEESSSS
       - id: marrow_knot
         name: Marrow Knot
         primary_property: spindrive
@@ -570,7 +570,7 @@ views:
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSBBSSSSSS
-        - id: scar
+        - id: scar_knot
           weight: 1
           cells:
           - '    ◢◢██◣◣    '
@@ -585,9 +585,9 @@ views:
         - armor
         repeat:
           min: 1
-          max: 8
+          max: 7
         variants:
-        - id: bones
+        - id: spar
           weight: 1
           cells:
           - '  ╲╲▓▓██▓▓╱╱  '
@@ -595,7 +595,7 @@ views:
           color_mask:
           - SSSSSSSSSSSSSS
           - SSSSSSSSSSSSSS
-        - id: muscle
+        - id: muscle_band
           weight: 1
           cells:
           - '  ▗▗██████▖▖  '
@@ -612,7 +612,7 @@ views:
           min: 1
           max: 1
         variants:
-        - id: eye
+        - id: eye_cluster
           weight: 1
           cells:
           - '    ██████    '
@@ -648,7 +648,7 @@ views:
           color_mask:
           - SSSSSSAASSSSSS
           - SSSSSSSSSSSSSS
-        - id: barb
+        - id: barbed_beak
           weight: 1
           cells:
           - '      ▲▲      '
@@ -677,19 +677,19 @@ views:
         - id: tendons
           weight: 1
           cells:
-          - '    ▓▓    '
-          - '▌▌▌▌▒▒▌▌  '
+          - '  ▓▓▓▓    '
+          - ▌▌▒▒██▌▌▌▌
           color_mask:
           - SSSSSSSSSS
-          - EEEESSEESS
+          - EESSSSEEEE
         - id: spasm
           weight: 1
           cells:
-          - '    ▓▓    '
-          - '▌▌╱╱██╲╲  '
+          - '  ▓▓▓▓    '
+          - '╱╱████╲╲  '
           color_mask:
           - SSSSSSSSSS
-          - EESSSSSSSS
+          - SSSSSSSSSS
       - id: marrow_knot
         name: Marrow Knot
         primary_property: spindrive
@@ -707,7 +707,7 @@ views:
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
-        - id: scar
+        - id: scar_knot
           weight: 1
           cells:
           - '  ◢◢██◣◣  '
@@ -722,9 +722,9 @@ views:
         - armor
         repeat:
           min: 1
-          max: 8
+          max: 7
         variants:
-        - id: bones
+        - id: spar
           weight: 1
           cells:
           - ╲╲▓▓██▓▓╱╱
@@ -732,7 +732,7 @@ views:
           color_mask:
           - SSSSSSSSSS
           - SSSSSSSSSS
-        - id: muscle
+        - id: muscle_band
           weight: 1
           cells:
           - ▗▗██████▖▖
@@ -749,11 +749,11 @@ views:
           min: 1
           max: 1
         variants:
-        - id: eye
+        - id: eye_cluster
           weight: 1
           cells:
           - '  ██████  '
-          - ☼☼☼☼██☼☼◤◤
+          - ☼☼☼☼▒▒☼☼◤◤
           color_mask:
           - SSSSSSSSSS
           - BBBBSSBBSS
@@ -781,7 +781,7 @@ views:
           color_mask:
           - SSSSAASSSS
           - SSSSSSSSSS
-        - id: barb
+        - id: barbed_beak
           weight: 1
           cells:
           - '    ▲▲    '
@@ -819,7 +819,7 @@ views:
           min: 1
           max: 12
         variants:
-        - id: bone
+        - id: spar
           weight: 1
           cells:
           - ██▒▒██
