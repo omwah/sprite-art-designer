@@ -255,10 +255,16 @@ async def test_t_shortcut_cycles_ship_tiers() -> None:
     app = EdgeArtDesigner(ROOT / "assets")
     async with app.run_test(size=(140, 50)) as pilot:
         await pilot.pause()
+        tree = app.query_one("#structure-tree", Tree)
         await pilot.press("t")
         assert app.selection is not None
-        assert app.selection.kind == "tier"
-        assert app.selection.item.id == "medium"
+        assert app.selection.kind == "variant"
+        medium_tier = tree.root.children[0].children[1]
+        first_variant = medium_tier.children[0].children[0]
+        assert app.selection.item is first_variant.data.item
+        assert tree.cursor_node is first_variant
+        assert medium_tier.is_expanded
+        assert app.query_one("#art-canvas", ArtCanvas).variant is app.selection.item
         assert app.query_one("#preview-size", Select).value == "medium"
 
 

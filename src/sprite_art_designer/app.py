@@ -1030,7 +1030,7 @@ class EdgeArtDesigner(App[None]):
         self._select_adjacent_structure(1)
 
     def action_next_tier(self) -> None:
-        """Select the next tier in the current view, wrapping at the end."""
+        """Select the first editable structure in the next tier, wrapping."""
 
         view = self.editor.current_sprite.views[self.current_view_id]
         if not view.tiers:
@@ -1040,8 +1040,11 @@ class EdgeArtDesigner(App[None]):
             return
         selected = self._tier_for_structure(selection.item)
         current_index = view.tiers.index(selected) if selected in view.tiers else -1
+        target_tier = view.tiers[(current_index + 1) % len(view.tiers)]
+        if not target_tier.sections or not target_tier.sections[0].variants:
+            return
         self._select_tree_item(
-            view.tiers[(current_index + 1) % len(view.tiers)],
+            target_tier.sections[0].variants[0],
             persist_variant=False,
         )
 
