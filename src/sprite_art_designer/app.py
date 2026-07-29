@@ -86,6 +86,14 @@ class HistoryEntry:
     selection_locator: tuple[str, str, int, int, int] | None
 
 
+@dataclass(frozen=True)
+class PaletteColorResult:
+    """A color-picker change, including an explicit removal request."""
+
+    color: str | None = None
+    remove: bool = False
+
+
 class ConfirmScreen(ModalScreen[bool]):
     def __init__(self, message: str) -> None:
         super().__init__()
@@ -228,12 +236,13 @@ class RexPaintImportScreen(ModalScreen[Path | None]):
         self.dismiss(Path(source).expanduser())
 
 
-class PaletteColorScreen(ModalScreen[str | None]):
+class PaletteColorScreen(ModalScreen[PaletteColorResult | None]):
     """Choose one palette color with the packaged Textual color picker."""
 
-    def __init__(self, label: str, color: str) -> None:
+    def __init__(self, label: str, color: str, *, allow_remove: bool) -> None:
         super().__init__()
         self.label = label
+        self.allow_remove = allow_remove
         rich_color = RichColor.parse(color).get_truecolor()
         self.color = TextualColor(rich_color.red, rich_color.green, rich_color.blue)
 
@@ -246,6 +255,18 @@ class PaletteColorScreen(ModalScreen[str | None]):
             yield Label(f"Select {self.label}", classes="dialog-title")
             yield ColorPicker(self.color, id="palette-color-picker")
             with Horizontal(classes="dialog-buttons"):
+                remove = Button(
+                    "Remove color",
+                    id="remove",
+                    variant="error",
+                    disabled=not self.allow_remove,
+                )
+                remove.tooltip = (
+                    "Remove this color; later color slots shift left"
+                    if self.allow_remove
+                    else "A color set must retain at least one color"
+                )
+                yield remove
                 yield Button("Cancel", id="cancel")
                 yield Button("Use color", id="confirm", variant="primary")
 
@@ -253,7 +274,14 @@ class PaletteColorScreen(ModalScreen[str | None]):
         if event.button.id == "cancel":
             self.dismiss(None)
             return
-        self.dismiss(self.query_one("#palette-color-picker", ColorPicker).color.hex)
+        if event.button.id == "remove":
+            self.dismiss(PaletteColorResult(remove=True))
+            return
+        self.dismiss(
+            PaletteColorResult(
+                color=self.query_one("#palette-color-picker", ColorPicker).color.hex
+            )
+        )
 
 
 def _unique_id(existing: set[str], base: str) -> str:
@@ -954,16 +982,27 @@ class EdgeArtDesigner(App[None]):
     def on_palette_color_swatch_selected(self, event: PaletteColorSwatch.Selected) -> None:
         swatch = event.swatch
         color = swatch.color_value
+        colors = (
+            self.editor.palettes.archetypes[self.current_archetype]
+            .color_set(swatch.color_set_id)
+            .colors
+        )
 
-        def apply_selection(selected: str | None) -> None:
-            if selected is not None:
+        def apply_selection(selected: PaletteColorResult | None) -> None:
+            if selected is None:
+                return
+            if selected.remove:
+                self._remove_palette_color(swatch.color_set_id, swatch.color_index)
+            elif selected.color is not None:
                 self._set_palette_color(
-                    swatch.color_set_id, swatch.color_index, selected
+                    swatch.color_set_id, swatch.color_index, selected.color
                 )
 
         self.push_screen(
             PaletteColorScreen(
-                swatch.color_set_id.replace("_", " ").title(), color
+                swatch.color_set_id.replace("_", " ").title(),
+                color,
+                allow_remove=len(colors) > 1,
             ),
             apply_selection,
         )
@@ -1533,6 +1572,25 @@ class EdgeArtDesigner(App[None]):
         self._push_history_snapshot()
         self._update_dirty_indicator()
         self._refresh_palette_fields()
+        self._refresh_preview()
+
+    def _remove_palette_color(self, color_set_id: str, index: int) -> None:
+        palette = self.editor.palettes.archetypes[self.current_archetype]
+        colors = palette.color_set(color_set_id).colors
+        if len(colors) <= 1:
+            self.notify(
+                "A color set must contain at least one color.", severity="warning"
+            )
+            return
+        if not 0 <= index < len(colors):
+            self.notify("That palette color no longer exists.", severity="warning")
+            return
+        colors.pop(index)
+        self.editor.mark_palettes_dirty()
+        self._push_history_snapshot()
+        self._update_dirty_indicator()
+        self._refresh_palette_fields()
+        self._refresh_variant_labels()
         self._refresh_preview()
 
     def _apply_preview_configuration(self) -> None:

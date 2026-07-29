@@ -144,6 +144,64 @@ async def test_palette_swatch_opens_color_picker_and_updates_palette() -> None:
 
 
 @pytest.mark.asyncio
+async def test_palette_color_picker_removes_selected_color_and_supports_undo() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        app.query_one("#tool-tabs", TabbedContent).active = "palette-tab"
+        await pilot.pause()
+        colors = (
+            app.editor.palettes.archetypes[app.current_archetype]
+            .color_set("beacon")
+            .colors
+        )
+        original = list(colors)
+
+        assert await pilot.click("#palette-color-beacon-0")
+        await pilot.pause()
+        remove = app.screen.query_one("#remove", Button)
+        assert not remove.disabled
+        assert await pilot.click("#remove")
+        await pilot.pause()
+
+        assert colors == original[1:]
+        assert app.editor.palettes_dirty
+        assert app.query_one("#palette-color-beacon-0", PaletteColorSwatch).color_value == (
+            original[1]
+        )
+        assert not app.query_one("#palette-color-beacon-1", PaletteColorSwatch).display
+
+        app.action_undo()
+        restored = (
+            app.editor.palettes.archetypes[app.current_archetype]
+            .color_set("beacon")
+            .colors
+        )
+        assert restored == original
+
+
+@pytest.mark.asyncio
+async def test_palette_color_picker_disables_remove_for_only_color() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        app.query_one("#tool-tabs", TabbedContent).active = "palette-tab"
+        await pilot.pause()
+        colors = (
+            app.editor.palettes.archetypes[app.current_archetype]
+            .color_set("beacon")
+            .colors
+        )
+        colors[:] = colors[:1]
+        app._refresh_palette_fields()
+
+        assert await pilot.click("#palette-color-beacon-0")
+        await pilot.pause()
+        remove = app.screen.query_one("#remove", Button)
+        assert remove.disabled
+
+
+@pytest.mark.asyncio
 async def test_palette_add_button_appends_colors_up_to_four() -> None:
     app = EdgeArtDesigner(ROOT / "assets")
     async with app.run_test(size=(140, 50)) as pilot:
