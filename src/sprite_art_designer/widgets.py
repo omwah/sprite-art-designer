@@ -392,7 +392,9 @@ class NavPane(Vertical):
 
     def compose(self) -> ComposeResult:
         yield Label("Structure", classes="pane-title")
-        yield Tree("Sprite", id="structure-tree")
+        tree: Tree[object] = Tree("Sprite", id="structure-tree")
+        tree.auto_expand = False
+        yield tree
         with Horizontal(id="structure-actions-row"):
             with Grid(id="structure-actions"):
                 yield Button("+", id="add-item", tooltip="Add child")
@@ -466,7 +468,7 @@ class PropertiesToolsTab(TabPane):
             yield Label("Selection", id="selection-title", classes="section-title")
             yield Label("ID")
             yield Input(id="item-id")
-            yield Label("Name")
+            yield Label("Name", id="item-name-label")
             yield Input(id="item-name")
             with Vertical(id="section-fields"):
                 yield Label("Primary property")

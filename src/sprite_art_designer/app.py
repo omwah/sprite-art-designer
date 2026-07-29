@@ -800,7 +800,9 @@ class EdgeArtDesigner(App[None]):
         id_input.disabled = kind == "sprite"
         name_input = self.query_one("#item-name", Input)
         name_input.value = str(name)
-        name_input.disabled = kind == "variant"
+        name_visible = kind != "variant"
+        self.query_one("#item-name-label", Label).display = name_visible
+        name_input.display = name_visible
         section_fields = self.query_one("#section-fields")
         variant_fields = self.query_one("#variant-fields")
         section_fields.display = kind == "section"

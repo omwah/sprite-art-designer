@@ -238,6 +238,50 @@ async def test_color_set_selector_defaults_to_surface() -> None:
 
 
 @pytest.mark.asyncio
+async def test_properties_hides_name_for_variants_and_restores_it_for_sections() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        name_label = app.query_one("#item-name-label", Label)
+        name_input = app.query_one("#item-name")
+
+        assert app.selection is not None
+        assert app.selection.kind == "variant"
+        assert not name_label.display
+        assert not name_input.display
+
+        tree = app.query_one("#structure-tree", Tree)
+        section = tree.root.children[0].children[0].children[0]
+        tree.select_node(section)
+        await pilot.pause()
+
+        assert app.selection is not None
+        assert app.selection.kind == "section"
+        assert name_label.display
+        assert name_input.display
+
+
+@pytest.mark.asyncio
+async def test_structure_tree_only_collapses_from_disclosure_arrow() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        tree = app.query_one("#structure-tree", Tree)
+        view = tree.root.children[0]
+        assert view.is_expanded
+
+        assert await pilot.click("#structure-tree", offset=(10, 1))
+        await pilot.pause()
+        assert view.is_expanded
+        assert app.selection is not None
+        assert app.selection.item is view.data.item
+
+        assert await pilot.click("#structure-tree", offset=(4, 1))
+        await pilot.pause()
+        assert not view.is_expanded
+
+
+@pytest.mark.asyncio
 async def test_preview_structure_selection_activates_clicked_variant() -> None:
     app = EdgeArtDesigner(ROOT / "assets")
     async with app.run_test(size=(140, 50)) as pilot:
