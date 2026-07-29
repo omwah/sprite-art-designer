@@ -16,13 +16,14 @@ assets/
         └── future_icon.yaml
 ```
 
-Every document currently uses `schema_version: 2`. Sprite and palette versions
-remain independent migration seams.
+Sprite documents currently use `schema_version: 3`; the palette catalog remains
+at `schema_version: 2`. Sprite and palette versions are independent migration
+seams.
 
 ## Sprite document
 
 ```yaml
-schema_version: 2
+schema_version: 3
 id: fighter
 name: Fighter
 kind: ship
@@ -37,13 +38,12 @@ views:
     tiers:
       - id: full
         name: Full Detail
-        structure_lengths: {hull: 4}
         sections:
           - id: hull
             name: Hull
             primary_property: hull
             secondary_properties: [armor]
-            repeat: {min: 1, max: 6}
+            repeat: 4
             variants:
               - id: hull_1
                 weight: 1
@@ -74,22 +74,26 @@ Horizontal and vertical views are separate stored art. The editor's rotation
 command only creates an editable starting point; rendering never rotates one
 view to obtain another.
 
-### Tiers, ship width, and structure length
+### Tiers, ship width, and repetition
 
 Tiers are ordered richest/largest first. Each tier defines a ship's shared
 **ship width** (the cross-axis geometry of its structures); individual
-structures cannot set an independent width. `structure_lengths` gives one
-positive repeat count for every structure in the tier. A ship's **length** is
-the resulting sequence of structures, whose counts may differ. Rendering never
-grows those counts to fill a requested box. A horizontal view selects by
+structures cannot set an independent width. Each Section owns one positive,
+fixed `repeat` count. A ship's **length** is the resulting sequence of
+structures, whose counts may differ. Rendering never grows those counts to fill
+a requested box. A horizontal view selects by
 available ship width; a vertical view selects by available ship width. A fixed view selects the
 first canvas that fits both dimensions. If none fit, the smallest tier is used
 and centered cropping provides the requested exact rectangle.
 
+The editor exposes shared ship width on Tier properties. Changing it resizes
+the cross-axis of every variant in every section in that tier as one validated
+operation. For fixed canvases, the Tier width field is the canvas width.
+
 ### Sections and variants
 
 A section has one controlled `primary_property` and zero or more controlled
-`secondary_properties`. These are metadata in schema v2; they do not alter
+`secondary_properties`. These are metadata in schema v3; they do not alter
 runtime composition.
 
 The closed vocabulary is:
@@ -103,9 +107,12 @@ Each section's variants must have identical rectangular dimensions. `weight`
 is a positive integer. Equal weights use the same `random.Random.choice`
 behavior as Edge's original grammar; unequal weights use weighted selection.
 
-Repeats start at `min`, grow round-robin without exceeding the requested size,
-and stop at `max`. Variant selection always consumes one random decision per
-section regardless of repeat count.
+Variant dimensions are therefore edited on Section properties rather than on
+an individual Variant. The Section length field resizes every variant in the
+section along the composition axis. For fixed canvases, it is the canvas
+height. Section properties also edit the Section's single fixed repetition
+value. Variant selection always consumes one random decision per section
+regardless of repeat count.
 
 ### Glyph and color-mask semantics
 

@@ -1,4 +1,4 @@
-schema_version: 2
+schema_version: 3
 id: capital_warship
 name: Capital Warship
 kind: ship
@@ -13,12 +13,6 @@ views:
     tiers:
     - id: full
       name: Full Detail
-      structure_lengths:
-        thrusters: 1
-        spindrive: 1
-        hull: 4
-        screens: 1
-        main_gun: 1
       sections:
       - id: thrusters
         name: Capital Thrusters
@@ -26,9 +20,7 @@ views:
         secondary_properties:
         - spindrive
         - reactor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: triple_bell
           weight: 1
@@ -72,9 +64,7 @@ views:
         secondary_properties:
         - armor
         - reactor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: bastion_cage
           weight: 1
@@ -118,9 +108,7 @@ views:
         secondary_properties:
         - hull
         - bridge
-        repeat:
-          min: 1
-          max: 4
+        repeat: 4
         variants:
         - id: command_decks
           weight: 1
@@ -182,9 +170,7 @@ views:
         secondary_properties:
         - bridge
         - sensors
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: flag_bridge
           weight: 1
@@ -228,9 +214,7 @@ views:
         secondary_properties:
         - weapons
         - armor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: embedded_battery
           weight: 1
@@ -270,12 +254,6 @@ views:
           - SSSSSSS
     - id: medium
       name: Medium
-      structure_lengths:
-        thrusters: 1
-        spindrive: 1
-        hull: 3
-        screens: 1
-        main_gun: 1
       sections:
       - id: thrusters
         name: Capital Thrusters
@@ -283,9 +261,7 @@ views:
         secondary_properties:
         - spindrive
         - reactor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: triple_bell
           weight: 1
@@ -321,9 +297,7 @@ views:
         secondary_properties:
         - armor
         - reactor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: bastion_cage
           weight: 1
@@ -359,9 +333,7 @@ views:
         secondary_properties:
         - hull
         - bridge
-        repeat:
-          min: 1
-          max: 4
+        repeat: 3
         variants:
         - id: command_decks
           weight: 1
@@ -411,9 +383,7 @@ views:
         secondary_properties:
         - bridge
         - sensors
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: flag_bridge
           weight: 1
@@ -449,9 +419,7 @@ views:
         secondary_properties:
         - weapons
         - armor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: embedded_battery
           weight: 1
@@ -483,18 +451,12 @@ views:
           - SSSSS
     - id: compact
       name: Compact
-      structure_lengths:
-        drive: 1
-        body: 4
-        prow: 1
       sections:
       - id: drive
         name: Drive
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: drive
           weight: 1
@@ -511,9 +473,7 @@ views:
         primary_property: hull
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 7
+        repeat: 4
         variants:
         - id: decks
           weight: 1
@@ -539,9 +499,7 @@ views:
         name: Prow
         primary_property: weapons
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: battery
           weight: 1
@@ -561,12 +519,6 @@ views:
     tiers:
     - id: full
       name: Full Detail
-      structure_lengths:
-        thrusters: 1
-        spindrive: 1
-        hull: 4
-        screens: 1
-        main_gun: 1
       sections:
       - id: thrusters
         name: Capital Thrusters
@@ -574,9 +526,7 @@ views:
         secondary_properties:
         - spindrive
         - reactor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: triple_bell
           weight: 1
@@ -604,9 +554,7 @@ views:
         secondary_properties:
         - armor
         - reactor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: bastion_cage
           weight: 1
@@ -634,9 +582,7 @@ views:
         secondary_properties:
         - hull
         - bridge
-        repeat:
-          min: 1
-          max: 4
+        repeat: 4
         variants:
         - id: command_decks
           weight: 1
@@ -674,9 +620,7 @@ views:
         secondary_properties:
         - bridge
         - sensors
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: flag_bridge
           weight: 1
@@ -704,9 +648,7 @@ views:
         secondary_properties:
         - weapons
         - armor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: embedded_battery
           weight: 1
@@ -734,12 +676,6 @@ views:
           - SSSSSSSSSSSSSS
     - id: medium
       name: Medium
-      structure_lengths:
-        thrusters: 1
-        spindrive: 1
-        hull: 3
-        screens: 1
-        main_gun: 1
       sections:
       - id: thrusters
         name: Capital Thrusters
@@ -747,9 +683,7 @@ views:
         secondary_properties:
         - spindrive
         - reactor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: triple_bell
           weight: 1
@@ -777,9 +711,7 @@ views:
         secondary_properties:
         - armor
         - reactor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: bastion_cage
           weight: 1
@@ -807,9 +739,7 @@ views:
         secondary_properties:
         - hull
         - bridge
-        repeat:
-          min: 1
-          max: 4
+        repeat: 3
         variants:
         - id: command_decks
           weight: 1
@@ -847,9 +777,7 @@ views:
         secondary_properties:
         - bridge
         - sensors
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: flag_bridge
           weight: 1
@@ -873,9 +801,7 @@ views:
         secondary_properties:
         - weapons
         - armor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: embedded_battery
           weight: 1
@@ -899,18 +825,12 @@ views:
           - SSSSSSSSSS
     - id: compact
       name: Compact
-      structure_lengths:
-        drive: 1
-        body: 4
-        prow: 1
       sections:
       - id: drive
         name: Drive
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: drive
           weight: 1
@@ -923,9 +843,7 @@ views:
         primary_property: hull
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 7
+        repeat: 4
         variants:
         - id: decks
           weight: 1
@@ -947,9 +865,7 @@ views:
         name: Prow
         primary_property: weapons
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: battery
           weight: 1

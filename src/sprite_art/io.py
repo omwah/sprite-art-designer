@@ -51,7 +51,6 @@ def _section_from_data(data: object, context: str) -> Section:
     variants_data = item.get("variants", [])
     if not isinstance(variants_data, list):
         raise SpriteValidationError(f"{context}.variants must be a list")
-    repeat = _mapping(item.get("repeat", {}), f"{context}.repeat")
     return Section(
         id=str(item.get("id", "")),
         name=str(item.get("name", item.get("id", ""))),
@@ -60,8 +59,7 @@ def _section_from_data(data: object, context: str) -> Section:
             item.get("secondary_properties", []),
             f"{context}.secondary_properties",
         ),
-        min_repeat=int(repeat.get("min", 1)),
-        max_repeat=int(repeat.get("max", 1)),
+        repeat=int(item.get("repeat", 1)),
         variants=[
             _variant_from_data(variant, f"{context}.variants[{index}]")
             for index, variant in enumerate(variants_data)
@@ -78,18 +76,10 @@ def _tier_from_data(data: object, context: str) -> Tier:
         _section_from_data(section, f"{context}.sections[{index}]")
         for index, section in enumerate(sections_data)
     ]
-    lengths_data = item.get("structure_lengths")
-    if lengths_data is None:
-        structure_lengths = {section.id: section.min_repeat for section in sections}
-    else:
-        structure_lengths = {
-            key: int(value) for key, value in _mapping(lengths_data, f"{context}.structure_lengths").items()
-        }
     return Tier(
         id=str(item.get("id", "")),
         name=str(item.get("name", item.get("id", ""))),
         sections=sections,
-        structure_lengths=structure_lengths,
     )
 
 
@@ -202,7 +192,7 @@ def _section_to_data(section: Section) -> dict[str, object]:
         "name": section.name,
         "primary_property": section.primary_property,
         "secondary_properties": list(section.secondary_properties),
-        "repeat": {"min": section.min_repeat, "max": section.max_repeat},
+        "repeat": section.repeat,
         "variants": [_variant_to_data(variant) for variant in section.variants],
     }
 
@@ -211,7 +201,6 @@ def _tier_to_data(tier: Tier) -> dict[str, object]:
     return {
         "id": tier.id,
         "name": tier.name,
-        "structure_lengths": dict(tier.structure_lengths),
         "sections": [_section_to_data(section) for section in tier.sections],
     }
 

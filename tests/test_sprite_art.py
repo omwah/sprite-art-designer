@@ -7,6 +7,7 @@ from copy import deepcopy
 from pathlib import Path
 
 import pytest
+import yaml
 
 from sprite_art import (
     ARCHETYPE_IDS,
@@ -268,6 +269,15 @@ def test_sprite_color_masks_match_geometry_and_reject_unknown_codes() -> None:
     assert all(len(row) == variant.width for row in variant.color_mask)
     variant.color_mask[0] = "?" + variant.color_mask[0][1:]
     with pytest.raises(SpriteValidationError, match="unknown color-mask code"):
+        sprite.validate()
+
+
+def test_section_repetition_must_be_positive() -> None:
+    sprite = load_sprite(ASSETS / "sprites" / "ships" / "fighter.yaml")
+    section = sprite.views["horizontal"].tiers[0].sections[0]
+    section.repeat = 0
+
+    with pytest.raises(SpriteValidationError, match="repeat must be positive"):
         sprite.validate()
 
 
@@ -633,6 +643,11 @@ def test_yaml_round_trip(tmp_path: Path, palettes: PaletteCatalog) -> None:
     loaded.source = sprite.source
     assert loaded == sprite
     assert load_palette_catalog(palette_path) == palettes
+    dumped = yaml.safe_load(sprite_path.read_text(encoding="utf-8"))
+    tier = dumped["views"]["horizontal"]["tiers"][0]
+    assert dumped["schema_version"] == 3
+    assert "structure_lengths" not in tier
+    assert isinstance(tier["sections"][0]["repeat"], int)
 
 
 def test_library_facade_selects_view_and_caches() -> None:

@@ -1,4 +1,4 @@
-schema_version: 2
+schema_version: 3
 id: transport
 name: Transport
 kind: ship
@@ -13,21 +13,13 @@ views:
     tiers:
     - id: full
       name: Full Detail
-      structure_lengths:
-        thrusters: 1
-        spindrive: 1
-        hull: 5
-        screens: 1
-        main_gun: 1
       sections:
       - id: thrusters
         name: Cargo Thrusters
         primary_property: thrusters
         secondary_properties:
         - spindrive
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: twin_bell
           weight: 1
@@ -70,9 +62,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - utility
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: drive_cradle
           weight: 1
@@ -116,9 +106,7 @@ views:
         secondary_properties:
         - hull
         - utility
-        repeat:
-          min: 1
-          max: 5
+        repeat: 5
         variants:
         - id: boxcar
           weight: 1
@@ -180,9 +168,7 @@ views:
         secondary_properties:
         - bridge
         - sensors
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: bridge_collar
           weight: 1
@@ -226,9 +212,7 @@ views:
         secondary_properties:
         - utility
         - weapons
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: docking_prow
           weight: 1
@@ -268,21 +252,13 @@ views:
           - SSSS
     - id: medium
       name: Medium
-      structure_lengths:
-        thrusters: 1
-        spindrive: 1
-        hull: 4
-        screens: 1
-        main_gun: 1
       sections:
       - id: thrusters
         name: Cargo Thrusters
         primary_property: thrusters
         secondary_properties:
         - spindrive
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: twin_bell
           weight: 1
@@ -317,9 +293,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - utility
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: drive_cradle
           weight: 1
@@ -355,9 +329,7 @@ views:
         secondary_properties:
         - hull
         - utility
-        repeat:
-          min: 1
-          max: 5
+        repeat: 4
         variants:
         - id: boxcar
           weight: 1
@@ -407,9 +379,7 @@ views:
         secondary_properties:
         - bridge
         - sensors
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: bridge_collar
           weight: 1
@@ -445,9 +415,7 @@ views:
         secondary_properties:
         - utility
         - weapons
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: docking_prow
           weight: 1
@@ -479,18 +447,12 @@ views:
           - SSS
     - id: compact
       name: Compact
-      structure_lengths:
-        drive: 1
-        body: 4
-        prow: 1
       sections:
       - id: drive
         name: Drive
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: drive
           weight: 1
@@ -507,9 +469,7 @@ views:
         primary_property: hull
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 5
+        repeat: 4
         variants:
         - id: box
           weight: 1
@@ -535,9 +495,7 @@ views:
         name: Prow
         primary_property: weapons
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: cab
           weight: 1
@@ -557,21 +515,13 @@ views:
     tiers:
     - id: full
       name: Full Detail
-      structure_lengths:
-        thrusters: 1
-        spindrive: 1
-        hull: 5
-        screens: 1
-        main_gun: 1
       sections:
       - id: thrusters
         name: Cargo Thrusters
         primary_property: thrusters
         secondary_properties:
         - spindrive
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: twin_bell
           weight: 1
@@ -598,9 +548,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - utility
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: drive_cradle
           weight: 1
@@ -628,9 +576,7 @@ views:
         secondary_properties:
         - hull
         - utility
-        repeat:
-          min: 1
-          max: 5
+        repeat: 5
         variants:
         - id: boxcar
           weight: 1
@@ -668,9 +614,7 @@ views:
         secondary_properties:
         - bridge
         - sensors
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: bridge_collar
           weight: 1
@@ -694,9 +638,7 @@ views:
         secondary_properties:
         - utility
         - weapons
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: docking_prow
           weight: 1
@@ -716,21 +658,13 @@ views:
           - SSSSSSSSSSSSSS
     - id: medium
       name: Medium
-      structure_lengths:
-        thrusters: 1
-        spindrive: 1
-        hull: 4
-        screens: 1
-        main_gun: 1
       sections:
       - id: thrusters
         name: Cargo Thrusters
         primary_property: thrusters
         secondary_properties:
         - spindrive
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: twin_bell
           weight: 1
@@ -753,9 +687,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - utility
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: drive_cradle
           weight: 1
@@ -779,9 +711,7 @@ views:
         secondary_properties:
         - hull
         - utility
-        repeat:
-          min: 1
-          max: 5
+        repeat: 4
         variants:
         - id: boxcar
           weight: 1
@@ -819,9 +749,7 @@ views:
         secondary_properties:
         - bridge
         - sensors
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: bridge_collar
           weight: 1
@@ -845,9 +773,7 @@ views:
         secondary_properties:
         - utility
         - weapons
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: docking_prow
           weight: 1
@@ -867,18 +793,12 @@ views:
           - SSSSSSSSSS
     - id: compact
       name: Compact
-      structure_lengths:
-        drive: 1
-        body: 4
-        prow: 1
       sections:
       - id: drive
         name: Drive
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: drive
           weight: 1
@@ -891,9 +811,7 @@ views:
         primary_property: hull
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 5
+        repeat: 4
         variants:
         - id: box
           weight: 1
@@ -915,9 +833,7 @@ views:
         name: Prow
         primary_property: weapons
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: cab
           weight: 1

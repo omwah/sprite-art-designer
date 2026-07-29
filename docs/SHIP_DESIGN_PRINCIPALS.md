@@ -7,11 +7,12 @@ The spaceship art system in *Edge of the Unknown* is best understood as
 generative drawing.
 
 Each ship is assembled from small Unicode fragments chosen by a seeded random
-number generator, stretched to the requested dimensions by repeating selected
-hull sections, optionally reflected to face the opposite direction, and finally
-painted into a `rich.text.Text` object with an archetype-specific terminal
-palette. This hybrid method preserves crisp, recognizable silhouettes at very
-small terminal sizes while still giving individual ships stable visual variety.
+number generator, repeated by fixed authored section counts, fitted to the
+requested dimensions, optionally reflected to face the opposite direction, and
+finally painted into a `rich.text.Text` object with an archetype-specific
+terminal palette. This hybrid method preserves crisp, recognizable silhouettes
+at very small terminal sizes while still giving individual ships stable visual
+variety.
 
 The design is governed primarily by:
 
@@ -34,15 +35,15 @@ blobs and random detail becomes speckle. The game therefore reserves raster and
 SDF methods for larger organic subjects such as planets and uses **compositional
 cell art** for ships.
 
-The basic vocabulary consists of two immutable types:
+The basic vocabulary consists of two authored types:
 
-- A **part** is a rectangular fragment made from full Unicode rows. A part may
-  be marked repeatable.
-- A **slot** is one semantic position in a ship. It offers interchangeable parts
-  and defines minimum and maximum repetition counts.
+- A **variant** is a rectangular fragment made from full Unicode rows.
+- A **section** is one semantic position in a ship. It offers interchangeable
+  variants and defines one fixed positive repetition count.
 
-A ship grammar is an ordered tuple of slots. Generation chooses one part from
-each slot, then joins the resulting fragments edge-to-edge. The geometry is
+A ship grammar is an ordered list of sections. Generation chooses one variant
+from each section, repeats it by its authored count, then joins the resulting
+fragments edge-to-edge. The geometry is
 authored; the combination, length, lights, windows, color treatment, and facing
 are procedural.
 
@@ -161,18 +162,16 @@ glow/body/muzzle pattern—instead of a detailed ship cropped into nonsense. If
 even the smallest tier exceeds the height, the compact tier is still selected
 as the safest fallback and the painter performs centered cropping.
 
-Width is handled independently. The composer:
+Length is authored independently within each tier. The composer:
 
-1. chooses exactly one part per slot;
-2. starts every slot at its minimum repetition count;
-3. grows repeatable sections one block at a time in round-robin order;
-4. stops when another block would exceed the target width or the slot reaches
-   its maximum.
+1. chooses exactly one variant per section;
+2. repeats it by the Section's fixed positive count;
+3. joins the repeated sections in semantic tail-to-nose order.
 
 For ships, the repeatable section is primarily the hull backbone, so increasing
-width makes a ship longer without stretching its glyphs or distorting its bow
-and engines. The composed width grows monotonically and does not overshoot the
-request unless the grammar's irreducible minimum is already wider than the box.
+its authored count makes a tier longer without stretching its glyphs or
+distorting its bow and engines. Requested boxes do not change authored
+repetition.
 
 The final painter always returns the exact requested rectangle:
 
@@ -200,8 +199,9 @@ models. The same complete request therefore produces the same glyphs and Rich
 style spans.
 
 Composition also preserves RNG stability across widths. It makes one random
-part-selection draw per grammar slot, regardless of how many times the chosen
-hull fragment is repeated. Repetition is calculated arithmetically. The
+variant-selection draw per section, regardless of how many times the chosen
+hull fragment is repeated. Repetition is fixed authored data and consumes no
+random draws. The
 renderer retains the two historical pre-composition draws so converted variant
 choices stay stable, but palette shading and windows consume no random draws.
 
@@ -290,7 +290,7 @@ The implementation turns its artistic assumptions into testable contracts:
 - reflection is reversible;
 - generation is deterministic in both text and style spans;
 - part-selection draw count is independent of width;
-- composed width grows monotonically and respects bounds;
+- each section has one positive fixed repetition count;
 - every generated result exactly fills its requested box;
 - opposite facings are exact glyph-aware reflections;
 - ship silhouettes remain genuinely asymmetric;

@@ -1,4 +1,4 @@
-schema_version: 2
+schema_version: 3
 id: broadside_citadel
 name: Broadside Citadel
 kind: ship
@@ -13,12 +13,6 @@ views:
     tiers:
     - id: full
       name: Full Detail
-      structure_lengths:
-        capital_drive: 1
-        drive_citadel: 1
-        broadside_decks: 4
-        command_keep: 1
-        siege_prow: 1
       sections:
       - id: capital_drive
         name: Capital Drive
@@ -26,9 +20,7 @@ views:
         secondary_properties:
         - reactor
         - spindrive
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: triple_bell
           weight: 1
@@ -71,9 +63,7 @@ views:
         primary_property: armor
         secondary_properties:
         - spindrive
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: buttress
           weight: 1
@@ -117,9 +107,7 @@ views:
         secondary_properties:
         - hull
         - armor
-        repeat:
-          min: 1
-          max: 4
+        repeat: 4
         variants:
         - id: open_bays
           weight: 1
@@ -163,9 +151,7 @@ views:
         secondary_properties:
         - sensors
         - screens
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: tower
           weight: 1
@@ -208,9 +194,7 @@ views:
         primary_property: main_gun
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: triple_battery
           weight: 1
@@ -250,12 +234,6 @@ views:
           - SSSSSS
     - id: medium
       name: Medium
-      structure_lengths:
-        capital_drive: 1
-        drive_citadel: 1
-        broadside_decks: 3
-        command_keep: 1
-        siege_prow: 1
       sections:
       - id: capital_drive
         name: Capital Drive
@@ -263,9 +241,7 @@ views:
         secondary_properties:
         - reactor
         - spindrive
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: triple_bell
           weight: 1
@@ -300,9 +276,7 @@ views:
         primary_property: armor
         secondary_properties:
         - spindrive
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: buttress
           weight: 1
@@ -338,9 +312,7 @@ views:
         secondary_properties:
         - hull
         - armor
-        repeat:
-          min: 1
-          max: 4
+        repeat: 3
         variants:
         - id: open_bays
           weight: 1
@@ -376,9 +348,7 @@ views:
         secondary_properties:
         - sensors
         - screens
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: tower
           weight: 1
@@ -413,9 +383,7 @@ views:
         primary_property: main_gun
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: triple_battery
           weight: 1
@@ -447,18 +415,12 @@ views:
           - SSDSS
     - id: compact
       name: Compact
-      structure_lengths:
-        drive: 1
-        body: 6
-        prow: 1
       sections:
       - id: drive
         name: Drive
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: drive
           weight: 1
@@ -475,9 +437,7 @@ views:
         primary_property: hull
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 15
+        repeat: 6
         variants:
         - id: battery
           weight: 1
@@ -503,9 +463,7 @@ views:
         name: Prow
         primary_property: weapons
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: siege
           weight: 1
@@ -525,12 +483,6 @@ views:
     tiers:
     - id: full
       name: Full Detail
-      structure_lengths:
-        capital_drive: 1
-        drive_citadel: 1
-        broadside_decks: 4
-        command_keep: 1
-        siege_prow: 1
       sections:
       - id: capital_drive
         name: Capital Drive
@@ -538,9 +490,7 @@ views:
         secondary_properties:
         - reactor
         - spindrive
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: triple_bell
           weight: 1
@@ -567,9 +517,7 @@ views:
         primary_property: armor
         secondary_properties:
         - spindrive
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: buttress
           weight: 1
@@ -597,9 +545,7 @@ views:
         secondary_properties:
         - hull
         - armor
-        repeat:
-          min: 1
-          max: 4
+        repeat: 4
         variants:
         - id: open_bays
           weight: 1
@@ -627,9 +573,7 @@ views:
         secondary_properties:
         - sensors
         - screens
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: tower
           weight: 1
@@ -656,9 +600,7 @@ views:
         primary_property: main_gun
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: triple_battery
           weight: 1
@@ -682,12 +624,6 @@ views:
           - SSSSSSSSSSSSSS
     - id: medium
       name: Medium
-      structure_lengths:
-        capital_drive: 1
-        drive_citadel: 1
-        broadside_decks: 3
-        command_keep: 1
-        siege_prow: 1
       sections:
       - id: capital_drive
         name: Capital Drive
@@ -695,9 +631,7 @@ views:
         secondary_properties:
         - reactor
         - spindrive
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: triple_bell
           weight: 1
@@ -720,9 +654,7 @@ views:
         primary_property: armor
         secondary_properties:
         - spindrive
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: buttress
           weight: 1
@@ -746,9 +678,7 @@ views:
         secondary_properties:
         - hull
         - armor
-        repeat:
-          min: 1
-          max: 4
+        repeat: 3
         variants:
         - id: open_bays
           weight: 1
@@ -776,9 +706,7 @@ views:
         secondary_properties:
         - sensors
         - screens
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: tower
           weight: 1
@@ -801,9 +729,7 @@ views:
         primary_property: main_gun
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: triple_battery
           weight: 1
@@ -827,18 +753,12 @@ views:
           - SSDDDDDDSS
     - id: compact
       name: Compact
-      structure_lengths:
-        drive: 1
-        body: 6
-        prow: 1
       sections:
       - id: drive
         name: Drive
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: drive
           weight: 1
@@ -851,9 +771,7 @@ views:
         primary_property: hull
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 15
+        repeat: 6
         variants:
         - id: battery
           weight: 1
@@ -871,9 +789,7 @@ views:
         name: Prow
         primary_property: weapons
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: siege
           weight: 1

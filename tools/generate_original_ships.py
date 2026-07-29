@@ -4,7 +4,7 @@ The compact marker alphabet keeps glyph and semantic color authorship adjacent:
 ``Y/y`` is engine glow, ``X/x`` is a hot engine throat, ``R/r/O`` is a beacon,
 ``C/c`` is a window, ``G/g/K/L/U/u`` is armament, and ``B/b/P`` is defensive
 energy. The markers become appropriate blocks, facets, beams, or muzzles and
-never reach schema-v2 YAML.
+never reach schema-v3 YAML.
 
 Authoring conventions that keep the derived tiers readable:
 
@@ -79,8 +79,7 @@ def section(
         name=name,
         primary_property=primary,
         secondary_properties=list(secondary),
-        min_repeat=minimum,
-        max_repeat=maximum,
+        repeat=maximum,
         variants=variants,
     )
 
@@ -160,14 +159,14 @@ def _medium_tier(full: Tier) -> Tier:
     return medium
 
 
-def _structure_lengths(tier: Tier, target: int) -> dict[str, int]:
+def _fixed_repetitions(tier: Tier, target: int) -> dict[str, int]:
     sizes = [part.variants[0].width for part in tier.sections]
-    repeats = [part.min_repeat for part in tier.sections]
+    repeats = [1 for _part in tier.sections]
     total = sum(size * repeat for size, repeat in zip(sizes, repeats))
     while True:
         changed = False
         for index, part in enumerate(tier.sections):
-            if repeats[index] < part.max_repeat and total + sizes[index] <= target:
+            if repeats[index] < part.repeat and total + sizes[index] <= target:
                 repeats[index] += 1
                 total += sizes[index]
                 changed = True
@@ -175,8 +174,10 @@ def _structure_lengths(tier: Tier, target: int) -> dict[str, int]:
             return {part.id: repeat for part, repeat in zip(tier.sections, repeats)}
 
 
-def _set_structure_lengths(tier: Tier) -> None:
-    tier.structure_lengths = _structure_lengths(tier, TIER_TARGETS[tier.id])
+def _set_fixed_repetitions(tier: Tier) -> None:
+    repetitions = _fixed_repetitions(tier, TIER_TARGETS[tier.id])
+    for section in tier.sections:
+        section.repeat = repetitions[section.id]
 
 
 def ship(
@@ -191,7 +192,7 @@ def ship(
     medium = _medium_tier(full)
     _normalize_tier(compact_tier, 3)
     for tier in (full, medium, compact_tier):
-        _set_structure_lengths(tier)
+        _set_fixed_repetitions(tier)
     sprite = Sprite(
         schema_version=SCHEMA_VERSION,
         id=role,

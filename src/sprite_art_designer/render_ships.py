@@ -123,13 +123,13 @@ def _select_tiers(view: View, requested_ids: Sequence[str] | None) -> list[Tier]
 def _tier_dimensions(view: View, tier: Tier) -> tuple[int, int]:
     if view.axis == "horizontal":
         width = sum(
-            section.variants[0].width * tier.structure_lengths[section.id]
+            section.variants[0].width * section.repeat
             for section in tier.sections
         )
         return width, tier.cross_axis_size(view.axis)
     if view.axis == "vertical":
         height = sum(
-            section.variants[0].height * tier.structure_lengths[section.id]
+            section.variants[0].height * section.repeat
             for section in tier.sections
         )
         return tier.cross_axis_size(view.axis), height

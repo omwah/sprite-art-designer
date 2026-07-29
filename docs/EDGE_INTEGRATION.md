@@ -56,7 +56,7 @@ In `edge/art/generator.py`:
 4. Keep the outer `generate_sprite` cache or rely on the library cache, but not
    both unless the additional layer is useful for non-ship art.
 
-The four original gameplay role names remain available, but their schema-v2
+The four original gameplay role names remain available, but their schema-v3
 assets are now native Edge Art Designer compositions rather than byte-for-byte
 translations of the old in-code grammar. Vendoring these files is therefore an
 intentional visual migration for:
@@ -93,7 +93,8 @@ It consumes the two historical color-selection draws before choosing one
 variant per section. This preserves the renderer's established draw discipline,
 but the redesigned assets are not expected to reproduce the former Edge glyphs
 or style spans. Equal variant weights use `random.Random.choice`, and repeats
-consume no additional draws. Palette colors do not consume RNG, and windows
+are fixed authored counts that consume no additional draws. Palette colors do
+not consume RNG, and windows
 appear only where the authored color mask selects Window. Rich style spans
 therefore follow the six-set palette contract rather than Edge's random-window
 painter.

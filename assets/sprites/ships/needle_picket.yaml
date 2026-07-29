@@ -1,4 +1,4 @@
-schema_version: 2
+schema_version: 3
 id: needle_picket
 name: Needle Picket
 kind: ship
@@ -13,20 +13,12 @@ views:
     tiers:
     - id: full
       name: Full Detail
-      structure_lengths:
-        thrusters: 1
-        drive_nodes: 1
-        patrol_spine: 7
-        sensor_crown: 1
-        needle: 1
       sections:
       - id: thrusters
         name: Thruster Fork
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: forked_nacelles
           weight: 1
@@ -69,9 +61,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - radiator
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: exposed_nodes
           weight: 1
@@ -114,9 +104,7 @@ views:
         primary_property: hull
         secondary_properties:
         - sensors
-        repeat:
-          min: 1
-          max: 7
+        repeat: 7
         variants:
         - id: truss_rib
           weight: 1
@@ -158,9 +146,7 @@ views:
         name: Sensor Crown
         primary_property: sensors
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: crown
           weight: 1
@@ -203,9 +189,7 @@ views:
         primary_property: main_gun
         secondary_properties:
         - sensors
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: long_needle
           weight: 1
@@ -245,20 +229,12 @@ views:
           - SSSSSS
     - id: medium
       name: Medium
-      structure_lengths:
-        thrusters: 1
-        drive_nodes: 1
-        patrol_spine: 6
-        sensor_crown: 1
-        needle: 1
       sections:
       - id: thrusters
         name: Thruster Fork
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: forked_nacelles
           weight: 1
@@ -293,9 +269,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - radiator
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: exposed_nodes
           weight: 1
@@ -330,9 +304,7 @@ views:
         primary_property: hull
         secondary_properties:
         - sensors
-        repeat:
-          min: 1
-          max: 7
+        repeat: 6
         variants:
         - id: truss_rib
           weight: 1
@@ -366,9 +338,7 @@ views:
         name: Sensor Crown
         primary_property: sensors
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: crown
           weight: 1
@@ -403,9 +373,7 @@ views:
         primary_property: main_gun
         secondary_properties:
         - sensors
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: long_needle
           weight: 1
@@ -437,18 +405,12 @@ views:
           - SSSSS
     - id: compact
       name: Compact
-      structure_lengths:
-        drive: 1
-        body: 6
-        prow: 1
       sections:
       - id: drive
         name: Drive
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: drive
           weight: 1
@@ -465,9 +427,7 @@ views:
         primary_property: hull
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 12
+        repeat: 6
         variants:
         - id: truss
           weight: 1
@@ -493,9 +453,7 @@ views:
         name: Prow
         primary_property: weapons
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: needle
           weight: 1
@@ -515,20 +473,12 @@ views:
     tiers:
     - id: full
       name: Full Detail
-      structure_lengths:
-        thrusters: 1
-        drive_nodes: 1
-        patrol_spine: 7
-        sensor_crown: 1
-        needle: 1
       sections:
       - id: thrusters
         name: Thruster Fork
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: forked_nacelles
           weight: 1
@@ -555,9 +505,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - radiator
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: exposed_nodes
           weight: 1
@@ -580,9 +528,7 @@ views:
         primary_property: hull
         secondary_properties:
         - sensors
-        repeat:
-          min: 1
-          max: 7
+        repeat: 7
         variants:
         - id: truss_rib
           weight: 1
@@ -604,9 +550,7 @@ views:
         name: Sensor Crown
         primary_property: sensors
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: crown
           weight: 1
@@ -633,9 +577,7 @@ views:
         primary_property: main_gun
         secondary_properties:
         - sensors
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: long_needle
           weight: 1
@@ -659,20 +601,12 @@ views:
           - SSSSSSSSSSSSSS
     - id: medium
       name: Medium
-      structure_lengths:
-        thrusters: 1
-        drive_nodes: 1
-        patrol_spine: 6
-        sensor_crown: 1
-        needle: 1
       sections:
       - id: thrusters
         name: Thruster Fork
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: forked_nacelles
           weight: 1
@@ -695,9 +629,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - radiator
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: exposed_nodes
           weight: 1
@@ -720,9 +652,7 @@ views:
         primary_property: hull
         secondary_properties:
         - sensors
-        repeat:
-          min: 1
-          max: 7
+        repeat: 6
         variants:
         - id: truss_rib
           weight: 1
@@ -744,9 +674,7 @@ views:
         name: Sensor Crown
         primary_property: sensors
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: crown
           weight: 1
@@ -769,9 +697,7 @@ views:
         primary_property: main_gun
         secondary_properties:
         - sensors
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: long_needle
           weight: 1
@@ -795,18 +721,12 @@ views:
           - SSSSSSSSSS
     - id: compact
       name: Compact
-      structure_lengths:
-        drive: 1
-        body: 6
-        prow: 1
       sections:
       - id: drive
         name: Drive
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: drive
           weight: 1
@@ -819,9 +739,7 @@ views:
         primary_property: hull
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 12
+        repeat: 6
         variants:
         - id: truss
           weight: 1
@@ -839,9 +757,7 @@ views:
         name: Prow
         primary_property: weapons
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: needle
           weight: 1

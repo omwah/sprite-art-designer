@@ -335,7 +335,6 @@ def _new_sprite(sprite_id: str, name: str, kind: str) -> Sprite:
                         Tier(
                             id="full",
                             name="Full Detail",
-                            structure_lengths={"hull": 1},
                             sections=[
                                 Section(
                                     id="hull",
@@ -348,7 +347,6 @@ def _new_sprite(sprite_id: str, name: str, kind: str) -> Sprite:
                         Tier(
                             id="medium",
                             name="Medium",
-                            structure_lengths={"hull": 1},
                             sections=[
                                 Section(
                                     id="hull",
@@ -361,7 +359,6 @@ def _new_sprite(sprite_id: str, name: str, kind: str) -> Sprite:
                         Tier(
                             id="compact",
                             name="Compact",
-                            structure_lengths={"hull": 1},
                             sections=[
                                 Section(
                                     id="hull",
@@ -725,7 +722,6 @@ class EdgeArtDesigner(App[None]):
         if selected_tier is not None and sync_preview_size:
             self._set_preview_size_for_tier(selected_tier)
         self._populate_inspector()
-        self._populate_ship_config()
         canvas = self.query_one("#art-canvas", ArtCanvas)
         if selection.kind == "variant":
             variant = selection.item
@@ -803,45 +799,49 @@ class EdgeArtDesigner(App[None]):
         name_visible = kind != "variant"
         self.query_one("#item-name-label", Label).display = name_visible
         name_input.display = name_visible
+        tier_fields = self.query_one("#tier-fields")
         section_fields = self.query_one("#section-fields")
         variant_fields = self.query_one("#variant-fields")
+        tier_fields.display = kind == "tier"
         section_fields.display = kind == "section"
         variant_fields.display = kind == "variant"
-        if kind == "section":
+        if kind == "tier":
+            tier_item = item
+            assert isinstance(tier_item, Tier)
+            view = self._view_for_structure(tier_item)
+            assert view is not None
+            width_label = self.query_one("#tier-width-label", Label)
+            width_label.update(
+                "Canvas width" if view.axis == "fixed" else "Ship width (cross-axis cells)"
+            )
+            first = tier_item.sections[0].variants[0]
+            width = first.width if view.axis in ("vertical", "fixed") else first.height
+            self.query_one("#tier-width", Input).value = str(width)
+        elif kind == "section":
             section_item = item
             assert isinstance(section_item, Section)
+            view = self._view_for_structure(section_item)
+            assert view is not None
             self.query_one("#primary-property", Select).value = section_item.primary_property
             self.query_one("#secondary-properties", Input).value = ", ".join(
                 section_item.secondary_properties
             )
+            first = section_item.variants[0]
+            section_length = first.width if view.axis == "horizontal" else first.height
+            length_label = self.query_one("#section-length-label", Label)
+            length_label.update(
+                "Canvas height"
+                if view.axis == "fixed"
+                else f"Section length ({view.axis} cells)"
+            )
+            self.query_one("#section-length", Input).value = str(section_length)
+            repeat_fields = self.query_one("#section-repeat-fields")
+            repeat_fields.display = view.axis != "fixed"
+            self.query_one("#section-repeat", Input).value = str(section_item.repeat)
         elif kind == "variant":
             variant_item = item
             assert isinstance(variant_item, Variant)
             self.query_one("#variant-weight", Input).value = str(variant_item.weight)
-            self.query_one("#variant-width", Input).value = str(variant_item.width)
-            self.query_one("#variant-height", Input).value = str(variant_item.height)
-
-    def _populate_ship_config(self) -> None:
-        tier = self._tier_for_structure(self.selection.item) if self.selection else None
-        tier_label = self.query_one("#ship-config-tier", Label)
-        width_label = self.query_one("#ship-config-width", Label)
-        lengths_input = self.query_one("#ship-config-lengths", Input)
-        if tier is None:
-            tier_label.update("Tier: select a ship tier or structure")
-            width_label.update("Ship width: —")
-            lengths_input.value = ""
-            lengths_input.disabled = True
-            return
-        view = self._view_for_structure(tier)
-        assert view is not None
-        ship_width = tier.cross_axis_size(view.axis)
-        tier_label.update(f"Tier: {tier.name}")
-        width_label.update(f"Ship width: {ship_width}")
-        lengths_input.value = ", ".join(
-            f"{section.id}: {tier.structure_lengths[section.id]}"
-            for section in tier.sections
-        )
-        lengths_input.disabled = False
 
     def _mark_changed(self) -> None:
         self.editor.mark_sprite_dirty()
@@ -1338,9 +1338,22 @@ class EdgeArtDesigner(App[None]):
     def _set_preview_size_for_tier(self, tier: Tier) -> None:
         view = self.editor.current_sprite.views[self.current_view_id]
         if view.axis == "horizontal":
-            size = (sum(section.variants[0].width * tier.structure_lengths[section.id] for section in tier.sections), tier.cross_axis_size(view.axis))
+            size = (
+                sum(
+                    section.variants[0].width * section.repeat
+                    for section in tier.sections
+                ),
+                tier.cross_axis_size(view.axis),
+            )
         elif view.axis == "vertical":
-            size = (sum(section.variants[0].height * tier.structure_lengths[section.id] for section in tier.sections) * 2, tier.cross_axis_size(view.axis))
+            size = (
+                sum(
+                    section.variants[0].height * section.repeat
+                    for section in tier.sections
+                )
+                * 2,
+                tier.cross_axis_size(view.axis),
+            )
         else:
             variant = tier.sections[0].variants[0]
             size = (variant.width, variant.height)
@@ -1426,8 +1439,6 @@ class EdgeArtDesigner(App[None]):
             self._apply_properties()
         elif button_id.startswith("palette-add-"):
             self._add_palette_color(button_id.removeprefix("palette-add-"))
-        elif button_id == "apply-ship-config":
-            self._apply_ship_config()
         elif button_id == "apply-preview":
             self._apply_preview_configuration()
         elif button_id == "reset-preview-seed":
@@ -1452,6 +1463,9 @@ class EdgeArtDesigner(App[None]):
             return
         item = self.selection.item
         kind = self.selection.kind
+        locator = self._selection_locator()
+        original_sprite = deepcopy(self.editor.current_sprite)
+        original_view_id = self.current_view_id
         requested_id = self.query_one("#item-id", Input).value.strip()
         requested_name = self.query_one("#item-name", Input).value.strip()
         try:
@@ -1472,45 +1486,43 @@ class EdgeArtDesigner(App[None]):
                     raise ValueError(f"Unknown secondary properties: {sorted(invalid)}")
                 item.primary_property = primary
                 item.secondary_properties = secondary
+                view = self._view_for_structure(item)
+                assert view is not None
+                length = int(self.query_one("#section-length", Input).value)
+                if length < 1:
+                    raise ValueError("Section length must be positive")
+                first = item.variants[0]
+                width = length if view.axis == "horizontal" else first.width
+                height = first.height if view.axis == "horizontal" else length
+                self._resize_section(item, width, height)
+                if view.axis != "fixed":
+                    repeat = int(self.query_one("#section-repeat", Input).value)
+                    if repeat < 1:
+                        raise ValueError("Repetition must be positive")
+                    item.repeat = repeat
+            elif kind == "tier":
+                assert isinstance(item, Tier)
+                view = self._view_for_structure(item)
+                assert view is not None
+                width = int(self.query_one("#tier-width", Input).value)
+                self._resize_tier_width(item, view, width)
             elif kind == "variant":
                 assert isinstance(item, Variant)
                 item.weight = int(self.query_one("#variant-weight", Input).value)
-                width = int(self.query_one("#variant-width", Input).value)
-                height = int(self.query_one("#variant-height", Input).value)
-                self._resize_variant(item, width, height)
             self.editor.current_sprite.validate()
         except Exception as error:
+            self.editor.sprites[self.editor.current_sprite_id] = original_sprite
+            self.current_view_id = original_view_id
+            restored = self._selection_from_locator(locator)
+            self._rebuild_tree(select_item=restored)
             self.notify(str(error), severity="error")
-            self._populate_inspector()
             return
         self._rebuild_tree(select_item=item)
         if isinstance(item, Variant):
             self.query_one("#art-canvas", ArtCanvas).set_variant(item)
-        self._mark_changed()
-
-    def _apply_ship_config(self) -> None:
-        if self.selection is None:
-            return
-        tier = self._tier_for_structure(self.selection.item)
-        if tier is None:
-            self.notify("Select a ship tier or structure first.", severity="error")
-            return
-        try:
-            values = {
-                key.strip(): int(value.strip())
-                for entry in self.query_one("#ship-config-lengths", Input).value.split(",")
-                if entry.strip()
-                for key, value in [entry.split(":", 1)]
-            }
-            if set(values) != {section.id for section in tier.sections}:
-                raise ValueError("Provide one positive count for every structure.")
-            tier.structure_lengths = values
-            self.editor.current_sprite.validate()
-        except Exception as error:
-            self.notify(f"Invalid structure lengths: {error}", severity="error")
-            self._populate_ship_config()
-            return
-        self._set_preview_size_for_tier(tier)
+        tier = self._tier_for_structure(item)
+        if tier is not None:
+            self._set_preview_size_for_tier(tier)
         self._mark_changed()
 
     def _rename_selected(self, requested_id: str) -> None:
@@ -1534,6 +1546,23 @@ class EdgeArtDesigner(App[None]):
                 parent[requested_id] = item
                 if self.current_view_id == old_key:
                     self.current_view_id = requested_id
+
+    @staticmethod
+    def _resize_section(section: Section, width: int, height: int) -> None:
+        for variant in section.variants:
+            EdgeArtDesigner._resize_variant(variant, width, height)
+
+    @staticmethod
+    def _resize_tier_width(tier: Tier, view: View, width: int) -> None:
+        if width < 1:
+            raise ValueError("Ship width must be positive")
+        for section in tier.sections:
+            first = section.variants[0]
+            variant_width = width if view.axis in ("vertical", "fixed") else first.width
+            variant_height = first.height if view.axis in ("vertical", "fixed") else width
+            EdgeArtDesigner._resize_section(
+                section, variant_width, variant_height
+            )
 
     @staticmethod
     def _resize_variant(variant: Variant, width: int, height: int) -> None:
@@ -1811,7 +1840,13 @@ class EdgeArtDesigner(App[None]):
                 axis="fixed",
                 canonical_facing="default",
                 mirror_facing=None,
-                tiers=[Tier("full", "Full Detail", [_default_section("canvas")])],
+                tiers=[
+                    Tier(
+                        "full",
+                        "Full Detail",
+                        [_default_section("canvas")],
+                    )
+                ],
             )
             sprite.views[view_id] = added
         elif kind == "view":
@@ -1826,7 +1861,11 @@ class EdgeArtDesigner(App[None]):
             else:
                 cross = view.tiers[0].sections[0].variants[0].width
                 section = _default_section("section", width=cross, height=4)
-            added = Tier(tier_id, tier_id.title(), [section])
+            added = Tier(
+                tier_id,
+                tier_id.title(),
+                [section],
+            )
             view.tiers.append(added)
         elif kind == "tier":
             tier = item

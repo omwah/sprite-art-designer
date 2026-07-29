@@ -262,6 +262,117 @@ async def test_properties_hides_name_for_variants_and_restores_it_for_sections()
 
 
 @pytest.mark.asyncio
+async def test_properties_owns_shared_geometry_and_repetition_controls() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        tabs = app.query_one("#tool-tabs", TabbedContent)
+        assert not any(pane.id == "ship-config-tab" for pane in tabs.query(TabPane))
+        with pytest.raises(NoMatches):
+            app.query_one("#variant-width")
+        with pytest.raises(NoMatches):
+            app.query_one("#variant-height")
+
+        tabs.active = "properties-tab"
+        tree = app.query_one("#structure-tree", Tree)
+        section_node = tree.root.children[0].children[0].children[0]
+        tree.select_node(section_node)
+        await pilot.pause()
+        section = section_node.data.item
+        original_height = section.variants[0].height
+        new_length = section.variants[0].width + 1
+
+        app.query_one("#section-length").value = str(new_length)
+        app.query_one("#section-repeat").value = "2"
+        app._apply_properties()
+        await pilot.pause()
+
+        assert all(variant.width == new_length for variant in section.variants)
+        assert all(variant.height == original_height for variant in section.variants)
+        assert section.repeat == 2
+        assert app.editor.current_sprite_id in app.editor.dirty_sprites
+
+
+@pytest.mark.asyncio
+async def test_tier_width_resizes_every_section_variant() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        app.query_one("#tool-tabs", TabbedContent).active = "properties-tab"
+        tree = app.query_one("#structure-tree", Tree)
+        tier_node = tree.root.children[0].children[0]
+        tree.select_node(tier_node)
+        await pilot.pause()
+        tier = tier_node.data.item
+        new_width = tier.cross_axis_size("horizontal") + 1
+
+        app.query_one("#tier-width").value = str(new_width)
+        assert await pilot.click("#apply-properties")
+        await pilot.pause()
+
+        assert all(
+            variant.height == new_width
+            for section in tier.sections
+            for variant in section.variants
+        )
+        assert app.preview_size[1] == new_width
+
+
+@pytest.mark.asyncio
+async def test_invalid_section_properties_restore_geometry_atomically() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        app.query_one("#tool-tabs", TabbedContent).active = "properties-tab"
+        tree = app.query_one("#structure-tree", Tree)
+        section_node = tree.root.children[0].children[0].children[0]
+        tree.select_node(section_node)
+        await pilot.pause()
+        original_width = section_node.data.item.variants[0].width
+
+        app.query_one("#section-length").value = str(original_width + 1)
+        app.query_one("#section-repeat").value = "0"
+        app._apply_properties()
+        await pilot.pause()
+
+        assert app.selection is not None
+        assert app.selection.kind == "section"
+        restored = app.selection.item
+        assert all(variant.width == original_width for variant in restored.variants)
+        assert app.editor.current_sprite_id not in app.editor.dirty_sprites
+
+
+@pytest.mark.asyncio
+async def test_section_structure_actions_preserve_fixed_repetition() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        tree = app.query_one("#structure-tree", Tree)
+        tier_node = tree.root.children[0].children[0]
+        tree.select_node(tier_node)
+        await pilot.pause()
+        tier = tier_node.data.item
+
+        app.action_add_item()
+        await pilot.pause()
+        assert app.selection is not None
+        added = app.selection.item
+        assert added.repeat == 1
+        added.repeat = 2
+
+        app.action_duplicate_item()
+        await pilot.pause()
+        assert app.selection is not None
+        duplicate = app.selection.item
+        assert duplicate.repeat == 2
+
+        app.action_delete_item()
+        await pilot.pause()
+        assert duplicate not in tier.sections
+        app.editor.current_sprite.validate()
+
+
+@pytest.mark.asyncio
 async def test_structure_tree_only_collapses_from_disclosure_arrow() -> None:
     app = EdgeArtDesigner(ROOT / "assets")
     async with app.run_test(size=(140, 50)) as pilot:

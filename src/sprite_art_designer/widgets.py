@@ -470,6 +470,9 @@ class PropertiesToolsTab(TabPane):
             yield Input(id="item-id")
             yield Label("Name", id="item-name-label")
             yield Input(id="item-name")
+            with Vertical(id="tier-fields"):
+                yield Label("Ship width (cross-axis cells)", id="tier-width-label")
+                yield Input(value="1", type="integer", id="tier-width")
             with Vertical(id="section-fields"):
                 yield Label("Primary property")
                 yield Select(
@@ -480,13 +483,14 @@ class PropertiesToolsTab(TabPane):
                 )
                 yield Label("Secondary properties (comma-separated)")
                 yield Input(id="secondary-properties")
+                yield Label("Section length (cells)", id="section-length-label")
+                yield Input(value="1", type="integer", id="section-length")
+                with Vertical(id="section-repeat-fields"):
+                    yield Label("Repetition")
+                    yield Input(value="1", type="integer", id="section-repeat")
             with Vertical(id="variant-fields"):
                 yield Label("Selection weight")
                 yield Input(value="1", type="integer", id="variant-weight")
-                yield Label("Canvas width / height")
-                with Horizontal(classes="canvas-dimensions"):
-                    yield Input(value="1", type="integer", id="variant-width")
-                    yield Input(value="1", type="integer", id="variant-height")
             yield Button("Apply properties", id="apply-properties", variant="primary")
 
 
@@ -594,22 +598,6 @@ class PaletteColorSwatch(Button):
         self.post_message(self.Selected(self))
 
 
-class ShipConfigToolsTab(TabPane):
-    """Per-tier ship width and structure-length configuration."""
-
-    def __init__(self) -> None:
-        super().__init__("Ship Config", id="ship-config-tab")
-
-    def compose(self) -> ComposeResult:
-        with VerticalScroll():
-            yield Label("Select a tier to configure its ship width and structure lengths.")
-            yield Label("Tier", id="ship-config-tier")
-            yield Label("Ship width", id="ship-config-width")
-            yield Label("Structure lengths (structure: count)")
-            yield Input(id="ship-config-lengths")
-            yield Button("Apply ship config", id="apply-ship-config", variant="primary")
-
-
 class PreviewToolsTab(TabPane):
     """Preview view, random seed, and size controls tab."""
 
@@ -712,7 +700,6 @@ class ToolsPane(Vertical):
                 self.highlight_enabled,
             )
             yield PropertiesToolsTab()
-            yield ShipConfigToolsTab()
 
 
 class PreviewPane(Vertical):

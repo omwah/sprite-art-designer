@@ -187,7 +187,7 @@ def active_variant_at_cell(
     )
     variants = [active[id(section.variants)] for section in tier.sections]
     horizontal = view.axis != "vertical"
-    repeats = [tier.structure_lengths[section.id] for section in tier.sections]
+    repeats = [section.repeat for section in tier.sections]
     natural_width = sum(variant.width * repeat for variant, repeat in zip(variants, repeats))
     natural_height = (
         variants[0].height
@@ -223,36 +223,6 @@ def active_variant_at_cell(
     return None
 
 
-def _repeat_counts(
-    sections: list[Section],
-    chosen: list[Variant],
-    target: int,
-    horizontal: bool,
-) -> list[int]:
-    footprints = [
-        variant.width if horizontal else variant.height for variant in chosen
-    ]
-    repeats = [section.min_repeat for section in sections]
-    total = sum(size * count for size, count in zip(footprints, repeats))
-    growable = [
-        index
-        for index, section in enumerate(sections)
-        if section.max_repeat > section.min_repeat
-    ]
-    progressed = True
-    while progressed and growable:
-        progressed = False
-        for index in growable:
-            if (
-                repeats[index] < sections[index].max_repeat
-                and total + footprints[index] <= target
-            ):
-                repeats[index] += 1
-                total += footprints[index]
-                progressed = True
-    return repeats
-
-
 def _compose_horizontal(
     tier: Tier,
     rng: random.Random,
@@ -263,7 +233,7 @@ def _compose_horizontal(
     chosen = [
         _choose_variant(section, rng, variant_overrides) for section in tier.sections
     ]
-    repeats = [tier.structure_lengths[section.id] for section in tier.sections]
+    repeats = [section.repeat for section in tier.sections]
     height = chosen[0].height
     rows = [
         "".join(
@@ -301,7 +271,7 @@ def _compose_vertical(
     chosen = [
         _choose_variant(section, rng, variant_overrides) for section in tier.sections
     ]
-    repeats = [tier.structure_lengths[section.id] for section in tier.sections]
+    repeats = [section.repeat for section in tier.sections]
     rows: list[str] = []
     color_mask: list[str] = []
     highlight_mask: list[str] = []

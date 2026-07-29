@@ -1,4 +1,4 @@
-schema_version: 2
+schema_version: 3
 id: fighter
 name: Fighter
 kind: ship
@@ -13,21 +13,13 @@ views:
     tiers:
     - id: full
       name: Full Detail
-      structure_lengths:
-        thrusters: 1
-        spindrive: 1
-        hull: 5
-        screens: 1
-        main_gun: 1
       sections:
       - id: thrusters
         name: Swept Thrusters
         primary_property: thrusters
         secondary_properties:
         - spindrive
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: twin_bell
           weight: 1
@@ -70,9 +62,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - reactor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: faceted_core
           weight: 1
@@ -116,9 +106,7 @@ views:
         secondary_properties:
         - armor
         - bridge
-        repeat:
-          min: 1
-          max: 5
+        repeat: 5
         variants:
         - id: panel_rib
           weight: 1
@@ -161,9 +149,7 @@ views:
         primary_property: screens
         secondary_properties:
         - bridge
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: canopy
           weight: 1
@@ -206,9 +192,7 @@ views:
         primary_property: main_gun
         secondary_properties:
         - weapons
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: long_barrel
           weight: 1
@@ -248,21 +232,13 @@ views:
           - SSSSSS
     - id: medium
       name: Medium
-      structure_lengths:
-        thrusters: 1
-        spindrive: 1
-        hull: 5
-        screens: 1
-        main_gun: 1
       sections:
       - id: thrusters
         name: Swept Thrusters
         primary_property: thrusters
         secondary_properties:
         - spindrive
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: twin_bell
           weight: 1
@@ -297,9 +273,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - reactor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: faceted_core
           weight: 1
@@ -335,9 +309,7 @@ views:
         secondary_properties:
         - armor
         - bridge
-        repeat:
-          min: 1
-          max: 5
+        repeat: 5
         variants:
         - id: panel_rib
           weight: 1
@@ -372,9 +344,7 @@ views:
         primary_property: screens
         secondary_properties:
         - bridge
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: canopy
           weight: 1
@@ -409,9 +379,7 @@ views:
         primary_property: main_gun
         secondary_properties:
         - weapons
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: long_barrel
           weight: 1
@@ -443,18 +411,12 @@ views:
           - SSASS
     - id: compact
       name: Compact
-      structure_lengths:
-        drive: 1
-        body: 6
-        prow: 1
       sections:
       - id: drive
         name: Drive
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: flare
           weight: 1
@@ -471,9 +433,7 @@ views:
         primary_property: hull
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 6
+        repeat: 6
         variants:
         - id: dart
           weight: 1
@@ -499,9 +459,7 @@ views:
         name: Prow
         primary_property: weapons
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: muzzle
           weight: 1
@@ -521,21 +479,13 @@ views:
     tiers:
     - id: full
       name: Full Detail
-      structure_lengths:
-        thrusters: 1
-        spindrive: 1
-        hull: 5
-        screens: 1
-        main_gun: 1
       sections:
       - id: thrusters
         name: Swept Thrusters
         primary_property: thrusters
         secondary_properties:
         - spindrive
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: twin_bell
           weight: 1
@@ -562,9 +512,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - reactor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: faceted_core
           weight: 1
@@ -592,9 +540,7 @@ views:
         secondary_properties:
         - armor
         - bridge
-        repeat:
-          min: 1
-          max: 5
+        repeat: 5
         variants:
         - id: panel_rib
           weight: 1
@@ -617,9 +563,7 @@ views:
         primary_property: screens
         secondary_properties:
         - bridge
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: canopy
           weight: 1
@@ -642,9 +586,7 @@ views:
         primary_property: main_gun
         secondary_properties:
         - weapons
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: long_barrel
           weight: 1
@@ -668,21 +610,13 @@ views:
           - SSSSSSAASSSSSS
     - id: medium
       name: Medium
-      structure_lengths:
-        thrusters: 1
-        spindrive: 1
-        hull: 5
-        screens: 1
-        main_gun: 1
       sections:
       - id: thrusters
         name: Swept Thrusters
         primary_property: thrusters
         secondary_properties:
         - spindrive
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: twin_bell
           weight: 1
@@ -705,9 +639,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - reactor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: faceted_core
           weight: 1
@@ -731,9 +663,7 @@ views:
         secondary_properties:
         - armor
         - bridge
-        repeat:
-          min: 1
-          max: 5
+        repeat: 5
         variants:
         - id: panel_rib
           weight: 1
@@ -752,9 +682,7 @@ views:
         primary_property: screens
         secondary_properties:
         - bridge
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: canopy
           weight: 1
@@ -777,9 +705,7 @@ views:
         primary_property: main_gun
         secondary_properties:
         - weapons
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: long_barrel
           weight: 1
@@ -803,18 +729,12 @@ views:
           - SSSSSSSSSS
     - id: compact
       name: Compact
-      structure_lengths:
-        drive: 1
-        body: 6
-        prow: 1
       sections:
       - id: drive
         name: Drive
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: flare
           weight: 1
@@ -827,9 +747,7 @@ views:
         primary_property: hull
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 6
+        repeat: 6
         variants:
         - id: dart
           weight: 1
@@ -847,9 +765,7 @@ views:
         name: Prow
         primary_property: weapons
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: muzzle
           weight: 1

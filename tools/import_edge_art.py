@@ -86,8 +86,7 @@ def _tier(source_slots: tuple[Any, ...], index: int) -> Tier:
                 id=section_id,
                 name=name,
                 primary_property=property_id,
-                min_repeat=int(slot.min_repeat),
-                max_repeat=int(slot.max_repeat),
+                repeat=int(slot.min_repeat),
                 variants=[
                     Variant(
                         id=f"{section_id}_{variant_index + 1}",

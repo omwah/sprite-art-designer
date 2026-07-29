@@ -260,23 +260,19 @@ Header {
     background: #10212c;
 }
 
+#tier-fields,
 #section-fields,
+#section-repeat-fields,
 #variant-fields {
     height: auto;
 }
 
-#section-fields Horizontal,
 #variant-fields Horizontal {
     height: 3;
 }
 
-#section-fields Horizontal Input,
 #variant-fields Horizontal Input {
     width: 1fr;
-}
-
-.canvas-dimensions {
-    margin-bottom: 1;
 }
 
 #preview-pane {

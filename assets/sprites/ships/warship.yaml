@@ -1,4 +1,4 @@
-schema_version: 2
+schema_version: 3
 id: warship
 name: Warship
 kind: ship
@@ -13,12 +13,6 @@ views:
     tiers:
     - id: full
       name: Full Detail
-      structure_lengths:
-        thrusters: 1
-        spindrive: 1
-        hull: 5
-        screens: 1
-        main_gun: 1
       sections:
       - id: thrusters
         name: Armored Thrusters
@@ -26,9 +20,7 @@ views:
         secondary_properties:
         - spindrive
         - armor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: armored_bells
           weight: 1
@@ -71,9 +63,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: armored_core
           weight: 1
@@ -117,9 +107,7 @@ views:
         secondary_properties:
         - hull
         - weapons
-        repeat:
-          min: 1
-          max: 5
+        repeat: 5
         variants:
         - id: plate_band
           weight: 1
@@ -162,9 +150,7 @@ views:
         primary_property: screens
         secondary_properties:
         - sensors
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: deflector_collar
           weight: 1
@@ -207,9 +193,7 @@ views:
         primary_property: main_gun
         secondary_properties:
         - weapons
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: heavy_spinal
           weight: 1
@@ -249,12 +233,6 @@ views:
           - SSSSSSS
     - id: medium
       name: Medium
-      structure_lengths:
-        thrusters: 1
-        spindrive: 1
-        hull: 5
-        screens: 1
-        main_gun: 1
       sections:
       - id: thrusters
         name: Armored Thrusters
@@ -262,9 +240,7 @@ views:
         secondary_properties:
         - spindrive
         - armor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: armored_bells
           weight: 1
@@ -299,9 +275,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: armored_core
           weight: 1
@@ -337,9 +311,7 @@ views:
         secondary_properties:
         - hull
         - weapons
-        repeat:
-          min: 1
-          max: 5
+        repeat: 5
         variants:
         - id: plate_band
           weight: 1
@@ -374,9 +346,7 @@ views:
         primary_property: screens
         secondary_properties:
         - sensors
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: deflector_collar
           weight: 1
@@ -411,9 +381,7 @@ views:
         primary_property: main_gun
         secondary_properties:
         - weapons
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: heavy_spinal
           weight: 1
@@ -445,18 +413,12 @@ views:
           - SSSSS
     - id: compact
       name: Compact
-      structure_lengths:
-        drive: 1
-        body: 6
-        prow: 1
       sections:
       - id: drive
         name: Drive
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: drive
           weight: 1
@@ -473,9 +435,7 @@ views:
         primary_property: hull
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 6
+        repeat: 6
         variants:
         - id: armor
           weight: 1
@@ -501,9 +461,7 @@ views:
         name: Prow
         primary_property: weapons
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: gun
           weight: 1
@@ -523,12 +481,6 @@ views:
     tiers:
     - id: full
       name: Full Detail
-      structure_lengths:
-        thrusters: 1
-        spindrive: 1
-        hull: 5
-        screens: 1
-        main_gun: 1
       sections:
       - id: thrusters
         name: Armored Thrusters
@@ -536,9 +488,7 @@ views:
         secondary_properties:
         - spindrive
         - armor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: armored_bells
           weight: 1
@@ -565,9 +515,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: armored_core
           weight: 1
@@ -595,9 +543,7 @@ views:
         secondary_properties:
         - hull
         - weapons
-        repeat:
-          min: 1
-          max: 5
+        repeat: 5
         variants:
         - id: plate_band
           weight: 1
@@ -624,9 +570,7 @@ views:
         primary_property: screens
         secondary_properties:
         - sensors
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: deflector_collar
           weight: 1
@@ -649,9 +593,7 @@ views:
         primary_property: main_gun
         secondary_properties:
         - weapons
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: heavy_spinal
           weight: 1
@@ -679,12 +621,6 @@ views:
           - SSSSSSSSSSSSSS
     - id: medium
       name: Medium
-      structure_lengths:
-        thrusters: 1
-        spindrive: 1
-        hull: 5
-        screens: 1
-        main_gun: 1
       sections:
       - id: thrusters
         name: Armored Thrusters
@@ -692,9 +628,7 @@ views:
         secondary_properties:
         - spindrive
         - armor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: armored_bells
           weight: 1
@@ -717,9 +651,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: armored_core
           weight: 1
@@ -743,9 +675,7 @@ views:
         secondary_properties:
         - hull
         - weapons
-        repeat:
-          min: 1
-          max: 5
+        repeat: 5
         variants:
         - id: plate_band
           weight: 1
@@ -768,9 +698,7 @@ views:
         primary_property: screens
         secondary_properties:
         - sensors
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: deflector_collar
           weight: 1
@@ -793,9 +721,7 @@ views:
         primary_property: main_gun
         secondary_properties:
         - weapons
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: heavy_spinal
           weight: 1
@@ -819,18 +745,12 @@ views:
           - SSSSSSSSSS
     - id: compact
       name: Compact
-      structure_lengths:
-        drive: 1
-        body: 6
-        prow: 1
       sections:
       - id: drive
         name: Drive
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: drive
           weight: 1
@@ -843,9 +763,7 @@ views:
         primary_property: hull
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 6
+        repeat: 6
         variants:
         - id: armor
           weight: 1
@@ -863,9 +781,7 @@ views:
         name: Prow
         primary_property: weapons
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: gun
           weight: 1

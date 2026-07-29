@@ -1,4 +1,4 @@
-schema_version: 2
+schema_version: 3
 id: marrow_dart
 name: Marrow Dart
 kind: ship
@@ -13,21 +13,13 @@ views:
     tiers:
     - id: full
       name: Full Detail
-      structure_lengths:
-        sinew_drive: 1
-        marrow_knot: 1
-        bound_spars: 7
-        nerve_cluster: 1
-        hardened_beak: 1
       sections:
       - id: sinew_drive
         name: Sinew Drive
         primary_property: thrusters
         secondary_properties:
         - reactor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: tendons
           weight: 1
@@ -70,9 +62,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - hull
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: joint
           weight: 1
@@ -115,9 +105,7 @@ views:
         primary_property: hull
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 7
+        repeat: 7
         variants:
         - id: spar
           weight: 1
@@ -160,9 +148,7 @@ views:
         primary_property: sensors
         secondary_properties:
         - weapons
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: eye_cluster
           weight: 1
@@ -204,9 +190,7 @@ views:
         name: Hardened Beak
         primary_property: main_gun
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: fang
           weight: 1
@@ -246,21 +230,13 @@ views:
           - SSSS
     - id: medium
       name: Medium
-      structure_lengths:
-        sinew_drive: 1
-        marrow_knot: 1
-        bound_spars: 7
-        nerve_cluster: 1
-        hardened_beak: 1
       sections:
       - id: sinew_drive
         name: Sinew Drive
         primary_property: thrusters
         secondary_properties:
         - reactor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: tendons
           weight: 1
@@ -295,9 +271,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - hull
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: joint
           weight: 1
@@ -332,9 +306,7 @@ views:
         primary_property: hull
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 7
+        repeat: 7
         variants:
         - id: spar
           weight: 1
@@ -369,9 +341,7 @@ views:
         primary_property: sensors
         secondary_properties:
         - weapons
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: eye_cluster
           weight: 1
@@ -405,9 +375,7 @@ views:
         name: Hardened Beak
         primary_property: main_gun
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: fang
           weight: 1
@@ -439,18 +407,12 @@ views:
           - SSS
     - id: compact
       name: Compact
-      structure_lengths:
-        drive: 1
-        body: 6
-        prow: 1
       sections:
       - id: drive
         name: Drive
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: drive
           weight: 1
@@ -467,9 +429,7 @@ views:
         primary_property: hull
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 12
+        repeat: 6
         variants:
         - id: spar
           weight: 1
@@ -495,9 +455,7 @@ views:
         name: Prow
         primary_property: weapons
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: fang
           weight: 1
@@ -517,21 +475,13 @@ views:
     tiers:
     - id: full
       name: Full Detail
-      structure_lengths:
-        sinew_drive: 1
-        marrow_knot: 1
-        bound_spars: 7
-        nerve_cluster: 1
-        hardened_beak: 1
       sections:
       - id: sinew_drive
         name: Sinew Drive
         primary_property: thrusters
         secondary_properties:
         - reactor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: tendons
           weight: 1
@@ -558,9 +508,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - hull
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: joint
           weight: 1
@@ -583,9 +531,7 @@ views:
         primary_property: hull
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 7
+        repeat: 7
         variants:
         - id: spar
           weight: 1
@@ -608,9 +554,7 @@ views:
         primary_property: sensors
         secondary_properties:
         - weapons
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: eye_cluster
           weight: 1
@@ -636,9 +580,7 @@ views:
         name: Hardened Beak
         primary_property: main_gun
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: fang
           weight: 1
@@ -658,21 +600,13 @@ views:
           - SSSSSSSSSSSSSS
     - id: medium
       name: Medium
-      structure_lengths:
-        sinew_drive: 1
-        marrow_knot: 1
-        bound_spars: 7
-        nerve_cluster: 1
-        hardened_beak: 1
       sections:
       - id: sinew_drive
         name: Sinew Drive
         primary_property: thrusters
         secondary_properties:
         - reactor
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: tendons
           weight: 1
@@ -695,9 +629,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - hull
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: joint
           weight: 1
@@ -720,9 +652,7 @@ views:
         primary_property: hull
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 7
+        repeat: 7
         variants:
         - id: spar
           weight: 1
@@ -745,9 +675,7 @@ views:
         primary_property: sensors
         secondary_properties:
         - weapons
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: eye_cluster
           weight: 1
@@ -769,9 +697,7 @@ views:
         name: Hardened Beak
         primary_property: main_gun
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: fang
           weight: 1
@@ -791,18 +717,12 @@ views:
           - SSSSSSSSSS
     - id: compact
       name: Compact
-      structure_lengths:
-        drive: 1
-        body: 6
-        prow: 1
       sections:
       - id: drive
         name: Drive
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: drive
           weight: 1
@@ -815,9 +735,7 @@ views:
         primary_property: hull
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 12
+        repeat: 6
         variants:
         - id: spar
           weight: 1
@@ -835,9 +753,7 @@ views:
         name: Prow
         primary_property: weapons
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: fang
           weight: 1

@@ -1,4 +1,4 @@
-schema_version: 2
+schema_version: 3
 id: junction_pinnace
 name: Junction Pinnace
 kind: ship
@@ -13,19 +13,12 @@ views:
     tiers:
     - id: full
       name: Full Detail
-      structure_lengths:
-        overdrive: 1
-        sail_nodes: 1
-        cabin: 3
-        landing_nose: 1
       sections:
       - id: overdrive
         name: Overdrive
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: big_bell
           weight: 1
@@ -68,9 +61,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - radiator
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: diamond_sails
           weight: 1
@@ -113,9 +104,7 @@ views:
         primary_property: habitat
         secondary_properties:
         - sensors
-        repeat:
-          min: 1
-          max: 3
+        repeat: 3
         variants:
         - id: windowed_cabin
           weight: 1
@@ -157,9 +146,7 @@ views:
         name: Landing Nose
         primary_property: utility
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: docking_nose
           weight: 1
@@ -199,19 +186,12 @@ views:
           - SSS
     - id: medium
       name: Medium
-      structure_lengths:
-        overdrive: 1
-        sail_nodes: 1
-        cabin: 3
-        landing_nose: 1
       sections:
       - id: overdrive
         name: Overdrive
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: big_bell
           weight: 1
@@ -246,9 +226,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - radiator
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: diamond_sails
           weight: 1
@@ -283,9 +261,7 @@ views:
         primary_property: habitat
         secondary_properties:
         - sensors
-        repeat:
-          min: 1
-          max: 3
+        repeat: 3
         variants:
         - id: windowed_cabin
           weight: 1
@@ -319,9 +295,7 @@ views:
         name: Landing Nose
         primary_property: utility
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: docking_nose
           weight: 1
@@ -353,18 +327,12 @@ views:
           - SS
     - id: compact
       name: Compact
-      structure_lengths:
-        drive: 1
-        body: 4
-        prow: 1
       sections:
       - id: drive
         name: Drive
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: drive
           weight: 1
@@ -381,9 +349,7 @@ views:
         primary_property: hull
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 4
+        repeat: 4
         variants:
         - id: cabin
           weight: 1
@@ -399,9 +365,7 @@ views:
         name: Prow
         primary_property: weapons
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: nose
           weight: 1
@@ -421,19 +385,12 @@ views:
     tiers:
     - id: full
       name: Full Detail
-      structure_lengths:
-        overdrive: 1
-        sail_nodes: 1
-        cabin: 3
-        landing_nose: 1
       sections:
       - id: overdrive
         name: Overdrive
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: big_bell
           weight: 1
@@ -456,9 +413,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - radiator
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: diamond_sails
           weight: 1
@@ -481,9 +436,7 @@ views:
         primary_property: habitat
         secondary_properties:
         - sensors
-        repeat:
-          min: 1
-          max: 3
+        repeat: 3
         variants:
         - id: windowed_cabin
           weight: 1
@@ -505,9 +458,7 @@ views:
         name: Landing Nose
         primary_property: utility
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: docking_nose
           weight: 1
@@ -527,19 +478,12 @@ views:
           - SSSSSSDDSSSSSS
     - id: medium
       name: Medium
-      structure_lengths:
-        overdrive: 1
-        sail_nodes: 1
-        cabin: 3
-        landing_nose: 1
       sections:
       - id: overdrive
         name: Overdrive
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: big_bell
           weight: 1
@@ -562,9 +506,7 @@ views:
         primary_property: spindrive
         secondary_properties:
         - radiator
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: diamond_sails
           weight: 1
@@ -587,9 +529,7 @@ views:
         primary_property: habitat
         secondary_properties:
         - sensors
-        repeat:
-          min: 1
-          max: 3
+        repeat: 3
         variants:
         - id: windowed_cabin
           weight: 1
@@ -611,9 +551,7 @@ views:
         name: Landing Nose
         primary_property: utility
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: docking_nose
           weight: 1
@@ -629,18 +567,12 @@ views:
           - SSSSSSSSSS
     - id: compact
       name: Compact
-      structure_lengths:
-        drive: 1
-        body: 4
-        prow: 1
       sections:
       - id: drive
         name: Drive
         primary_property: thrusters
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: drive
           weight: 1
@@ -653,9 +585,7 @@ views:
         primary_property: hull
         secondary_properties:
         - armor
-        repeat:
-          min: 1
-          max: 4
+        repeat: 4
         variants:
         - id: cabin
           weight: 1
@@ -669,9 +599,7 @@ views:
         name: Prow
         primary_property: weapons
         secondary_properties: []
-        repeat:
-          min: 1
-          max: 1
+        repeat: 1
         variants:
         - id: nose
           weight: 1
