@@ -1,4 +1,4 @@
-"""Render a terminal gallery of authored ship sprites and tiers."""
+"""Render a terminal gallery of authored sprites and tiers, by kind."""
 
 from __future__ import annotations
 
@@ -31,7 +31,7 @@ DEFAULT_PALETTE_CATALOG = DEFAULT_ASSET_ROOT / "palettes.yaml"
 
 
 class GallerySelectionError(ValueError):
-    """A requested ship or tier is not present in the loaded gallery."""
+    """A requested sprite or tier is not present in the loaded gallery."""
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -53,8 +53,15 @@ def _parser() -> argparse.ArgumentParser:
         help="Archetype palette to apply (default: humanoid_diplomat)",
     )
     parser.add_argument(
+        "--kind",
+        default="ship",
+        help="Sprite kind to render, e.g. ship or port (default: ship)",
+    )
+    parser.add_argument(
         "--ship-type",
         "--ship-types",
+        "--sprite-id",
+        "--sprite-ids",
         dest="ship_types",
         action="extend",
         nargs="+",
@@ -83,25 +90,32 @@ def _deduplicate(values: Sequence[str]) -> list[str]:
 
 
 def _select_ships(
-    sprites: dict[str, Sprite], requested_ids: Sequence[str] | None
+    sprites: dict[str, Sprite], requested_ids: Sequence[str] | None, kind: str = "ship"
 ) -> list[Sprite]:
-    ships = {sprite.id: sprite for sprite in sprites.values() if sprite.kind == "ship"}
-    if not ships:
-        raise GallerySelectionError("no ship sprites were found")
+    matching = {
+        sprite.id: sprite for sprite in sprites.values() if sprite.kind == kind
+    }
+    if not matching:
+        kinds = ", ".join(sorted({sprite.kind for sprite in sprites.values()}))
+        raise GallerySelectionError(
+            f"no {kind} sprites were found; loaded kinds: {kinds or 'none'}"
+        )
     if requested_ids is None:
-        return [ships[sprite_id] for sprite_id in sorted(ships)]
+        return [matching[sprite_id] for sprite_id in sorted(matching)]
 
     selected_ids = _deduplicate(requested_ids)
-    missing = [sprite_id for sprite_id in selected_ids if sprite_id not in ships]
+    missing = [sprite_id for sprite_id in selected_ids if sprite_id not in matching]
     if missing:
-        available = ", ".join(sorted(ships))
+        available = ", ".join(sorted(matching))
         raise GallerySelectionError(
-            f"unknown ship type(s): {', '.join(missing)}; available: {available}"
+            f"unknown {kind} id(s): {', '.join(missing)}; available: {available}"
         )
-    return [ships[sprite_id] for sprite_id in selected_ids]
+    return [matching[sprite_id] for sprite_id in selected_ids]
 
 
 def _gallery_view(sprite: Sprite) -> View:
+    """Prefer the horizontal view; vertical-only kinds fall back to their own."""
+
     return sprite.views.get("horizontal", next(iter(sprite.views.values())))
 
 
@@ -120,19 +134,19 @@ def _select_tiers(view: View, requested_ids: Sequence[str] | None) -> list[Tier]
     return [tiers[tier_id] for tier_id in selected_ids]
 
 
-def _tier_dimensions(view: View, tier: Tier) -> tuple[int, int]:
+def _tier_dimensions(view: View, tier: Tier, archetype_id: str) -> tuple[int, int]:
+    """The exact box this tier composes into for one archetype."""
+
     if view.axis == "horizontal":
-        width = sum(
-            section.variants[0].width * section.repeat
-            for section in tier.sections
+        return (
+            tier.composed_length(view.axis, archetype_id),
+            tier.cross_axis_size(view.axis),
         )
-        return width, tier.cross_axis_size(view.axis)
     if view.axis == "vertical":
-        height = sum(
-            section.variants[0].height * section.repeat
-            for section in tier.sections
+        return (
+            tier.cross_axis_size(view.axis),
+            tier.composed_length(view.axis, archetype_id),
         )
-        return tier.cross_axis_size(view.axis), height
     variant = tier.sections[0].variants[0]
     return variant.width, variant.height
 
@@ -151,7 +165,7 @@ def _render_tier(
         sprite,
         views={**sprite.views, view.id: isolated_view},
     )
-    width, height = _tier_dimensions(view, tier)
+    width, height = _tier_dimensions(view, tier, archetype_id)
     art = render_sprite(
         isolated_sprite,
         palettes,
@@ -174,8 +188,9 @@ def render_gallery(
     tier_ids: Sequence[str] | None,
     archetype_id: str,
     seed: int,
+    kind: str = "ship",
 ) -> None:
-    ships = _select_ships(sprites, ship_type_ids)
+    ships = _select_ships(sprites, ship_type_ids, kind)
     selections = [
         (ship, _gallery_view(ship), _select_tiers(_gallery_view(ship), tier_ids))
         for ship in ships
@@ -183,7 +198,7 @@ def render_gallery(
 
     console.print(
         Text.assemble(
-            ("Ship sprite gallery", "bold"),
+            (f"{kind.replace('_', ' ').title()} sprite gallery", "bold"),
             f" · archetype={archetype_id} · seed={seed}",
         )
     )
@@ -233,6 +248,7 @@ def main(argv: Sequence[str] | None = None, *, console: Console | None = None) -
             tier_ids=args.tiers,
             archetype_id=args.archetype,
             seed=seed,
+            kind=args.kind,
         )
     except (OSError, SpriteValidationError, GallerySelectionError, YAMLError) as error:
         parser.error(str(error))

@@ -26,16 +26,8 @@ from sprite_art import (
 )
 from sprite_art.model import SCHEMA_VERSION
 
-LEGACY_MARKERS = {
-    "R": ("▀", "B"),
-    "r": ("▄", "B"),
-    "Y": ("▀", "E"),
-    "y": ("▄", "E"),
-    "G": ("▀", "A"),
-    "g": ("▄", "A"),
-    "B": ("▀", "D"),
-    "b": ("▄", "D"),
-}
+from edge_markers import migrate_rows
+
 DEFENSIVE_COLORS = {
     "humanoid_diplomat": "#60a5fa",
     "canid_technologist": "#2563eb",
@@ -52,14 +44,6 @@ DEFENSIVE_COLORS = {
     "colonial_broodmaster": "#93c5fd",
     "winged_schemer": "#0891b2",
 }
-
-
-def _migrate_rows(rows: tuple[str, ...]) -> tuple[list[str], list[str]]:
-    cells = ["".join(LEGACY_MARKERS.get(glyph, (glyph, "S"))[0] for glyph in row) for row in rows]
-    color_mask = [
-        "".join(LEGACY_MARKERS.get(glyph, (glyph, "S"))[1] for glyph in row) for row in rows
-    ]
-    return cells, color_mask
 
 
 FULL_SECTIONS = (
@@ -90,8 +74,8 @@ def _tier(source_slots: tuple[Any, ...], index: int) -> Tier:
                 variants=[
                     Variant(
                         id=f"{section_id}_{variant_index + 1}",
-                        cells=_migrate_rows(part.left)[0],
-                        color_mask=_migrate_rows(part.left)[1],
+                        cells=migrate_rows(part.left)[0],
+                        color_mask=migrate_rows(part.left)[1],
                     )
                     for variant_index, part in enumerate(slot.parts)
                 ],

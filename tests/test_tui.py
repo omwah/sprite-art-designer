@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import gzip
 import struct
+from collections import Counter
 from pathlib import Path
 from shutil import copytree
 
@@ -9,7 +10,7 @@ import pytest
 from textual.color import Color as TextualColor
 from textual.css.query import NoMatches
 from textual.containers import Horizontal, ItemGrid
-from textual.widgets import Button, Label, Select, TabbedContent, TabPane, Tree
+from textual.widgets import Button, Input, Label, Select, TabbedContent, TabPane, Tree
 from textual_colorpicker import ColorPicker
 
 from sprite_art.glyphs import (
@@ -35,7 +36,8 @@ async def test_app_mounts_wide_and_populates_editor() -> None:
     app = EdgeArtDesigner(ROOT / "assets")
     async with app.run_test(size=(140, 50)) as pilot:
         await pilot.pause()
-        assert len(app.editor.sprites) == 12
+        kinds = Counter(sprite.kind for sprite in app.editor.sprites.values())
+        assert kinds == {"ship": 12, "port": 3}
         assert app.query_one("#nav-pane").display
         assert app.query_one("#canvas-pane").display
         assert app.query_one("#tools-pane").display
@@ -331,7 +333,9 @@ async def test_invalid_section_properties_restore_geometry_atomically() -> None:
         original_width = section_node.data.item.variants[0].width
 
         app.query_one("#section-length").value = str(original_width + 1)
-        app.query_one("#section-repeat").value = "0"
+        # Zero is a legal repeat -- it omits the band -- so a negative one is
+        # what still has to be rejected.
+        app.query_one("#section-repeat").value = "-1"
         app._apply_properties()
         await pilot.pause()
 
@@ -759,3 +763,153 @@ async def test_undo_and_redo_restore_canvas_edits() -> None:
         redone = app.query_one("#art-canvas", ArtCanvas).variant
         assert redone is not None
         assert redone.cells[0][0] != original
+
+
+@pytest.mark.asyncio
+async def test_station_sprite_hides_orientation_and_facing_controls(
+    tmp_path: Path,
+) -> None:
+    """A vertical-only kind has one view and one facing, so both are inert."""
+
+    asset_root = tmp_path / "assets"
+    copytree(ROOT / "assets", asset_root)
+    app = EdgeArtDesigner(asset_root)
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        app.query_one("#sprite-select", Select).value = "stardock"
+        await pilot.pause()
+
+        assert app.editor.current_sprite.kind == "port"
+        assert app.current_view_id == "vertical"
+        assert not app.query_one("#facing-field").display
+
+        # Neither orientation action applies without a horizontal source.
+        app.action_toggle_orientation()
+        app.action_rotate_vertical()
+        await pilot.pause()
+        assert list(app.editor.current_sprite.views) == ["vertical"]
+        assert app.editor.current_sprite_id not in app.editor.dirty_sprites
+
+
+@pytest.mark.asyncio
+async def test_new_station_sprite_saves_under_ports(tmp_path: Path) -> None:
+    asset_root = tmp_path / "assets"
+    copytree(ROOT / "assets", asset_root)
+    app = EdgeArtDesigner(asset_root)
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        app._finish_new_sprite(("relay_post", "Relay Post", "port"))
+        await pilot.pause()
+
+        sprite = app.editor.sprites["relay_post"]
+        assert sprite.kind == "port"
+        assert list(sprite.views) == ["vertical"]
+        assert sprite.views["vertical"].mirror_facing is None
+
+        app.action_save()
+        await pilot.pause()
+        assert (asset_root / "sprites" / "ports" / "relay_post.yaml").is_file()
+
+
+@pytest.mark.asyncio
+async def test_per_archetype_repeat_override_is_set_and_cleared(
+    tmp_path: Path,
+) -> None:
+    """The override is scoped to the archetype currently being previewed."""
+
+    asset_root = tmp_path / "assets"
+    copytree(ROOT / "assets", asset_root)
+    app = EdgeArtDesigner(asset_root)
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        app.query_one("#tool-tabs", TabbedContent).active = "properties-tab"
+
+        def current_section():
+            tier = app.editor.current_sprite.views["horizontal"].tiers[0]
+            return tier.sections[0]
+
+        async def select_section() -> None:
+            app._select_tree_item(current_section(), persist_variant=False)
+            await pilot.pause()
+
+        await select_section()
+        baseline = current_section().repeat
+
+        app.query_one("#section-archetype-repeat", Input).value = str(baseline + 2)
+        app._apply_properties()
+        await pilot.pause()
+        section = current_section()
+        assert section.archetype_repeats == {app.current_archetype: baseline + 2}
+        assert section.repeat == baseline
+        assert section.repeat_for("ribbon_salvager") == baseline
+
+        # Clearing the field drops the override rather than storing a zero.
+        await select_section()
+        assert app.query_one("#section-archetype-repeat", Input).value == str(baseline + 2)
+        app.query_one("#section-archetype-repeat", Input).value = ""
+        app._apply_properties()
+        await pilot.pause()
+        assert current_section().archetype_repeats == {}
+
+
+@pytest.mark.asyncio
+async def test_a_repeat_override_that_collapses_the_tier_ladder_is_rejected(
+    tmp_path: Path,
+) -> None:
+    """Shrinking a tier onto the next one would make that next one unreachable."""
+
+    asset_root = tmp_path / "assets"
+    copytree(ROOT / "assets", asset_root)
+    app = EdgeArtDesigner(asset_root)
+    messages: list[str] = []
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        app.query_one("#sprite-select", Select).value = "stardock"
+        await pilot.pause()
+        app.query_one("#tool-tabs", TabbedContent).active = "properties-tab"
+        app.notify = lambda message, **kwargs: messages.append(str(message))
+
+        view = app.editor.current_sprite.views["vertical"]
+        assert view.tiers[0].composed_length("vertical") > view.tiers[1].composed_length(
+            "vertical"
+        )
+        section = view.tiers[0].sections[0]
+        app._select_tree_item(section, persist_variant=False)
+        await pilot.pause()
+
+        # Dropping the beacon band shrinks Full onto Medium for this archetype.
+        app.query_one("#section-archetype-repeat", Input).value = "0"
+        app._apply_properties()
+        await pilot.pause()
+
+        assert any("strictly smaller" in message for message in messages)
+        assert app.editor.current_sprite.views["vertical"].tiers[0].sections[
+            0
+        ].archetype_repeats == {}
+
+
+@pytest.mark.asyncio
+async def test_variant_archetype_field_rejects_unknown_species(tmp_path: Path) -> None:
+    asset_root = tmp_path / "assets"
+    copytree(ROOT / "assets", asset_root)
+    app = EdgeArtDesigner(asset_root)
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        app.query_one("#tool-tabs", TabbedContent).active = "properties-tab"
+        tree = app.query_one("#structure-tree", Tree)
+        variant_node = tree.root.children[0].children[0].children[0].children[0]
+        tree.select_node(variant_node)
+        await pilot.pause()
+        variant = variant_node.data.item
+
+        app.query_one("#variant-archetypes", Input).value = "ribbon_salvager"
+        app._apply_properties()
+        await pilot.pause()
+        assert variant.archetypes == ["ribbon_salvager"]
+
+        tree.select_node(variant_node)
+        await pilot.pause()
+        app.query_one("#variant-archetypes", Input).value = "not_a_species"
+        app._apply_properties()
+        await pilot.pause()
+        assert variant.archetypes == ["ribbon_salvager"]

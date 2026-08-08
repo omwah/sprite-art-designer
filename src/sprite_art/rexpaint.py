@@ -21,7 +21,13 @@ from .model import (
     Sprite,
     Variant,
 )
-from .render import render_sprite, selected_tier, selected_variants
+from .render import (
+    ordered_sections,
+    render_sprite,
+    resolve_archetype,
+    selected_tier,
+    selected_variants,
+)
 
 REXPAINT_VERSION = -1
 REXPAINT_FONT_COLUMNS = 16
@@ -197,7 +203,10 @@ def segment_rexpaint_cells(
     view = sprite.views.get(view_id)
     if view is None:
         raise RexPaintImportError(f"sprite {sprite.id!r} has no view {view_id!r}")
-    tier = selected_tier(sprite, width=width, height=height, view_id=view_id)
+    archetype = resolve_archetype(archetype_id)
+    tier = selected_tier(
+        sprite, width=width, height=height, view_id=view_id, archetype_id=archetype_id
+    )
     active = selected_variants(
         sprite,
         palettes,
@@ -210,7 +219,7 @@ def segment_rexpaint_cells(
     )
     variants = [active[id(section.variants)] for section in tier.sections]
     horizontal = view.axis != "vertical"
-    repeats = [section.repeat for section in tier.sections]
+    repeats = [section.repeat_for(archetype) for section in tier.sections]
 
     natural_width = sum(variant.width * repeat for variant, repeat in zip(variants, repeats))
     natural_height = (
@@ -239,6 +248,9 @@ def segment_rexpaint_cells(
     if horizontal:
         cursor = left
         for variant, repeat in zip(variants, repeats):
+            if repeat == 0:
+                # Omitted for this archetype, so it occupies no imported cells.
+                continue
             copies = [
                 [
                     row[cursor + copy * variant.width : cursor + (copy + 1) * variant.width]
@@ -264,7 +276,10 @@ def segment_rexpaint_cells(
             cursor += variant.width * repeat
     else:
         cursor = top
-        for variant, repeat in reversed(list(zip(variants, repeats))):
+        for variant, repeat in ordered_sections(view, zip(variants, repeats)):
+            if repeat == 0:
+                # Omitted for this archetype, so it occupies no imported cells.
+                continue
             copies = [rows[cursor + copy * variant.height : cursor + (copy + 1) * variant.height]
                       for copy in range(repeat)]
             mask_copies = [

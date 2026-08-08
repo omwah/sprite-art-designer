@@ -1,4 +1,4 @@
-schema_version: 3
+schema_version: 4
 id: junction_pinnace
 name: Junction Pinnace
 kind: ship
@@ -382,6 +382,7 @@ views:
     axis: vertical
     canonical_facing: up
     mirror_facing: down
+    section_order: reversed
     tiers:
     - id: full
       name: Full Detail
@@ -585,7 +586,7 @@ views:
         primary_property: hull
         secondary_properties:
         - armor
-        repeat: 4
+        repeat: 3
         variants:
         - id: cabin
           weight: 1

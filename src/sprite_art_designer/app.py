@@ -32,6 +32,7 @@ from textual.widgets.tree import TreeNode
 from textual_colorpicker import ColorPicker
 
 from sprite_art import (
+    ARCHETYPE_IDS,
     COLOR_SET_IDS,
     PROPERTY_IDS,
     active_variant_at_cell,
@@ -159,13 +160,13 @@ class HelpScreen(ModalScreen[None]):
                 "  Ctrl+Shift+S  Save all modified assets\n"
                 "  Ctrl+N  Create a sprite\n"
                 "  Ctrl+R  Restore recovery snapshot\n"
-                "  Ctrl+G  Generate vertical view\n"
+                "  Ctrl+G  Generate vertical view (needs a horizontal source)\n"
                 "  Ctrl+I  Import RexPaint image\n"
                 "  Ctrl+D  Duplicate selection\n"
                 "  Delete  Delete selection\n"
                 "  H  Toggle selected-part preview highlight\n"
-                "  T  Switch to the next ship tier\n"
-                "  O  Switch horizontal / vertical orientation\n"
+                "  T  Switch to the next size tier\n"
+                "  O  Switch orientation (sprites with two views)\n"
                 "  Click a Structure variant to select and keep it for its slot\n"
                 "  V  Select and keep the next variant in the selected slot\n"
                 "  , / .  Temporarily browse previous / next structure\n"
@@ -187,7 +188,11 @@ class NewSpriteScreen(ModalScreen[tuple[str, str, str] | None]):
             yield Input(placeholder="New Role", id="new-name")
             yield Label("Asset type")
             yield Select(
-                [("Ship composition", "ship"), ("Fixed canvas", "generic")],
+                [
+                    ("Ship composition", "ship"),
+                    ("Station composition", "port"),
+                    ("Fixed canvas", "generic"),
+                ],
                 value="ship",
                 allow_blank=False,
                 id="new-kind",
@@ -315,7 +320,67 @@ def _default_section(
     )
 
 
+def _station_tier(tier_id: str, tier_name: str, width: int, band_height: int) -> Tier:
+    """One rung of a station ladder: a beacon cap, a repeating body, a base.
+
+    Stations stack downward, so the bands are authored in the order they are
+    drawn and the body carries the repeat that sets the tier's height."""
+
+    return Tier(
+        id=tier_id,
+        name=tier_name,
+        sections=[
+            Section(
+                id="cap",
+                name="Cap",
+                primary_property="beacon",
+                variants=[_blank_variant("cap_1", width, band_height)],
+            ),
+            Section(
+                id="body",
+                name="Body",
+                primary_property="hull",
+                repeat=2,
+                variants=[_blank_variant("body_1", width, band_height)],
+            ),
+            Section(
+                id="base",
+                name="Base",
+                primary_property="thrusters",
+                variants=[_blank_variant("base_1", width, band_height)],
+            ),
+        ],
+    )
+
+
 def _new_sprite(sprite_id: str, name: str, kind: str) -> Sprite:
+    if kind == "port":
+        # Stations have one orientation and no mirror facing, so there is no
+        # horizontal source to rotate from; the vertical view is authored
+        # directly, top to bottom.
+        return Sprite(
+            schema_version=SCHEMA_VERSION,
+            id=sprite_id,
+            name=name,
+            kind="port",
+            role=sprite_id,
+            description="",
+            views={
+                "vertical": View(
+                    id="vertical",
+                    name="Vertical",
+                    axis="vertical",
+                    canonical_facing="up",
+                    mirror_facing=None,
+                    section_order="authored",
+                    tiers=[
+                        _station_tier("full", "Full Detail", 11, 3),
+                        _station_tier("medium", "Medium", 7, 2),
+                        _station_tier("compact", "Compact", 5, 1),
+                    ],
+                )
+            },
+        )
     if kind == "ship":
         sprite = Sprite(
             schema_version=SCHEMA_VERSION,
@@ -677,12 +742,25 @@ class EdgeArtDesigner(App[None]):
             return Text(label, style="#d9e3ea")
         return Text(label, style="dim #718096")
 
+    def _preview_dimensions(self) -> tuple[int, int]:
+        """The box the preview actually renders into.
+
+        ``preview_size`` is stored before aspect correction, so anything that
+        must agree with what is on screen -- variant selection, REXPaint export
+        and import -- has to go through the same conversion the preview uses.
+        It is the identity for horizontal views, which is why passing the raw
+        pair used to look correct."""
+
+        view = self.editor.current_sprite.views[self.current_view_id]
+        return PreviewMatrix.dimensions_for_view(view.axis, *self.preview_size)
+
     def _preview_variants(self) -> dict[int, Variant]:
+        width, height = self._preview_dimensions()
         return selected_variants(
             self.editor.current_sprite,
             self.editor.palettes,
-            width=self.preview_size[0],
-            height=self.preview_size[1],
+            width=width,
+            height=height,
             seed=self.preview_seed,
             archetype_id=self.current_archetype,
             view_id=self.current_view_id,
@@ -812,7 +890,9 @@ class EdgeArtDesigner(App[None]):
             assert view is not None
             width_label = self.query_one("#tier-width-label", Label)
             width_label.update(
-                "Canvas width" if view.axis == "fixed" else "Ship width (cross-axis cells)"
+                "Canvas width"
+                if view.axis == "fixed"
+                else "Structure width (cross-axis cells)"
             )
             first = tier_item.sections[0].variants[0]
             width = first.width if view.axis in ("vertical", "fixed") else first.height
@@ -838,10 +918,31 @@ class EdgeArtDesigner(App[None]):
             repeat_fields = self.query_one("#section-repeat-fields")
             repeat_fields.display = view.axis != "fixed"
             self.query_one("#section-repeat", Input).value = str(section_item.repeat)
+            override = section_item.archetype_repeats.get(self.current_archetype)
+            self.query_one("#section-archetype-repeat-label", Label).update(
+                f"Repetition for {self.current_archetype.replace('_', ' ').title()}"
+            )
+            self.query_one("#section-archetype-repeat", Input).value = (
+                "" if override is None else str(override)
+            )
+            others = {
+                archetype_id: value
+                for archetype_id, value in sorted(section_item.archetype_repeats.items())
+                if archetype_id != self.current_archetype
+            }
+            self.query_one("#section-archetype-repeat-summary", Label).update(
+                "Also overridden: "
+                + ", ".join(f"{key} {value}" for key, value in others.items())
+                if others
+                else ""
+            )
         elif kind == "variant":
             variant_item = item
             assert isinstance(variant_item, Variant)
             self.query_one("#variant-weight", Input).value = str(variant_item.weight)
+            self.query_one("#variant-archetypes", Input).value = ", ".join(
+                variant_item.archetypes
+            )
 
     def _mark_changed(self) -> None:
         self.editor.mark_sprite_dirty()
@@ -1337,21 +1438,17 @@ class EdgeArtDesigner(App[None]):
 
     def _set_preview_size_for_tier(self, tier: Tier) -> None:
         view = self.editor.current_sprite.views[self.current_view_id]
+        # Per-archetype repeats make a tier's composed length depend on who is
+        # being previewed, so size against the archetype on screen.
+        archetype = self.current_archetype
         if view.axis == "horizontal":
             size = (
-                sum(
-                    section.variants[0].width * section.repeat
-                    for section in tier.sections
-                ),
+                tier.composed_length(view.axis, archetype),
                 tier.cross_axis_size(view.axis),
             )
         elif view.axis == "vertical":
             size = (
-                sum(
-                    section.variants[0].height * section.repeat
-                    for section in tier.sections
-                )
-                * 2,
+                tier.composed_length(view.axis, archetype) * 2,
                 tier.cross_axis_size(view.axis),
             )
         else:
@@ -1372,6 +1469,9 @@ class EdgeArtDesigner(App[None]):
         if view.mirror_facing is not None:
             options.append((view.mirror_facing.title(), view.mirror_facing))
         facing_select = self.query_one("#preview-facing", Select)
+        # A view with no mirror has exactly one facing, so the control would be
+        # a dead single-option Select taking up a row. Hide it instead.
+        self.query_one("#facing-field").display = view.mirror_facing is not None
         facing_select.set_options(options)
         if self.current_facing not in {value for _, value in options}:
             self.current_facing = view.canonical_facing
@@ -1497,9 +1597,18 @@ class EdgeArtDesigner(App[None]):
                 self._resize_section(item, width, height)
                 if view.axis != "fixed":
                     repeat = int(self.query_one("#section-repeat", Input).value)
-                    if repeat < 1:
-                        raise ValueError("Repetition must be positive")
+                    if repeat < 0:
+                        raise ValueError("Repetition cannot be negative")
                     item.repeat = repeat
+                    override = self.query_one(
+                        "#section-archetype-repeat", Input
+                    ).value.strip()
+                    if override:
+                        if int(override) < 0:
+                            raise ValueError("Repetition override cannot be negative")
+                        item.archetype_repeats[self.current_archetype] = int(override)
+                    else:
+                        item.archetype_repeats.pop(self.current_archetype, None)
             elif kind == "tier":
                 assert isinstance(item, Tier)
                 view = self._view_for_structure(item)
@@ -1509,6 +1618,15 @@ class EdgeArtDesigner(App[None]):
             elif kind == "variant":
                 assert isinstance(item, Variant)
                 item.weight = int(self.query_one("#variant-weight", Input).value)
+                archetypes = [
+                    value.strip()
+                    for value in self.query_one("#variant-archetypes", Input).value.split(",")
+                    if value.strip()
+                ]
+                unknown = set(archetypes) - set(ARCHETYPE_IDS)
+                if unknown:
+                    raise ValueError(f"Unknown archetypes: {sorted(unknown)}")
+                item.archetypes = archetypes
             self.editor.current_sprite.validate()
         except Exception as error:
             self.editor.sprites[self.editor.current_sprite_id] = original_sprite
@@ -1662,9 +1780,10 @@ class EdgeArtDesigner(App[None]):
         facing = self.current_facing or self.editor.current_sprite.views[
             self.current_view_id
         ].canonical_facing
+        width, height = self._preview_dimensions()
         filename = (
             f"{self.editor.current_sprite.id}-{self.current_view_id}-{facing}-"
-            f"{self.preview_size[0]}x{self.preview_size[1]}-seed{self.preview_seed}.xp"
+            f"{width}x{height}-seed{self.preview_seed}.xp"
         )
         destination = self.editor.export_root / filename
         try:
@@ -1672,8 +1791,8 @@ class EdgeArtDesigner(App[None]):
                 self.editor.current_sprite,
                 self.editor.palettes,
                 destination,
-                width=self.preview_size[0],
-                height=self.preview_size[1],
+                width=width,
+                height=height,
                 seed=self.preview_seed,
                 archetype_id=self.current_archetype,
                 view_id=self.current_view_id,
@@ -1711,12 +1830,13 @@ class EdgeArtDesigner(App[None]):
             return
         try:
             image = import_rexpaint_cells(source)
+            width, height = self._preview_dimensions()
             segments = segment_rexpaint_cells(
                 image,
                 self.editor.current_sprite,
                 self.editor.palettes,
-                width=self.preview_size[0],
-                height=self.preview_size[1],
+                width=width,
+                height=height,
                 seed=self.preview_seed,
                 archetype_id=self.current_archetype,
                 view_id=self.current_view_id,

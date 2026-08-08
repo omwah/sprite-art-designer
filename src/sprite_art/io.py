@@ -34,11 +34,24 @@ def _string_list(value: object, context: str) -> list[str]:
     return list(value)
 
 
+def _int_mapping(value: object, context: str) -> dict[str, int]:
+    item = _mapping(value, context)
+    result: dict[str, int] = {}
+    for key, raw in item.items():
+        if isinstance(raw, bool) or not isinstance(raw, int):
+            raise SpriteValidationError(f"{context}.{key} must be an integer")
+        result[str(key)] = raw
+    return result
+
+
 def _variant_from_data(data: object, context: str) -> Variant:
     item = _mapping(data, context)
     return Variant(
         id=str(item.get("id", "")),
         weight=int(item.get("weight", 1)),
+        archetypes=_string_list(
+            item.get("archetypes", []), f"{context}.archetypes"
+        ),
         cells=_string_list(item.get("cells", []), f"{context}.cells"),
         color_mask=_string_list(
             item.get("color_mask", []), f"{context}.color_mask"
@@ -60,6 +73,9 @@ def _section_from_data(data: object, context: str) -> Section:
             f"{context}.secondary_properties",
         ),
         repeat=int(item.get("repeat", 1)),
+        archetype_repeats=_int_mapping(
+            item.get("archetype_repeats", {}), f"{context}.archetype_repeats"
+        ),
         variants=[
             _variant_from_data(variant, f"{context}.variants[{index}]")
             for index, variant in enumerate(variants_data)
@@ -95,6 +111,7 @@ def _view_from_data(view_id: str, data: object, context: str) -> View:
         axis=str(item.get("axis", "fixed")),  # type: ignore[arg-type]
         canonical_facing=str(item.get("canonical_facing", "default")),
         mirror_facing=None if mirror is None else str(mirror),
+        section_order=str(item.get("section_order", "authored")),  # type: ignore[arg-type]
         tiers=[
             _tier_from_data(tier, f"{context}.tiers[{index}]")
             for index, tier in enumerate(tiers_data)
@@ -178,23 +195,30 @@ def load_palette_catalog(path: str | Path) -> PaletteCatalog:
 
 
 def _variant_to_data(variant: Variant) -> dict[str, object]:
-    return {
+    data: dict[str, object] = {
         "id": variant.id,
         "weight": variant.weight,
-        "cells": list(variant.cells),
-        "color_mask": list(variant.color_mask),
     }
+    # Omitted at its default so ordinary art keeps its existing YAML shape.
+    if variant.archetypes:
+        data["archetypes"] = list(variant.archetypes)
+    data["cells"] = list(variant.cells)
+    data["color_mask"] = list(variant.color_mask)
+    return data
 
 
 def _section_to_data(section: Section) -> dict[str, object]:
-    return {
+    data: dict[str, object] = {
         "id": section.id,
         "name": section.name,
         "primary_property": section.primary_property,
         "secondary_properties": list(section.secondary_properties),
         "repeat": section.repeat,
-        "variants": [_variant_to_data(variant) for variant in section.variants],
     }
+    if section.archetype_repeats:
+        data["archetype_repeats"] = dict(sorted(section.archetype_repeats.items()))
+    data["variants"] = [_variant_to_data(variant) for variant in section.variants]
+    return data
 
 
 def _tier_to_data(tier: Tier) -> dict[str, object]:
@@ -206,13 +230,16 @@ def _tier_to_data(tier: Tier) -> dict[str, object]:
 
 
 def _view_to_data(view: View) -> dict[str, object]:
-    return {
+    data: dict[str, object] = {
         "name": view.name,
         "axis": view.axis,
         "canonical_facing": view.canonical_facing,
         "mirror_facing": view.mirror_facing,
-        "tiers": [_tier_to_data(tier) for tier in view.tiers],
     }
+    if view.section_order != "authored":
+        data["section_order"] = view.section_order
+    data["tiers"] = [_tier_to_data(tier) for tier in view.tiers]
+    return data
 
 
 def sprite_to_data(sprite: Sprite) -> dict[str, object]:

@@ -471,7 +471,7 @@ class PropertiesToolsTab(TabPane):
             yield Label("Name", id="item-name-label")
             yield Input(id="item-name")
             with Vertical(id="tier-fields"):
-                yield Label("Ship width (cross-axis cells)", id="tier-width-label")
+                yield Label("Structure width (cross-axis cells)", id="tier-width-label")
                 yield Input(value="1", type="integer", id="tier-width")
             with Vertical(id="section-fields"):
                 yield Label("Primary property")
@@ -488,9 +488,17 @@ class PropertiesToolsTab(TabPane):
                 with Vertical(id="section-repeat-fields"):
                     yield Label("Repetition")
                     yield Input(value="1", type="integer", id="section-repeat")
+                    # Scoped to the previewed archetype rather than shown as a
+                    # matrix of every archetype at once. Blank means "use the
+                    # repetition above"; zero omits the band for that archetype.
+                    yield Label("Repetition override", id="section-archetype-repeat-label")
+                    yield Input(placeholder="inherit", type="integer", id="section-archetype-repeat")
+                    yield Label("", id="section-archetype-repeat-summary")
             with Vertical(id="variant-fields"):
                 yield Label("Selection weight")
                 yield Input(value="1", type="integer", id="variant-weight")
+                yield Label("Archetypes (blank for any, comma-separated)")
+                yield Input(id="variant-archetypes")
             yield Button("Apply properties", id="apply-properties", variant="primary")
 
 
@@ -631,7 +639,7 @@ class PreviewToolsTab(TabPane):
                                 value=self.initial_view_id,
                                 allow_blank=False,
                                 id="preview-view")
-                with Vertical():
+                with Vertical(id="facing-field"):
                     yield Label("Facing")
                     yield Select(
                         self.facing_options,

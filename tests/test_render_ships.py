@@ -93,4 +93,22 @@ def test_cli_rejects_unknown_ship_type(capsys: pytest.CaptureFixture[str]) -> No
     with pytest.raises(SystemExit, match="2"):
         render_ships.main(["--ship-type", "missing"])
 
-    assert "unknown ship type(s): missing" in capsys.readouterr().err
+    assert "unknown ship id(s): missing" in capsys.readouterr().err
+
+
+def test_cli_renders_a_station_kind(capsys: pytest.CaptureFixture[str]) -> None:
+    console = Console(file=StringIO(), color_system=None, width=120)
+    assert render_ships.main(["--kind", "port", "--sprite-id", "stardock"], console=console) == 0
+
+    output = console.file.getvalue()
+    assert "Port sprite gallery" in output
+    assert "Stardock (stardock) · Vertical" in output
+
+
+def test_cli_rejects_a_kind_with_no_sprites(capsys: pytest.CaptureFixture[str]) -> None:
+    with pytest.raises(SystemExit, match="2"):
+        render_ships.main(["--kind", "creature"])
+
+    error = capsys.readouterr().err
+    assert "no creature sprites were found" in error
+    assert "loaded kinds: port, ship" in error

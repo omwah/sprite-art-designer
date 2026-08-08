@@ -7,12 +7,13 @@ from typing import Literal
 
 from rich.cells import get_character_cell_size
 
-SPRITE_SCHEMA_VERSION = 3
+SPRITE_SCHEMA_VERSION = 4
 PALETTE_SCHEMA_VERSION = 2
 # Kept as the sprite-document version for editor construction call sites.
 SCHEMA_VERSION = SPRITE_SCHEMA_VERSION
 
 Axis = Literal["horizontal", "vertical", "fixed"]
+SectionOrder = Literal["authored", "reversed"]
 
 COLOR_SET_IDS: tuple[str, ...] = (
     "surface",
@@ -52,6 +53,12 @@ PROPERTY_IDS: tuple[str, ...] = (
     "hangar",
     "reactor",
     "utility",
+    # Station parts. Ships never use these, but the vocabulary is shared so the
+    # editor keeps one controlled list.
+    "docking",
+    "beacon",
+    "platform",
+    "tower",
 )
 
 ARCHETYPE_IDS: tuple[str, ...] = (
@@ -82,6 +89,12 @@ class Variant:
     cells: list[str]
     color_mask: list[str]
     weight: int = 1
+    archetypes: list[str] = field(default_factory=list)
+    """Archetypes this variant is exclusive to; empty means any archetype.
+
+    Selection prefers variants naming the rendered archetype, falls back to the
+    un-tagged variants, and only then to the whole section. See
+    ``render._choose_variant``."""
 
     @property
     def width(self) -> int:
@@ -96,6 +109,15 @@ class Variant:
             raise SpriteValidationError(f"{context}: variant id cannot be empty")
         if self.weight < 1:
             raise SpriteValidationError(f"{context}/{self.id}: weight must be at least 1")
+        unknown_archetypes = set(self.archetypes) - set(ARCHETYPE_IDS)
+        if unknown_archetypes:
+            raise SpriteValidationError(
+                f"{context}/{self.id}: unknown archetypes {sorted(unknown_archetypes)!r}"
+            )
+        if len(set(self.archetypes)) != len(self.archetypes):
+            raise SpriteValidationError(
+                f"{context}/{self.id}: archetypes must be unique"
+            )
         if not self.cells:
             raise SpriteValidationError(f"{context}/{self.id}: cells cannot be empty")
         widths = {len(row) for row in self.cells}
@@ -144,6 +166,20 @@ class Section:
     secondary_properties: list[str] = field(default_factory=list)
     repeat: int = 1
     variants: list[Variant] = field(default_factory=list)
+    archetype_repeats: dict[str, int] = field(default_factory=dict)
+    """Per-archetype overrides of ``repeat``; a resolved zero omits the band.
+
+    A baseline ``repeat`` of zero plus a single override makes a band exclusive
+    to one archetype. Overrides never change how many random decisions a render
+    consumes: the variant draw happens for every section and is discarded when
+    the resolved repeat is zero."""
+
+    def repeat_for(self, archetype_id: str | None) -> int:
+        """Resolve this section's repetition count for one archetype."""
+
+        if archetype_id is None:
+            return self.repeat
+        return self.archetype_repeats.get(archetype_id, self.repeat)
 
     def validate(self, context: str) -> None:
         section_context = f"{context}/{self.id}"
@@ -167,8 +203,20 @@ class Section:
             raise SpriteValidationError(
                 f"{section_context}: secondary properties must be unique"
             )
-        if self.repeat < 1:
-            raise SpriteValidationError(f"{section_context}: repeat must be positive")
+        if self.repeat < 0:
+            raise SpriteValidationError(f"{section_context}: repeat cannot be negative")
+        unknown_archetypes = set(self.archetype_repeats) - set(ARCHETYPE_IDS)
+        if unknown_archetypes:
+            raise SpriteValidationError(
+                f"{section_context}: unknown archetype_repeats keys "
+                f"{sorted(unknown_archetypes)!r}"
+            )
+        for archetype_id, repeat in sorted(self.archetype_repeats.items()):
+            if repeat < 0:
+                raise SpriteValidationError(
+                    f"{section_context}: archetype_repeats[{archetype_id!r}] "
+                    "cannot be negative"
+                )
         if not self.variants:
             raise SpriteValidationError(f"{section_context}: requires at least one variant")
         seen: set[str] = set()
@@ -203,6 +251,23 @@ class Tier:
         first = self.sections[0].variants[0]
         return max(first.width, first.height)
 
+    def composed_length(self, axis: Axis, archetype_id: str | None = None) -> int:
+        """Cells this tier occupies along its composition axis for one archetype.
+
+        Columns for a horizontal view, rows for a vertical one. Exact rather
+        than approximate, because every variant in a section shares one
+        rectangular size. This is what a vertical view's tier selection budgets
+        against, mirroring Edge's ``port._grammar_floor``."""
+
+        total = 0
+        for section in self.sections:
+            if not section.variants:
+                continue
+            variant = section.variants[0]
+            extent = variant.width if axis == "horizontal" else variant.height
+            total += extent * section.repeat_for(archetype_id)
+        return total
+
     def validate(self, context: str, axis: Axis) -> None:
         tier_context = f"{context}/{self.id}"
         if not self.id:
@@ -230,6 +295,17 @@ class Tier:
             raise SpriteValidationError(
                 f"{tier_context}: every part must share the same cross-axis size"
             )
+        # A per-archetype repeat of zero omits a band. Zeroing every band would
+        # compose an empty grid, which renders as a blank box rather than an
+        # error, so reject it here instead.
+        for archetype_id in (None, *ARCHETYPE_IDS):
+            if any(section.repeat_for(archetype_id) for section in self.sections):
+                continue
+            who = archetype_id or "the default archetype"
+            raise SpriteValidationError(
+                f"{tier_context}: {who} has no section left to compose; at least "
+                "one repeat must be positive"
+            )
 
 
 @dataclass
@@ -240,6 +316,24 @@ class View:
     canonical_facing: str
     mirror_facing: str | None
     tiers: list[Tier] = field(default_factory=list)
+    section_order: SectionOrder = "authored"
+    """Whether a vertical view stacks its sections as authored or in reverse.
+
+    Ship vertical views are rotations of tail-to-nose horizontal art, so they
+    stack ``reversed`` to read nose-up. Art authored directly top-to-bottom,
+    such as a station, uses ``authored``."""
+
+    def tier_budget_size(self, tier: Tier, archetype_id: str | None = None) -> int:
+        """The height this tier needs, which is what selects it.
+
+        A horizontal view is bounded by its constant structure height; a
+        vertical view by the rows its sections stack to. Both are compared
+        against the requested height, matching Edge's ship and port
+        generators."""
+
+        if self.axis == "vertical":
+            return tier.composed_length(self.axis, archetype_id)
+        return tier.cross_axis_size(self.axis)
 
     def validate(self, context: str) -> None:
         view_context = f"{context}/{self.id}"
@@ -255,10 +349,17 @@ class View:
             raise SpriteValidationError(
                 f"{view_context}: fixed views cannot declare a mirror facing"
             )
+        if self.section_order not in ("authored", "reversed"):
+            raise SpriteValidationError(
+                f"{view_context}: unsupported section_order {self.section_order!r}"
+            )
+        if self.section_order == "reversed" and self.axis != "vertical":
+            raise SpriteValidationError(
+                f"{view_context}: only vertical views may reverse their section order"
+            )
         if not self.tiers:
             raise SpriteValidationError(f"{view_context}: requires at least one tier")
         seen: set[str] = set()
-        sizes: list[int] = []
         for tier in self.tiers:
             if tier.id in seen:
                 raise SpriteValidationError(
@@ -266,11 +367,22 @@ class View:
                 )
             seen.add(tier.id)
             tier.validate(view_context, self.axis)
-            sizes.append(tier.cross_axis_size(self.axis))
-        if sizes != sorted(sizes, reverse=True):
-            raise SpriteValidationError(
-                f"{view_context}: tiers must be ordered richest/largest first"
-            )
+        # Tier selection walks the list and takes the first tier that fits, so
+        # the ordering key has to be the same quantity the selector compares,
+        # and it has to be strictly decreasing: two tiers of equal size make the
+        # later one unreachable. Per-archetype repeats make a vertical view's
+        # key archetype-dependent, so this has to hold for every archetype.
+        archetypes: tuple[str | None, ...] = (None,)
+        if self.axis == "vertical":
+            archetypes = (None, *ARCHETYPE_IDS)
+        for archetype_id in archetypes:
+            sizes = [self.tier_budget_size(tier, archetype_id) for tier in self.tiers]
+            if any(later >= earlier for earlier, later in zip(sizes, sizes[1:])):
+                who = f" for {archetype_id}" if archetype_id else ""
+                raise SpriteValidationError(
+                    f"{view_context}: tiers must be ordered richest/largest "
+                    f"first, each strictly smaller than the last{who}; got {sizes}"
+                )
 
 
 @dataclass

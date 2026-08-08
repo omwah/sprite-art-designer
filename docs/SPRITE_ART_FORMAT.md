@@ -12,18 +12,18 @@ assets/
 └── sprites/
     ├── ships/
     │   └── fighter.yaml
-    └── generic/
-        └── future_icon.yaml
+    └── ports/
+        └── stardock.yaml
 ```
 
-Sprite documents currently use `schema_version: 3`; the palette catalog remains
+Sprite documents currently use `schema_version: 4`; the palette catalog remains
 at `schema_version: 2`. Sprite and palette versions are independent migration
 seams.
 
 ## Sprite document
 
 ```yaml
-schema_version: 3
+schema_version: 4
 id: fighter
 name: Fighter
 kind: ship
@@ -59,36 +59,55 @@ views:
                   - "SSSS"
 ```
 
-View names are data, not schema keywords. Ships currently store `horizontal`
-and `vertical`; future sprite kinds may define names such as `docked`, `damaged`,
-or `icon`.
+View names are data, not schema keywords. Ships store `horizontal` and
+`vertical`; stations store only `vertical` and declare no `mirror_facing`, so
+they have a single orientation and no facing transform. Future sprite kinds may
+define names such as `docked`, `damaged`, or `icon`.
 
 ### Composition axes
 
 - `horizontal`: sections are authored tail-to-nose and joined left-to-right.
-- `vertical`: sections remain tail-to-nose in the file but are stacked
-  bottom-to-top, producing canonical nose-up art.
+- `vertical`: sections are stacked downward in the order `section_order` names.
 - `fixed`: one section and one or more weighted full-canvas variants.
+
+A vertical view's `section_order` is `authored` (the default) or `reversed`.
+Ship vertical views are rotations of tail-to-nose horizontal art, so they stack
+`reversed` to read nose-up. Art authored directly downward, such as a station's
+beacon over its body over its engine glow, uses `authored`. Only vertical views
+may declare `reversed`.
 
 Horizontal and vertical views are separate stored art. The editor's rotation
 command only creates an editable starting point; rendering never rotates one
 view to obtain another.
 
-### Tiers, ship width, and repetition
+### Tiers, structure width, and repetition
 
-Tiers are ordered richest/largest first. Each tier defines a ship's shared
-**ship width** (the cross-axis geometry of its structures); individual
-structures cannot set an independent width. Each Section owns one positive,
-fixed `repeat` count. A ship's **length** is the resulting sequence of
+Tiers are ordered richest/largest first. Each tier defines one shared
+**structure width** (the cross-axis geometry of its structures); individual
+structures cannot set an independent width. Each Section owns one non-negative,
+fixed `repeat` count. A sprite's **length** is the resulting sequence of
 structures, whose counts may differ. Rendering never grows those counts to fill
-a requested box. A horizontal view selects by
-available ship width; a vertical view selects by available ship width. A fixed view selects the
-first canvas that fits both dimensions. If none fit, the smallest tier is used
-and centered cropping provides the requested exact rectangle.
+a requested box.
 
-The editor exposes shared ship width on Tier properties. Changing it resizes
-the cross-axis of every variant in every section in that tier as one validated
-operation. For fixed canvases, the Tier width field is the canvas width.
+**Every view selects its tier on the requested height**, matching Edge's own
+generators. A horizontal view compares the tier's constant structure height; a
+vertical view compares its **composed length**, the rows its sections stack to
+at their authored repeats. A vertical view's width is not consulted: the tier
+fixes one structure width, and centered padding or cropping fits it to the box.
+A fixed view selects the first canvas that fits both dimensions. If no tier
+fits, the smallest is used and centered cropping provides the requested exact
+rectangle.
+
+Because the selector walks the list and takes the first tier that fits, tier
+sizes must be **strictly** decreasing on that same measure — two tiers of equal
+size make the later one unreachable. Per-archetype repeats make a vertical
+view's composed length archetype-dependent, so the ordering must hold for every
+archetype.
+
+The editor exposes shared structure width on Tier properties. Changing it
+resizes the cross-axis of every variant in every section in that tier as one
+validated operation. For fixed canvases, the Tier width field is the canvas
+width.
 
 ### Sections and variants
 
@@ -100,19 +119,68 @@ The closed vocabulary is:
 
 ```text
 thrusters, spindrive, hull, armor, screens, main_gun, weapons,
-cargo, sensors, bridge, habitat, radiator, hangar, reactor, utility
+cargo, sensors, bridge, habitat, radiator, hangar, reactor, utility,
+docking, beacon, platform, tower
 ```
+
+The last four name station parts. The vocabulary is shared rather than scoped
+per kind, so the editor keeps one controlled list; ships simply never use them.
 
 Each section's variants must have identical rectangular dimensions. `weight`
 is a positive integer. Equal weights use the same `random.Random.choice`
 behavior as Edge's original grammar; unequal weights use weighted selection.
+
+#### Per-archetype art
+
+Two optional fields let the rendered archetype change geometry, not only color.
+Both are **kind-agnostic**: ships may use them exactly as stations do.
+
+`Variant.archetypes` scopes a variant to named archetypes; empty means any.
+Selection resolves in three steps: variants naming the rendered archetype win
+outright; if none name it, the un-tagged variants are used as the default art;
+if every variant in the section is scoped, nothing is filtered so the pool is
+never empty. This reproduces Edge's
+`variants.get(archetype_id, variants["default"])`. An unknown or unset
+archetype resolves to the un-tagged art.
+
+`Section.archetype_repeats` overrides a section's `repeat` per archetype. A
+resolved `0` omits that band entirely; a baseline `repeat: 0` plus one override
+makes a band exclusive to a single archetype. Every archetype must still
+resolve to at least one section with a positive repeat, or the tier would
+compose an empty grid.
+
+```yaml
+- id: docking_arms
+  primary_property: docking
+  repeat: 2
+  archetype_repeats:
+    ribbon_salvager: 4
+    cosmic_arbiter: 0
+  variants:
+    - id: salvaged_berths
+      archetypes: [ribbon_salvager]
+      cells: [...]
+    - id: plain_berths      # no list: any archetype
+      cells: [...]
+```
+
+Neither field changes how many random decisions a render consumes: the variant
+draw happens once per section regardless of the resolved repeat, and is
+discarded when that repeat is zero. Toggling a band off therefore leaves every
+other band's chosen variant untouched.
+
+What these fields cannot vary is the skeleton *within* a section: a section's
+variants share one `(width, height)` and a tier's variants share one cross-axis
+size, so an archetype's band is normalized to its section's rectangle.
+Horizontal and vertical views are independent stored art, so a tag applied to
+one must be applied to the other separately.
 
 Variant dimensions are therefore edited on Section properties rather than on
 an individual Variant. The Section length field resizes every variant in the
 section along the composition axis. For fixed canvases, it is the canvas
 height. Section properties also edit the Section's single fixed repetition
 value. Variant selection always consumes one random decision per section
-regardless of repeat count.
+regardless of repeat count or archetype.
 
 ### Glyph and color-mask semantics
 

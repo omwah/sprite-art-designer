@@ -15,6 +15,15 @@ from sprite_art import (
     load_sprite_directory,
 )
 
+KIND_FOLDERS = {
+    "ship": "ships",
+    "port": "ports",
+}
+"""Where each sprite kind is saved under ``assets/sprites``.
+
+Sprite ids are unique across the whole tree, so the folder is presentation
+only; an unlisted kind falls back to ``generic``."""
+
 
 @dataclass
 class EditorState:
@@ -69,7 +78,7 @@ class EditorState:
         if sprite_id in self.sprite_paths:
             return self.sprite_paths[sprite_id]
         sprite = self.sprites[sprite_id]
-        kind_folder = "ships" if sprite.kind == "ship" else "generic"
+        kind_folder = KIND_FOLDERS.get(sprite.kind, "generic")
         return self.asset_root / "sprites" / kind_folder / f"{sprite.id}.yaml"
 
     def save_current(self) -> None:

@@ -1,4 +1,4 @@
-schema_version: 3
+schema_version: 4
 id: broadside_citadel
 name: Broadside Citadel
 kind: ship
@@ -480,6 +480,7 @@ views:
     axis: vertical
     canonical_facing: up
     mirror_facing: down
+    section_order: reversed
     tiers:
     - id: full
       name: Full Detail
