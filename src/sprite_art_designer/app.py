@@ -57,6 +57,7 @@ from .widgets import (
     ColorSetSelector,
     DocumentBar,
     GlyphPalette,
+    GroupedSpriteSelect,
     NarrowTabs,
     NavPane,
     PaletteColorSwatch,
@@ -537,7 +538,7 @@ class EdgeArtDesigner(App[None]):
                 (initial_view.mirror_facing.title(), initial_view.mirror_facing)
             )
         yield Header(show_clock=True)
-        yield DocumentBar(self._sprite_options(), self.editor.current_sprite_id)
+        yield DocumentBar(self._sprite_option_groups(), self.editor.current_sprite_id)
         yield NarrowTabs()
 
         with Container(id="body"):
@@ -564,11 +565,26 @@ class EdgeArtDesigner(App[None]):
                     yield CanvasPane()
         yield Footer()
 
-    def _sprite_options(self) -> list[tuple[str, str]]:
+    def _sprite_options(self, kind: str) -> list[tuple[str, str]]:
         return [
             (self.editor.sprites[sprite_id].name, sprite_id)
             for sprite_id in sorted(self.editor.sprites)
+            if self.editor.sprites[sprite_id].kind == kind
         ]
+
+    def _sprite_option_groups(self) -> list[tuple[str, list[tuple[str, str]]]]:
+        groups = [
+            ("Ships", self._sprite_options("ship")),
+            ("Stations", self._sprite_options("port")),
+        ]
+        other_sprites = [
+            (self.editor.sprites[sprite_id].name, sprite_id)
+            for sprite_id in sorted(self.editor.sprites)
+            if self.editor.sprites[sprite_id].kind not in {"ship", "port"}
+        ]
+        if other_sprites:
+            groups.append(("Other sprites", other_sprites))
+        return groups
 
     def on_mount(self) -> None:
         self._rebuild_tree()
@@ -1873,9 +1889,8 @@ class EdgeArtDesigner(App[None]):
         except Exception as error:
             self.notify(str(error), severity="error")
             return
-        selector = self.query_one("#sprite-select", Select)
-        selector.set_options(self._sprite_options())
-        selector.value = sprite_id
+        selector = self.query_one("#sprite-select", GroupedSpriteSelect)
+        selector.set_groups(self._sprite_option_groups(), sprite_id)
         self.current_view_id = next(iter(self.editor.current_sprite.views))
         self._rebuild_tree()
         self._refresh_preview_controls()

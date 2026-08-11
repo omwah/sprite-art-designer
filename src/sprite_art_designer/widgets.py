@@ -2,8 +2,12 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
+from typing import TypeAlias
+
 from rich.color import Color
 from rich.columns import Columns
+from rich.console import RenderableType
 from rich.panel import Panel
 from rich.text import Text
 from textual import events
@@ -13,6 +17,7 @@ from textual.geometry import Size
 from textual.message import Message
 from textual.widget import Widget
 from textual.widgets import Button, Input, Label, Select, Static, Switch, TabbedContent, TabPane, Tree
+from textual.widgets._select import SelectOverlay
 
 from sprite_art import (
     COLOR_CODE_TO_SET,
@@ -340,20 +345,95 @@ class ColorSetSelector(ItemGrid):
         self.post_message(self.Selected(color_set_id))
 
 
+SpriteOption: TypeAlias = tuple[str, str]
+SpriteOptionGroups: TypeAlias = list[tuple[str, list[SpriteOption]]]
+
+
+@dataclass(frozen=True)
+class _SpriteGroupHeader:
+    """An internal, disabled Select value used to label an option group."""
+
+    label: str
+
+
+@dataclass(frozen=True)
+class _SpriteGroupSpacer:
+    """An internal, disabled Select value that spaces option groups."""
+
+
+SpriteSelectValue: TypeAlias = str | _SpriteGroupHeader | _SpriteGroupSpacer
+
+
+class GroupedSpriteSelect(Select[SpriteSelectValue]):
+    """A Select whose disabled options serve as visible group headers."""
+
+    def __init__(
+        self,
+        groups: SpriteOptionGroups,
+        *,
+        value: str,
+        id: str,
+    ) -> None:
+        self.groups = self._copy_groups(groups)
+        super().__init__(
+            self._flatten_groups(self.groups),
+            value=value,
+            allow_blank=False,
+            id=id,
+        )
+
+    @staticmethod
+    def _copy_groups(groups: SpriteOptionGroups) -> SpriteOptionGroups:
+        return [(label, list(options)) for label, options in groups]
+
+    @staticmethod
+    def _flatten_groups(
+        groups: SpriteOptionGroups,
+    ) -> list[tuple[RenderableType, SpriteSelectValue]]:
+        options: list[tuple[RenderableType, SpriteSelectValue]] = []
+        for group_index, (label, group_options) in enumerate(groups):
+            if group_index:
+                options.append(("", _SpriteGroupSpacer()))
+            options.append((Text(label, style="bold #7dd3fc"), _SpriteGroupHeader(label)))
+            options.extend(group_options)
+        return options
+
+    def _setup_options_renderables(self) -> None:
+        super()._setup_options_renderables()
+        overlay = self.query_one(SelectOverlay)
+        header_indices = [
+            index
+            for index, (_, value) in enumerate(self._options)
+            if isinstance(value, _SpriteGroupHeader)
+        ]
+        for index, (_, value) in enumerate(self._options):
+            if isinstance(value, (_SpriteGroupHeader, _SpriteGroupSpacer)):
+                overlay.disable_option_at_index(index)
+        for index in header_indices:
+            overlay.options[index]._divider = True
+
+    def set_groups(self, groups: SpriteOptionGroups, value: str) -> None:
+        """Replace all groups while retaining the specified sprite selection."""
+
+        self.groups = self._copy_groups(groups)
+        self._setup_variables_for_options(self._flatten_groups(self.groups))
+        self._setup_options_renderables()
+        self._init_selected_option(value)
+
+
 class DocumentBar(Horizontal):
     """The current-sprite picker and document-level actions."""
 
-    def __init__(self, sprite_options: list[tuple[str, str]], current_sprite_id: str) -> None:
+    def __init__(self, sprite_groups: SpriteOptionGroups, current_sprite_id: str) -> None:
         super().__init__(id="document-bar")
-        self.sprite_options = sprite_options
+        self.sprite_groups = sprite_groups
         self.current_sprite_id = current_sprite_id
 
     def compose(self) -> ComposeResult:
         yield Label("Sprite")
-        yield Select(
-            self.sprite_options,
+        yield GroupedSpriteSelect(
+            self.sprite_groups,
             value=self.current_sprite_id,
-            allow_blank=False,
             id="sprite-select",
         )
         yield Select(

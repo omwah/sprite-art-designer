@@ -10,7 +10,7 @@ import pytest
 from textual.color import Color as TextualColor
 from textual.css.query import NoMatches
 from textual.containers import Horizontal, ItemGrid
-from textual.widgets import Button, Input, Label, Select, TabbedContent, TabPane, Tree
+from textual.widgets import Button, Input, Label, OptionList, Select, TabbedContent, TabPane, Tree
 from textual_colorpicker import ColorPicker
 
 from sprite_art.glyphs import (
@@ -23,6 +23,7 @@ from sprite_art_designer.widgets import (
     ArtCanvas,
     ColorSetSelector,
     GlyphPalette,
+    GroupedSpriteSelect,
     PaletteColorGroup,
     PaletteColorSwatch,
     PreviewMatrix,
@@ -62,6 +63,41 @@ async def test_app_mounts_wide_and_populates_editor() -> None:
         app._set_workspace_top_height(top_row.region.height - 4)
         await pilot.pause()
         assert top_row.region.height < bottom_row.region.height
+
+
+@pytest.mark.asyncio
+async def test_sprite_picker_groups_ships_and_stations() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        picker = app.query_one("#sprite-select", GroupedSpriteSelect)
+        assert [label for label, _ in picker.groups] == ["Ships", "Stations"]
+        assert {
+            sprite_id for _, sprite_id in picker.groups[0][1]
+        } == {
+            sprite_id
+            for sprite_id, sprite in app.editor.sprites.items()
+            if sprite.kind == "ship"
+        }
+        assert {
+            sprite_id for _, sprite_id in picker.groups[1][1]
+        } == {"starbase", "stardock", "trading_port"}
+
+        overlay = picker.query_one(OptionList)
+        headers = [
+            option
+            for option in overlay.options
+            if option.disabled and str(option.prompt)
+        ]
+        assert [str(header.prompt) for header in headers] == ["Ships", "Stations"]
+        stations_index = next(
+            index
+            for index, option in enumerate(overlay.options)
+            if str(option.prompt) == "Stations"
+        )
+        assert str(overlay.options[stations_index - 1].prompt) == ""
+        assert overlay.options[stations_index - 1].disabled
+        assert overlay.options[stations_index]._divider
 
 
 @pytest.mark.asyncio
@@ -800,6 +836,10 @@ async def test_new_station_sprite_saves_under_ports(tmp_path: Path) -> None:
         await pilot.pause()
         app._finish_new_sprite(("relay_post", "Relay Post", "port"))
         await pilot.pause()
+
+        picker = app.query_one("#sprite-select", GroupedSpriteSelect)
+        station_options = dict(picker.groups[1][1])
+        assert station_options["Relay Post"] == "relay_post"
 
         sprite = app.editor.sprites["relay_post"]
         assert sprite.kind == "port"
