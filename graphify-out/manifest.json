@@ -1,0 +1,292 @@
+{
+  "pyproject.toml": {
+    "mtime": 1786421331.2488732,
+    "ast_hash": "1bb681db0d00f998368a90be3406aee4",
+    "semantic_hash": "1bb681db0d00f998368a90be3406aee4"
+  },
+  "src/sprite_art/__init__.py": {
+    "mtime": 1786421331.2498386,
+    "ast_hash": "92cbbbc0aebfc42ab0de24e3bd8e315e",
+    "semantic_hash": "92cbbbc0aebfc42ab0de24e3bd8e315e"
+  },
+  "src/sprite_art/glyphs.py": {
+    "mtime": 1786421331.2499037,
+    "ast_hash": "b93337917de10a1a1fd371295c1a885c",
+    "semantic_hash": "b93337917de10a1a1fd371295c1a885c"
+  },
+  "src/sprite_art/io.py": {
+    "mtime": 1786421331.2499037,
+    "ast_hash": "569d52145218cea88932cc77327bb52d",
+    "semantic_hash": "569d52145218cea88932cc77327bb52d"
+  },
+  "src/sprite_art/library.py": {
+    "mtime": 1786421331.2499037,
+    "ast_hash": "b8c7cf7ac98973e382c0db237a89d6ec",
+    "semantic_hash": "b8c7cf7ac98973e382c0db237a89d6ec"
+  },
+  "src/sprite_art/model.py": {
+    "mtime": 1786421331.2499037,
+    "ast_hash": "5b44c7fc9c36b09876be26f4ba40e5d5",
+    "semantic_hash": "5b44c7fc9c36b09876be26f4ba40e5d5"
+  },
+  "src/sprite_art/render.py": {
+    "mtime": 1786499424.6079433,
+    "ast_hash": "0fca6668349bb8ed31b87625f9189a07",
+    "semantic_hash": "0fca6668349bb8ed31b87625f9189a07"
+  },
+  "src/sprite_art/rexpaint.py": {
+    "mtime": 1786499431.7240372,
+    "ast_hash": "a1107d11e278ae5ed734953e4ef5ea69",
+    "semantic_hash": "a1107d11e278ae5ed734953e4ef5ea69"
+  },
+  "src/sprite_art/transform.py": {
+    "mtime": 1786421331.2499037,
+    "ast_hash": "ddb916912458a565038f41f267563511",
+    "semantic_hash": "ddb916912458a565038f41f267563511"
+  },
+  "src/sprite_art_designer/__init__.py": {
+    "mtime": 1786421331.2499037,
+    "ast_hash": "1105b58704ea7fc5b30e28c266982cb0",
+    "semantic_hash": "1105b58704ea7fc5b30e28c266982cb0"
+  },
+  "src/sprite_art_designer/__main__.py": {
+    "mtime": 1786421331.2507436,
+    "ast_hash": "d608283ca22bcfab640c8e8b67c63df7",
+    "semantic_hash": "d608283ca22bcfab640c8e8b67c63df7"
+  },
+  "src/sprite_art_designer/app.py": {
+    "mtime": 1786552466.700303,
+    "ast_hash": "6f199414ae3e265202430b9941a85dfb",
+    "semantic_hash": "6f199414ae3e265202430b9941a85dfb"
+  },
+  "src/sprite_art_designer/render_ships.py": {
+    "mtime": 1786421331.2507436,
+    "ast_hash": "ddd2f634f4858baf79823e53be28d471",
+    "semantic_hash": "ddd2f634f4858baf79823e53be28d471"
+  },
+  "src/sprite_art_designer/state.py": {
+    "mtime": 1786421331.2507436,
+    "ast_hash": "19e473304234b6e7feef1bc5f4e0295a",
+    "semantic_hash": "19e473304234b6e7feef1bc5f4e0295a"
+  },
+  "src/sprite_art_designer/widgets.py": {
+    "mtime": 1786499921.8656526,
+    "ast_hash": "39e5a3517cf8358b45147b049dbf2b35",
+    "semantic_hash": "39e5a3517cf8358b45147b049dbf2b35"
+  },
+  "tests/test_render_ships.py": {
+    "mtime": 1786421331.251695,
+    "ast_hash": "2987513fb7ae58761e53d13876d1ef11",
+    "semantic_hash": "2987513fb7ae58761e53d13876d1ef11"
+  },
+  "tests/test_sprite_art.py": {
+    "mtime": 1786498085.4004533,
+    "ast_hash": "dfcdc03eeed9dcf10d48f84b4470861d",
+    "semantic_hash": "dfcdc03eeed9dcf10d48f84b4470861d"
+  },
+  "tests/test_tui.py": {
+    "mtime": 1786552473.3423824,
+    "ast_hash": "f662cf853422c68932e01170d947ffc3",
+    "semantic_hash": "f662cf853422c68932e01170d947ffc3"
+  },
+  "tools/edge_markers.py": {
+    "mtime": 1786421331.251695,
+    "ast_hash": "acb3f29796077cc502fed36d11c17219",
+    "semantic_hash": "acb3f29796077cc502fed36d11c17219"
+  },
+  "tools/generate_original_ships.py": {
+    "mtime": 1786421331.2523665,
+    "ast_hash": "df31479e37f79763880b1ef096840fcf",
+    "semantic_hash": "df31479e37f79763880b1ef096840fcf"
+  },
+  "tools/generate_rexpaint_font.py": {
+    "mtime": 1786421331.2523665,
+    "ast_hash": "5bab1125467a64457e06c1e0f5d5e27c",
+    "semantic_hash": "5bab1125467a64457e06c1e0f5d5e27c"
+  },
+  "tools/import_edge_art.py": {
+    "mtime": 1786421331.2523665,
+    "ast_hash": "45fbfb0e197906cb483a0ec0ad6011d4",
+    "semantic_hash": "45fbfb0e197906cb483a0ec0ad6011d4"
+  },
+  "tools/import_edge_ports.py": {
+    "mtime": 1786421331.2523665,
+    "ast_hash": "8004137bfb6fac64a3fe127efc59cf8b",
+    "semantic_hash": "8004137bfb6fac64a3fe127efc59cf8b"
+  },
+  "tools/migrate_color_masks.py": {
+    "mtime": 1786421331.2523665,
+    "ast_hash": "7adb3a2c730f568112c685267efd22c8",
+    "semantic_hash": "7adb3a2c730f568112c685267efd22c8"
+  },
+  "tools/migrate_fixed_repetition.py": {
+    "mtime": 1786421331.252409,
+    "ast_hash": "8cd9bc1e9cd54b3072ba84e5739c4c8f",
+    "semantic_hash": "8cd9bc1e9cd54b3072ba84e5739c4c8f"
+  },
+  "tools/migrate_sprites_v3_to_v4.py": {
+    "mtime": 1786421331.252409,
+    "ast_hash": "bff3c899eb912cbb04c6bc9843dbee8f",
+    "semantic_hash": "bff3c899eb912cbb04c6bc9843dbee8f"
+  },
+  "tools/refresh_medium_tiers.py": {
+    "mtime": 1786421331.252409,
+    "ast_hash": "bebb674ea337bfc2bf8f832b847df0e4",
+    "semantic_hash": "bebb674ea337bfc2bf8f832b847df0e4"
+  },
+  "AGENTS.md": {
+    "mtime": 1786421331.244678,
+    "ast_hash": "39ba82d70cfaa21666f2a9469d737278",
+    "semantic_hash": ""
+  },
+  "CLAUDE.md": {
+    "mtime": 1786421331.244678,
+    "ast_hash": "5c27369b226fcf2be8a6cfe52224e767",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1786421331.244678,
+    "ast_hash": "3ec3418cf869e157eac5f7d0a5184021",
+    "semantic_hash": ""
+  },
+  "assets/palettes.yaml": {
+    "mtime": 1786421331.244678,
+    "ast_hash": "3932c389cd3a0c5840a57d29c1c32b68",
+    "semantic_hash": ""
+  },
+  "assets/rexpaint/edge-art-designer-map.md": {
+    "mtime": 1786421331.2457452,
+    "ast_hash": "038fb6c34746ed21e30dc059c3b0926f",
+    "semantic_hash": ""
+  },
+  "assets/rexpaint/edge-art-designer-mirror.txt": {
+    "mtime": 1786421331.2457452,
+    "ast_hash": "490ee035d5f7f3b3cffcf96e74c01203",
+    "semantic_hash": ""
+  },
+  "assets/rexpaint/edge-art-designer-unicode.txt": {
+    "mtime": 1786421331.2457452,
+    "ast_hash": "3e214e6ae7441f789ac6d5cffb7247a8",
+    "semantic_hash": ""
+  },
+  "assets/sprites/ports/starbase.yaml": {
+    "mtime": 1786421331.2459428,
+    "ast_hash": "d899faf729da99af9b3883c259e96a7e",
+    "semantic_hash": ""
+  },
+  "assets/sprites/ports/stardock.yaml": {
+    "mtime": 1786421331.2464056,
+    "ast_hash": "250959c0b869e47a9bf7d3275fdb8fb2",
+    "semantic_hash": ""
+  },
+  "assets/sprites/ports/trading_port.yaml": {
+    "mtime": 1786421331.2464087,
+    "ast_hash": "2b2bcd3f5854f101a58f5a0e8c9c8001",
+    "semantic_hash": ""
+  },
+  "assets/sprites/ships/broadside_citadel.yaml": {
+    "mtime": 1786421331.2464087,
+    "ast_hash": "5b7682ca5f01e81fd5511378ca5acb24",
+    "semantic_hash": ""
+  },
+  "assets/sprites/ships/capital_warship.yaml": {
+    "mtime": 1786421331.2472446,
+    "ast_hash": "bd8d5327030e6a2e3e870d3d63f65738",
+    "semantic_hash": ""
+  },
+  "assets/sprites/ships/falsehold_raider.yaml": {
+    "mtime": 1786421331.2472446,
+    "ast_hash": "294e71e9badecd90354b9c20ff2c0557",
+    "semantic_hash": ""
+  },
+  "assets/sprites/ships/fighter.yaml": {
+    "mtime": 1786421331.2472446,
+    "ast_hash": "ca68daa32f4eb73d4bb0ff78abfca1ef",
+    "semantic_hash": ""
+  },
+  "assets/sprites/ships/hearth_freighter.yaml": {
+    "mtime": 1786421331.2472446,
+    "ast_hash": "851376c6d7652628afbc1d1a9f5bf7e2",
+    "semantic_hash": ""
+  },
+  "assets/sprites/ships/junction_pinnace.yaml": {
+    "mtime": 1786421331.2474089,
+    "ast_hash": "2b6979e11b7d327e0f64b53ab9f0b40b",
+    "semantic_hash": ""
+  },
+  "assets/sprites/ships/marrow_dart.yaml": {
+    "mtime": 1786421331.2474089,
+    "ast_hash": "0bb2f88f1f258bb74fac7dff1dbbf826",
+    "semantic_hash": ""
+  },
+  "assets/sprites/ships/needle_picket.yaml": {
+    "mtime": 1786421331.2474089,
+    "ast_hash": "36b237c368247125d09544a607d59aed",
+    "semantic_hash": ""
+  },
+  "assets/sprites/ships/pearl_shell.yaml": {
+    "mtime": 1786421331.2474089,
+    "ast_hash": "dc0d638e939ddec57f179ab2ed37f703",
+    "semantic_hash": ""
+  },
+  "assets/sprites/ships/radiant_lance.yaml": {
+    "mtime": 1786421331.2474089,
+    "ast_hash": "321cc8cfa0383fa4cc294f7e47ff4852",
+    "semantic_hash": ""
+  },
+  "assets/sprites/ships/transport.yaml": {
+    "mtime": 1786421331.2474089,
+    "ast_hash": "6a91c854063461c83c7a4c1c405c869b",
+    "semantic_hash": ""
+  },
+  "assets/sprites/ships/warship.yaml": {
+    "mtime": 1786421331.2474089,
+    "ast_hash": "8d97a8f90ee6d2cdcbdf2584cc7d4298",
+    "semantic_hash": ""
+  },
+  "docs/EDGE_INTEGRATION.md": {
+    "mtime": 1786421331.2474089,
+    "ast_hash": "4645883cf6891f9229b0e2755b52de7a",
+    "semantic_hash": ""
+  },
+  "docs/PORT_DESIGN_PRINCIPLES.md": {
+    "mtime": 1786421331.2488732,
+    "ast_hash": "6a55288b9df22d14d9c1cc2547052ab2",
+    "semantic_hash": ""
+  },
+  "docs/PORT_INTEGRATION_PLAN.md": {
+    "mtime": 1786498099.3536334,
+    "ast_hash": "ba5616ac002d7636955a4ee800807238",
+    "semantic_hash": ""
+  },
+  "docs/SHIP_DESIGN_PRINCIPALS.md": {
+    "mtime": 1786421331.2488732,
+    "ast_hash": "49c7b5c7e47b10c5d1fb173b9d978eeb",
+    "semantic_hash": ""
+  },
+  "docs/SHIP_TYPE_PRINCIPLES.md": {
+    "mtime": 1786421331.2488732,
+    "ast_hash": "6e151f4e2facb0aff3de5b0a81f04050",
+    "semantic_hash": ""
+  },
+  "docs/SPRITE_ART_FORMAT.md": {
+    "mtime": 1786498095.2395804,
+    "ast_hash": "b85e54559fa163123225c4a2c7d52362",
+    "semantic_hash": ""
+  },
+  "docs/tier-selection-change.md": {
+    "mtime": 1786421331.2488732,
+    "ast_hash": "65eb5659b08f5820bb3da73fb1d0cb69",
+    "semantic_hash": ""
+  },
+  "assets/rexpaint/edge-art-designer-gui.png": {
+    "mtime": 1786421331.2456934,
+    "ast_hash": "c5e6f9c23124b277b9005f5cf7d7006e",
+    "semantic_hash": ""
+  },
+  "assets/rexpaint/edge-art-designer.png": {
+    "mtime": 1786421331.2457452,
+    "ast_hash": "f80e21b009de07839faa351f1f383c80",
+    "semantic_hash": ""
+  }
+}

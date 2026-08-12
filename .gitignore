@@ -6,3 +6,12 @@
 *.py[cod]
 .edge-art-designer/
 
+# graphify
+graphify-out/cost.json
+graphify-out/cache/
+
+# Graphify dated backup snapshots
+graphify-out/????-??-??/
+
+# Agent skills
+.agents
