@@ -102,6 +102,27 @@ async def test_sprite_picker_groups_ships_and_stations() -> None:
 
 
 @pytest.mark.asyncio
+async def test_switching_sprites_clears_a_stale_section_selection() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        app.query_one("#sprite-select", Select).value = "stardock"
+        await pilot.pause()
+        tree = app.query_one("#structure-tree", Tree)
+        tree.select_node(tree.root.children[0].children[0].children[0])
+        await pilot.pause()
+        assert app.selection is not None
+        assert app.selection.kind == "section"
+
+        app.query_one("#sprite-select", Select).value = "trading_port"
+        await pilot.pause()
+
+        assert app.editor.current_sprite_id == "trading_port"
+        assert app.selection is not None
+        assert app._view_for_structure(app.selection.item) is not None
+
+
+@pytest.mark.asyncio
 async def test_glyph_tab_separates_shaded_and_facet_glyphs() -> None:
     app = EdgeArtDesigner(ROOT / "assets")
     async with app.run_test(size=(140, 50)) as pilot:

@@ -1463,6 +1463,10 @@ class EdgeArtDesigner(App[None]):
             if value == self.editor.current_sprite_id:
                 return
             self.editor.current_sprite_id = value
+            # Tree selection is delivered asynchronously. Do not let inspector
+            # refreshes below inspect an object from the previously selected
+            # sprite while the replacement tree's selection is pending.
+            self.selection = None
             self._persistent_variant_overrides.clear()
             self._transient_variant_override = None
             self.current_view_id = next(iter(self.editor.current_sprite.views))
