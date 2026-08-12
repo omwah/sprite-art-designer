@@ -256,7 +256,7 @@ views:
         name: Core
         primary_property: docking
         secondary_properties: []
-        repeat: 1
+        repeat: 2
         variants:
         - id: default_1
           weight: 1

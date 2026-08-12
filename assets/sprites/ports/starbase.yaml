@@ -290,7 +290,7 @@ views:
         name: Body
         primary_property: hull
         secondary_properties: []
-        repeat: 1
+        repeat: 2
         variants:
         - id: default_1
           weight: 1
