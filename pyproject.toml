@@ -34,6 +34,7 @@ mypy = "*"
 
 [tool.pixi.pypi-dependencies]
 edge-art-designer = { path = ".", editable = true }
+textual-serve = ">=1.1.3,<2"
 
 [tool.pixi.tasks]
 app = "edge-art-designer"

@@ -4,10 +4,12 @@ from __future__ import annotations
 
 import argparse
 import re
+import shlex
+import sys
 from copy import deepcopy
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any, Literal, Sequence
 
 from rich.text import Text
 from rich.color import Color as RichColor
@@ -2220,7 +2222,18 @@ class EdgeArtDesigner(App[None]):
         raise LookupError("tier is not attached to a view")
 
 
-def main() -> None:
+def _serve(asset_root: Path, host: str, port: int) -> None:
+    """Host the ordinary editor command in a browser without recursive serving."""
+
+    from textual_serve.server import Server
+
+    command = shlex.join(
+        (sys.executable, "-m", "sprite_art_designer.app", str(asset_root))
+    )
+    Server(command, host=host, port=port, title="Edge Art Designer").serve()
+
+
+def main(argv: Sequence[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description="Edit Edge sprite art")
     default_assets = Path(__file__).resolve().parents[2] / "assets"
     parser.add_argument(
@@ -2230,7 +2243,26 @@ def main() -> None:
         default=default_assets,
         help="Directory containing palettes.yaml and sprites/",
     )
-    args = parser.parse_args()
+    parser.add_argument(
+        "--serve",
+        action="store_true",
+        help="Serve the editor in a browser with Textual Serve",
+    )
+    parser.add_argument(
+        "--host",
+        default="localhost",
+        help="Host interface for --serve (default: localhost)",
+    )
+    parser.add_argument(
+        "--port",
+        type=int,
+        default=8000,
+        help="TCP port for --serve (default: 8000)",
+    )
+    args = parser.parse_args(argv)
+    if args.serve:
+        _serve(args.asset_root, args.host, args.port)
+        return
     EdgeArtDesigner(args.asset_root).run()
 
 

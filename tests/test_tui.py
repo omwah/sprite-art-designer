@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import gzip
 import struct
+import sys
 from collections import Counter
 from copy import deepcopy
 from pathlib import Path
 from shutil import copytree
+from unittest.mock import patch
 
 import pytest
 from textual.color import Color as TextualColor
@@ -19,6 +21,7 @@ from sprite_art.glyphs import (
     FACET_AUTHORING_GLYPHS,
     SHADED_AUTHORING_GLYPHS,
 )
+from sprite_art_designer import app as app_module
 from sprite_art_designer.app import EdgeArtDesigner, HelpScreen, PaletteColorScreen, _new_sprite
 from sprite_art_designer.widgets import (
     ArtCanvas,
@@ -31,6 +34,30 @@ from sprite_art_designer.widgets import (
 )
 
 ROOT = Path(__file__).parents[1]
+
+
+def test_serve_hosts_an_ordinary_editor_process() -> None:
+    asset_root = ROOT / "assets"
+    with patch("textual_serve.server.Server") as server:
+        app_module._serve(asset_root, "0.0.0.0", 9000)
+
+    assert server.call_args.args[0] == (
+        f"{sys.executable} -m sprite_art_designer.app {asset_root}"
+    )
+    assert server.call_args.kwargs == {
+        "host": "0.0.0.0",
+        "port": 9000,
+        "title": "Edge Art Designer",
+    }
+    server.return_value.serve.assert_called_once()
+
+
+def test_main_routes_serve_flag() -> None:
+    serve = patch.object(app_module, "_serve")
+    with serve as served:
+        app_module.main(["--serve", "--port", "9000"])
+
+    served.assert_called_once_with(ROOT / "assets", "localhost", 9000)
 
 
 @pytest.mark.asyncio
