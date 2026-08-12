@@ -3,6 +3,7 @@ from __future__ import annotations
 import gzip
 import struct
 from collections import Counter
+from copy import deepcopy
 from pathlib import Path
 from shutil import copytree
 
@@ -641,6 +642,79 @@ async def test_v_shortcut_cycles_variant_and_overrides_preview_selection() -> No
         overrides = app.query_one("#preview-matrix", PreviewMatrix).variant_overrides
         assert overrides is not None
         assert overrides[id(app.selection.parent)] is app.selection.item
+
+
+@pytest.mark.asyncio
+async def test_preview_archetype_selects_a_whole_sprite_grammar_and_scopes_v() -> None:
+    app = EdgeArtDesigner(ROOT / "assets")
+    async with app.run_test(size=(140, 50)) as pilot:
+        await pilot.pause()
+        app.query_one("#sprite-select", Select).value = "trading_port"
+        await pilot.pause()
+
+        archetype_select = app.query_one("#preview-archetype", Select)
+        assert [value for _, value in archetype_select._options] == [
+            "__no_archetype__",
+            "humanoid_diplomat",
+            "canid_technologist",
+            "tentacled_envoy",
+            "brain_dome_automaton",
+            "ribbon_salvager",
+            "temporal_broker",
+            "cosmic_arbiter",
+            "telepath_aristocrat",
+            "engineered_aesthete",
+            "amorous_imp",
+            "horned_grudgekeeper",
+            "psionic_overlord",
+            "colonial_broodmaster",
+            "winged_schemer",
+        ]
+
+        archetype_select.value = "humanoid_diplomat"
+        await pilot.pause()
+        matrix = app.query_one("#preview-matrix", PreviewMatrix)
+        assert app.preview_archetype == "humanoid_diplomat"
+        assert matrix.archetype_id == "humanoid_diplomat"
+        assert app.current_archetype == "humanoid_diplomat"
+
+        tree = app.query_one("#structure-tree", Tree)
+        mast = tree.root.children[0].children[0].children[0]
+        humanoid_node = mast.children[3]
+        tree.select_node(humanoid_node)
+        await pilot.pause()
+        assert archetype_select.value == "humanoid_diplomat"
+        assert all(
+            variant.archetypes == ["humanoid_diplomat"]
+            for variant in app._preview_variants().values()
+        )
+
+        original = humanoid_node.data.item
+        duplicate = deepcopy(original)
+        duplicate.id = "humanoid_diplomat_alternate"
+        mast.data.item.variants.append(duplicate)
+        app._rebuild_tree(select_item=original)
+        await pilot.pause()
+        app.action_next_variant()
+        await pilot.pause()
+        assert app.selection is not None
+        assert app.selection.item is duplicate
+
+        archetype_select.value = "__no_archetype__"
+        await pilot.pause()
+        assert app.preview_archetype is None
+        assert matrix.archetype_id is None
+        app.action_next_variant()
+        await pilot.pause()
+        assert app.selection is not None
+        assert not app.selection.item.archetypes
+
+        # Palette browsing/editing remains independent of composition.
+        app.query_one("#palette-archetype", Select).value = "ribbon_salvager"
+        await pilot.pause()
+        assert app.current_archetype == "ribbon_salvager"
+        assert app.preview_archetype is None
+        assert matrix.archetype_id is None
 
 
 @pytest.mark.asyncio

@@ -68,6 +68,7 @@ from .widgets import (
 )
 
 SelectionKind = Literal["sprite", "view", "tier", "section", "variant"]
+PREVIEW_NO_ARCHETYPE = "__no_archetype__"
 
 
 @dataclass
@@ -168,8 +169,8 @@ class HelpScreen(ModalScreen[None]):
                 "  H  Toggle selected-part preview highlight\n"
                 "  T  Switch to the next size tier\n"
                 "  O  Switch orientation (sprites with two views)\n"
-                "  Click a Structure variant to select and keep it for its slot\n"
-                "  V  Select and keep the next variant in the selected slot\n"
+                "  Click a tagged Structure variant to preview its archetype\n"
+                "  V  Select the next variant in the active archetype\n"
                 "  , / .  Temporarily browse previous / next structure\n"
                 "  ?  Open or close this help"
             )
@@ -504,7 +505,10 @@ class EdgeArtDesigner(App[None]):
         self.preview_size = (40, 7)
         self.highlight_preview = False
         self.preview_seed = 7
+        # Palette editing and preview composition deliberately have separate
+        # selections. The latter is None for the un-tagged/default grammar.
         self.current_archetype = "humanoid_diplomat"
+        self.preview_archetype: str | None = None
         self.current_view_id = "horizontal"
         self.current_facing: str | None = None
         self._recovery_timer: Timer | None = None
@@ -518,6 +522,7 @@ class EdgeArtDesigner(App[None]):
         self._updating_preview_tier_control = False
         self._programmatic_preview_tier_value: str | None = None
         self._preview_tier_selector_enabled = False
+        self._updating_preview_archetype_select = False
         self._history: list[HistoryEntry] = []
         self._history_index = -1
 
@@ -538,7 +543,12 @@ class EdgeArtDesigner(App[None]):
                 (initial_view.mirror_facing.title(), initial_view.mirror_facing)
             )
         yield Header(show_clock=True)
-        yield DocumentBar(self._sprite_option_groups(), self.editor.current_sprite_id)
+        yield DocumentBar(
+            self._sprite_option_groups(),
+            self.editor.current_sprite_id,
+            self._preview_archetype_options(),
+            self._preview_archetype_value(),
+        )
         yield NarrowTabs()
 
         with Container(id="body"):
@@ -586,8 +596,74 @@ class EdgeArtDesigner(App[None]):
             groups.append(("Other sprites", other_sprites))
         return groups
 
+    def _sprite_archetype_ids(self) -> list[str]:
+        """Return this sprite's declared geometry archetypes in catalog order."""
+
+        declared = {
+            archetype_id
+            for view in self.editor.current_sprite.views.values()
+            for tier in view.tiers
+            for section in tier.sections
+            for variant in section.variants
+            for archetype_id in variant.archetypes
+        }
+        return [archetype_id for archetype_id in ARCHETYPE_IDS if archetype_id in declared]
+
+    def _preview_archetype_options(self) -> list[tuple[str, str]]:
+        return [("No Archetype", PREVIEW_NO_ARCHETYPE)] + [
+            (archetype_id.replace("_", " ").title(), archetype_id)
+            for archetype_id in self._sprite_archetype_ids()
+        ]
+
+    def _preview_archetype_value(self) -> str:
+        return self.preview_archetype or PREVIEW_NO_ARCHETYPE
+
+    def _refresh_preview_archetype_options(self) -> None:
+        valid = set(self._sprite_archetype_ids())
+        if self.preview_archetype is not None and self.preview_archetype not in valid:
+            self.preview_archetype = None
+            self._persistent_variant_overrides.clear()
+            self._transient_variant_override = None
+        selector = self.query_one("#preview-archetype", Select)
+        options = self._preview_archetype_options()
+        value = self._preview_archetype_value()
+        self._updating_preview_archetype_select = True
+        try:
+            # Rebuilding Select options posts change messages. Avoid doing so
+            # when an archetype click only changes the active value.
+            if list(selector._options) != options:
+                selector.set_options(options)
+            if selector.value != value:
+                selector.value = value
+        finally:
+            self._updating_preview_archetype_select = False
+
+    def _set_preview_archetype(
+        self, archetype_id: str | None, *, resize_preview: bool = True
+    ) -> None:
+        valid = set(self._sprite_archetype_ids())
+        selected = archetype_id if archetype_id in valid else None
+        if selected != self.preview_archetype:
+            self.preview_archetype = selected
+            self._persistent_variant_overrides.clear()
+            self._transient_variant_override = None
+        self._refresh_preview_archetype_options()
+        # No Archetype uses the catalog fallback colors, without inventing a
+        # writable palette entry for the baseline grammar.
+        self.current_archetype = selected or self.editor.palettes.fallback_archetype
+        self.query_one("#palette-archetype", Select).value = self.current_archetype
+        self._refresh_palette_fields()
+        if resize_preview and self.selection is not None:
+            tier = self._tier_for_structure(self.selection.item)
+            if tier is not None:
+                self._set_preview_size_for_tier(tier)
+        self._populate_inspector()
+        self._refresh_variant_labels()
+        self._refresh_preview()
+
     def on_mount(self) -> None:
         self._rebuild_tree()
+        self._refresh_preview_archetype_options()
         self.call_after_refresh(self._sync_tree_cursor_to_selection)
         self._select_glyph(self.selected_glyph)
         self._select_color_set(self.selected_color_set_id)
@@ -735,6 +811,7 @@ class EdgeArtDesigner(App[None]):
                         if select_item is variant:
                             selected_node = variant_node
         tree.root.expand_all()
+        self._refresh_preview_archetype_options()
         if selected_node is not None:
             self._select_tree_node(
                 selected_node,
@@ -778,7 +855,7 @@ class EdgeArtDesigner(App[None]):
             width=width,
             height=height,
             seed=self.preview_seed,
-            archetype_id=self.current_archetype,
+            archetype_id=self.preview_archetype,
             view_id=self.current_view_id,
             variant_overrides=self._preview_variant_overrides(),
         )
@@ -807,6 +884,16 @@ class EdgeArtDesigner(App[None]):
         sync_preview_size = self._tree_selection_syncs_preview_size
         self._tree_selection_syncs_preview_size = True
         self.selection = selection
+        if selection.kind == "variant":
+            variant = selection.item
+            assert isinstance(variant, Variant)
+            # A tagged variant names an entire archetype grammar, not an
+            # independent station/ship part. Use the first stored tag when a
+            # variant belongs to more than one archetype.
+            self._set_preview_archetype(
+                variant.archetypes[0] if variant.archetypes else None,
+                resize_preview=False,
+            )
         self.call_after_refresh(self._sync_tree_cursor_to_selection)
         selected_view = self._view_for_structure(selection.item)
         if selected_view is not None and self.current_view_id != selected_view.id:
@@ -938,9 +1025,9 @@ class EdgeArtDesigner(App[None]):
             self.query_one("#section-archetype-repeat-label", Label).update(
                 f"Repetition for {self.current_archetype.replace('_', ' ').title()}"
             )
-            self.query_one("#section-archetype-repeat", Input).value = (
-                "" if override is None else str(override)
-            )
+            override_input = self.query_one("#section-archetype-repeat", Input)
+            override_input.value = "" if override is None else str(override)
+            override_input.disabled = False
             others = {
                 archetype_id: value
                 for archetype_id, value in sorted(section_item.archetype_repeats.items())
@@ -1139,7 +1226,7 @@ class EdgeArtDesigner(App[None]):
             width=width,
             height=height,
             seed=self.preview_seed,
-            archetype_id=self.current_archetype,
+            archetype_id=self.preview_archetype,
             view_id=self.current_view_id,
             facing=self.current_facing,
             variant_overrides=self._preview_variant_overrides(),
@@ -1280,19 +1367,29 @@ class EdgeArtDesigner(App[None]):
         if self.selection is None:
             return
         if isinstance(self.selection.item, Section):
-            variants = self.selection.item.variants
-            current_index = -1
+            candidates = self.selection.item.variants
+            current_item: Variant | None = None
         elif isinstance(self.selection.item, Variant):
-            variants = [
+            candidates = [
                 variant
                 for variant in self.selection.parent or []
                 if isinstance(variant, Variant)
             ]
-            current_index = variants.index(self.selection.item)
+            current_item = self.selection.item
         else:
             return
+        variants = [
+            variant
+            for variant in candidates
+            if (
+                self.preview_archetype in variant.archetypes
+                if self.preview_archetype is not None
+                else not variant.archetypes
+            )
+        ]
         if not variants:
             return
+        current_index = variants.index(current_item) if current_item in variants else -1
         self._select_tree_item(
             variants[(current_index + 1) % len(variants)], persist_variant=True
         )
@@ -1370,6 +1467,9 @@ class EdgeArtDesigner(App[None]):
             self._transient_variant_override = None
             self.current_view_id = next(iter(self.editor.current_sprite.views))
             self._rebuild_tree()
+            self._set_preview_archetype(
+                self.preview_archetype, resize_preview=False
+            )
             self._refresh_preview_controls()
             self._refresh_preview()
             self._update_dirty_indicator()
@@ -1381,6 +1481,11 @@ class EdgeArtDesigner(App[None]):
         elif select_id == "document-actions":
             self._finish_document_action(value)
             event.select.value = Select.NULL
+        elif select_id == "preview-archetype":
+            if not self._updating_preview_archetype_select:
+                self._set_preview_archetype(
+                    None if value == PREVIEW_NO_ARCHETYPE else value
+                )
         elif select_id == "palette-archetype":
             self.current_archetype = value
             self._refresh_palette_fields()
@@ -1456,7 +1561,7 @@ class EdgeArtDesigner(App[None]):
         view = self.editor.current_sprite.views[self.current_view_id]
         # Per-archetype repeats make a tier's composed length depend on who is
         # being previewed, so size against the archetype on screen.
-        archetype = self.current_archetype
+        archetype = self.preview_archetype
         if view.axis == "horizontal":
             size = (
                 tier.composed_length(view.axis, archetype),
@@ -1498,7 +1603,7 @@ class EdgeArtDesigner(App[None]):
         matrix.configure(
             sprite=self.editor.current_sprite,
             palettes=self.editor.palettes,
-            archetype_id=self.current_archetype,
+            archetype_id=self.preview_archetype,
             view_id=self.current_view_id,
             facing=self.current_facing,
             seed=self.preview_seed,
@@ -1652,6 +1757,7 @@ class EdgeArtDesigner(App[None]):
             self.notify(str(error), severity="error")
             return
         self._rebuild_tree(select_item=item)
+        self._set_preview_archetype(self.preview_archetype, resize_preview=False)
         if isinstance(item, Variant):
             self.query_one("#art-canvas", ArtCanvas).set_variant(item)
         tier = self._tier_for_structure(item)
@@ -1810,7 +1916,7 @@ class EdgeArtDesigner(App[None]):
                 width=width,
                 height=height,
                 seed=self.preview_seed,
-                archetype_id=self.current_archetype,
+                archetype_id=self.preview_archetype,
                 view_id=self.current_view_id,
                 facing=self.current_facing,
                 variant_overrides=self._preview_variant_overrides(),
@@ -1854,7 +1960,7 @@ class EdgeArtDesigner(App[None]):
                 width=width,
                 height=height,
                 seed=self.preview_seed,
-                archetype_id=self.current_archetype,
+                archetype_id=self.preview_archetype,
                 view_id=self.current_view_id,
                 facing=self.current_facing,
                 variant_overrides=self._preview_variant_overrides(),

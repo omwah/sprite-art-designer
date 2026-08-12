@@ -29,6 +29,11 @@ Header {
     margin-right: 1;
 }
 
+#preview-archetype {
+    width: 30;
+    margin-right: 1;
+}
+
 #dirty-indicator {
     color: #ffc857;
     margin-left: 1;
@@ -390,8 +395,8 @@ ModalScreen {
 .narrow #document-bar {
     height: 6;
     layout: grid;
-    grid-size: 4 2;
-    grid-columns: 8 1fr 10 10;
+    grid-size: 5 2;
+    grid-columns: 8 1fr 10 16 1fr;
 }
 
 .narrow #workspace {

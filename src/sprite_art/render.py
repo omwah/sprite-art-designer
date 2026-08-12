@@ -115,7 +115,7 @@ class RenderRequest:
     width: int
     height: int
     seed: int = 0
-    archetype_id: str = "humanoid_diplomat"
+    archetype_id: str | None = "humanoid_diplomat"
     view_id: str = "horizontal"
     facing: str | None = None
 
@@ -169,7 +169,7 @@ def selected_variants(
     width: int,
     height: int,
     seed: int = 0,
-    archetype_id: str = "humanoid_diplomat",
+    archetype_id: str | None = "humanoid_diplomat",
     view_id: str = "horizontal",
     variant_overrides: dict[int, Variant] | None = None,
 ) -> dict[int, Variant]:
@@ -247,7 +247,7 @@ def active_variant_at_cell(
     width: int,
     height: int,
     seed: int = 0,
-    archetype_id: str = "humanoid_diplomat",
+    archetype_id: str | None = "humanoid_diplomat",
     view_id: str = "horizontal",
     facing: str | None = None,
     variant_overrides: dict[int, Variant] | None = None,
@@ -629,7 +629,7 @@ def render_sprite(
     width: int,
     height: int,
     seed: int = 0,
-    archetype_id: str = "humanoid_diplomat",
+    archetype_id: str | None = "humanoid_diplomat",
     view_id: str = "horizontal",
     facing: str | None = None,
     highlight_variant: Variant | None = None,

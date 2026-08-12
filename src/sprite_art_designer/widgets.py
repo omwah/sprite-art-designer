@@ -422,12 +422,20 @@ class GroupedSpriteSelect(Select[SpriteSelectValue]):
 
 
 class DocumentBar(Horizontal):
-    """The current-sprite picker and document-level actions."""
+    """The current-sprite picker, preview archetype, and document actions."""
 
-    def __init__(self, sprite_groups: SpriteOptionGroups, current_sprite_id: str) -> None:
+    def __init__(
+        self,
+        sprite_groups: SpriteOptionGroups,
+        current_sprite_id: str,
+        preview_archetype_options: list[tuple[str, str]],
+        preview_archetype_value: str,
+    ) -> None:
         super().__init__(id="document-bar")
         self.sprite_groups = sprite_groups
         self.current_sprite_id = current_sprite_id
+        self.preview_archetype_options = preview_archetype_options
+        self.preview_archetype_value = preview_archetype_value
 
     def compose(self) -> ComposeResult:
         yield Label("Sprite")
@@ -447,6 +455,12 @@ class DocumentBar(Horizontal):
             ],
             prompt="Actions",
             id="document-actions",
+        )
+        yield Select(
+            self.preview_archetype_options,
+            value=self.preview_archetype_value,
+            allow_blank=False,
+            id="preview-archetype",
         )
         yield Label("", id="dirty-indicator")
 
@@ -568,8 +582,8 @@ class PropertiesToolsTab(TabPane):
                 with Vertical(id="section-repeat-fields"):
                     yield Label("Repetition")
                     yield Input(value="1", type="integer", id="section-repeat")
-                    # Scoped to the previewed archetype rather than shown as a
-                    # matrix of every archetype at once. Blank means "use the
+                    # Scoped to the palette-editor archetype rather than shown
+                    # as a matrix of every archetype at once. Blank means "use the
                     # repetition above"; zero omits the band for that archetype.
                     yield Label("Repetition override", id="section-archetype-repeat-label")
                     yield Input(placeholder="inherit", type="integer", id="section-archetype-repeat")
@@ -813,7 +827,7 @@ class PreviewMatrix(Static):
 
     sprite: Sprite | None = None
     palettes: PaletteCatalog | None = None
-    archetype_id = "humanoid_diplomat"
+    archetype_id: str | None = "humanoid_diplomat"
     view_id = "horizontal"
     facing: str | None = None
     seed = 7
@@ -838,7 +852,7 @@ class PreviewMatrix(Static):
         *,
         sprite: Sprite,
         palettes: PaletteCatalog,
-        archetype_id: str,
+        archetype_id: str | None,
         view_id: str,
         facing: str | None,
         seed: int,
