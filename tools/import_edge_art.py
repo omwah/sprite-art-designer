@@ -22,9 +22,9 @@ from sprite_art import (
     View,
     dump_palette_catalog,
     dump_sprite,
-    generate_rotated_view,
 )
 from sprite_art.model import SCHEMA_VERSION
+from sprite_art_authoring import generate_rotated_view
 
 from edge_markers import migrate_rows
 

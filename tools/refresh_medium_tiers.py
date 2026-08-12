@@ -6,7 +6,8 @@ import argparse
 from copy import deepcopy
 from pathlib import Path
 
-from sprite_art import Tier, dump_sprite, generate_rotated_view, load_sprite
+from sprite_art import Tier, dump_sprite, load_sprite
+from sprite_art_authoring import generate_rotated_view
 
 
 def _fit_rows(cells: list[str], height: int, fill: str = " ") -> list[str]:

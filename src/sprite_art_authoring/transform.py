@@ -5,8 +5,8 @@ from __future__ import annotations
 from copy import deepcopy
 from dataclasses import dataclass
 
-from .glyphs import ROTATE_CCW, ROTATION_FALLBACK
-from .model import Sprite, View
+from sprite_art.glyphs import ROTATE_CCW, ROTATION_FALLBACK
+from sprite_art.model import Sprite, View
 
 
 @dataclass(frozen=True)

@@ -23,7 +23,7 @@ from pathlib import Path
 
 from sprite_art import Section, Sprite, Tier, Variant, View, dump_sprite
 from sprite_art.model import SCHEMA_VERSION
-from sprite_art.transform import generate_rotated_view
+from sprite_art_authoring import generate_rotated_view
 
 COLOR_MARKERS = {
     "R": ("▀", "B"),

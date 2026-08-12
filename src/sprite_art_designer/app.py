@@ -43,14 +43,16 @@ from sprite_art import (
     Sprite,
     Tier,
     Variant,
-    export_rexpaint,
     View,
-    generate_rotated_view,
-    import_rexpaint_cells,
-    segment_rexpaint_cells,
     selected_variants,
 )
 from sprite_art.model import SCHEMA_VERSION
+from sprite_art_authoring import (
+    export_rexpaint,
+    generate_rotated_view,
+    import_rexpaint_cells,
+    segment_rexpaint_cells,
+)
 
 from .state import EditorState
 from .widgets import (

@@ -11,8 +11,8 @@ from rich.color import Color
 from rich.console import Console
 from rich.text import Text
 
-from .glyphs import AUTHORING_GLYPHS, flip_rows_horizontal, flip_rows_vertical
-from .model import (
+from sprite_art.glyphs import AUTHORING_GLYPHS, flip_rows_horizontal, flip_rows_vertical
+from sprite_art.model import (
     COLOR_SET_CODES,
     COLOR_SET_IDS,
     SURFACE_MASK_CODE,
@@ -21,7 +21,7 @@ from .model import (
     Sprite,
     Variant,
 )
-from .render import (
+from sprite_art import (
     ordered_sections,
     render_sprite,
     resolve_archetype,

@@ -8,7 +8,7 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-from sprite_art.rexpaint import REXPAINT_GLYPH_INDICES
+from sprite_art_authoring import REXPAINT_GLYPH_INDICES
 
 CELL_WIDTH = 10
 CELL_HEIGHT = 20

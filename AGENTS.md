@@ -22,6 +22,10 @@ Read these before architectural or format changes:
   contract.
 - `docs/EDGE_INTEGRATION.md` — the vendoring and game-runtime seam.
 
+The authoring-only REXPaint and view-generation helpers live in the sibling
+`sprite_art_authoring` package. Keep new authoring exports there rather than
+adding them to the runtime facade.
+
 If implementation changes any documented contract, update the relevant
 document in the same change.
 
@@ -51,14 +55,16 @@ side effect of editor work.
 Dependencies flow in one direction:
 
 ```text
-sprite_art_designer  →  sprite_art  →  Rich + PyYAML
-       Textual
+sprite_art_designer  →  sprite_art_authoring  →  sprite_art  →  Rich + PyYAML
+       Textual                 tools consume both packages
 ```
 
-- `src/sprite_art/` is the reusable, game-vendorable library. It must not import
-  Textual or editor code.
-- `src/sprite_art_designer/` is the Textual application and may depend on
-  `sprite_art`.
+- `src/sprite_art/` is the reusable, game-vendorable runtime library. It must
+  not import Textual, editor code, or `sprite_art_authoring`.
+- `src/sprite_art_authoring/` contains editor interchange and authoring
+  transforms and may depend on `sprite_art`.
+- `src/sprite_art_designer/` is the Textual application and may depend on both
+  sprite-art packages.
 - `assets/palettes.yaml` is the single palette catalog.
 - `assets/sprites/` stores one independently versioned YAML file per sprite,
   foldered by kind (`ships/`, `ports/`). Sprite ids are unique across the whole

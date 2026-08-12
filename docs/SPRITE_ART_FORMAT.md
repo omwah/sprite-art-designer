@@ -217,15 +217,16 @@ All glyphs must occupy exactly one terminal cell.
 
 ## REXPaint export
 
-The reusable library exports a deterministic, one-layer REXPaint `.xp` file and
-a matching native REXPaint palette `.txt` file. Export uses the same width,
+The authoring package exports a deterministic, one-layer REXPaint `.xp` file
+and a matching native REXPaint palette `.txt` file. Export uses the same width,
 height, seed, archetype, view, facing, and variant overrides as the Rich preview.
 It writes the real authored glyph and uses the cell's color-set slot-1 color as
 foreground so import can infer the mask. YAML remains authoritative.
 
 An `.xp` file stores glyph *indices* rather than glyph shapes. The exporter uses
-the index order in `sprite_art.rexpaint.REXPAINT_GLYPH_INDICES`; its matching
-font sheet is `assets/rexpaint/edge-art-designer.png`. Install that sheet as a
+the index order in
+`sprite_art_authoring.rexpaint.REXPAINT_GLYPH_INDICES`; its matching font sheet
+is `assets/rexpaint/edge-art-designer.png`. Install that sheet as a
 16-column REXPaint art font, retaining the supplied index order. An authored
 glyph absent from the map rejects export with its cell position rather than
 being silently substituted. The map and font evolve together, so an `.xp` file
@@ -269,9 +270,11 @@ Unknown archetypes resolve to `humanoid_diplomat`.
 
 ## Rotation and reflection
 
-“Generate vertical” rotates every horizontal tier, section variant, and cell 90°
-counter-clockwise. Because terminal cells are approximately twice as tall as
-they are wide, the generated view doubles each rotated cell horizontally and
+The authoring package's `sprite_art_authoring.transform.generate_rotated_view`
+(used by the editor's “Generate vertical” action) rotates every horizontal tier,
+section variant, and cell 90° counter-clockwise. Because terminal cells are
+approximately twice as tall as they are wide, the generated view doubles each
+rotated cell horizontally and
 retains every other rotated row. This compact, deliberately lossy resampling
 produces a proportionate editable starting view without making it excessively
 wide. Known structural glyphs are rotated through an explicit mapping. An

@@ -1,6 +1,6 @@
 # Edge Art Designer REXPaint font map
 
-`sprite_art.rexpaint.REXPAINT_GLYPH_INDICES` writes the following glyph indices
+`sprite_art_authoring.rexpaint.REXPAINT_GLYPH_INDICES` writes the following glyph indices
 to `.xp` files. `edge-art-designer.png` is a 16-column art-font sheet whose
 cells use these indices in reading order.
 

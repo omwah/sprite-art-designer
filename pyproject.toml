@@ -16,7 +16,7 @@ build-backend = "hatchling.build"
 requires = ["hatchling"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/sprite_art", "src/sprite_art_designer"]
+packages = ["src/sprite_art", "src/sprite_art_authoring", "src/sprite_art_designer"]
 
 [tool.pixi.workspace]
 channels = ["conda-forge"]

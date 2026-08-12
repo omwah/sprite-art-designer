@@ -502,7 +502,7 @@ views it transposes the box. Route both REXPaint paths through
    (`generator.py:57`) now that two kinds share the library cache.
 5. That the two legacy color draws apply to `kind: ship` only.
 6. That `assets/` must exist at runtime beside the vendored package, and that
-   `sprite_art.rexpaint` is editor support with no game-side dependency.
+   `sprite_art_authoring.rexpaint` is editor support with no game-side dependency and is not vendored into Edge.
 7. That ship *horizontal* selection is unchanged by §1, while ship `up`/`down`
    views — a `sprite_art` extension Edge does not currently request — may pick a
    different tier.
@@ -637,8 +637,9 @@ tier-selection matrix from §1.
 
 ## Files touched
 
-**Library:** `src/sprite_art/model.py`, `io.py`, `render.py`, `library.py`,
-`rexpaint.py`
+**Library:** `src/sprite_art/model.py`, `io.py`, `render.py`, `library.py`
+
+**Authoring:** `src/sprite_art_authoring/rexpaint.py`
 
 **Editor:** `src/sprite_art_designer/app.py`, `widgets.py`, `state.py`,
 `render_ships.py`, `styles.tcss`

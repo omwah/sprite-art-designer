@@ -5,9 +5,9 @@ PyYAML, both already present in Edge of the Unknown. The editor package does not
 need to be vendored into the game.
 
 The editor-only color-well modal uses `textual-colorpicker`; it is not a
-dependency of `sprite_art` and is therefore not part of the game vendoring seam.
-`sprite_art.rexpaint` is editor support with no game-side dependency, but it is
-imported by the package facade and so travels with it.
+dependency of either sprite-art package and is therefore not part of the game
+vendoring seam. Authoring-only REXPaint and rotation helpers live in
+`sprite_art_authoring`, which Edge does not vendor.
 
 ## Vendoring
 
@@ -19,10 +19,10 @@ assets/palettes.yaml         -> edge/art/assets/palettes.yaml
 assets/sprites/              -> edge/art/assets/sprites/
 ```
 
-Then adjust relative imports if the package is nested as `edge.art.sprite_art`.
-Alternatively, copy `sprite_art` as a top-level package unchanged. The `assets`
-tree must exist at runtime beside the vendored package; the library reads it,
-it is not embedded.
+All intra-package imports are already relative, so the runtime package can be
+nested as `edge.art.sprite_art` without import adjustments. Alternatively, copy
+`sprite_art` as a top-level package unchanged. The `assets` tree must exist at
+runtime beside the vendored package; the library reads it, it is not embedded.
 
 The loaded facade is:
 
