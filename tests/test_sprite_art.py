@@ -949,7 +949,11 @@ def test_named_variants_win_and_untagged_ones_are_the_default(
     """
 
     sprite = load_sprite(ASSETS / "sprites" / "ports" / "starbase.yaml")
-    section = sprite.views["vertical"].tiers[0].sections[0]
+    view = sprite.views["vertical"]
+    tier = view.tiers[0]
+    section = tier.sections[0]
+    width = tier.cross_axis_size(view.axis)
+    height = tier.composed_length(view.axis)
     tagged = {
         archetype_id
         for variant in section.variants
@@ -961,8 +965,8 @@ def test_named_variants_win_and_untagged_ones_are_the_default(
         chosen = selected_variants(
             sprite,
             palettes,
-            width=11,
-            height=12,
+            width=width,
+            height=height,
             seed=2,
             archetype_id=archetype_id,
             view_id="vertical",
@@ -972,8 +976,8 @@ def test_named_variants_win_and_untagged_ones_are_the_default(
     fallback = selected_variants(
         sprite,
         palettes,
-        width=11,
-        height=12,
+        width=width,
+        height=height,
         seed=2,
         archetype_id="not_a_real_archetype",
         view_id="vertical",
@@ -985,14 +989,17 @@ def test_archetype_filtering_does_not_change_the_draw_count(
     palettes: PaletteCatalog,
 ) -> None:
     sprite = load_sprite(ASSETS / "sprites" / "ports" / "starbase.yaml")
-    tier = sprite.views["vertical"].tiers[0]
+    view = sprite.views["vertical"]
+    tier = view.tiers[0]
+    width = tier.cross_axis_size(view.axis)
+    height = tier.composed_length(view.axis)
 
     for archetype_id in (None, "humanoid_diplomat", "ribbon_salvager"):
         chosen = selected_variants(
             sprite,
             palettes,
-            width=11,
-            height=12,
+            width=width,
+            height=height,
             seed=2,
             archetype_id=archetype_id or "",
             view_id="vertical",
